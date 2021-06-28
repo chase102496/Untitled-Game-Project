@@ -1,0 +1,1 @@
+if global.showHitbox draw_self();

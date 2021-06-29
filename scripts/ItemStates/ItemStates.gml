@@ -1,7 +1,7 @@
 //
 /// INIT AND CONFIG STUFF
 //
-function scrWeaponStateInit()
+function scrItemStateInit()
 {
 	currentState = scrWeaponStateEmpty;
 	subState = 0;
@@ -18,13 +18,13 @@ function scrWeaponStateInit()
 	previousSubState2 = 0;
 }
 ///
-function scrWeaponBroadcastListener() //Used to run one-time evensts
+function scrItemBroadcastListener() //Used to run one-time evensts
 {
 	if event_data[? "event_type"] == "sequence event"
 	{
 		switch (event_data[? "message"])
 	    {
-		    case "seqWeaponGreatswordPrimary1":
+		    case "seqWeaponGreatswordStab-2f":
 			{
 		        owner.hVel += sign(owner.sprite_xscale)*1;
 		        break;
@@ -41,7 +41,7 @@ function scrSequenceCreator(_sequence)
 	sequence_instance_override_object(currentSequenceInstance,object_index,instance_find(self,0))
 }
 ///
-function scrWeaponStateMemory() //Used to store the previous state in memory
+function scrItemStateMemory() //Used to store the previous state in memory
 {
 	if storedState != currentState previousState = storedState;
 	if storedSubState != subState previousSubState = storedSubState;
@@ -85,7 +85,7 @@ function scrWeaponStateGreatsword()
 		
 		case 1: //Primary Attack
 		{
-			if currentSequence != seqWeaponGreatswordPrimary scrSequenceCreator(seqWeaponGreatswordPrimary);
+			if currentSequence != seqWeaponGreatswordStab scrSequenceCreator(seqWeaponGreatswordStab);
 			
 			owner.currentState = scrPlayerStateAttack;
 			owner.subState = currentState;

@@ -1,4 +1,4 @@
-scrWeaponStateInit()
+scrItemStateInit()
 //Init
 currentLayer = "layWeapon";
 currentSequence = 0;

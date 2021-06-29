@@ -1,1 +1,1 @@
-scrWeaponBroadcastListener();
+scrItemBroadcastListener();

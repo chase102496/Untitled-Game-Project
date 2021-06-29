@@ -1,7 +1,7 @@
 function scrDebugInit()
 {
 	drawDebug = false;
-	global.showHitbox = true;
+	global.showHitbox = false;
 	testVar1 = 0;
 	testVar2 = 0;
 	testVar3 = 0;
@@ -41,9 +41,12 @@ function debugVars()
 	if playerWeapon.changedDirection == 1 testVar2 += 1;
 	if playerWeapon.changedDirection == -1 testVar3 += -1;
 	
-	if keyPress0 drawDebug = scrToggle(drawDebug);
+	if keyPress0
+	{
+		drawDebug = scrToggle(drawDebug);
+		global.showHitbox = scrToggle(global.showHitbox);
+	}
 	if keyPress1 playerWeapon.currentState = scrCustomToggle(playerWeapon.currentState,scrWeaponStateGreatsword,scrWeaponStateEmpty);
-	if keyPress2 global.showHitbox = scrToggle(global.showHitbox);
 	if keyEsc game_restart();
 	
 	//testVar1 = layer_sequence_get_headpos(playerWeapon.currentSequenceElement) div 1

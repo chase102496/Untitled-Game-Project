@@ -1,4 +1,3 @@
-image_speed = 0;
 //Physics init
 hVel = 0;
 hVelFrac = 0;

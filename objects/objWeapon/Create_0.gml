@@ -1,7 +1,6 @@
 scrWeaponStateInit()
 //Init
 currentLayer = "layWeapon";
-global.showHitbox = true;
 currentSequence = 0;
 currentSequenceElement = 0;
 currentSequenceInstance = 0;

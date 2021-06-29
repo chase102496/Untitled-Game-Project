@@ -1,7 +1,7 @@
 {
   "resources": [
     {"id":{"name":"sprPlayerJumpRise","path":"sprites/sprPlayerJumpRise/sprPlayerJumpRise.yy",},"order":2,},
-    {"id":{"name":"ItemStates","path":"scripts/ItemStates/ItemStates.yy",},"order":3,},
+    {"id":{"name":"ItemStates","path":"scripts/ItemStates/ItemStates.yy",},"order":2,},
     {"id":{"name":"parEntity","path":"objects/parEntity/parEntity.yy",},"order":3,},
     {"id":{"name":"objGame","path":"objects/objGame/objGame.yy",},"order":2,},
     {"id":{"name":"sprStick","path":"sprites/sprStick/sprStick.yy",},"order":1,},
@@ -12,7 +12,7 @@
     {"id":{"name":"sprPlayerCrouch","path":"sprites/sprPlayerCrouch/sprPlayerCrouch.yy",},"order":5,},
     {"id":{"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},"order":0,},
     {"id":{"name":"objPlayer","path":"objects/objPlayer/objPlayer.yy",},"order":0,},
-    {"id":{"name":"Physics","path":"scripts/Physics/Physics.yy",},"order":4,},
+    {"id":{"name":"PlayerPhysics","path":"scripts/PlayerPhysics/PlayerPhysics.yy",},"order":3,},
     {"id":{"name":"seqWeaponGreatswordPrimary","path":"sequences/seqWeaponGreatswordPrimary/seqWeaponGreatswordPrimary.yy",},"order":1,},
     {"id":{"name":"sprPlayerWallslide","path":"sprites/sprPlayerWallslide/sprPlayerWallslide.yy",},"order":4,},
     {"id":{"name":"sprPlayerAttackForward","path":"sprites/sprPlayerAttackForward/sprPlayerAttackForward.yy",},"order":7,},
@@ -30,9 +30,9 @@
     {"id":{"name":"seqWeaponGreatswordIdle","path":"sequences/seqWeaponGreatswordIdle/seqWeaponGreatswordIdle.yy",},"order":0,},
     {"id":{"name":"sprPlayerAttackUpward","path":"sprites/sprPlayerAttackUpward/sprPlayerAttackUpward.yy",},"order":8,},
     {"id":{"name":"sprPlayerJumpFall","path":"sprites/sprPlayerJumpFall/sprPlayerJumpFall.yy",},"order":3,},
-    {"id":{"name":"Inputs","path":"scripts/Inputs/Inputs.yy",},"order":1,},
-    {"id":{"name":"ItemAnimations","path":"scripts/ItemAnimations/ItemAnimations.yy",},"order":6,},
-    {"id":{"name":"ItemPhysics","path":"scripts/ItemPhysics/ItemPhysics.yy",},"order":7,},
+    {"id":{"name":"PlayerInputs","path":"scripts/PlayerInputs/PlayerInputs.yy",},"order":8,},
+    {"id":{"name":"ItemAnimations","path":"scripts/ItemAnimations/ItemAnimations.yy",},"order":0,},
+    {"id":{"name":"ItemPhysics","path":"scripts/ItemPhysics/ItemPhysics.yy",},"order":1,},
     {"id":{"name":"Macros","path":"scripts/Macros/Macros.yy",},"order":2,},
     {"id":{"name":"Tools","path":"scripts/Tools/Tools.yy",},"order":3,},
     {"id":{"name":"objTerrain","path":"objects/objTerrain/objTerrain.yy",},"order":1,},
@@ -78,6 +78,7 @@
     {"folderPath":"folders/Sequences/Player.yy","order":3,"resourceVersion":"1.0","name":"Player","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Sequences/Weapons/Greatsword.yy","order":2,"resourceVersion":"1.0","name":"Greatsword","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Scripts/General.yy","order":10,"resourceVersion":"1.0","name":"General","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Scripts/Items.yy","order":11,"resourceVersion":"1.0","name":"Items","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},

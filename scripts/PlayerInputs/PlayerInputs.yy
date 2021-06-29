@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "General",
-    "path": "folders/Scripts/General.yy",
+    "name": "Player",
+    "path": "folders/Scripts/Player.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Inputs",
+  "name": "PlayerInputs",
   "tags": [],
   "resourceType": "GMScript",
 }

@@ -1,6 +1,6 @@
 //State machine handler under Itemstates.gml
-scrPlayerChangedDirection();
 scrWeaponStateMemory();
+scrPlayerChangedDirection();
 scrItemPhysics();
 script_execute(currentState);
 scrItemAnimations();

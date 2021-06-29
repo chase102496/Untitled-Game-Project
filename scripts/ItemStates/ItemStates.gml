@@ -12,9 +12,18 @@ function scrWeaponStateGreatsword()
 	
 	switch (subState)
 	{
+		case -2:
+		{	
+
+		}
+		
 		case -1: //Switching directions
 		{
-			if currentSequence != seqWeaponGreatswordChangeDirection scrSequenceCreator(seqWeaponGreatswordChangeDirection);
+			if sign(owner.sprite_xscale) == 1
+			{
+				if currentSequence != seqWeaponGreatswordChangeDirection scrSequenceCreator(seqWeaponGreatswordChangeDirection);
+			}
+			else if currentSequence != seqWeaponGreatswordChangeDirectionReverse scrSequenceCreator(seqWeaponGreatswordChangeDirectionReverse);
 			
 			if !in_sequence subState = 0;
 			

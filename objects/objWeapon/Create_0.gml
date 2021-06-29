@@ -1,5 +1,4 @@
 //Init
-owner = objPlayer;
 currentLayer = "layWeapon";
 currentState = scrWeaponStateEmpty;
 global.showHitbox = true;

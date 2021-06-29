@@ -12,7 +12,6 @@
     {"id":{"name":"sprPlayerCrouch","path":"sprites/sprPlayerCrouch/sprPlayerCrouch.yy",},"order":5,},
     {"id":{"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},"order":0,},
     {"id":{"name":"objPlayer","path":"objects/objPlayer/objPlayer.yy",},"order":0,},
-    {"id":{"name":"seqWeaponGreatswordChangeDirectionReverse","path":"sequences/seqWeaponGreatswordChangeDirectionReverse/seqWeaponGreatswordChangeDirectionReverse.yy",},"order":4,},
     {"id":{"name":"Physics","path":"scripts/Physics/Physics.yy",},"order":4,},
     {"id":{"name":"seqWeaponGreatswordPrimary","path":"sequences/seqWeaponGreatswordPrimary/seqWeaponGreatswordPrimary.yy",},"order":1,},
     {"id":{"name":"sprPlayerWallslide","path":"sprites/sprPlayerWallslide/sprPlayerWallslide.yy",},"order":4,},

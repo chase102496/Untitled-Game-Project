@@ -6,8 +6,6 @@ function scrAnimationInit()
 	bounceStretch =	0.5;		//How squishy and stretchy your sprite is. Higher = squishier. Lower = firmer. Don't go below 0.1 or above 0.9
 	
 	vVelBefore = 0;
-	previousDirection = 1;
-	changedDirection = 1;
 }
 function scrPlayerAnimations()
 {
@@ -124,10 +122,4 @@ function scrPlayerSquishing()
 	else sprite_yscale = sign(sprite_yscale)*spriteSize;
 
 	vVelBefore = vVel;
-}
-///
-function scrPlayerChangedDirection()
-{
-	changedDirection = sign(sign(sprite_xscale) - previousDirection); //Shows difference and direction, 1 for L to R, -1 for R to L
-	previousDirection = sign(sprite_xscale); //Reset
 }

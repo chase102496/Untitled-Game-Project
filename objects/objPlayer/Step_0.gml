@@ -1,5 +1,4 @@
 //Polling for player input
 playerInputs();
-scrStateMemory();
+scrPlayerStateMemory();
 script_execute(currentState);
-scrPlayerChangedDirection();

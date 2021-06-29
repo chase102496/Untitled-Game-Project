@@ -1,9 +1,20 @@
+function scrWeaponStateInit()
+{
+	currentState = scrWeaponStateEmpty;
+	subState = 0;
+	subState2 = 0;
+	previousState = scrWeaponStateEmpty;
+	storedState = scrWeaponStateEmpty;
+}
+///
+function scrWeaponStateMemory() //Used to store the previous state in memory
+{
+	if storedState != currentState previousState = storedState;
+	storedState = currentState;
+}
+///
 function scrWeaponStateEmpty()
 {
-	//sprite_index = sprStick;
-	//x = owner.x - ((owner.bbox_right - owner.bbox_left)*0.5);
-	//y = owner.y - abs((owner.bbox_top - owner.bbox_bottom)*0.5);
-	//image_angle = 45;
 }
 ///
 function scrWeaponStateGreatsword()
@@ -12,18 +23,9 @@ function scrWeaponStateGreatsword()
 	
 	switch (subState)
 	{
-		case -2:
-		{	
-
-		}
-		
-		case -1: //Switching directions
+		case -1: //Switching directions R > L
 		{
-			if sign(owner.sprite_xscale) == 1
-			{
-				if currentSequence != seqWeaponGreatswordChangeDirection scrSequenceCreator(seqWeaponGreatswordChangeDirection);
-			}
-			else if currentSequence != seqWeaponGreatswordChangeDirectionReverse scrSequenceCreator(seqWeaponGreatswordChangeDirectionReverse);
+			if currentSequence != seqWeaponGreatswordChangeDirection scrSequenceCreator(seqWeaponGreatswordChangeDirection);
 			
 			if !in_sequence subState = 0;
 			
@@ -34,7 +36,7 @@ function scrWeaponStateGreatsword()
 		{
 			if currentSequence != seqWeaponGreatswordIdle scrSequenceCreator(seqWeaponGreatswordIdle);
 			
-			if owner.changedDirection != 0 subState = -1;
+			if changedDirection != 0 subState = -1;		
 			if keyAttackPrimary > 0 subState = 1;
 			
 			break;
@@ -47,6 +49,8 @@ function scrWeaponStateGreatsword()
 			owner.currentState = scrPlayerStateAttack;
 			owner.subState = currentState;
 			owner.subState2 = subState;
+			
+			if scrRoundPrecise(layer_sequence_get_headpos(currentSequenceElement),0.01) >= 3 owner.vVel += -7
 			
 			if !in_sequence
 			{

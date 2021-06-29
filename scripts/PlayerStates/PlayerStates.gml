@@ -1,4 +1,12 @@
-function scrStateMemory() //Used to store the previous state in memory
+function scrPlayerStateInit()
+{
+	currentState = scrPlayerStateGround;
+	subState = 0;
+	subState2 = 0;
+	previousState = scrPlayerStateGround;
+	storedState = scrPlayerStateGround;	
+}
+function scrPlayerStateMemory() //Used to store the previous state in memory
 {
 	if storedState != currentState previousState = storedState;
 	storedState = currentState;
@@ -73,7 +81,7 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 	if keyJumpDown
 	{
 		vVel = -wallJumpStr*0.6;
-		hVel = -sign(sprite_xscale)*wallJumpStr*0.4;
+		hVel = sign(sprite_xscale)*wallJumpStr*0.4;
 	}
 	
 	scrPlayerPhysicsVars();

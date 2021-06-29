@@ -13,14 +13,8 @@ sprite_yscale = 1;
 playerWeapon = instance_create_layer(x,y,"layWeapon",objWeapon);
 playerWeapon.owner = self;
 
-//State machine init
-currentState = scrPlayerStateGround;
-subState = 0;
-subState2 = 0;
-previousState = scrPlayerStateGround;
-storedState = scrPlayerStateGround;
-
 //One-time init scripts
+scrPlayerStateInit()
 scrDebugInit();
 scrInputInit();
 scrAnimationInit();

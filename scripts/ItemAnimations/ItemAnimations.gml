@@ -14,4 +14,4 @@ function scrPlayerChangedDirection()
 {
 	changedDirection = sign(sign(owner.sprite_xscale) - previousDirection); //Shows difference and direction, 1 for L to R, -1 for R to L
 	previousDirection = sign(owner.sprite_xscale); //Reset
-}
+}//test

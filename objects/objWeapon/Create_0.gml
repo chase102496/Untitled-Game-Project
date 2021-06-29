@@ -1,6 +1,6 @@
-scrItemStateInit()
+scrEquipStateInit()
 //Init
-currentLayer = "layWeapon";
+currentLayer = "layEquip";
 currentSequence = 0;
 currentSequenceElement = 0;
 currentSequenceInstance = 0;

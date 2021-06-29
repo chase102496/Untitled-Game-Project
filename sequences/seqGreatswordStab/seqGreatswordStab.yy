@@ -64,7 +64,7 @@
                                 {"th0":0.0,"th1":0.00188251131,"tv0":0.0,"tv1":0.00119909644,"x":0.0,"y":-5.0,},
                                 {"th0":-0.009834766,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":1.0,"y":-5.0,},
                               ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                          ],"parent":{"name":"position","path":"sequences/seqWeaponGreatswordStab/seqWeaponGreatswordStab.yy",},"resourceVersion":"1.2","name":"Position","tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
+                          ],"parent":{"name":"position","path":"sequences/seqGreatswordStab/seqGreatswordStab.yy",},"resourceVersion":"1.2","name":"Position","tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
                             {"colour":4290799884,"visible":true,"points":[
                                 {"th0":-0.1,"th1":0.0452540554,"tv0":0.0,"tv1":0.0,"x":0.0,"y":-10.0,},
                                 {"th0":-0.07167418,"th1":0.177181378,"tv0":-0.0890953839,"tv1":0.220247269,"x":0.196700677,"y":-26.38116,},
@@ -76,7 +76,7 @@
                                 {"th0":0.0,"th1":0.00188251131,"tv0":0.0,"tv1":0.00119909644,"x":0.0,"y":-5.0,},
                                 {"th0":-0.009834766,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":1.0,"y":-5.0,},
                               ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                          ],"parent":{"name":"position","path":"sequences/seqWeaponGreatswordStab/seqWeaponGreatswordStab.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
+                          ],"parent":{"name":"position","path":"sequences/seqGreatswordStab/seqGreatswordStab.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
                 ],"resourceVersion":"1.0","resourceType":"KeyframeStore<RealKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":14,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","name":"position","tags":[],"resourceType":"GMRealTrack",},
             {"keyframes":{"Keyframes":[
                   {"id":"c155696a-2007-482b-9807-68d7293ee2e4","Key":0.0,"Length":8.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"EmbeddedAnimCurve":{"function":2,"channels":[
@@ -90,7 +90,7 @@
                                 {"th0":-0.0501956344,"th1":0.025,"tv0":0.0,"tv1":0.0,"x":0.875,"y":45.0,},
                                 {"th0":-0.025,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":1.0,"y":45.0,},
                               ],"resourceVersion":"1.0","name":"angle","tags":[],"resourceType":"GMAnimCurveChannel",},
-                          ],"parent":{"name":"rotation","path":"sequences/seqWeaponGreatswordStab/seqWeaponGreatswordStab.yy",},"resourceVersion":"1.2","name":"Rotation","tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
+                          ],"parent":{"name":"rotation","path":"sequences/seqGreatswordStab/seqGreatswordStab.yy",},"resourceVersion":"1.2","name":"Rotation","tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
                 ],"resourceVersion":"1.0","resourceType":"KeyframeStore<RealKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":8,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","name":"rotation","tags":[],"resourceType":"GMRealTrack",},
             {"keyframes":{"Keyframes":[
                   {"id":"3ac019e0-68c5-4e77-a26b-54dafc0620bf","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":true,"Channels":{"0":{"EmbeddedAnimCurve":null,"RealValue":1.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":null,"RealValue":1.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
@@ -193,10 +193,10 @@
   "eventStubScript": null,
   "parent": {
     "name": "Greatsword",
-    "path": "folders/Sequences/Weapons/Greatsword.yy",
+    "path": "folders/Sequences/Equipment/Greatsword.yy",
   },
   "resourceVersion": "1.3",
-  "name": "seqWeaponGreatswordStab",
+  "name": "seqGreatswordStab",
   "tags": [],
   "resourceType": "GMSequence",
 }

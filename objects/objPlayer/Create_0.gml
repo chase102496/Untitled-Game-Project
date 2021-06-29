@@ -9,8 +9,8 @@ sprite_xscale = 1;
 sprite_yscale = 1;
 
 //Combat stuff
-playerWeapon = instance_create_layer(x,y,"layWeapon",objWeapon);
-playerWeapon.owner = self;
+playerEquip = instance_create_layer(x,y,"layEquip",objWeapon);
+playerEquip.owner = self;
 
 //One-time init scripts
 scrPlayerStateInit()

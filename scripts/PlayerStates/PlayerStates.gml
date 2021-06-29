@@ -136,6 +136,6 @@ function scrPlayerStateAttack() //Player is attacking from the ground state
 	scrPlayerCollision();
 	scrPlayerAnimations();
 	
-	//State switches are located in itemStates.gml
+	//State switches are located in equipStates.gml
 }
 ///

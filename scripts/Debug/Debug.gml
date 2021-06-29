@@ -42,7 +42,7 @@ function debugVars()
 		drawDebug = scrToggle(drawDebug);
 		global.showHitbox = scrToggle(global.showHitbox);
 	}
-	if keyPress1 playerWeapon.currentState = scrCustomToggle(playerWeapon.currentState,scrWeaponStateGreatsword,scrWeaponStateEmpty);
+	if keyPress1 playerEquip.currentState = scrCustomToggle(playerEquip.currentState,scrEquipStateGreatsword,scrEquipStateEmpty);
 	if keyEsc game_restart();
 	
 	//Polling
@@ -56,7 +56,7 @@ function debugDraw()
 	if drawDebug
 	{
 		draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true) //Player bbox
-		draw_rectangle(playerWeapon.bbox_left,playerWeapon.bbox_top,playerWeapon.bbox_right,playerWeapon.bbox_bottom,true)
+		draw_rectangle(playerEquip.bbox_left,playerEquip.bbox_top,playerEquip.bbox_right,playerEquip.bbox_bottom,true)
 
 		for (var i = 0; i < array_length(debugVar); i += 1)
 		{

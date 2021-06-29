@@ -1,4 +1,4 @@
-function scrItemAnimations()
+function scrEquipAnimations()
 {
 	var xDirection = sign(owner.sprite_xscale);
 	var yDirection = sign(owner.sprite_yscale);

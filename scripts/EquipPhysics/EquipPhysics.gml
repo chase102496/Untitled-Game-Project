@@ -1,4 +1,4 @@
-function scrItemPhysics() //Position
+function scrEquipPhysics() //Position
 {		
 	hVel = owner.hVel;
 	vVel = owner.vVel;

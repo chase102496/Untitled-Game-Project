@@ -1,7 +1,7 @@
-//State machine handler under Itemstates.gml
-scrItemStateMemory();
+//State machine handler under equipStates.gml
+scrEquipStateMemory();
 scrPlayerChangedDirection();
-scrItemPhysics();
+scrEquipPhysics();
 script_execute(currentState);
-scrItemAnimations();
+scrEquipAnimations();
 

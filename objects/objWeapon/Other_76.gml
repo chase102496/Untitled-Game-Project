@@ -1,1 +1,1 @@
-scrItemBroadcastListener();
+scrEquipBroadcastListener();

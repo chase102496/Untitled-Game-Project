@@ -42,7 +42,11 @@ function debugVars()
 		drawDebug = scrToggle(drawDebug);
 		global.showHitbox = scrToggle(global.showHitbox);
 	}
-	if keyPress1 playerEquip.currentState = scrToggleList(playerEquip.currentState,[scrEquipStateEmpty,scrEquipStateGreatsword,scrEquipStateBow])
+	if keyPress1
+	{
+		playerEquip.currentState = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
+		//playerEquip.currentState[0] = scrToggleList(playerEquip.currentState,[[scrEquipStateEmpty],[scrEquipStateGreatsword,scrEquipStateGreatswordIdle],scrEquipStateBow])
+	}
 	if keyEsc game_restart();
 	
 	//Polling

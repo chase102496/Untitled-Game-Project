@@ -56,20 +56,22 @@ function scrEquipStateMemory() //Used to store the previous state in memory
 //
 function scrEquipStateEmpty()
 {
+	image_index = 1;
+	sprite_index = sprStick;
 }
 ///
 function scrEquipStateGreatsword()
 {
-	sprite_index = sprGreatsword;
-	
+	sprite_index = sprGreatswordIdle;
+
 	switch (subState)
 	{
-		case -1: //Switching directions R > L
+		case -1: //Switching directions
 		{
 			if currentSequence != seqGreatswordChangeDirection scrSequenceCreator(seqGreatswordChangeDirection);
 			
 			if !in_sequence subState = 0;
-			
+		
 			break;
 		}
 		
@@ -78,8 +80,8 @@ function scrEquipStateGreatsword()
 			if currentSequence != seqGreatswordIdle scrSequenceCreator(seqGreatswordIdle);
 			
 			if changedDirection != 0 subState = -1;		
-			if keyAttackPrimary > 0 subState = 1;
-			
+			if keyAttackPrimary > 0 subState = 1; //Key has been released, time to poll
+
 			break;
 		}
 		
@@ -93,7 +95,6 @@ function scrEquipStateGreatsword()
 			
 			if changedStates
 			{
-				
 				owner.vVel += -5
 				changedStates = false;
 			}
@@ -111,3 +112,68 @@ function scrEquipStateGreatsword()
 	}
 }
 ///
+function scrEquipStateBow()
+{
+	image_angle = point_direction(x+(sprite_width*0.5),y-(sprite_height*0.5),mouse_x,mouse_y)+45;
+	
+	
+	switch (subState)
+	{	
+		case -1: //Switching directions R > L
+		{
+			if currentSequence != seqBowChangeDirection scrSequenceCreator(seqBowChangeDirection);
+			
+			if !in_sequence subState = 0;
+			
+			break;
+		}
+		
+		case 0: //Idle
+		{
+			sprite_index = sprBowIdle;
+			
+			if currentSequence != seqBowIdle scrSequenceCreator(seqBowIdle);
+			
+			if changedDirection != 0 subState = -1;
+			if keyAttackPrimary == -1 subState = 1; //Key is being held, start draw animation
+			
+			break;
+		}
+		
+		case 1: //Primary Attack - Draw
+		{
+			sprite_index = sprBowDraw;
+			
+			if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
+			image_index = layer_sequence_get_headpos(currentSequenceElement)
+			
+			if keyAttackPrimary != -1 subState = 0;
+			else if !in_sequence subState = 2;
+			
+			break;
+		}
+		
+		case 2: //Primary Attack - Hold
+		{
+			sprite_index = sprBowDraw;
+			image_index = image_number-1; //set to last frame of charge animation
+			
+			if currentSequence != seqBowHold scrSequenceCreator(seqBowHold);
+			
+			if keyAttackPrimary != -1 subState = 3;
+			
+			break;
+		}
+		case 3: //Primary Attack - Fire
+		{
+			sprite_index = sprBowFire;
+			
+			if currentSequence != seqBowFire scrSequenceCreator(seqBowFire);
+			image_index = layer_sequence_get_headpos(currentSequenceElement);
+			
+			if !in_sequence subState = 0;
+			
+			break;
+		}
+	}
+}

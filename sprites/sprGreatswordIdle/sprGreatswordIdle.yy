@@ -24,12 +24,12 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"12ea7741-9454-4c14-ae2c-b7bac1b1f04d","path":"sprites/sprGreatsword/sprGreatsword.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"12ea7741-9454-4c14-ae2c-b7bac1b1f04d","path":"sprites/sprGreatsword/sprGreatsword.yy",},"LayerId":{"name":"f60ac686-2eaf-4603-a6d1-d1f1a6b28545","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","name":"12ea7741-9454-4c14-ae2c-b7bac1b1f04d","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"LayerId":{"name":"c41b86b0-3d3f-4910-8e4d-d3ed4eac3eeb","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
-    "spriteId": {"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},
+    "spriteId": {"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 14.0,
@@ -41,7 +41,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"29e2c923-aed8-4e9c-8276-5dc4849d3557","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"12ea7741-9454-4c14-ae2c-b7bac1b1f04d","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"63637457-7197-4efb-b8f0-c6cd1c0381e6","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack",},
     ],
     "visibleRange": null,
@@ -58,22 +58,22 @@
     "yorigin": 24,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},
+    "parent": {"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},
     "resourceVersion": "1.3",
-    "name": "sprGreatsword",
+    "name": "sprGreatswordIdle",
     "tags": [],
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"f60ac686-2eaf-4603-a6d1-d1f1a6b28545","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"c41b86b0-3d3f-4910-8e4d-d3ed4eac3eeb","tags":[],"resourceType":"GMImageLayer",},
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Weapon",
-    "path": "folders/Sprites/Weapon.yy",
+    "name": "Equipment",
+    "path": "folders/Sprites/Equipment.yy",
   },
   "resourceVersion": "1.0",
-  "name": "sprGreatsword",
+  "name": "sprGreatswordIdle",
   "tags": [],
   "resourceType": "GMSprite",
 }

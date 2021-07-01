@@ -12,17 +12,21 @@ function scrInputInit()
 // _ms is how many milliseconds you want it to be held to count as a hold
 //_timer is the number of the timer you'd like to use to count the holds. Don't let this number overlap with others, just needs to be unique. Increase amount of timers under scrInputInit.
 //_max is when the hold command stops letting you hold it and sends the result. Multiplicative.
-//Tapped = 1, Held = 2, Neither = 0
+//Under length and released = 1, At length or more = 2, No input = 0, Currently held = -1
 function scrKeyHeld(_input,_ms,_timer,_max)
 {
 	var _gameSteps = scrRoundPrecise(_ms*0.001*room_speed,0.01); //grabs the millisecond and turns it into game frames per second
 	var _resultKey = 0;
 
-	if _input keyTimer[_timer] += 1; //Key is pressed, count how long by game steps
+	if _input //Key is pressed, count how long by game steps
+	{
+		keyTimer[_timer] += 1;
+		_resultKey = -1;
+	}
 	else if keyTimer[_timer] > 0 //Let go of key, previously pressed
 	{
-		if keyTimer[_timer] >= _gameSteps _resultKey = 2; //Pressed for amount specified
-		else _resultKey = 1; //Pressed for less
+		if keyTimer[_timer] >= _gameSteps _resultKey = 2; //Released for amount specified
+		else _resultKey = 1; //Released for less
 		keyTimer[_timer] = 0; //Reset
 	}
 	else keyTimer[_timer] = 0;

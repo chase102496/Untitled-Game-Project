@@ -4,12 +4,17 @@
 function scrEquipStateInit()
 {
 	currentState = [scrEquipStateEmpty];
+	storedState = currentState;
+	previousState = currentState;
 
 	changedStates = false;
+}
+///
+function scrEquipStateMemory() //Used to store the previous state in memory
+{
+	if storedState != currentState previousState = storedState;
 	
-	previousState = [scrEquipStateEmpty];
-	storedState = [scrEquipStateEmpty];
-
+	storedState = currentState;
 }
 ///
 function scrEquipBroadcastListener() //Used to run one-time evensts
@@ -34,33 +39,35 @@ function scrSequenceCreator(_sequence)
 	currentSequenceInstance = layer_sequence_get_instance(currentSequenceElement);
 	sequence_instance_override_object(currentSequenceInstance,object_index,instance_find(self,0))
 }
-///
-function scrEquipStateMemory() //Used to store the previous state in memory
-{
-	if storedState != currentState previousState = storedState;
-	
-	storedState = currentState;
-}
 //
-/// STATES
+///
+//// STATES
+///
 //
 function scrEquipStateEmpty()
 {
 	image_index = 1;
 	sprite_index = sprStick;
 }
-
+function scrEquipStateEmptyIdle()
+{
+}
+//
 /// --- Greatsword ---
+//
 function scrEquipStateGreatsword()
 {
+	if array_length(currentState) == 1 currentState[1] = scrEquipStateGreatswordIdle;
 	sprite_index = sprGreatswordIdle;
 }
 //
 function scrEquipStateGreatswordChangeDirection() //Switching directions
 {
 	if currentSequence != seqGreatswordChangeDirection scrSequenceCreator(seqGreatswordChangeDirection);
-			
+	
 	if !in_sequence currentState[1] = scrEquipStateGreatswordIdle;
+	
+	scrEquipAnimations();
 }
 //
 function scrEquipStateGreatswordIdle() //Idle
@@ -69,6 +76,8 @@ function scrEquipStateGreatswordIdle() //Idle
 			
 	if changedDirection != 0 currentState[1] = scrEquipStateGreatswordChangeDirection;
 	if keyAttackPrimary > 0 currentState[1] = scrEquipStateGreatswordStab; //Key has been released, time to poll
+	
+	scrEquipAnimations();
 }
 //
 function scrEquipStateGreatswordStab() //Stab Attack
@@ -88,19 +97,24 @@ function scrEquipStateGreatswordStab() //Stab Attack
 		owner.currentState = owner.previousState;
 		currentState[1] = scrEquipStateGreatswordIdle;
 	}
-}
-
-/// --- Bow ---
-function scrEquipStateBow()
-{
-image_angle = point_direction(x+(sprite_width*0.5),y-(sprite_height*0.5),mouse_x,mouse_y)+45;
+	
+	scrEquipAnimations();
 }
 //
-function scrEquipStateBowSwitchDirection() //Switching directions R > L
+/// --- Bow ---
+//
+function scrEquipStateBow()
+{
+	if array_length(currentState) == 1 currentState[1] = scrEquipStateBowIdle;
+}
+//
+function scrEquipStateBowSwitchDirection() //Switching directions
 {
 	if currentSequence != seqBowChangeDirection scrSequenceCreator(seqBowChangeDirection);
 		
 	if !in_sequence currentState[1] = scrEquipStateBowIdle;
+	
+	scrEquipAnimations();
 }
 //
 function scrEquipStateBowIdle() //Idle
@@ -111,16 +125,22 @@ function scrEquipStateBowIdle() //Idle
 			
 	if changedDirection != 0 currentState[1] = scrEquipStateBowSwitchDirection;
 	if keyAttackPrimary == -1 currentState[1] = scrEquipStateBowDraw; //Key is being held, start draw animation
+	
+	scrEquipAnimations();
 }
 //
 function scrEquipStateBowDraw() //Primary Attack - Draw
 {
 	sprite_index = sprBowDraw;
-			
+	
+	if sign(mouse_x - owner.x) >= 0 currentState[2] = scrBowAimingRight;
+	else currentState[2] = scrBowAimingLeft;
+	
 	if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
+
 	image_index = layer_sequence_get_headpos(currentSequenceElement)
 			
-	if keyAttackPrimary != -1 currentState[1] = scrEquipStateBowIdle;
+	if keyAttackPrimary != -1 currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 	else if !in_sequence currentState[1] = scrEquipStateBowHold;
 }
 //
@@ -141,5 +161,5 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	if currentSequence != seqBowFire scrSequenceCreator(seqBowFire);
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 			
-	if !in_sequence currentState[1] = scrEquipStateBowIdle;
+	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 }

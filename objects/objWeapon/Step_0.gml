@@ -15,5 +15,4 @@ for (var i = 0; i < array_length(currentState);i ++)
 {
 	script_execute(currentState[i]);
 }
-
-scrEquipAnimations();
+//scrEquipAnimations();

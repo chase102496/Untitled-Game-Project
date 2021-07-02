@@ -34,7 +34,7 @@ function scrPlayerStateGround() //Player is idle or running
 	
 	scrGravity();
 	scrFractionRemoval();
-	scrPlayerCollision();
+	scrCollision();
 	scrPlayerAnimations();
 	scrPlayerCombatOutputs(true); //Combat is enabled on the ground
 
@@ -63,7 +63,7 @@ function scrPlayerStateAir() //Player is in air not touching walls or ground
 
 	scrGravity();
 	scrFractionRemoval();
-	scrPlayerCollision();
+	scrCollision();
 	scrPlayerAnimations();
 	scrPlayerCombatOutputs(true); //Combat is not enabled in the air
 
@@ -87,7 +87,7 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 	scrPlayerPhysicsVars();
 	scrGravity();
 	scrFractionRemoval();
-	scrPlayerCollision();
+	scrCollision();
 	scrPlayerAnimations();
 	scrPlayerCombatOutputs(false);
 	
@@ -104,7 +104,7 @@ function scrPlayerStateCrouch() //Player is crouching
 	scrPlayerPhysicsVars();
 	scrGravity();
 	scrFractionRemoval();
-	scrPlayerCollision();
+	scrCollision();
 	scrPlayerAnimations();
 	scrPlayerCombatOutputs(false);
 	
@@ -133,7 +133,7 @@ function scrPlayerStateAttack() //Player is attacking from the ground state
 	
 	scrGravity();
 	scrFractionRemoval();
-	scrPlayerCollision();
+	scrCollision();
 	scrPlayerAnimations();
 	
 	//State switches are located in equipStates.gml

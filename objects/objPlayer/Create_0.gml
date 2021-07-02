@@ -1,10 +1,3 @@
-//Physics init
-hVel = 0;
-hVelFrac = 0;
-vVel = 0;
-vVelFrac = 0;
-onWall = false;
-onGround = false;
 sprite_xscale = 1;
 sprite_yscale = 1;
 
@@ -13,7 +6,8 @@ playerEquip = instance_create_layer(x,y,"layEquip",objWeapon);
 playerEquip.owner = self;
 
 //One-time init scripts
-scrPlayerStateInit()
+scrPhysicsInit();
+scrPlayerStateInit();
 scrDebugInit();
 scrInputInit();
 scrAnimationInit();

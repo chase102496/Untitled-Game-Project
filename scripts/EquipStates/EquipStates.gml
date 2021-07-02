@@ -138,10 +138,20 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	else currentState[2] = [scrBowAiming,-1];
 	
 	if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
-
+	
+	if !instance_exists(equipProjectile)
+	{
+		equipProjectile = instance_create_layer(x,y,"layProjectile",objProjectile);
+		equipProjectile.currentState = scrProjectileStateHold;
+	}
+	
 	image_index = layer_sequence_get_headpos(currentSequenceElement)
 			
-	if keyAttackPrimary != -1 currentState = [scrEquipStateBow];
+	if keyAttackPrimary != -1
+	{
+		//destroy arrow instance
+		currentState = [scrEquipStateBow];
+	}
 	else if !in_sequence currentState[1] = scrEquipStateBowHold;
 }
 //
@@ -161,6 +171,8 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 			
 	if currentSequence != seqBowFire scrSequenceCreator(seqBowFire);
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
-			
+	
+	equipProjectile.currentState = scrProjectileStateFree;
+	
 	if !in_sequence currentState = [scrEquipStateBow];
 }

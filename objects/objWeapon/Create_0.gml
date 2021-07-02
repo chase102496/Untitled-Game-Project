@@ -11,3 +11,4 @@ keyAttackSecondary = 0;
 keyAttackTertiary = 0;
 previousDirection = 1;
 changedDirection = 1;
+equipProjectile = 0;

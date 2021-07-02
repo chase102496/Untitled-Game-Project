@@ -1,3 +1,28 @@
+function scrPhysicsInit()
+{
+	//Physics init
+	hVel = 0;
+	hVelFrac = 0;
+	vVel = 0;
+	vVelFrac = 0;
+	onWall = false;
+	onGround = false;
+	//
+	hSlideDecel = 0.025;		//This is how slow you decelerate when sliding
+	vSlideDecel = 0.9;			//This is how slow you decelerate when wallsliding
+	hAirAccel = 0.2;			//Air acceleration
+	hAirDecel = 0.1;			//Air friction
+	//
+	gravAccel = 0.25;
+	jumpStr = 5;				//Amount of acceleration after pressing jump key
+	jumpControl = 0.25;			//Amount of deceleration after letting go of jump key
+	wallJumpStr = 7;			//How far you jump off the wall. 7 is just enough to not climb the wall.
+	//
+	hAccel = 0.2;				//This controls how quickly you accelerate when running
+	hDecel = 0.2;				//This is essentially friction, and controls how quickly you can stop after running
+	hMaxVel = 1.8;				//Max speed when running
+	vMaxVel = jumpStr + 1;		//Max speed when falling. Has to be >= jumpStr for your jump to work properly
+}
 ///
 function scrPlayerPhysicsVars()
 {
@@ -22,7 +47,7 @@ function scrGravity()
 	vVel += gravAccel;
 }
 ///
-function scrPlayerCollision(_noClip) //Enables object collision and physics, for no collision add true to the args
+function scrCollision(_noClip) //Enables object collision and physics, for no collision add true to the args
 {	
 	if _noClip == undefined or _noClip == false
 	{

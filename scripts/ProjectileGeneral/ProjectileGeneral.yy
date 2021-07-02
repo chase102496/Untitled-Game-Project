@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Player",
-    "path": "folders/Scripts/Player.yy",
+    "name": "Equipment",
+    "path": "folders/Scripts/Equipment.yy",
   },
   "resourceVersion": "1.0",
-  "name": "PlayerPhysics",
+  "name": "ProjectileGeneral",
   "tags": [],
   "resourceType": "GMScript",
 }

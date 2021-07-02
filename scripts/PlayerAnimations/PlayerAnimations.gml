@@ -64,13 +64,13 @@ function scrPlayerAnimations()
 		
 		case scrPlayerStateAttack:
 		{
-			switch (playerWeapon.subState)
+			switch (playerEquip.currentState[0])
 			{
 				case scrEquipStateGreatsword:
 				{
-					switch (playerWeapon.subState2)
+					switch (playerEquip.currentState[1])
 					{
-						case 1: //Primary attack forward
+						case scrEquipStateGreatswordStab: //Primary attack forward
 						{
 							image_speed = 1;
 							image_index = layer_sequence_get_headpos(playerEquip.currentSequenceElement);

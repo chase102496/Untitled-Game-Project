@@ -42,13 +42,16 @@ function debugVars()
 		drawDebug = scrToggle(drawDebug);
 		global.showHitbox = scrToggle(global.showHitbox);
 	}
-	if keyPress1 playerEquip.currentState = scrToggleList(playerEquip.currentState,[scrEquipStateEmpty,scrEquipStateGreatsword,scrEquipStateBow])
+	if keyPress1 playerEquip.currentState = [scrEquipStateEmpty,scrEquipStateEmptyIdle];
+	if keyPress2 playerEquip.currentState = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
+	if keyPress3 playerEquip.currentState = [scrEquipStateBow,scrEquipStateBowIdle];
+
 	if keyEsc game_restart();
 	
 	//Polling
 	debugVar[0] = "hVel: "+string(hVel);
 	debugVar[1] = "vVel: "+string(vVel);
-	//debugVar[2] = "debugVar: "+string(inserVariableHere)
+	debugVar[2] = "currentState[0]: "+string(playerEquip.currentState)
 	//debugVar[3] = "debugVar: "+string(inserVariableHere)
 }
 function debugDraw()

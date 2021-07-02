@@ -42,10 +42,13 @@ function scrToggleList(_currentValue,_valueList) //Thumbs through a list each ti
 	
 	_newIndex = ds_list_find_index(_ds,_currentValue)+1
 	
+	
 	if _newIndex+1 > array_length(_valueList) _newValue = _valueList[0];
 	else _newValue = _valueList[_newIndex];
 	
 	ds_list_destroy(_ds);
+	
+	
 	
 	return _newValue;
 }

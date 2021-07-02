@@ -49,10 +49,17 @@ function debugVars()
 	if keyEsc game_restart();
 	
 	//Polling
+	
 	debugVar[0] = "hVel: "+string(hVel);
 	debugVar[1] = "vVel: "+string(vVel);
-	debugVar[2] = "currentState[0]: "+string(playerEquip.currentState)
-	//debugVar[3] = "debugVar: "+string(inserVariableHere)
+
+	if !is_array(playerEquip.currentState[0]) debugVar[2] = script_get_name(playerEquip.currentState[0]);
+	else debugVar[2] = "state0: "+script_get_name(playerEquip.currentState[0][0]);
+	if !is_array(playerEquip.currentState[1]) debugVar[3] = script_get_name(playerEquip.currentState[1]);
+	else debugVar[3] = "state1: "+script_get_name(playerEquip.currentState[1][0]);
+	
+	//debugVar[3] = [scrTest,1];
+	//script_execute_ext(debugVar[3][0],debugVar[3],1);
 }
 function debugDraw()
 {

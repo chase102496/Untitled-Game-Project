@@ -112,7 +112,7 @@ function scrEquipStateBowSwitchDirection() //Switching directions
 {
 	if currentSequence != seqBowChangeDirection scrSequenceCreator(seqBowChangeDirection);
 		
-	if !in_sequence currentState[1] = scrEquipStateBowIdle;
+	if !in_sequence currentState = [scrEquipStateBow];
 	
 	scrEquipAnimations();
 }
@@ -133,14 +133,15 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 {
 	sprite_index = sprBowDraw;
 	
-	if sign(mouse_x - owner.x) >= 0 currentState[2] = scrBowAimingRight;
-	else currentState[2] = scrBowAimingLeft;
+	//Send arguments to subscript based on direction mouse is when drawing bow
+	if sign(mouse_x - owner.x) >= 0 currentState[2] = [scrBowAiming,1];
+	else currentState[2] = [scrBowAiming,-1];
 	
 	if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
 
 	image_index = layer_sequence_get_headpos(currentSequenceElement)
 			
-	if keyAttackPrimary != -1 currentState = [scrEquipStateBow,scrEquipStateBowIdle];
+	if keyAttackPrimary != -1 currentState = [scrEquipStateBow];
 	else if !in_sequence currentState[1] = scrEquipStateBowHold;
 }
 //
@@ -161,5 +162,5 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	if currentSequence != seqBowFire scrSequenceCreator(seqBowFire);
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 			
-	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
+	if !in_sequence currentState = [scrEquipStateBow];
 }

@@ -14,7 +14,7 @@ function scrPlayerStateMemory() //Used to store the previous state in memory
 ///
 function scrPlayerStateGround() //Player is idle or running
 {
-	scrPlayerPhysicsVars();
+	scrPhysicsVars();
 	
 	// Movement
 	if (moveDirection == 0 and hVel != 0)
@@ -45,7 +45,7 @@ function scrPlayerStateGround() //Player is idle or running
 ///
 function scrPlayerStateAir() //Player is in air not touching walls or ground
 {
-	scrPlayerPhysicsVars();
+	scrPhysicsVars();
 
 	// Movement
 	if (moveDirection == 0 and hVel != 0)
@@ -84,7 +84,7 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 		hVel = sign(sprite_xscale)*wallJumpStr*0.4;
 	}
 	
-	scrPlayerPhysicsVars();
+	scrPhysicsVars();
 	scrGravity();
 	scrFractionRemoval();
 	scrCollision();
@@ -101,7 +101,7 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 ///
 function scrPlayerStateCrouch() //Player is crouching
 {	
-	scrPlayerPhysicsVars();
+	scrPhysicsVars();
 	scrGravity();
 	scrFractionRemoval();
 	scrCollision();
@@ -123,7 +123,7 @@ function scrPlayerStateCrouch() //Player is crouching
 ///
 function scrPlayerStateAttack() //Player is attacking from the ground state
 {
-	scrPlayerPhysicsVars();
+	scrPhysicsVars();
 	
 	if hVel != 0
 	{

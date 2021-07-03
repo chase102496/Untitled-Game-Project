@@ -24,7 +24,7 @@ function scrPhysicsInit()
 	vMaxVel = jumpStr + 1;		//Max speed when falling. Has to be >= jumpStr for your jump to work properly
 }
 ///
-function scrPlayerPhysicsVars()
+function scrPhysicsVars()
 {
 	onWall = place_meeting(x+1,y,objTerrain) - place_meeting(x-1,y,objTerrain); //1 = left wall, 0 = no wall, -1 = right wall
 	onGround = place_meeting(x,y+1,objTerrain)

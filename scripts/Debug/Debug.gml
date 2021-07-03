@@ -54,8 +54,8 @@ function debugVars()
 	debugVar[0] = "hVel: "+string(hVel);
 	debugVar[1] = "vVel: "+string(vVel);
 	
-	//debugVar[5] = "objProj:"+string(instance_number(objProjectile));
-	//debugVar[6] = "objAnchor:"+string(instance_number(objProjectile));
+	//debugVar5] = "objProj:"+string(instance_number(objProjectile));
+	//debugVar6] = "objAnchor:"+string(instance_number(objProjectile));
 	
 	
 	if is_array(playerEquip.currentState)
@@ -83,19 +83,19 @@ function debugVars()
 			break;
 		}
 	}
-	
-	//debugVar[3] = [scrTest,1];
-	//script_execute_ext(debugVar[3][0],debugVar[3],1);
 }
 function debugDraw()
 {
 	if drawDebug
 	{
+		//Player and equip bbox
 		//draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
 		//draw_rectangle(playerEquip.bbox_left,playerEquip.bbox_top,playerEquip.bbox_right,playerEquip.bbox_bottom,true);
-		//
-		if instance_exists(objAnchor) draw_rectangle(objAnchor.bbox_left,objAnchor.bbox_top,objAnchor.bbox_right,objAnchor.bbox_bottom,true);
-		if instance_exists(objProjectile) draw_rectangle_color(objProjectile.bbox_left,objProjectile.bbox_top,objProjectile.bbox_right,objProjectile.bbox_bottom,140,140,140,50,true);
+		//Anchor and Projectile bbox
+		if instance_exists(objProjectile)
+		{
+			draw_rectangle_color(objProjectile.bbox_left,objProjectile.bbox_top,objProjectile.bbox_right,objProjectile.bbox_bottom,255,255,255,50,true);
+		}
 		//
 		for (var i = 0; i < array_length(debugVar); i += 1)
 		{

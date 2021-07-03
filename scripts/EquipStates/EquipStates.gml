@@ -121,6 +121,8 @@ function scrEquipStateBowIdle() //Idle
 {
 	sprite_index = sprBowIdle;
 	
+	aimRange[0] = 75;
+	
 	if currentSequence != seqBowIdle scrSequenceCreator(seqBowIdle);
 	
 	if changedDirection != 0 currentState[1] = scrEquipStateBowSwitchDirection;
@@ -147,9 +149,12 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 		equipProjectile.currentState = scrProjectileStateHold;
 	}
 	
+	equipProjectile.projectilePower = round(((image_index+1)/image_number) * equipProjectile.projectilePowerMax);
+	
 	if keyAttackPrimary != -1
 	{
-		instance_destroy(equipProjectile);
+		equipProjectile.currentState = scrProjectileStateFree;
+		equipProjectile = 0;
 		currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 	}
 	else if !in_sequence
@@ -162,7 +167,9 @@ function scrEquipStateBowHold() //Primary Attack - Hold
 {
 	sprite_index = sprBowDraw;
 	image_index = image_number-1; //set to last frame of charge animation
-
+	
+	equipProjectile.projectilePower = equipProjectile.projectilePowerMax;
+	
 	if currentSequence != seqBowHold scrSequenceCreator(seqBowHold);
 
 	if keyAttackPrimary != -1 currentState[1] = scrEquipStateBowFire;
@@ -175,7 +182,6 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	if currentSequence != seqBowFire
 	{
 		scrSequenceCreator(seqBowFire);
-		equipProjectile.projectileDirection = layer_sequence_get_angle(currentSequenceElement);
 		equipProjectile.currentState = scrProjectileStateFree;
 		equipProjectile = 0; //not associated with the object anymore
 	}

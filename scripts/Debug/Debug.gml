@@ -1,7 +1,9 @@
 function scrDebugInit()
 {
+	global.test = 0;
 	drawDebug = false;
 	global.showHitbox = false;
+	debugVar[0] = 0;
 }
 ///
 function debugInputs()
@@ -49,14 +51,38 @@ function debugVars()
 	if keyEsc game_restart();
 	
 	//Polling
-	
 	debugVar[0] = "hVel: "+string(hVel);
 	debugVar[1] = "vVel: "+string(vVel);
-
-	if !is_array(playerEquip.currentState[0]) debugVar[2] = script_get_name(playerEquip.currentState[0]);
-	else debugVar[2] = "state0: "+script_get_name(playerEquip.currentState[0][0]);
-	if !is_array(playerEquip.currentState[1]) debugVar[3] = script_get_name(playerEquip.currentState[1]);
-	else debugVar[3] = "state1: "+script_get_name(playerEquip.currentState[1][0]);
+	
+	//debugVar[5] = "objProj:"+string(instance_number(objProjectile));
+	//debugVar[6] = "objAnchor:"+string(instance_number(objProjectile));
+	
+	
+	if is_array(playerEquip.currentState)
+	{
+		switch (array_length(playerEquip.currentState))
+		{
+			default:
+			debugVar[2] = script_get_name(playerEquip.currentState[0]);
+			debugVar[3] = script_get_name(playerEquip.currentState[1]);
+			break;
+			
+			case 1:
+			debugVar[2] = script_get_name(playerEquip.currentState[0]);
+			break;
+			
+			case 2:
+			debugVar[2] = script_get_name(playerEquip.currentState[0]);
+			debugVar[3] = script_get_name(playerEquip.currentState[1]);
+			break;
+			
+			case 3:
+			debugVar[2] = script_get_name(playerEquip.currentState[0]);
+			debugVar[3] = script_get_name(playerEquip.currentState[1]);
+			debugVar[4] = playerEquip.currentState[2];
+			break;
+		}
+	}
 	
 	//debugVar[3] = [scrTest,1];
 	//script_execute_ext(debugVar[3][0],debugVar[3],1);
@@ -65,9 +91,12 @@ function debugDraw()
 {
 	if drawDebug
 	{
-		draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true) //Player bbox
-		draw_rectangle(playerEquip.bbox_left,playerEquip.bbox_top,playerEquip.bbox_right,playerEquip.bbox_bottom,true)
-
+		//draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
+		//draw_rectangle(playerEquip.bbox_left,playerEquip.bbox_top,playerEquip.bbox_right,playerEquip.bbox_bottom,true);
+		//
+		if instance_exists(objAnchor) draw_rectangle(objAnchor.bbox_left,objAnchor.bbox_top,objAnchor.bbox_right,objAnchor.bbox_bottom,true);
+		if instance_exists(objProjectile) draw_rectangle_color(objProjectile.bbox_left,objProjectile.bbox_top,objProjectile.bbox_right,objProjectile.bbox_bottom,140,140,140,50,true);
+		//
 		for (var i = 0; i < array_length(debugVar); i += 1)
 		{
 			draw_text_transformed(objPlayer.x,objPlayer.y-30-(8*i),debugVar[i],0.5,0.5,0);

@@ -37,7 +37,7 @@ function scrSequenceCreator(_sequence)
 	currentSequence = _sequence;
 	currentSequenceElement = layer_sequence_create(currentLayer,owner.x,owner.y,currentSequence);
 	currentSequenceInstance = layer_sequence_get_instance(currentSequenceElement);
-	sequence_instance_override_object(currentSequenceInstance,object_index,instance_find(self,0))
+	sequence_instance_override_object(currentSequenceInstance,object_index,id)
 }
 //
 ///
@@ -112,7 +112,7 @@ function scrEquipStateBowSwitchDirection() //Switching directions
 {
 	if currentSequence != seqBowChangeDirection scrSequenceCreator(seqBowChangeDirection);
 		
-	if !in_sequence currentState = [scrEquipStateBow];
+	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 	
 	scrEquipAnimations();
 }
@@ -120,9 +120,9 @@ function scrEquipStateBowSwitchDirection() //Switching directions
 function scrEquipStateBowIdle() //Idle
 {
 	sprite_index = sprBowIdle;
-			
+	
 	if currentSequence != seqBowIdle scrSequenceCreator(seqBowIdle);
-			
+	
 	if changedDirection != 0 currentState[1] = scrEquipStateBowSwitchDirection;
 	if keyAttackPrimary == -1 currentState[1] = scrEquipStateBowDraw; //Key is being held, start draw animation
 	
@@ -139,40 +139,48 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	
 	if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
 	
+	image_index = layer_sequence_get_headpos(currentSequenceElement)
+	
 	if !instance_exists(equipProjectile)
 	{
 		equipProjectile = instance_create_layer(x,y,"layProjectile",objProjectile);
 		equipProjectile.currentState = scrProjectileStateHold;
 	}
 	
-	image_index = layer_sequence_get_headpos(currentSequenceElement)
-			
 	if keyAttackPrimary != -1
 	{
-		//destroy arrow instance
-		currentState = [scrEquipStateBow];
+		instance_destroy(equipProjectile);
+		currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 	}
-	else if !in_sequence currentState[1] = scrEquipStateBowHold;
+	else if !in_sequence
+	{
+		currentState[1] = scrEquipStateBowHold;
+	}
 }
 //
 function scrEquipStateBowHold() //Primary Attack - Hold
 {
 	sprite_index = sprBowDraw;
 	image_index = image_number-1; //set to last frame of charge animation
-			
+
 	if currentSequence != seqBowHold scrSequenceCreator(seqBowHold);
-			
+
 	if keyAttackPrimary != -1 currentState[1] = scrEquipStateBowFire;
 }
-//	
+//
 function scrEquipStateBowFire() //Primary Attack - Fire
 {
 	sprite_index = sprBowFire;
-			
-	if currentSequence != seqBowFire scrSequenceCreator(seqBowFire);
+
+	if currentSequence != seqBowFire
+	{
+		scrSequenceCreator(seqBowFire);
+		equipProjectile.projectileDirection = layer_sequence_get_angle(currentSequenceElement);
+		equipProjectile.currentState = scrProjectileStateFree;
+		equipProjectile = 0; //not associated with the object anymore
+	}
+	
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
-	
-	equipProjectile.currentState = scrProjectileStateFree;
-	
-	if !in_sequence currentState = [scrEquipStateBow];
+
+	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 }

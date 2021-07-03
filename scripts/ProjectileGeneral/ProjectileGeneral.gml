@@ -1,18 +1,22 @@
+function scrProjectileStateIdle()
+{
+}
 function scrProjectileStateHold()
-{	
-	sprite_index = sprArrow; //temp
-	image_index = 0;		 //temp
+{		
 	image_angle = layer_sequence_get_angle(equip.currentSequenceElement)-45;
-	x = equip.anchor.x;
-	y = equip.anchor.y;
+	x = equip.anchor.x
+	y = equip.anchor.
 }
 function scrProjectileStateFree()
 {
-	instance_destroy(equip.anchor);
-	scrCollision(true);
+	scrProjectilePhysics();
 }
-function scrProjectileStateSequence()
+function scrProjectilePhysics()
 {
-	equip.anchor = self;
-	if !in_sequence instance_destroy();
+	vVel += gravAccel;
+	
+	owner.debugVar[5] = angle_difference(0,projectileDirection);
+	
+	x += hVel;
+	y += vVel;
 }

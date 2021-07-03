@@ -19,17 +19,15 @@ function scrBowAiming(_dir) //Points bow toward mouse cursor on right OLD+
 {
 	var _aim;
 	var _layAngle = layer_sequence_get_angle(currentSequenceElement);
+	var _aimX = x + (sprite_width/2);
+	var _aimY = y - (sprite_height/2);
 	
-	if _dir == 1 _aim = point_direction(equipProjectile.x,equipProjectile.y,mouse_x,mouse_y)
-	else _aim = point_direction(equipProjectile.x,equipProjectile.y,mouse_x,mouse_y)
+	if _dir == 1 _aim = point_direction(_aimX,_aimY,mouse_x,mouse_y);
+	else _aim = point_direction(_aimX,_aimY,mouse_x,mouse_y);
 	
-	var _diff = angle_difference(_layAngle,_aim)
+	var _diff = angle_difference(_layAngle,_aim);
 	
 	var _final = clamp(_layAngle - _diff,-35,35);
 	
-	layer_sequence_angle(currentSequenceElement,_final)// - _diff)
-	
-	owner.debugVar[5] = layer_sequence_get_angle(currentSequenceElement);
-	
-	//layer_sequence_xscale(currentSequenceElement,abs(image_xscale)*-_dir)
+	layer_sequence_angle(currentSequenceElement,_final);
 }

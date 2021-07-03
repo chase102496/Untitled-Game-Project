@@ -27,6 +27,7 @@
     {"id":{"name":"objWeapon","path":"objects/objWeapon/objWeapon.yy",},"order":1,},
     {"id":{"name":"Debug","path":"scripts/Debug/Debug.yy",},"order":0,},
     {"id":{"name":"seqBowHold","path":"sequences/seqBowHold/seqBowHold.yy",},"order":4,},
+    {"id":{"name":"objAnchor","path":"objects/objAnchor/objAnchor.yy",},"order":4,},
     {"id":{"name":"PlayerCombat","path":"scripts/PlayerCombat/PlayerCombat.yy",},"order":4,},
     {"id":{"name":"sprArrow","path":"sprites/sprArrow/sprArrow.yy",},"order":2,},
     {"id":{"name":"objCamera","path":"objects/objCamera/objCamera.yy",},"order":0,},

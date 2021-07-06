@@ -64,42 +64,44 @@ function scrEquipStateGreatsword()
 //
 function scrEquipStateGreatswordChangeDirection() //Switching directions
 {
+	//Sequence init
 	if currentSequence != seqGreatswordChangeDirection scrSequenceCreator(seqGreatswordChangeDirection);
 	
-	if !in_sequence currentState[1] = scrEquipStateGreatswordIdle;
-	
+	//Modules
 	scrEquipAnimations();
+	
+	//State switches
+	if !in_sequence currentState[1] = scrEquipStateGreatswordIdle;
 }
 //
 function scrEquipStateGreatswordIdle() //Idle
 {
+	//Sequence init
 	if currentSequence != seqGreatswordIdle scrSequenceCreator(seqGreatswordIdle);
-			
+	
+	//Modules
+	scrEquipAnimations();
+	
+	//State switches
 	if changedDirection != 0 currentState[1] = scrEquipStateGreatswordChangeDirection;
 	if keyAttackPrimary > 0 currentState[1] = scrEquipStateGreatswordStab; //Key has been released, time to poll
-	
-	scrEquipAnimations();
 }
 //
 function scrEquipStateGreatswordStab() //Stab Attack
 {
-	if currentSequence != seqGreatswordStab scrSequenceCreator(seqGreatswordStab);
-			
+	//Sequence init
+	if currentSequence != seqGreatswordStab scrSequenceCreator(seqGreatswordStab);	
 	owner.currentState = scrPlayerStateAttack;
-			
-	if changedStates
-	{
-		owner.vVel += -5
-		changedStates = false;
-	}
-			
+	
+	//Modules
+	scrEquipAnimations();
+	
+	//State switches
 	if !in_sequence
 	{
 		owner.currentState = owner.previousState;
 		currentState[1] = scrEquipStateGreatswordIdle;
 	}
-	
-	scrEquipAnimations();
 }
 //
 #endregion

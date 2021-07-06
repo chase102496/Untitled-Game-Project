@@ -29,7 +29,7 @@ function scrCustomToggle(_currentValue,_value1,_value2) //Toggles between two cu
 	
 	return _newValue
 }
-function scrToggleList(_currentValue,_valueList) //Thumbs through a list each time the script is run. Provide a list of values
+function scrToggleList(_currentValue,_valueList) //Thumbs through a list each time the script is run. Provide a list of values NEED FIXING
 {
 	var _newValue;
 	var _newIndex;

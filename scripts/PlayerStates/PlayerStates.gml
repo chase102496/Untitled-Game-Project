@@ -1,3 +1,5 @@
+#region Init config and tools
+
 function scrPlayerStateInit()
 {
 	currentState = scrPlayerStateGround;
@@ -11,7 +13,11 @@ function scrPlayerStateMemory() //Used to store the previous state in memory
 	if storedState != currentState previousState = storedState;
 	storedState = currentState;
 }
-///
+
+#endregion
+
+#region Player states
+
 function scrPlayerStateGround() //Player is idle or running
 {
 	scrPhysicsVars();
@@ -138,4 +144,5 @@ function scrPlayerStateAttack() //Player is attacking from the ground state
 	
 	//State switches are located in equipStates.gml
 }
-///
+
+#endregion

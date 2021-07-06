@@ -1,5 +1,4 @@
-//
-/// INIT AND CONFIG STUFF
+#region Init config and tools
 //
 function scrEquipStateInit()
 {
@@ -40,9 +39,9 @@ function scrSequenceCreator(_sequence)
 	sequence_instance_override_object(currentSequenceInstance,object_index,id)
 }
 //
-///
-//// STATES
-///
+#endregion
+
+#region Empty states
 //
 function scrEquipStateEmpty()
 {
@@ -53,7 +52,9 @@ function scrEquipStateEmptyIdle()
 {
 }
 //
-/// --- Greatsword ---
+#endregion
+
+#region Greatsword states
 //
 function scrEquipStateGreatsword()
 {
@@ -101,7 +102,9 @@ function scrEquipStateGreatswordStab() //Stab Attack
 	scrEquipAnimations();
 }
 //
-/// --- Bow ---
+#endregion
+
+#region Bow states
 //
 function scrEquipStateBow()
 {
@@ -142,20 +145,26 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 {
 	//Config
 	sprite_index = sprBowDraw;
-	
+
 	//Sequence init
 	if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
-	
+
 	//Extra
 	if sign(mouse_x - owner.x) >= 0 currentState[2] = [scrBowAiming,1];
 	else currentState[2] = [scrBowAiming,-1];
-	
+
 	//Projectile init
 	if !instance_exists(equipProjectile)
 	{
 		equipProjectile = instance_create_layer(x,y,"layProjectile",objProjectile);
-		equipProjectile.currentState = scrProjectileStateHold;
+		equipProjectile.stateHold = [scrProjectileStateHoldArrow];
+		equipProjectile.stateFree = [[scrProjectileStateFree,true,true,false,true,3]];
+		equipProjectile.stateCollideEntity = [[scrProjectileStateCollide,objEntity,3]];
+		equipProjectile.stateCollideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
+		equipProjectile.stateDestroy = [scrProjectileStateDestroy];
+		
+		equipProjectile.currentState = equipProjectile.stateHold;
 	}
 	
 	//Projectile updating var
@@ -164,7 +173,7 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	//State switches
 	if keyAttackPrimary != -1
 	{
-		equipProjectile.currentState = scrProjectileStateFree;
+		equipProjectile.currentState = equipProjectile.stateFree;
 		equipProjectile = 0;
 		currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 	}
@@ -196,7 +205,7 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	if currentSequence != seqBowFire
 	{
 		scrSequenceCreator(seqBowFire);
-		equipProjectile.currentState = scrProjectileStateFree;
+		equipProjectile.currentState = equipProjectile.stateFree
 		equipProjectile = 0; //not associated with the object anymore
 	}
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
@@ -205,5 +214,4 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 }
 //
-/// --- 
-//
+#endregion

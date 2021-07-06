@@ -1,1 +1,1 @@
-script_execute(currentState);
+scrStateExecute(currentState);

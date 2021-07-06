@@ -113,7 +113,7 @@ function scrEquipStateBow()
 	if array_length(currentState) == 1 currentState[1] = scrEquipStateBowIdle;
 }
 //
-function scrEquipStateBowSwitchDirection() //Switching directions
+function scrEquipStateBowChangeDirection() //Switching directions
 {
 	//Sequence init
 	if currentSequence != seqBowChangeDirection scrSequenceCreator(seqBowChangeDirection);
@@ -128,7 +128,7 @@ function scrEquipStateBowSwitchDirection() //Switching directions
 function scrEquipStateBowIdle() //Idle
 {	
 	//Config
-	sprite_index = sprBowIdle; //Sprite index
+	sprite_index = sprBowIdle;
 	aimRange[0] = 75; //Aim limit down
 	aimRange[1] = 75; //Aim limit up
 	
@@ -139,7 +139,7 @@ function scrEquipStateBowIdle() //Idle
 	scrEquipAnimations();
 	
 	//State switches
-	if changedDirection != 0 currentState[1] = scrEquipStateBowSwitchDirection;
+	if changedDirection != 0 currentState[1] = scrEquipStateBowChangeDirection;
 	if keyAttackPrimary == -1 currentState[1] = scrEquipStateBowDraw;
 }
 //
@@ -216,4 +216,70 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 }
 //
+#endregion
+
+#region Orb states
+
+function scrEquipStateOrb()
+{
+	if array_length(currentState) == 1 currentState[1] = scrEquipStateOrbIdle;
+}
+//
+function scrEquipStateOrbChangeDirection() //Switching directions
+{
+	//Sequence init
+	if currentSequence != seqOrbChangeDirection scrSequenceCreator(seqOrbChangeDirection);
+	
+	//Modules
+	scrEquipAnimations();
+	
+	//State switches
+	if !in_sequence currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+}
+//
+function scrEquipStateOrbIdle()
+{
+	//Config
+	sprite_index = sprOrbIdle;
+	
+	//Sequence init
+	if currentSequence != seqOrbIdle scrSequenceCreator(seqOrbIdle);
+		
+	//Modules
+	scrEquipAnimations();
+	
+	//State switches
+	if changedDirection != 0 currentState[1] = scrEquipStateOrbChangeDirection;
+	if keyAttackPrimary == -1 currentState[1] = scrEquipStateOrbCharge;
+}
+//
+function scrEquipStateOrbCharge()
+{
+	//Sequence init
+	if currentSequence != seqOrbCharge scrSequenceCreator(seqOrbCharge);
+	
+	//State switches
+	if keyAttackPrimary != -1 currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	else if !in_sequence currentState[1] = scrEquipStateOrbCast;
+}
+//
+function scrEquipStateOrbCast()
+{
+	//Sequence init
+	if currentSequence != seqOrbCast scrSequenceCreator(seqOrbCast);
+	
+	//Projectile init
+	if !instance_exists(equipProjectile)
+	{
+		equipProjectile = instance_create_layer(mouse_x,mouse_y,"layProjectile",objProjectile);
+		equipProjectile.sprite_index = sprArcaneBlast;
+		equipProjectile.stateFree = [[scrProjectileStateFree,false,false,false,false,-2]];
+		equipProjectile.stateDestroy = [scrProjectileStateDestroy];
+		equipProjectile.currentState = equipProjectile.stateFree;
+	}
+	else equipProjectile.image_index = round((equipProjectile.image_number-1)*scrSequenceRatio());
+
+	if !in_sequence currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+}
+
 #endregion

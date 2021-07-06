@@ -46,7 +46,7 @@ function scrProjectileStateFree(_physicsEnabled,_angleVelocity,_entityCollision,
 	if _physicsEnabled scrProjectilePhysics(_angleVelocity);
 	if _entityCollision scrProjectileDetectEntity();
 	if _terrainCollision scrProjectileDetectTerrain();
-	if _aliveTimerMax != -1 scrProjectileAliveTimer(_aliveTimerMax);
+	scrProjectileAliveTimer(_aliveTimerMax);
 }
 
 //End states
@@ -74,8 +74,7 @@ function scrProjectileStateCollide(_type,_aliveTimerMax)
 		{
 			hVel = 0;
 			vVel = 0;
-			if _aliveTimerMax != -1 scrProjectileAliveTimer(_aliveTimerMax);
-			
+			scrProjectileAliveTimer(_aliveTimerMax);
 			break;
 		}
 	}
@@ -94,8 +93,24 @@ function scrProjectileStateDestroy()
 // Keepalive timer. runs destroy state if reached
 function scrProjectileAliveTimer(_aliveTimerMax)
 {
-	aliveTimer += 1;
-	if aliveTimer >= _aliveTimerMax*room_speed currentState = stateDestroy;
+	switch(_aliveTimerMax)
+	{
+		default: //anything else
+		{
+			aliveTimer += 1;
+			if aliveTimer >= _aliveTimerMax*room_speed currentState = stateDestroy;
+			break;
+		}
+	
+		case -1: //disabled
+		break;
+	
+		case -2: //destroy on animation end
+		{
+			if image_index == image_number-1 currentState = stateDestroy;
+			break;
+		}
+	}
 }
 
 // Runs physics for object

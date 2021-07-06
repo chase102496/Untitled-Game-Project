@@ -47,6 +47,7 @@ function debugVars()
 	if keyPress1 playerEquip.currentState = [scrEquipStateEmpty,scrEquipStateEmptyIdle];
 	if keyPress2 playerEquip.currentState = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
 	if keyPress3 playerEquip.currentState = [scrEquipStateBow,scrEquipStateBowIdle];
+	if keyPress4 playerEquip.currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
 
 	if keyEsc game_restart();
 	

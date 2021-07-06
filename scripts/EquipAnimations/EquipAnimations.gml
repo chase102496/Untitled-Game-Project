@@ -40,3 +40,7 @@ function scrBowAiming(_dir) //Points bow toward mouse cursor
 	
 	projectileDirection = layer_sequence_angle(currentSequenceElement,_final);
 }
+function scrSequenceRatio()
+{
+	return layer_sequence_get_headpos(currentSequenceElement)/layer_sequence_get_length(currentSequenceElement);
+}

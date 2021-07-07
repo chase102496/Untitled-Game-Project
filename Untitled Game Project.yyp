@@ -47,6 +47,7 @@
     {"id":{"name":"sprOrbIdle","path":"sprites/sprOrbIdle/sprOrbIdle.yy",},"order":6,},
     {"id":{"name":"PlayerAnimations","path":"scripts/PlayerAnimations/PlayerAnimations.yy",},"order":5,},
     {"id":{"name":"seqGreatswordIdle","path":"sequences/seqGreatswordIdle/seqGreatswordIdle.yy",},"order":0,},
+    {"id":{"name":"Inputs","path":"scripts/Inputs/Inputs.yy",},"order":6,},
     {"id":{"name":"seqOrbIdle","path":"sequences/seqOrbIdle/seqOrbIdle.yy",},"order":0,},
     {"id":{"name":"Buffs","path":"scripts/Buffs/Buffs.yy",},"order":5,},
     {"id":{"name":"sprBowFire","path":"sprites/sprBowFire/sprBowFire.yy",},"order":4,},

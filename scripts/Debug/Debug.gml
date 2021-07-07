@@ -34,8 +34,11 @@ function scrDebugInputs()
 //
 function scrDebugVars()
 {	
-	if global.keyPress9 global.inputObject = instance_find(objPlayer,0);
-	if global.keyPress8 global.inputObject = instance_find(objEntity,0);
+	if mouse_check_button_pressed(mb_middle)
+	{
+		if position_meeting(mouse_x,mouse_y,global.playerObject) global.inputObject = global.playerObject.id;
+		if position_meeting(mouse_x,mouse_y,objEntity) global.inputObject = objEntity.id;
+	}
 
 	with global.playerObject
 	{

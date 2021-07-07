@@ -27,8 +27,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Entities",
-    "path": "folders/Objects/Entities.yy",
+    "name": "Equipment",
+    "path": "folders/Objects/Equipment.yy",
   },
   "resourceVersion": "1.0",
   "name": "objAnchor",

@@ -18,6 +18,7 @@ function scrPlayerChangedDirection()
 function scrBowAiming(_dir) //Points bow toward mouse cursor
 {
 	var _aim;
+	var _layXScale = layer_sequence_get_xscale(currentSequenceElement);
 	var _layAngle = layer_sequence_get_angle(currentSequenceElement);
 	var _aimX = x + (sprite_width/2);
 	var _aimY = y - (sprite_height/2);
@@ -25,13 +26,12 @@ function scrBowAiming(_dir) //Points bow toward mouse cursor
 	if _dir == 1
 	{
 		_aim = point_direction(_aimX,_aimY,mouse_x,mouse_y);
-		layer_sequence_xscale(currentSequenceElement,1)
+		layer_sequence_xscale(currentSequenceElement,1*abs(_layXScale))
 	}
 	else
 	{
 		_aim = point_direction(mouse_x,mouse_y,_aimX,_aimY);
-		
-		layer_sequence_xscale(currentSequenceElement,-1)
+		layer_sequence_xscale(currentSequenceElement,-1*abs(_layXScale))
 	}
 	
 	var _diff = angle_difference(_layAngle,_aim);

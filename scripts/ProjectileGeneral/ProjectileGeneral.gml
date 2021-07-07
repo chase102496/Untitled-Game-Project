@@ -51,22 +51,21 @@ function scrProjectileStateFree(_physicsEnabled,_angleVelocity,_entityCollision,
 
 //End states
 //Type is the type of object we collide with
-//_aliveTimerMax is how long in seconds we want to wait before running the destroy script. -1 for no timer
+//_aliveTimerMax is how long in seconds we want to wait before running the destroy script. -1 for no timer, -2 for end of animation timer
 function scrProjectileStateCollide(_type,_aliveTimerMax)
 {
 	switch(_type)
 	{
-		default:
+		case objEntity: //Runs a bunch of scripts based on what is configured in equipment, to the target: entityColliding
 		{
-		}
-		
-		case objPlayer:
-		{
-			break;
-		}
-		
-		case objEntity:
-		{	
+			with entityColliding
+			{
+			//Each entity and player will have a currentBuffs ds_list, detailing all the scripts currently being run related to buffs. They will be categ
+			//orized by type in the naming convention. The code will be passed on from the projectile, but will be run in the object being buffed or debuffed from the ds_list that is run ONLY when called by the
+			//script module scrBuffs();
+			//to add a buff, first a ds_list_find_index would be run to see if the buff is already applied. If it is, it will reset it and overwrite it (for now)
+			//once we know the buff doesn't exist on this entity, it would be added with optional parameters as a list, first being the script ds_list_add(currentBuffs,[scrBuffsPoison,10,true,12,1])
+			}
 			break;
 		}
 		
@@ -130,18 +129,17 @@ function scrProjectilePhysics(_angleVelocity)
 //Detects entities and changes state when hit
 function scrProjectileDetectEntity() //WIP
 {
+	if place_meeting(x,y,objEntity)
+	{
+		entityColliding = other;
+		currentState = stateCollideEntity;
+	}
 }
 
 //Detects terrain and changes state when hit
 function scrProjectileDetectTerrain()
 {
 	if place_meeting(x,y,objTerrain) currentState = stateCollideTerrain;
-}
-
-//Particles
-function scrProjectileParticles()
-{
-	
 }
 
 #endregion

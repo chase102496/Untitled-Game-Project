@@ -11,6 +11,7 @@ scrPlayerStateInit();
 scrDebugInit();
 scrInputInit();
 scrAnimationInit();
+scrBuffsInit();
 
 //Placeholders for sprite animations;
 phPlayerIdle = sprPlayerIdle;

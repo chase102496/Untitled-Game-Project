@@ -2,14 +2,14 @@ function scrPlayerCombatOutputs(_enabled)
 {
 	if _enabled
 	{
-	playerEquip.keyAttackPrimary = keyAttackPrimary;
-	playerEquip.keyAttackSecondary = keyAttackSecondary;
-	playerEquip.keyAttackTertiary = keyAttackTertiary;
+	playerEquip.keyAttackPrimaryPress = keyAttackPrimaryPress;
+	playerEquip.keyAttackPrimaryHold = keyAttackPrimaryHold;
+	playerEquip.keyAttackPrimaryRelease = keyAttackPrimaryRelease;
 	}
 	else
 	{
-	playerEquip.keyAttackPrimary = 0;
-	playerEquip.keyAttackSecondary = 0;
-	playerEquip.keyAttackTertiary = 0;
+	playerEquip.keyAttackPrimaryPress = 0;
+	playerEquip.keyAttackPrimaryHold = 0;
+	playerEquip.keyAttackPrimaryRelease = 0;
 	}
 }

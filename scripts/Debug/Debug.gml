@@ -48,6 +48,8 @@ function debugVars()
 	if keyPress2 playerEquip.currentState = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
 	if keyPress3 playerEquip.currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 	if keyPress4 playerEquip.currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	
+	if keyPress5 scrBuffsAdd([scrBuffsMaxVelocityBoost,7,2]);
 
 	if keyEsc game_restart();
 	
@@ -55,9 +57,13 @@ function debugVars()
 	debugVar[0] = "hVel: "+string(hVel);
 	debugVar[1] = "vVel: "+string(vVel);
 	
+	debugVar[3]  = string(scrBuffTimerDisplay(0))+string(currentBuffs[| 0]);
+	debugVar[4]  = string(scrBuffTimerDisplay(1))+string(currentBuffs[| 1]);
+	debugVar[5]  = string(scrBuffTimerDisplay(2))+string(currentBuffs[| 2]);
+	debugVar[6]  = string(scrBuffTimerDisplay(3))+string(currentBuffs[| 3]);
+	
 	//debugVar5] = "objProj:"+string(instance_number(objProjectile));
 	//debugVar6] = "objAnchor:"+string(instance_number(objProjectile));
-	
 	
 	if is_array(playerEquip.currentState)
 	{

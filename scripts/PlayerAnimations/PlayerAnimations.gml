@@ -64,29 +64,31 @@ function scrPlayerAnimations()
 		
 		case scrPlayerStateAttack:
 		{
-			switch (playerEquip.currentState[0])
+			switch (playerEquip.currentState[1])
 			{
-				case scrEquipStateGreatsword:
-				{
-					switch (playerEquip.currentState[1])
-					{
-						case scrEquipStateGreatswordStab: //Primary attack forward
-						{
-							image_speed = 1;
-							image_index = layer_sequence_get_headpos(playerEquip.currentSequenceElement);
-							sprite_index = phPlayerAttackForward;
-							
-							break;
-						}
-					}
-					
-				}
+				case scrEquipStateGreatswordStab: //Primary attack forward
+					image_speed = 1;
+					image_index = layer_sequence_get_headpos(playerEquip.currentSequenceElement);
+					sprite_index = phPlayerAttackForward;		
+					break;
+				
+				case scrEquipStateBowDraw: //Primary attack forward
+					sprite_index = phPlayerIdle;		
+					break;
+				
+				case scrEquipStateBowHold: //Primary attack forward
+					sprite_index = phPlayerIdle;	
+					break;
+				
+				case scrEquipStateOrbCharge:
+					sprite_index = phPlayerIdle;
+					break;	
 			}
 			break;
 		}
 	}
-	
-	//scrPlayerSquishing();
+
+	scrPlayerSquishing();
 }
 ///
 function scrPlayerSquishing()

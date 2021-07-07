@@ -72,6 +72,7 @@ function scrEquipStateGreatswordChangeDirection() //Switching directions
 	
 	//State switches
 	if !in_sequence currentState[1] = scrEquipStateGreatswordIdle;
+	if keyAttackPrimaryPress currentState[1] = scrEquipStateGreatswordStab;
 }
 //
 function scrEquipStateGreatswordIdle() //Idle
@@ -84,14 +85,22 @@ function scrEquipStateGreatswordIdle() //Idle
 	
 	//State switches
 	if changedDirection != 0 currentState[1] = scrEquipStateGreatswordChangeDirection;
-	if keyAttackPrimary > 0 currentState[1] = scrEquipStateGreatswordStab; //Key has been released, time to poll
+	if keyAttackPrimaryPress currentState[1] = scrEquipStateGreatswordStab;
 }
 //
 function scrEquipStateGreatswordStab() //Stab Attack
 {
 	//Sequence init
 	if currentSequence != seqGreatswordStab scrSequenceCreator(seqGreatswordStab);	
-	owner.currentState = scrPlayerStateAttack;
+	with owner
+	{
+		currentState = scrPlayerStateAttack;
+		if hVel != 0
+		{
+		if (abs(hVel) >= hSlideDecel) hVel -= sign(hVel) * hSlideDecel;
+		else hVel = 0;
+		}
+	}
 	
 	//Modules
 	scrEquipAnimations();
@@ -123,6 +132,7 @@ function scrEquipStateBowChangeDirection() //Switching directions
 	
 	//State switches
 	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
+	if keyAttackPrimaryPress currentState = [scrEquipStateBow, scrEquipStateBowDraw];
 }
 //
 function scrEquipStateBowIdle() //Idle
@@ -140,7 +150,7 @@ function scrEquipStateBowIdle() //Idle
 	
 	//State switches
 	if changedDirection != 0 currentState[1] = scrEquipStateBowChangeDirection;
-	if keyAttackPrimary == -1 currentState[1] = scrEquipStateBowDraw;
+	if keyAttackPrimaryHold currentState[1] = scrEquipStateBowDraw;
 }
 //
 function scrEquipStateBowDraw() //Primary Attack - Draw
@@ -153,6 +163,8 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 
 	//Extra
+	owner.hVel = clamp(owner.hVel,-owner.hMaxVel/2,owner.hMaxVel/2); //Limiting player movement during
+	
 	if sign(mouse_x - owner.x) >= 0 currentState[2] = [scrBowAiming,1];
 	else currentState[2] = [scrBowAiming,-1];
 
@@ -160,20 +172,22 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	if !instance_exists(equipProjectile)
 	{
 		equipProjectile = instance_create_layer(x,y,"layProjectile",objProjectile);
-		equipProjectile.stateHold = [scrProjectileStateHoldArrow];
-		equipProjectile.stateFree = [[scrProjectileStateFree,true,true,false,true,3]];
-		equipProjectile.stateCollideEntity = [[scrProjectileStateCollide,objEntity,3]];
-		equipProjectile.stateCollideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
-		equipProjectile.stateDestroy = [scrProjectileStateDestroy];
-		
-		equipProjectile.currentState = equipProjectile.stateHold;
+		with equipProjectile
+		{
+			sprite_index = sprArrow;
+			stateHold = [scrProjectileStateHoldArrow];
+			stateFree = [[scrProjectileStateFree,true,true,false,true,3]];
+			stateCollideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
+			stateDestroy = [scrProjectileStateDestroy];
+			currentState = stateHold;
+		}
 	}
-	
-	//Projectile updating var
+
+	//Projectile power updating var as bow pulls back, power goes up
 	equipProjectile.projectilePower = round(((image_index+1)/image_number) * equipProjectile.projectilePowerMax);
 	
 	//State switches
-	if keyAttackPrimary != -1
+	if !keyAttackPrimaryHold
 	{
 		equipProjectile.currentState = equipProjectile.stateFree;
 		equipProjectile = 0;
@@ -191,11 +205,14 @@ function scrEquipStateBowHold() //Primary Attack - Hold
 	sprite_index = sprBowDraw;
 	image_index = image_number-1; //set to last frame of scrEquipStateBowDraw
 	
+	//Extra
+	owner.hVel = clamp(owner.hVel,-owner.hMaxVel/2,owner.hMaxVel/2); //Limiting player movement
+	
 	//Sequence init
 	if currentSequence != seqBowHold scrSequenceCreator(seqBowHold);
 	
 	//State switches
-	if keyAttackPrimary != -1 currentState[1] = scrEquipStateBowFire;
+	if !keyAttackPrimaryHold currentState[1] = scrEquipStateBowFire;
 }
 //
 function scrEquipStateBowFire() //Primary Attack - Fire
@@ -213,6 +230,7 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 
 	//State switches
+	if keyAttackPrimaryPress currentState = [scrEquipStateBow, scrEquipStateBowDraw];
 	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 }
 //
@@ -235,12 +253,15 @@ function scrEquipStateOrbChangeDirection() //Switching directions
 	
 	//State switches
 	if !in_sequence currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	if keyAttackPrimaryPress currentState[1] = scrEquipStateOrbCharge;
 }
 //
 function scrEquipStateOrbIdle()
 {
 	//Config
 	sprite_index = sprOrbIdle;
+	aimRange[0] = 15; //Aim limit, purely cosmetic
+	aimRange[1] = 15; //
 	
 	//Sequence init
 	if currentSequence != seqOrbIdle scrSequenceCreator(seqOrbIdle);
@@ -250,7 +271,7 @@ function scrEquipStateOrbIdle()
 	
 	//State switches
 	if changedDirection != 0 currentState[1] = scrEquipStateOrbChangeDirection;
-	if keyAttackPrimary == -1 currentState[1] = scrEquipStateOrbCharge;
+	if keyAttackPrimaryPress currentState[1] = scrEquipStateOrbCharge;
 }
 //
 function scrEquipStateOrbCharge()
@@ -258,9 +279,35 @@ function scrEquipStateOrbCharge()
 	//Sequence init
 	if currentSequence != seqOrbCharge scrSequenceCreator(seqOrbCharge);
 	
+	//Extra
+	if sign(mouse_x - owner.x) >= 0 currentState[2] = [scrBowAiming,1];
+	else currentState[2] = [scrBowAiming,-1];
+	
+	with owner
+	{
+		var _mod = 2; //decel at twice the normal rate
+		currentState = scrPlayerStateAttack;
+		
+		if hVel != 0
+		{
+			if (abs(hVel) >= hSlideDecel*_mod) hVel -= sign(hVel) * hSlideDecel*_mod;
+			else hVel = 0;
+		}
+	}
+	
+	owner.hVel = clamp(owner.hVel,-owner.hMaxVel/2,owner.hMaxVel/2); //Limiting player movement during
+	
 	//State switches
-	if keyAttackPrimary != -1 currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
-	else if !in_sequence currentState[1] = scrEquipStateOrbCast;
+	if !keyAttackPrimaryHold
+	{
+		owner.currentState = owner.previousState;
+		currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	}
+	else if !in_sequence 
+	{
+		owner.currentState = owner.previousState;
+		currentState[1] = scrEquipStateOrbCast;
+	}
 }
 //
 function scrEquipStateOrbCast()
@@ -272,14 +319,19 @@ function scrEquipStateOrbCast()
 	if !instance_exists(equipProjectile)
 	{
 		equipProjectile = instance_create_layer(mouse_x,mouse_y,"layProjectile",objProjectile);
-		equipProjectile.sprite_index = sprArcaneBlast;
-		equipProjectile.stateFree = [[scrProjectileStateFree,false,false,false,false,-2]];
-		equipProjectile.stateDestroy = [scrProjectileStateDestroy];
-		equipProjectile.currentState = equipProjectile.stateFree;
+		with equipProjectile
+		{
+			sprite_index = sprArcaneBlast;
+			stateFree = [[scrProjectileStateFree,false,false,false,false,-2]];
+			stateDestroy = [scrProjectileStateDestroy];
+			currentState = stateFree;
+		}
 	}
 	else equipProjectile.image_index = round((equipProjectile.image_number-1)*scrSequenceRatio());
 
-	if !in_sequence currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	//State switches, for some reason !in_sequence isn't working
+	if keyAttackPrimaryPress currentState[1] = scrEquipStateOrbCharge;
+	if layer_sequence_get_headpos(currentSequenceElement) >= layer_sequence_get_length(currentSequenceElement)-1 currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
 }
 
 #endregion

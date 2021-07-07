@@ -27,8 +27,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Equipment",
-    "path": "folders/Objects/Equipment.yy",
+    "name": "General",
+    "path": "folders/Objects/General.yy",
   },
   "resourceVersion": "1.0",
   "name": "objHitbox",

@@ -8,11 +8,6 @@ function scrPlayerStateInit()
 	previousState = scrPlayerStateGround;
 	storedState = scrPlayerStateGround;	
 }
-function scrPlayerStateMemory() //Used to store the previous state in memory
-{
-	if storedState != currentState previousState = storedState;
-	storedState = currentState;
-}
 
 #endregion
 
@@ -139,6 +134,7 @@ function scrPlayerStateAttack() //Player is attacking from the ground state
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
+	scrPlayerCombatOutputs(true);
 	
 	//State switches are located in equipStates.gml
 }

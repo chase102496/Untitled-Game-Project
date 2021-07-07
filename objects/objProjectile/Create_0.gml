@@ -1,7 +1,6 @@
 scrPhysicsInit();
-
-equip = instance_find(objWeapon,0);
-owner = instance_find(objPlayer, 0);
+owner = global.playerObject
+equip = owner.playerEquip
 
 angleVelocityOffset = -45; //How much the image_angle should be turned to point forward. -45 is top-right of the sprite is forward
 
@@ -19,7 +18,7 @@ currentState = [scrProjectileStateIdle];
 aliveTimer = 0;
 entityColliding = 0;
 
-projectilePowerMax = 13; //This is when the bow is fully changed, what the value will be
+projectilePowerMax = 13; //This is when the bow is fully charged, what the value will be
 projectilePower = 0; //This is the real-time bow power. Should be modified by equipment
 gravAccel = 0.15; //Gravity. 0 for free-flying projectile
 hAirDecel = 0.01;

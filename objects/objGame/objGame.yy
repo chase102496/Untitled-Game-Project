@@ -1,5 +1,8 @@
 {
-  "spriteId": null,
+  "spriteId": {
+    "name": "sprGame",
+    "path": "sprites/sprGame/sprGame.yy",
+  },
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
@@ -24,8 +27,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Game",
-    "path": "folders/Objects/Game.yy",
+    "name": "General",
+    "path": "folders/Objects/General.yy",
   },
   "resourceVersion": "1.0",
   "name": "objGame",

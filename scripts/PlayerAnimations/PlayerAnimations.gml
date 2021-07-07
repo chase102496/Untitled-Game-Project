@@ -1,4 +1,4 @@
-function scrAnimationInit()
+function scrPlayerAnimationsInit()
 {
 	//Thereshold for bouncy/squishy animation calls
 	bounceThereshold = 0.5;		//When we will consider a quick velocity change a "bounce"
@@ -15,10 +15,10 @@ function scrPlayerAnimations()
 		{
 			image_speed = abs(hVel/hMaxVel);
 			
-			if hVel == 0 sprite_index = phPlayerIdle; //Idle animation
+			if hVel == 0 sprite_index = phSpriteIdle; //Idle animation
 			else
 			{
-				sprite_index = phPlayerRun; //Run animation
+				sprite_index = phSpriteRun; //Run animation
 				sprite_xscale = sign(hVel);
 			}
 			break;
@@ -30,11 +30,11 @@ function scrPlayerAnimations()
 			
 			if vVel < 0 
 			{
-				sprite_index = phPlayerJumpRise;
+				sprite_index = phSpriteJumpRise;
 			}
 			else
 			{
-				sprite_index = phPlayerJumpFall;
+				sprite_index = phSpriteJumpFall;
 			}
 			break;
 		}
@@ -42,7 +42,7 @@ function scrPlayerAnimations()
 		case scrPlayerStateWallslide:
 		{
 			image_speed = abs(vVel/vMaxVel) + 0.2;
-			sprite_index = phPlayerWallslide;
+			sprite_index = phSpriteWallslide;
 			
 			if onWall != 0 sprite_xscale = -onWall;
 			break;
@@ -54,10 +54,10 @@ function scrPlayerAnimations()
 			
 			if hVel = 0
 			{
-				sprite_index = phPlayerCrouch;
+				sprite_index = phSpriteCrouch;
 				if moveDirection != 0 sprite_xscale = moveDirection;
 			}
-			else sprite_index = phPlayerSlide;
+			else sprite_index = phSpriteSlide;
 			
 			break;
 		}
@@ -69,29 +69,29 @@ function scrPlayerAnimations()
 				case scrEquipStateGreatswordStab: //Primary attack forward
 					image_speed = 1;
 					image_index = layer_sequence_get_headpos(playerEquip.currentSequenceElement);
-					sprite_index = phPlayerAttackForward;		
+					sprite_index = phSpriteAttackForward;		
 					break;
 				
 				case scrEquipStateBowDraw: //Primary attack forward
-					sprite_index = phPlayerIdle;		
+					sprite_index = phSpriteIdle;		
 					break;
 				
 				case scrEquipStateBowHold: //Primary attack forward
-					sprite_index = phPlayerIdle;	
+					sprite_index = phSpriteIdle;	
 					break;
 				
 				case scrEquipStateOrbCharge:
-					sprite_index = phPlayerIdle;
+					sprite_index = phSpriteIdle;
 					break;	
 			}
 			break;
 		}
 	}
 
-	scrPlayerSquishing();
+	scrVelocitySquishing();
 }
 ///
-function scrPlayerSquishing()
+function scrVelocitySquishing()
 {	
 	var _vBounceAmount = abs(vVel - vVelBefore); //Change in velocity
 	var _vBounceCoefficient = scrRoundPrecise((_vBounceAmount/vMaxVel),0.01); //Change bounce strength based on vVel change

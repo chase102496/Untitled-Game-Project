@@ -79,3 +79,13 @@ function scrStateExecute(_currentState)
 		else script_execute(_currentState[i]);
 	}
 }
+function scrStateMemory() //Used to store the previous state in memory
+{
+	if storedState != currentState previousState = storedState;
+	storedState = currentState;
+}
+function scrInSequence(_currentSequenceElement) //Used as alternative to in_sequence
+{
+	if layer_sequence_get_headpos(_currentSequenceElement) >= layer_sequence_get_length(_currentSequenceElement)-1 return false;
+	else return true;
+}

@@ -3,7 +3,6 @@
 function scrBuffsInit()
 {
 	currentBuffs = ds_list_create();
-	buffTicks = 0;
 	
 	var _buffTimers = 16;
 	
@@ -23,10 +22,10 @@ function scrBuffsAdd(_scriptList)
 	var _find = scrBuffsFind(_scriptList[0]);
 	
 	if _find == -1 ds_list_add(currentBuffs,_scriptList); //If no current buffs are found, make a new one
-	else 
+	else //If current buff found
 	{
-		ds_list_replace(currentBuffs,_find,_scriptList)
-		buffTimer[_find] = 1; //If it exists, refresh the clock without instantiating it
+		ds_list_add(currentBuffs,_scriptList); //Create our new buff in its place
+		buffTimer[_find] = 0; //Expire it
 	}
 }
 //
@@ -72,14 +71,16 @@ function scrBuffsMaxVelocityBoost(_sec,_str)
 	
 	if buffTimer[_index] == -1 //Init buff, before timer is set
 	{
-		buffPrevious[_index] = hMaxVel; //Saving our regular max vel to reset after buff expires
-		hMaxVel *= _str; //Modifying max vel
+		var _newValue = hMaxVel*_str;
+		
+		buffPrevious[_index] = _newValue - hMaxVel; //Saving the diff between the old and new value
+		hMaxVel = _newValue;
 		buffTimer[_index] = _timeStart
 	}
 	
 	if buffTimer[_index] == 0 //Timer has been set and expired, end of buff
 	{
-		hMaxVel = buffPrevious[_index]; //setting max vel back to previous before buff
+		hMaxVel -= buffPrevious[_index]; //setting max vel back to previous before buff
 		buffTimer[_index] = -1; //Reset to init
 		ds_list_delete(currentBuffs,_index); //Delete this buff from the ds_list
 	}

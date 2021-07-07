@@ -1,37 +1,33 @@
 sprite_xscale = 1;
 sprite_yscale = 1;
+spriteSize = 1
 
 //Combat stuff
 playerEquip = instance_create_layer(x,y,"layEquip",objWeapon);
-playerEquip.owner = self;
+playerEquip.owner = id;
 
 //One-time init scripts
 scrPhysicsInit();
 scrPlayerStateInit();
-scrDebugInit();
-scrInputInit();
-scrAnimationInit();
+scrPlayerAnimationsInit();
 scrBuffsInit();
 
 //Placeholders for sprite animations;
-phPlayerIdle = sprPlayerIdle;
-phPlayerCrouch = sprPlayerCrouch;
-phPlayerRun = sprPlayerRun;
-phPlayerSlide = sprPlayerSlide;
-phPlayerJumpRise = sprPlayerJumpRise;
-phPlayerJumpFall = sprPlayerJumpFall;
-phPlayerWallslide = sprPlayerWallslide;
-//Combat placeholders
-phPlayerAttackDownward = sprPlayerAttackDownward;
-phPlayerAttackForward = sprPlayerAttackForward;
-phPlayerAttackUpward = sprPlayerAttackUpward;
+phSpriteIdle = sprPlayerIdle;
+phSpriteCrouch = sprPlayerCrouch;
+phSpriteRun = sprPlayerRun;
+phSpriteSlide = sprPlayerSlide;
+phSpriteJumpRise = sprPlayerJumpRise;
+phSpriteJumpFall = sprPlayerJumpFall;
+phSpriteWallslide = sprPlayerWallslide;
+phSpriteAttackDownward = sprPlayerAttackDownward;
+phSpriteAttackForward = sprPlayerAttackForward;
+phSpriteAttackUpward = sprPlayerAttackUpward;
 
 //Settings Config
 window_set_fullscreen(false)	//Fullscreen toggle
 
-//Var Config
-spriteSize = 1
-//
+//Physics config
 hSlideDecel = 0.025;		//This is how slow you decelerate when sliding
 vSlideDecel = 0.9;			//This is how slow you decelerate when wallsliding
 hAirAccel = 0.2;			//Air acceleration

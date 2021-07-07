@@ -157,13 +157,14 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 {
 	//Config
 	sprite_index = sprBowDraw;
+	var _slow = 0.5; //Slow during hold
 
 	//Sequence init
 	if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 
 	//Extra
-	owner.hVel = clamp(owner.hVel,-owner.hMaxVel/2,owner.hMaxVel/2); //Limiting player movement during
+	owner.hVel = clamp(owner.hVel,-owner.hMaxVel*_slow,owner.hMaxVel*_slow); //Limiting player movement during draw
 	
 	if sign(mouse_x - owner.x) >= 0 currentState[2] = [scrBowAiming,1];
 	else currentState[2] = [scrBowAiming,-1];
@@ -182,15 +183,13 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 			currentState = stateHold;
 		}
 	}
-
-	//Projectile power updating var as bow pulls back, power goes up
-	equipProjectile.projectilePower = round(((image_index+1)/image_number) * equipProjectile.projectilePowerMax);
+	else equipProjectile.projectilePower = round(((image_index+1)/image_number) * equipProjectile.projectilePowerMax); //Projectile power updating var as bow pulls back, power goes up
 	
 	//State switches
 	if !keyAttackPrimaryHold
 	{
 		equipProjectile.currentState = equipProjectile.stateFree;
-		equipProjectile = 0;
+		equipProjectile = noone;
 		currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 	}
 	else if !in_sequence
@@ -204,9 +203,13 @@ function scrEquipStateBowHold() //Primary Attack - Hold
 	//Config
 	sprite_index = sprBowDraw;
 	image_index = image_number-1; //set to last frame of scrEquipStateBowDraw
+	var _slow = 0.5; //Slow during hold
+	
+	//Projectile power
+	equipProjectile.projectilePower = equipProjectile.projectilePowerMax;
 	
 	//Extra
-	owner.hVel = clamp(owner.hVel,-owner.hMaxVel/2,owner.hMaxVel/2); //Limiting player movement
+	owner.hVel = clamp(owner.hVel,-owner.hMaxVel*_slow,owner.hMaxVel*_slow); //Limiting player movement during hold
 	
 	//Sequence init
 	if currentSequence != seqBowHold scrSequenceCreator(seqBowHold);
@@ -225,12 +228,11 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	{
 		scrSequenceCreator(seqBowFire);
 		equipProjectile.currentState = equipProjectile.stateFree
-		equipProjectile = 0; //not associated with the object anymore
+		equipProjectile = noone; //not associated with the object anymore
 	}
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 
 	//State switches
-	if keyAttackPrimaryPress currentState = [scrEquipStateBow, scrEquipStateBowDraw];
 	if !in_sequence currentState = [scrEquipStateBow,scrEquipStateBowIdle];
 }
 //
@@ -243,7 +245,7 @@ function scrEquipStateOrb()
 	if array_length(currentState) == 1 currentState[1] = scrEquipStateOrbIdle;
 }
 //
-function scrEquipStateOrbChangeDirection() //Switching directions
+function scrEquipStateOrbChangeDirection()
 {
 	//Sequence init
 	if currentSequence != seqOrbChangeDirection scrSequenceCreator(seqOrbChangeDirection);
@@ -271,7 +273,7 @@ function scrEquipStateOrbIdle()
 	
 	//State switches
 	if changedDirection != 0 currentState[1] = scrEquipStateOrbChangeDirection;
-	if keyAttackPrimaryPress currentState[1] = scrEquipStateOrbCharge;
+	if keyAttackPrimaryHold currentState[1] = scrEquipStateOrbCharge;
 }
 //
 function scrEquipStateOrbCharge()
@@ -303,7 +305,7 @@ function scrEquipStateOrbCharge()
 		owner.currentState = owner.previousState;
 		currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
 	}
-	else if !in_sequence 
+	else if !scrInSequence(currentSequenceElement)
 	{
 		owner.currentState = owner.previousState;
 		currentState[1] = scrEquipStateOrbCast;
@@ -318,7 +320,10 @@ function scrEquipStateOrbCast()
 	//Projectile init
 	if !instance_exists(equipProjectile)
 	{
-		equipProjectile = instance_create_layer(mouse_x,mouse_y,"layProjectile",objProjectile);
+		var _range = 128; //Sets cast range to 128 pixels
+		var _castRange = scrCastRange(owner.x,owner.y,mouse_x,mouse_y,_range);
+		equipProjectile = instance_create_layer(_castRange[0],_castRange[1],"layProjectile",objProjectile); //[0] is x, [1] is y
+		
 		with equipProjectile
 		{
 			sprite_index = sprArcaneBlast;
@@ -329,9 +334,8 @@ function scrEquipStateOrbCast()
 	}
 	else equipProjectile.image_index = round((equipProjectile.image_number-1)*scrSequenceRatio());
 
-	//State switches, for some reason !in_sequence isn't working
-	if keyAttackPrimaryPress currentState[1] = scrEquipStateOrbCharge;
-	if layer_sequence_get_headpos(currentSequenceElement) >= layer_sequence_get_length(currentSequenceElement)-1 currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	//State switches, for some reason !in_sequence isn't working so i made a better script than YoYo
+	if !scrInSequence(currentSequenceElement) currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
 }
 
 #endregion

@@ -44,3 +44,20 @@ function scrSequenceRatio()
 {
 	return layer_sequence_get_headpos(currentSequenceElement)/layer_sequence_get_length(currentSequenceElement);
 }
+function scrCastRange(_originX,_originY,_pointX,_pointY,_range)
+{
+	var _dir = point_direction(_originX,_originY,_pointX,_pointY);
+	
+	if point_distance(_originX,_originY,_pointX,_pointY) >= _range
+	{
+		var _x = _originX+lengthdir_x(_range,_dir);
+		var _y = _originY+lengthdir_y(_range,_dir);
+	}
+	else
+	{
+		var _x = _pointX;
+		var _y = _pointY;
+	}
+	
+	return [_x,_y];
+}

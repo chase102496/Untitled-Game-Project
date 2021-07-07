@@ -1,13 +1,4 @@
-function scrInputInit()
-{
-	var _totalTimers = 10;
-	
-	for (var i = 0; i < _totalTimers; i += 1)
-	{
-		keyTimer[i] = 0;
-	}
-}
-function playerInputs()
+function scrInputs()
 {	
 	//Movement inputs
 	keyLeft = keyboard_check(ord("A"));
@@ -27,9 +18,8 @@ function playerInputs()
 	keyAttackSecondaryPress = mouse_check_button_pressed(mb_right);
 	keyAttackSecondaryHold = mouse_check_button(mb_right);
 	keyAttackSecondaryRelease = mouse_check_button_released(mb_right);
-	
+		
 	//Misc inputs
 	//keyInteract = keyboard_check(ord("W"));
 	//keyBack = scrKeyHeld(vk_escape,500);
 }
-///

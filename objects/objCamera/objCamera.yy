@@ -24,8 +24,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Game",
-    "path": "folders/Objects/Game.yy",
+    "name": "General",
+    "path": "folders/Objects/General.yy",
   },
   "resourceVersion": "1.0",
   "name": "objCamera",

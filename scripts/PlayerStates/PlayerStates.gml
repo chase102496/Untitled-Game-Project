@@ -138,5 +138,15 @@ function scrPlayerStateAttack() //Player is attacking from the ground state
 	
 	//State switches are located in equipStates.gml
 }
+///
+function scrPlayerStateHurt() //Player has been damaged by an attack
+{
+	scrPhysicsVars();
+	scrGravity();
+	scrFractionRemoval();
+	scrCollision();
+	scrPlayerAnimations();
+	scrBuffs();
+}
 
 #endregion

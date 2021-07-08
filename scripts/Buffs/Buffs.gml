@@ -17,16 +17,17 @@ function scrBuffsCleanup()
 	 ds_list_destroy(currentBuffs);
 }
 // Adds the buff to the entity's buff list. Be sure to include the script and args in the same array, starting with the script as [0]
-function scrBuffsAdd(_scriptList)
+function scrBuffsAdd(_scriptList,_targetID)
 {
-	var _find = scrBuffsFind(_scriptList[0]);
+	var _find = scrBuffsFind(_scriptList[0],_targetID);
 	
-	if _find == -1 ds_list_add(currentBuffs,_scriptList); //If no current buffs are found, make a new one
-	else //If current buff found
-	{
-		ds_list_add(currentBuffs,_scriptList); //Create our new buff in its place
-		buffTimer[_find] = 0; //Expire it
-	}
+	if _find == -1 ds_list_add(_targetID.currentBuffs,_scriptList); //If no current buffs are found, make a new one
+	//NEEDS FIXING, ADDS TOO MANY BUFFS AND CANT CATCH THEM IN TIME. IF SET TO 0, IT ADDS ONE EMPTY BUFF AND ONE EVER-ADDING BUFF FOR SOME RETARDED REASON
+	//else //If current buff found
+	//{
+	//	_targetID.buffTimer[_find] = 0; //Expire it
+	//	ds_list_add(_targetID.currentBuffs,_scriptList); //Create our new buff in its place
+	//}
 }
 //
 function scrBuffTimerDisplay(_index)
@@ -34,11 +35,11 @@ function scrBuffTimerDisplay(_index)
 	return max(scrRoundPrecise(buffTimer[_index]/room_speed,0.1),0);
 }
 //
-function scrBuffsFind(_script)
+function scrBuffsFind(_script,_targetID)
 {
-	for (var i = 0;i < ds_list_size(currentBuffs);i ++)
+	for (var i = 0;i < ds_list_size(_targetID.currentBuffs);i ++)
 	{
-		var _index = currentBuffs[| i];
+		var _index = _targetID.currentBuffs[| i];
 		
 		if _index[0] == _script return i;
 	}
@@ -64,7 +65,7 @@ function scrBuffs() //Runs code for each buff in the ds_list currentBuffs
 //_sec is how many seconds the buff is active, _str is the multiplicative value of the max speed
 function scrBuffsMaxVelocityBoost(_sec,_str)
 {
-	var _index = scrBuffsFind(scrBuffsMaxVelocityBoost); //Tracks the index of our buff by searching for script name with our tool
+	var _index = scrBuffsFind(scrBuffsMaxVelocityBoost,id); //Tracks the index of our buff by searching for script name with our tool
 	var _timeStart = _sec*room_speed
 
 	if buffTimer[_index] > 0 buffTimer[_index] --; //Buff timer init, counts down to 0

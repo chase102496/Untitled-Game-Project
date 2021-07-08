@@ -56,16 +56,15 @@ function scrProjectileStateCollide(_type,_aliveTimerMax)
 {
 	switch(_type)
 	{
-		case objEntity: //Runs a bunch of scripts based on what is configured in equipment, to the target: entityColliding
+		case objEntity: //Runs a bunch of scripts (entityBuffs) that are translated by scrBuffs based on what is configured in equipment
 		{
-			with entityColliding
+			for (var i = 0;i < array_length(entityBuffs);i ++) //Run each one through the buff add script for this target
 			{
-			//Each entity and player will have a currentBuffs ds_list, detailing all the scripts currently being run related to buffs. They will be categ
-			//orized by type in the naming convention. The code will be passed on from the projectile, but will be run in the object being buffed or debuffed from the ds_list that is run ONLY when called by the
-			//script module scrBuffs();
-			//to add a buff, first a ds_list_find_index would be run to see if the buff is already applied. If it is, it will reset it and overwrite it (for now)
-			//once we know the buff doesn't exist on this entity, it would be added with optional parameters as a list, first being the script ds_list_add(currentBuffs,[scrBuffsPoison,10,true,12,1])
+				scrBuffsAdd(entityBuffs[i],entityColliding);
 			}
+			
+			scrProjectileAliveTimer(_aliveTimerMax);
+			
 			break;
 		}
 		
@@ -127,13 +126,10 @@ function scrProjectilePhysics(_angleVelocity)
 }
 
 //Detects entities and changes state when hit
-function scrProjectileDetectEntity() //WIP
+function scrProjectileDetectEntity()
 {
-	if place_meeting(x,y,objEntity)
-	{
-		entityColliding = other;
-		currentState = stateCollideEntity;
-	}
+	entityColliding = instance_place(x,y,objEntity)
+	if instance_exists(entityColliding) currentState = stateCollideEntity;
 }
 
 //Detects terrain and changes state when hit

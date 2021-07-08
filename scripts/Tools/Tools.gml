@@ -1,10 +1,11 @@
+#region General tools
+
 //@scrRoundPrecise(value to be rounded, rounding frac)
 //e.g. to round to 0.01 scrRoundPrecise(10.354676, 0.01) = 10.35
 function scrRoundPrecise(_value,_decimal)
 {
 	return round(_value/_decimal)*_decimal;
 }
-
 //Format is if *condition* _value = scrToggle(value);
 function scrToggle(_value) //Toggles a value true and false
 {
@@ -54,18 +55,11 @@ function scrToggleList(_currentValue,_valueList) //Thumbs through a list each ti
 	return _newValue;
 }
 
-// currentState[0] will be currentState w/ no args
-// currentState [0][0] will be currentState w/ args
-// currentState[0][1+] will be arguments for currentState
-// currentState[1] will be currentSubstate /w no args
-// currentState[1][0] will be currentSubstate w/ args
-// currentState[1][1+] will be arguments for currentSubstate
-// etc...
-// Ideally would switch states by saying
-// currentState = [scrMain,scrSub,scrSub2,scrSub3...] or
-// currentState = [[scrMain,arg0,arg1],[scrSub,arg0,arg1],[scrSub2,arg0,arg1],[scrSub3,arg0,arg1]...]
-// It would then run in numerical order 0 - array length of currentState
-function scrStateExecute(_currentState)
+#endregion
+
+#region State-related tools
+
+function scrStateExecute(_currentState) //Script to run the list of states and substates (e.g. currentstate = [scrMainState,Substate1,[Substate2withargs,arg0,arg1]])
 {
 	for (var i = 0; i < array_length(_currentState);i ++)
 	{
@@ -79,13 +73,60 @@ function scrStateExecute(_currentState)
 		else script_execute(_currentState[i]);
 	}
 }
+//
 function scrStateMemory() //Used to store the previous state in memory
 {
 	if storedState != currentState previousState = storedState;
 	storedState = currentState;
 }
+
+#endregion
+
+#region Animation tools
+
 function scrInSequence(_currentSequenceElement) //Used as alternative to in_sequence
 {
 	if layer_sequence_get_headpos(_currentSequenceElement) >= layer_sequence_get_length(_currentSequenceElement)-1 return false;
 	else return true;
 }
+//
+function scrSquishVelocity()
+{
+	var _vBounceAmount = abs(vVel - vVelBefore); //Change in velocity
+	var _vBounceCoefficient = scrRoundPrecise((_vBounceAmount/vMaxVel),0.01); //Change bounce strength based on vVel change
+	
+	//Bounce detection upon sudden vVel change. Make sure abs(yscale) + abs(xscale) always equals 2
+	if _vBounceAmount > bounceThereshold
+	{
+		if sign(vVelBefore) = 1 //stopped moving fast
+		{
+			sprite_xscale *= (spriteSize + ((bounceStretch) * _vBounceCoefficient)); //widen
+			sprite_yscale *= (spriteSize - ((bounceStretch) * _vBounceCoefficient)); //shorten
+		}
+		else //started moving fast
+		{
+			sprite_xscale *= (spriteSize - ((bounceStretch) * _vBounceCoefficient)); //thin
+			sprite_yscale *= (spriteSize + ((bounceStretch) * _vBounceCoefficient)); //tall
+		}
+	}
+	vVelBefore = vVel;
+}
+//
+function scrSquish()
+{	
+	if abs(sprite_xscale - sign(sprite_xscale)) >= bounceSpeed //If subtracting would not overshoot 1 or -1
+	{
+		if abs(sprite_xscale) > spriteSize sprite_xscale -= (sign(sprite_xscale) * bounceSpeed); //Should return xscale back to normal from being too wide
+		else if abs(sprite_xscale) < spriteSize sprite_xscale += (sign(sprite_xscale) * bounceSpeed); //Should return xscale back to normal from being too thin
+	}
+	else sprite_xscale = sign(sprite_xscale)*spriteSize;
+
+	if abs(sprite_yscale - sign(sprite_yscale)) >= bounceSpeed //If subtracting would not overshoot 1 or -1
+	{
+	if abs(sprite_yscale) > spriteSize sprite_yscale -= (sign(sprite_yscale) * bounceSpeed); //Should return xscale back to normal from being too wide
+	else if abs(sprite_yscale) < spriteSize sprite_yscale += (sign(sprite_yscale) * bounceSpeed); //Should return xscale back to normal from being too thin
+	}
+	else sprite_yscale = sign(sprite_yscale)*spriteSize;
+}
+
+#endregion

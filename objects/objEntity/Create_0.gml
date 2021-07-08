@@ -22,7 +22,7 @@ hAirAccel = 0.2;			//Air acceleration
 hAirDecel = 0.1;			//Air friction
 //
 gravAccel = 0.25;
-jumpStr = 5;				//Amount of acceleration after pressing jump key
+jumpStr = 3;				//Amount of acceleration after pressing jump key
 jumpControl = 0.25;			//Amount of deceleration after letting go of jump key
 wallJumpStr = 7;			
 //

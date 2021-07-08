@@ -7,6 +7,7 @@ function scrPlayerAnimationsInit()
 	
 	vVelBefore = 0;
 }
+///
 function scrPlayerAnimations()
 {
 	switch currentState
@@ -62,6 +63,14 @@ function scrPlayerAnimations()
 			break;
 		}
 		
+		case scrPlayerStateHurt:
+		{
+			
+			break
+		}
+		
+		#region Attack animations
+		
 		case scrPlayerStateAttack:
 		{
 			switch (playerEquip.currentState[1])
@@ -86,44 +95,10 @@ function scrPlayerAnimations()
 			}
 			break;
 		}
+		
+		#endregion
 	}
 
-	scrVelocitySquishing();
-}
-///
-function scrVelocitySquishing()
-{	
-	var _vBounceAmount = abs(vVel - vVelBefore); //Change in velocity
-	var _vBounceCoefficient = scrRoundPrecise((_vBounceAmount/vMaxVel),0.01); //Change bounce strength based on vVel change
-	
-	//Bounce detection upon sudden vVel change. Make sure abs(yscale) + abs(xscale) always equals 2
-	if _vBounceAmount > bounceThereshold
-	{
-		if sign(vVelBefore) = 1 //stopped moving fast
-		{
-			sprite_xscale *= (spriteSize + ((bounceStretch) * _vBounceCoefficient)); //widen
-			sprite_yscale *= (spriteSize - ((bounceStretch) * _vBounceCoefficient)); //shorten
-		}
-		else //started moving fast
-		{
-			sprite_xscale *= (spriteSize - ((bounceStretch) * _vBounceCoefficient));
-			sprite_yscale *= (spriteSize + ((bounceStretch) * _vBounceCoefficient));
-		}
-	}
-
-	if abs(sprite_xscale - sign(sprite_xscale)) >= bounceSpeed //If subtracting would not overshoot 1 or -1
-	{
-		if abs(sprite_xscale) > spriteSize sprite_xscale -= (sign(sprite_xscale) * bounceSpeed); //Should return xscale back to normal from being too wide
-		else if abs(sprite_xscale) < spriteSize sprite_xscale += (sign(sprite_xscale) * bounceSpeed); //Should return xscale back to normal from being too thin
-	}
-	else sprite_xscale = sign(sprite_xscale)*spriteSize;
-
-	if abs(sprite_yscale - sign(sprite_yscale)) >= bounceSpeed //If subtracting would not overshoot 1 or -1
-	{
-	if abs(sprite_yscale) > spriteSize sprite_yscale -= (sign(sprite_yscale) * bounceSpeed); //Should return xscale back to normal from being too wide
-	else if abs(sprite_yscale) < spriteSize sprite_yscale += (sign(sprite_yscale) * bounceSpeed); //Should return xscale back to normal from being too thin
-	}
-	else sprite_yscale = sign(sprite_yscale)*spriteSize;
-
-	vVelBefore = vVel;
+	scrSquishVelocity();
+	scrSquish();
 }

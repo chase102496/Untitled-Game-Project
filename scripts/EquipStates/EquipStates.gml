@@ -327,7 +327,9 @@ function scrEquipStateOrbCast()
 		with equipProjectile
 		{
 			sprite_index = sprArcaneBlast;
-			stateFree = [[scrProjectileStateFree,false,false,false,false,-2]];
+			stateFree = [[scrProjectileStateFree,false,false,true,false,-2]];
+			stateCollideEntity = [[scrProjectileStateCollide,objEntity,-2]];
+			entityBuffs = [[scrBuffsMaxVelocityBoost,7,2]];
 			stateDestroy = [scrProjectileStateDestroy];
 			currentState = stateFree;
 		}

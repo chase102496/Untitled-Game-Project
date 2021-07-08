@@ -16,7 +16,8 @@ currentState = [scrProjectileStateIdle];
 //e.g. buffState = [[ThisOneDoesDamage,20 damage,Fire type],[ThisOneCausesPoison,10 damage, 10 seconds, Every 1 sec]]
 
 aliveTimer = 0;
-entityColliding = 0;
+entityColliding = noone;
+entityBuffs = [];
 
 projectilePowerMax = 13; //This is when the bow is fully charged, what the value will be
 projectilePower = 0; //This is the real-time bow power. Should be modified by equipment

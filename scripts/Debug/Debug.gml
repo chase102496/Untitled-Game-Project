@@ -40,20 +40,14 @@ function scrDebugVars()
 {		
 	with objPlayer
 	{
-		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
-		{
-			global.debugVar[4+i] = "Buff "+string(i)+" "+string(scrBuffTimerDisplay(i))+string(currentBuffs[| i]);
-		}
+		
 	}
 	
 	with objEntity
 	{
-		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
-		{
-			global.debugVar[8+i] = "Buff "+string(i)+" "+string(scrBuffTimerDisplay(i))+string(currentBuffs[| i]);
-		}
+		
 	}
-
+	
 	with global.playerObject
 	{
 		#region Input-driven debug

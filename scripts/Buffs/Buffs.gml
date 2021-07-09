@@ -10,18 +10,19 @@ function scrBuffsCleanup()
 	 ds_list_destroy(currentBuffs);
 }
 // Adds the buff to the entity's buff list. Be sure to include the script and args in the same array, starting with the script as [0]
+// The buff will be added, as an array, to the list. [0] = script and args, [1] = buff timer, [2] = buff's saved info to revert back to (such as in a speed buff or slow buff)
 function scrBuffsAdd(_scriptList,_targetID)
 {
 	var _index = scrBuffsFind(_scriptList[0],_targetID);
 	
 	if _index == -1 //If no buff found
 	{
-		ds_list_add(_targetID.currentBuffs,[_scriptList,-1]);
+		ds_list_add(_targetID.currentBuffs,[_scriptList,-1,0]);
 	}
 	else //If buff found
 	{
 		_targetID.currentBuffs[| _index][@ 1] = 0;
-		ds_list_add(_targetID.currentBuffs,[_scriptList,-1]);
+		ds_list_add(_targetID.currentBuffs,[_scriptList,-1,0]);
 	}
 }
 //
@@ -57,29 +58,65 @@ function scrBuffs() //Runs code for each buff in the ds_list currentBuffs
 
 #region Buffs
 
-//_sec is how many seconds the buff is active, _str is the multiplicative value of the max speed
-function scrBuffsMaxVelocityBoost(_sec,_str)
+//Changes the player's max velocity temporarily, up or down
+//_sec is how many seconds the buff is active, _str is the multiplicative value of the max speed. if it is less than 0, it will decrease the maxvel
+function scrBuffsMaxVelocity(_sec,_str)
 {
-	var _index = scrBuffsFind(scrBuffsMaxVelocityBoost,id); //Tracks the index of our buff by searching for script name with our tool
+	//Config
+	var _index = scrBuffsFind(scrBuffsMaxVelocity,id);
 	var _timeStart = _sec*room_speed;
-	var _buffTimer = currentBuffs[| _index][1]; //purely to reference. Use directly when modifying
-
-	if _buffTimer > 0 currentBuffs[| _index][@ 1] --; //Buff timer init, counts down to 0
+	var _buffTimer = currentBuffs[| _index][@ 1];
+	var _newValue = (hMaxVel*_str) - hMaxVel;
 	
-	if _buffTimer == -1 //Init buff, before timer is set
+	switch _buffTimer
 	{
-		var _newValue = hMaxVel*_str;
-		buffPrevious[_index] = _newValue - hMaxVel; //Saving the diff between the old and new value
-		hMaxVel = _newValue;
-		currentBuffs[| _index][@ 1] = _timeStart //Changing our timer to timeStart
+		//Init
+		case -1:
+		currentBuffs[| _index][@ 2] = _newValue; //Saving the diff between the old and new value
+		hMaxVel += _newValue;
+		currentBuffs[| _index][@ 1] = _timeStart; //Changing our timer to timeStart
+		break;
+		
+		//Running
+		default:
+		currentBuffs[| _index][@ 1] --;
+		break;
+		
+		//Finished
+		case 0:
+		hMaxVel -= currentBuffs[| _index][@ 2]; //setting max vel back to previous before buff
+		ds_list_delete(currentBuffs,_index); //Reset
+		break;
 	}
+}
+//
+function scrBuffsJumpStrength(_sec,_str)
+{
+	//Config
+	var _index = scrBuffsFind(scrBuffsJumpStrength,id);
+	var _timeStart = _sec*room_speed;
+	var _buffTimer = currentBuffs[| _index][@ 1];
+	var _newValue = (jumpStr*_str) - jumpStr;
 	
-	if _buffTimer == 0 //Timer has been set and expired, end of buff
+	switch _buffTimer
 	{
-		hMaxVel -= buffPrevious[_index]; //setting max vel back to previous before buff
-		currentBuffs[| _index][@ 1] = -1; //Reset timer to init
-		buffPrevious[_index] = 0; //Reset to no difference
-		ds_list_delete(currentBuffs,_index); //Delete this buff from the ds_list
+		//Init
+		case -1:
+		currentBuffs[| _index][@ 2] = _newValue; //Saving the diff between the old and new value
+		jumpStr += _newValue;
+		currentBuffs[| _index][@ 1] = _timeStart; //Changing our timer to timeStart
+		break;
+		
+		//Running
+		default:
+		currentBuffs[| _index][@ 1] --;
+		break;
+		
+		//Finished
+		case 0:
+		jumpStr -= currentBuffs[| _index][@ 2]; //setting max vel back to previous before buff
+		ds_list_delete(currentBuffs,_index); //Reset
+		break;
 	}
 }
 

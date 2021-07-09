@@ -2,11 +2,9 @@ function scrDebugInit()
 {
 	global.drawDebug = false;
 	global.showHitbox = false;
-	
-	for (var i = 0;i < 100;i ++)
-	{
-		global.debugVar[i] = 0;
-	}
+	global.debugVar = ds_list_create()
+	global.debugVar[| 0] = []; //Velocities
+	global.debugVar[| 1] = []; //Buffs
 }
 //
 function scrDebugInputs()
@@ -38,85 +36,61 @@ function scrDebugInputs()
 //
 function scrDebugVars()
 {		
-	with objPlayer
+	with global.inputObject
 	{
+		#region Polling-driven debug
 		
-	}
-	
-	with objEntity
-	{
+		//Tracking velocity
+		global.debugVar[| 0] = ["Player hVel: "+string(hVel),"Player vVel: "+string(vVel)];
 		
-	}
-	
-	with global.playerObject
-	{
-		#region Input-driven debug
-		
-		//Changing input targets. Control a body with MMB!
-		if mouse_check_button_pressed(mb_middle)
+		//Tracking buffs
+		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
 		{
-			if position_meeting(mouse_x,mouse_y,global.playerObject) global.inputObject = global.playerObject.id;
-			if position_meeting(mouse_x,mouse_y,objEntity) global.inputObject = objEntity.id;
+			var _buff = script_get_name(currentBuffs[| i][0][0]);
+			var _timer = string(scrRoundPrecise(currentBuffs[| i][1]/room_speed,0.01));
+			global.debugVar[| 1][i] = _buff+" "+_timer;
 		}
-		
-		//Debug toggle
-		if global.keyPress0
+		for (var i = 0;i < array_length(global.debugVar[| 1]); i ++)
 		{
-			global.drawDebug = scrToggle(global.drawDebug);
-			global.showHitbox = scrToggle(global.showHitbox);
+			if i >= ds_list_size(currentBuffs) array_delete(global.debugVar[| 1],i,1);
 		}
-		
-		//Equipment change
-		if global.keyPress1 playerEquip.currentState = [scrEquipStateEmpty,scrEquipStateEmptyIdle];
-		if global.keyPress2 playerEquip.currentState = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
-		if global.keyPress3 playerEquip.currentState = [scrEquipStateBow,scrEquipStateBowIdle];
-		if global.keyPress4 playerEquip.currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
-		
-		//Add a buff to your currently controlled target
-		if global.keyPress5 scrBuffsAdd([scrBuffsMaxVelocityBoost,7,2],global.inputObject);
-
-		//Restart game
-		if global.keyEsc game_restart();
-		
-		#endregion
-		
-		#region Polling debug
-		
-		global.debugVar[0] = "Player hVel: "+string(hVel);
-		global.debugVar[1] = "Player vVel: "+string(vVel);
-	
-		//States
-		//if is_array(playerEquip.currentState) //Displays our states [2] - [3]
-		//{
-		//	switch (array_length(playerEquip.currentState))
-		//	{			
-		//		default:
-		//		break;
-			
-		//		case 0:
-		//		break;
-			
-		//		case 1:
-		//		if !is_array(playerEquip.currentState[0]) global.debugVar[2] = script_get_name(playerEquip.currentState[0]);
-		//		global.debugVar[3] = "Empty"
-		//		break;
-			
-		//		case 2:
-		//		if !is_array(playerEquip.currentState[0]) global.debugVar[2] = script_get_name(playerEquip.currentState[0]);
-		//		if !is_array(playerEquip.currentState[1]) global.debugVar[3] = script_get_name(playerEquip.currentState[1]);
-		//		break;
-		//	}
-		//}
-	
-		//debuff/buffs
-		//for (var i = 0;i < ds_list_size(currentBuffs);i ++)
-		//{
-		//	global.debugVar[4+i] = string(scrBuffTimerDisplay(i))+string(currentBuffs[| i]);
-		//}
-
+		if ds_list_size(currentBuffs) == 0 array_pop(global.debugVar[| 1]);
 		
 		#endregion
 	}
+	
+	#region Input-driven debug
+		
+	//Changing input targets. Control a body with MMB!
+	if mouse_check_button_pressed(mb_middle)
+	{
+		if position_meeting(mouse_x,mouse_y,global.playerObject) global.inputObject = global.playerObject.id;
+		if position_meeting(mouse_x,mouse_y,objEntity) global.inputObject = objEntity.id;
+	}
+		
+	//Debug toggle
+	if global.keyPress0
+	{
+		global.drawDebug = scrToggle(global.drawDebug);
+		global.showHitbox = scrToggle(global.showHitbox);
+	}
+		
+	//Equipment change
+	var _playerEquip = global.playerObject.playerEquip;
+	if global.keyPress1 _playerEquip.currentState = [scrEquipStateEmpty,scrEquipStateEmptyIdle];
+	if global.keyPress2 _playerEquip.currentState = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
+	if global.keyPress3 _playerEquip.currentState = [scrEquipStateBow,scrEquipStateBowIdle];
+	if global.keyPress4 _playerEquip.currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+		
+	//Add a buff to your currently controlled target
+	if global.keyPress5 scrBuffsAdd([scrBuffsMaxVelocity,7,2],global.inputObject);
+	if global.keyPress6 scrBuffsAdd([scrBuffsJumpStrength,7,2],global.inputObject);
+
+	//Restart game
+	if global.keyEsc game_restart();
+		
+	#endregion
+	
 }
 //
 function scrDebugDraw()
@@ -138,9 +112,9 @@ function scrDebugDraw()
 		}
 
 		//
-		for (var i = 0; i < array_length(global.debugVar); i += 1)
+		for (var i = 0; i < ds_list_size(global.debugVar); i += 1)
 		{
-			draw_text_transformed(global.playerObject.x,global.playerObject.y-30-(8*i),global.debugVar[i],0.5,0.5,0);
+			draw_text_transformed(global.inputObject.x,global.inputObject.y-30-(8*i),global.debugVar[| i],0.5,0.5,0);
 		}
 	}
 }

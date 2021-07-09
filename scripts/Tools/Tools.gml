@@ -128,5 +128,10 @@ function scrSquish()
 	}
 	else sprite_yscale = sign(sprite_yscale)*spriteSize;
 }
+//
+
+#endregion
+
+#region Debug tools
 
 #endregion

@@ -16,20 +16,20 @@ function scrEntityStateGround()
 	scrPhysicsVars();
 	
 	// Movement
-	if hVel != 0 and moveDirection == 0
+	if stats.hVel != 0 and moveDirection == 0
 	{
-		if (abs(hVel) >= hDecel) hVel -= sign(hVel) * hDecel;
-		else hVel = 0;
+		if (abs(stats.hVel) >= stats.hDecel) stats.hVel -= sign(stats.hVel) * stats.hDecel;
+		else stats.hVel = 0;
 	}
 	else
 	{
-		// Movement acceleration, capping vel at hMaxVel
-		hVel = clamp(hVel + (moveDirection * hAccel),-hMaxVel,hMaxVel)
+		// Movement acceleration, capping vel at stats.hMaxVel
+		stats.hVel = clamp(stats.hVel + (moveDirection * stats.hAccel),-stats.hMaxVel,stats.hMaxVel)
 		
-		if sign(hVel) != moveDirection hVel = 0; //If our velocity isn't the same as our move direction, turn instantly
+		if sign(stats.hVel) != moveDirection stats.hVel = 0; //If our velocity isn't the same as our move direction, turn instantly
 	}
 	
-	if keyJump vVel -= jumpStr; //Jump
+	if keyJump stats.vVel -= stats.jumpStr; //Jump
 	
 	scrGravity();
 	scrFractionRemoval();
@@ -45,18 +45,18 @@ function scrEntityStateAir()
 	scrPhysicsVars();
 
 	// Movement
-	if (moveDirection == 0 and hVel != 0)
+	if (moveDirection == 0 and stats.hVel != 0)
 	{
-		if (abs(hVel) >= hAirDecel) hVel -= sign(hVel) * hAirDecel;
-		else hVel = 0;
+		if (abs(stats.hVel) >= stats.hAirDecel) stats.hVel -= sign(stats.hVel) * stats.hAirDecel;
+		else stats.hVel = 0;
 	}
 	else
 	{
-		// Movement acceleration, capping hVel at hMaxVel in both directions
-		hVel = clamp(hVel + (moveDirection * hAirAccel),-hMaxVel,hMaxVel)
+		// Movement acceleration, capping stats.hVel at stats.hMaxVel in both directions
+		stats.hVel = clamp(stats.hVel + (moveDirection * stats.hAirAccel),-stats.hMaxVel,stats.hMaxVel)
 	}
-	//vVel cap
-	vVel = clamp(vVel,-vMaxVel,vMaxVel)
+	//stats.vVel cap
+	stats.vVel = clamp(stats.vVel,-stats.vMaxVel,stats.vMaxVel)
 
 	scrGravity();
 	scrFractionRemoval();
@@ -68,5 +68,5 @@ function scrEntityStateAir()
 	if onGround currentState = scrEntityStateGround;
 	
 	//Extra
-	if (!keyJump and (vVel < -jumpControl)) vVel += jumpControl; //Shaves off some velocity by a set amount
+	if (!keyJump and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount
 }

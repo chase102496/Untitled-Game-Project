@@ -30,8 +30,8 @@ function scrProjectileStateHoldArrow()
 	_vVelRatio = (_degVel/90);
 	_hVelRatio = (1 - abs(_degVel/90))*sign(equip.image_xscale);
 	
-	vVel = projectilePower*_vVelRatio;
-	hVel = projectilePower*_hVelRatio;
+	stats.vVel = projectilePower*_vVelRatio;
+	stats.hVel = projectilePower*_hVelRatio;
 
 	x = equip.anchor.x;
 	y = equip.anchor.y;
@@ -70,8 +70,8 @@ function scrProjectileStateCollide(_type,_aliveTimerMax)
 		
 		case objTerrain:
 		{
-			hVel = 0;
-			vVel = 0;
+			stats.hVel = 0;
+			stats.vVel = 0;
 			scrProjectileAliveTimer(_aliveTimerMax);
 			break;
 		}
@@ -116,13 +116,13 @@ function scrProjectileAliveTimer(_aliveTimerMax)
 function scrProjectilePhysics(_angleVelocity)
 {
 	//Angles the projectile toward the current velocity
-	if _angleVelocity image_angle = point_direction(0,0,hVel,vVel)+angleVelocityOffset;
+	if _angleVelocity image_angle = point_direction(0,0,stats.hVel,stats.vVel)+angleVelocityOffset;
 	
-	vVel += gravAccel;
-	hVel -= sign(hVel)*hAirDecel;
+	stats.vVel += stats.gravAccel;
+	stats.hVel -= sign(stats.hVel)*stats.hAirDecel;
 
-	x += hVel;
-	y += vVel;
+	x += stats.hVel;
+	y += stats.vVel;
 }
 
 //Detects entities and changes state when hit

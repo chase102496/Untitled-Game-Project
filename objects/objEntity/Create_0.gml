@@ -1,10 +1,10 @@
+//NEW constructor instantiation
+stats = new conStatsInit();
+
 //One-time init scripts
-scrPhysicsInit();
-scrEntityInputsInit();
 scrEntityStateInit();
 scrEntityAnimationsInit();
 scrBuffsInit();
-scrStatsInit();
 
 //Placeholders for sprite animations;
 phSpriteIdle = sprPlayerIdle;

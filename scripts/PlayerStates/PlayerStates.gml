@@ -18,20 +18,20 @@ function scrPlayerStateGround() //Player is idle or running
 	scrPhysicsVars();
 	
 	// Movement
-	if (moveDirection == 0 and hVel != 0)
+	if (moveDirection == 0 and stats.hVel != 0)
 	{
-		if (abs(hVel) >= hDecel) hVel -= sign(hVel) * hDecel;
-		else hVel = 0;
+		if (abs(stats.hVel) >= stats.hDecel) stats.hVel -= sign(stats.hVel) * stats.hDecel;
+		else stats.hVel = 0;
 	}
 	else
 	{
-		// Movement acceleration, capping vel at hMaxVel
-		hVel = clamp(hVel + (moveDirection * hAccel),-hMaxVel,hMaxVel)
+		// Movement acceleration, capping vel at stats.hMaxVel
+		stats.hVel = clamp(stats.hVel + (moveDirection * stats.hAccel),-stats.hMaxVel,stats.hMaxVel)
 		
-		if sign(hVel) != moveDirection hVel = 0; //If our velocity isn't the same as our move direction, turn instantly
+		if sign(stats.hVel) != moveDirection stats.hVel = 0; //If our velocity isn't the same as our move direction, turn instantly
 	}
 	
-	if keyJumpDown vVel -= jumpStr; //Jump
+	if keyJumpDown stats.vVel -= stats.jumpStr; //Jump
 	
 	scrGravity();
 	scrFractionRemoval();
@@ -50,18 +50,18 @@ function scrPlayerStateAir() //Player is in air not touching walls or ground
 	scrPhysicsVars();
 
 	// Movement
-	if (moveDirection == 0 and hVel != 0)
+	if (moveDirection == 0 and stats.hVel != 0)
 	{
-		if (abs(hVel) >= hAirDecel) hVel -= sign(hVel) * hAirDecel;
-		else hVel = 0;
+		if (abs(stats.hVel) >= stats.hAirDecel) stats.hVel -= sign(stats.hVel) * stats.hAirDecel;
+		else stats.hVel = 0;
 	}
 	else
 	{
-		// Movement acceleration, capping hVel at hMaxVel in both directions
-		hVel = clamp(hVel + (moveDirection * hAirAccel),-hMaxVel,hMaxVel)
+		// Movement acceleration, capping stats.hVel at stats.hMaxVel in both directions
+		stats.hVel = clamp(stats.hVel + (moveDirection * stats.hAirAccel),-stats.hMaxVel,stats.hMaxVel)
 	}
-	//vVel cap
-	vVel = clamp(vVel,-vMaxVel,vMaxVel)
+	//stats.vVel cap
+	stats.vVel = clamp(stats.vVel,-stats.vMaxVel,stats.vMaxVel)
 
 	scrGravity();
 	scrFractionRemoval();
@@ -75,7 +75,7 @@ function scrPlayerStateAir() //Player is in air not touching walls or ground
 	else if onWall != 0 currentState = scrPlayerStateWallslide;
 	
 	//Extra
-	if (!keyJump and (vVel < -jumpControl)) vVel += jumpControl; //Shaves off some velocity by a set amount
+	if (!keyJump and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount
 }
 ///
 function scrPlayerStateWallslide() //Player is sliding on wall
@@ -83,8 +83,8 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 	//Movement
 	if keyJumpDown
 	{
-		vVel = -wallJumpStr*0.6;
-		hVel = sign(sprite_xscale)*wallJumpStr*0.4;
+		stats.vVel = -stats.wallJumpStr*0.6;
+		stats.hVel = sign(sprite_xscale)*stats.wallJumpStr*0.4;
 	}
 	
 	scrPhysicsVars();
@@ -100,7 +100,7 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 	else if onWall = 0 currentState = scrPlayerStateAir;
 	
 	//Extra
-	vVel = scrRoundPrecise(vVel*vSlideDecel,0.01) //Rounds to the hundredth (0.01)
+	stats.vVel = scrRoundPrecise(stats.vVel*stats.vSlideDecel,0.01) //Rounds to the hundredth (0.01)
 }
 ///
 function scrPlayerStateCrouch() //Player is crouching
@@ -118,10 +118,10 @@ function scrPlayerStateCrouch() //Player is crouching
 	else if !onGround currentState = scrPlayerStateAir;
 	
 	//Extra
-	if hVel != 0
+	if stats.hVel != 0
 	{
-		if (abs(hVel) >= hSlideDecel) hVel -= sign(hVel) * hSlideDecel;
-		else hVel = 0;
+		if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
+		else stats.hVel = 0;
 	}
 
 }

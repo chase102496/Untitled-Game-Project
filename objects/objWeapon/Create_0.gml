@@ -1,11 +1,12 @@
+//NEW constructor instantiation
+stats = new conStatsInit();
+
 scrEquipStateInit()
 //Init
 currentLayer = "layEquip";
 currentSequence = 0;
 currentSequenceElement = 0;
 currentSequenceInstance = 0;
-vVel = 0;
-hVel = 0;
 previousDirection = 1;
 changedDirection = 1;
 equipProjectile = noone;

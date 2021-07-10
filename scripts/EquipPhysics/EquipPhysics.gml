@@ -1,8 +1,8 @@
 function scrEquipPhysics() //Position
 {		
-	hVel = owner.hVel;
-	vVel = owner.vVel;
+	stats.hVel = owner.stats.hVel;
+	stats.vVel = owner.stats.vVel;
 	
-	layer_sequence_x(currentSequenceElement,owner.x+hVel);
-	layer_sequence_y(currentSequenceElement,owner.y+vVel);
+	layer_sequence_x(currentSequenceElement,owner.x+stats.hVel);
+	layer_sequence_y(currentSequenceElement,owner.y+stats.vVel);
 }

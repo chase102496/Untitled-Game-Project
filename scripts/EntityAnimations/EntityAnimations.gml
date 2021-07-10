@@ -14,25 +14,25 @@ function scrEntityAnimations()
 	{	
 		case scrEntityStateGround:
 		{
-			if hVel == 0
+			if stats.hVel == 0
 			{
 				image_speed = 0.5;
 				sprite_index = phSpriteIdle; //Idle animation
 			}
 			else
 			{
-				image_speed = abs(hVel/hMaxVel);
+				image_speed = abs(stats.hVel/stats.hMaxVel);
 				sprite_index = phSpriteRun; //Run animation
-				sprite_xscale = sign(hVel);
+				sprite_xscale = sign(stats.hVel);
 			}
 			break;
 		}
 	
 		case scrEntityStateAir:
 		{
-			image_speed = abs(vVel/vMaxVel) + 0.5
+			image_speed = abs(stats.vVel/stats.vMaxVel) + 0.5
 			
-			if vVel < 0 
+			if stats.vVel < 0 
 			{
 				sprite_index = phSpriteJumpRise;
 			}

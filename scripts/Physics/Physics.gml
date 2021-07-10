@@ -1,29 +1,3 @@
-function scrPhysicsInit()
-{
-	//Physics init
-	hVel = 0;
-	hVelFrac = 0;
-	vVel = 0;
-	vVelFrac = 0;
-	onWall = false;
-	onGround = false;
-	//
-	hSlideDecel = 0.025;		//This is how slow you decelerate when sliding
-	vSlideDecel = 0.9;			//This is how slow you decelerate when wallsliding
-	hAirAccel = 0.2;			//Air acceleration
-	hAirDecel = 0.1;			//Air friction
-	//
-	gravAccel = 0.25;
-	jumpStr = 5;				//Amount of acceleration after pressing jump key
-	jumpControl = 0.25;			//Amount of deceleration after letting go of jump key
-	wallJumpStr = 7;			//How far you jump off the wall. 7 is just enough to not climb the wall.
-	//
-	hAccel = 0.2;				//This controls how quickly you accelerate when running
-	hDecel = 0.2;				//This is essentially friction, and controls how quickly you can stop after running
-	hMaxVel = 1.8;				//Max speed when running
-	vMaxVel = jumpStr + 1;		//Max speed when falling. Has to be >= jumpStr for your jump to work properly
-}
-///
 function scrPhysicsVars()
 {
 	onWall = place_meeting(x+1,y,objTerrain) - place_meeting(x-1,y,objTerrain); //1 = left wall, 0 = no wall, -1 = right wall
@@ -33,18 +7,18 @@ function scrPhysicsVars()
 function scrFractionRemoval()
 {
 	//Store and remove fractions for collision prep MUST GO BEFORE COLLISION
-	//hVel += hVelFrac
-	//vVel += vVelFrac
+	//stats.hVel += hVelFrac
+	//stats.vVel += vVelFrac
 	
-	//hVelFrac = hVel - (floor(abs(hVel))*sign(hVel));
-	//hVel -= hVelFrac;
-	//vVelFrac = vVel - (floor(abs(vVel))*sign(vVel));
-	//vVel -= vVelFrac;
+	//hVelFrac = stats.hVel - (floor(abs(stats.hVel))*sign(stats.hVel));
+	//stats.hVel -= hVelFrac;
+	//vVelFrac = stats.vVel - (floor(abs(stats.vVel))*sign(stats.vVel));
+	//stats.vVel -= vVelFrac;
 }
 ///
 function scrGravity()
 {
-	vVel += gravAccel;
+	stats.vVel += stats.gravAccel;
 }
 ///
 function scrCollision(_noClip) //Enables object collision and physics, for no collision add true to the args
@@ -53,33 +27,33 @@ function scrCollision(_noClip) //Enables object collision and physics, for no co
 	{
 		// OLD Horizontal Collision
 		// Make sure the sprite mask width is an even number for using this
-		if place_meeting(x+hVel,y,objTerrain) // Colliding with terrain horizontally
+		if place_meeting(x+stats.hVel,y,objTerrain) // Colliding with terrain horizontally
 		{
-			while (!place_meeting(x+sign(hVel),y,objTerrain))
+			while (!place_meeting(x+sign(stats.hVel),y,objTerrain))
 			{
-			x += sign(hVel);
+			x += sign(stats.hVel);
 			}
-			hVel = 0;
+			stats.hVel = 0;
 		}
 	
-		x += hVel;
+		x += stats.hVel;
 
 		// OLD Vertical Collision
-		if place_meeting(x,y+vVel,objTerrain) // Colliding with terrain vertically
+		if place_meeting(x,y+stats.vVel,objTerrain) // Colliding with terrain vertically
 		{
-			while (!place_meeting(x,y+sign(vVel),objTerrain))
+			while (!place_meeting(x,y+sign(stats.vVel),objTerrain))
 			{
-				y += sign(vVel);
+				y += sign(stats.vVel);
 			}
-			vVel = 0;
+			stats.vVel = 0;
 		}
 	
-		y += vVel;
+		y += stats.vVel;
 	}
 	else if _noClip == true
 	{
-		x += hVel;
-		y += vVel;	
+		x += stats.hVel;
+		y += stats.vVel;	
 	}
 }
 ///

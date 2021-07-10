@@ -92,10 +92,10 @@ function scrInSequence(_currentSequenceElement) //Used as alternative to in_sequ
 //
 function scrSquishVelocity()
 {
-	var _vBounceAmount = abs(vVel - vVelBefore); //Change in velocity
-	var _vBounceCoefficient = scrRoundPrecise((_vBounceAmount/vMaxVel),0.01); //Change bounce strength based on vVel change
+	var _vBounceAmount = abs(stats.vVel - vVelBefore); //Change in velocity
+	var _vBounceCoefficient = scrRoundPrecise((_vBounceAmount/stats.vMaxVel),0.01); //Change bounce strength based on stats.vVel change
 	
-	//Bounce detection upon sudden vVel change. Make sure abs(yscale) + abs(xscale) always equals 2
+	//Bounce detection upon sudden stats.vVel change. Make sure abs(yscale) + abs(xscale) always equals 2
 	if _vBounceAmount > bounceThereshold
 	{
 		if sign(vVelBefore) = 1 //stopped moving fast
@@ -109,7 +109,7 @@ function scrSquishVelocity()
 			sprite_yscale *= (spriteSize + ((bounceStretch) * _vBounceCoefficient)); //tall
 		}
 	}
-	vVelBefore = vVel;
+	vVelBefore = stats.vVel;
 }
 //
 function scrSquish()

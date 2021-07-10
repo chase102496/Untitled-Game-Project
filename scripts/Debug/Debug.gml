@@ -43,7 +43,7 @@ function scrDebugVars()
 		#region Polling-driven debug
 		
 		//Tracking velocity
-		global.debugVar[| 0] = ["Player hVel: "+string(hVel),"Player vVel: "+string(vVel)];
+		global.debugVar[| 0] = ["Player stats.hVel: "+string(stats.hVel),"Player stats.vVel: "+string(stats.vVel)];
 		
 		//Tracking buffs
 		for (var i = 0;i < ds_list_size(currentBuffs);i ++)

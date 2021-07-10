@@ -1,4 +1,8 @@
-scrPhysicsInit();
+//NEW constructor instantiation
+stats = new conStatsInit();
+stats.gravAccel = 0.15; //Gravity. 0 for free-flying projectile
+stats.hAirDecel = 0.01;
+
 owner = global.playerObject
 equip = owner.playerEquip
 
@@ -21,5 +25,3 @@ entityBuffs = [];
 
 projectilePowerMax = 13; //This is when the bow is fully charged, what the value will be
 projectilePower = 0; //This is the real-time bow power. Should be modified by equipment
-gravAccel = 0.15; //Gravity. 0 for free-flying projectile
-hAirDecel = 0.01;

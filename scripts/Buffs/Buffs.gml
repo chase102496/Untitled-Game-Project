@@ -71,14 +71,14 @@ function scrBuffsMaxVelocity(_sec,_str)
 	var _index = scrBuffsFind(scrBuffsMaxVelocity,id);
 	var _timeStart = _sec*room_speed;
 	var _buffTimer = currentBuffs[| _index][@ 1];
-	var _newValue = (hMaxVel*_str) - hMaxVel;
+	var _newValue = (stats.hMaxVel*_str) - stats.hMaxVel;
 	
 	switch _buffTimer
 	{
 		//Init
 		case -1:
 		currentBuffs[| _index][@ 2] = _newValue; //Saving the diff between the old and new value
-		hMaxVel += _newValue;
+		stats.hMaxVel += _newValue;
 		currentBuffs[| _index][@ 1] = _timeStart; //Changing our timer to timeStart
 		break;
 		
@@ -89,7 +89,7 @@ function scrBuffsMaxVelocity(_sec,_str)
 		
 		//Finished
 		case 0:
-		hMaxVel -= currentBuffs[| _index][@ 2]; //setting max vel back to previous before buff
+		stats.hMaxVel -= currentBuffs[| _index][@ 2]; //setting max vel back to previous before buff
 		ds_list_delete(currentBuffs,_index); //Reset
 		break;
 	}
@@ -101,14 +101,14 @@ function scrBuffsJumpStrength(_sec,_str)
 	var _index = scrBuffsFind(scrBuffsJumpStrength,id);
 	var _timeStart = _sec*room_speed;
 	var _buffTimer = currentBuffs[| _index][@ 1];
-	var _newValue = (jumpStr*_str) - jumpStr;
+	var _newValue = (stats.jumpStr*_str) - stats.jumpStr;
 	
 	switch _buffTimer
 	{
 		//Init
 		case -1:
 		currentBuffs[| _index][@ 2] = _newValue; //Saving the diff between the old and new value
-		jumpStr += _newValue;
+		stats.jumpStr += _newValue;
 		currentBuffs[| _index][@ 1] = _timeStart; //Changing our timer to timeStart
 		break;
 		
@@ -119,7 +119,7 @@ function scrBuffsJumpStrength(_sec,_str)
 		
 		//Finished
 		case 0:
-		jumpStr -= currentBuffs[| _index][@ 2]; //setting max vel back to previous before buff
+		stats.jumpStr -= currentBuffs[| _index][@ 2]; //setting max vel back to previous before buff
 		ds_list_delete(currentBuffs,_index); //Reset
 		break;
 	}

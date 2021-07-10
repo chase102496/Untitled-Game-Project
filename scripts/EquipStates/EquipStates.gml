@@ -24,7 +24,7 @@ function scrEquipBroadcastListener() //Used to run one-time evensts
 	    {
 		    case "seqGreatswordStab-2f":
 			{
-		        owner.hVel += sign(owner.sprite_xscale)*1;
+		        owner.stats.hVel += sign(owner.sprite_xscale)*1;
 		        break;
 			}
 		}
@@ -95,10 +95,10 @@ function scrEquipStateGreatswordStab() //Stab Attack
 	with owner
 	{
 		currentState = scrPlayerStateAttack;
-		if hVel != 0
+		if stats.hVel != 0
 		{
-		if (abs(hVel) >= hSlideDecel) hVel -= sign(hVel) * hSlideDecel;
-		else hVel = 0;
+		if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
+		else stats.hVel = 0;
 		}
 	}
 	
@@ -164,7 +164,7 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 
 	//Extra
-	owner.hVel = clamp(owner.hVel,-owner.hMaxVel*_slow,owner.hMaxVel*_slow); //Limiting player movement during draw
+	owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*_slow,owner.stats.hMaxVel*_slow); //Limiting player movement during draw
 	
 	if sign(mouse_x - owner.x) >= 0 currentState[2] = [scrBowAiming,1];
 	else currentState[2] = [scrBowAiming,-1];
@@ -209,7 +209,7 @@ function scrEquipStateBowHold() //Primary Attack - Hold
 	equipProjectile.projectilePower = equipProjectile.projectilePowerMax;
 	
 	//Extra
-	owner.hVel = clamp(owner.hVel,-owner.hMaxVel*_slow,owner.hMaxVel*_slow); //Limiting player movement during hold
+	owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*_slow,owner.stats.hMaxVel*_slow); //Limiting player movement during hold
 	
 	//Sequence init
 	if currentSequence != seqBowHold scrSequenceCreator(seqBowHold);
@@ -290,14 +290,14 @@ function scrEquipStateOrbCharge()
 		var _mod = 2; //decel at twice the normal rate
 		currentState = scrPlayerStateAttack;
 		
-		if hVel != 0
+		if stats.hVel != 0
 		{
-			if (abs(hVel) >= hSlideDecel*_mod) hVel -= sign(hVel) * hSlideDecel*_mod;
-			else hVel = 0;
+			if (abs(stats.hVel) >= stats.hSlideDecel*_mod) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel*_mod;
+			else stats.hVel = 0;
 		}
 	}
 	
-	owner.hVel = clamp(owner.hVel,-owner.hMaxVel/2,owner.hMaxVel/2); //Limiting player movement during
+	owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel/2,owner.stats.hMaxVel/2); //Limiting player movement during
 	
 	//State switches
 	if !keyAttackPrimaryHold

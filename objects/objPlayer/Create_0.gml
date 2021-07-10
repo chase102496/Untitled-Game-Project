@@ -2,12 +2,13 @@
 playerEquip = instance_create_layer(x,y,"layEquip",objWeapon);
 playerEquip.owner = id;
 
+//NEW constructor instantiation
+stats = new conStatsInit();
+
 //One-time init scripts
-scrPhysicsInit();
 scrPlayerStateInit();
 scrPlayerAnimationsInit();
 scrBuffsInit();
-scrStatsInit();
 
 //Placeholders for sprite animations;
 phSpriteIdle = sprPlayerIdle;

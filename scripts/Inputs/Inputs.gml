@@ -25,4 +25,25 @@ function scrInputs()
 	//keyInteract = keyboard_check(ord("W"));
 	//keyBack = scrKeyHeld(vk_escape,500);
 	}
+	else
+	{
+	//Movement inputs
+	keyLeft = 0;
+	keyRight = 0;
+	keyDown = 0;
+	keyJump = 0;
+	keyJumpDown = 0;
+	keyJummUp = 0;
+	moveDirection = 0;
+	//Combat inputs
+	keyAttackPrimaryPress = 0;
+	keyAttackPrimaryHold = 0;
+	keyAttackPrimaryRelease = 0;
+	keyAttackSecondaryPress = 0;
+	keyAttackSecondaryHold = 0;
+	keyAttackSecondaryRelease = 0;
+	//Misc inputs
+	//keyInteract = 0;
+	//keyBack = 0;
+	}
 }

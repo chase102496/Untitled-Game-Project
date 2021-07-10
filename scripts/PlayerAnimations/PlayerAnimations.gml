@@ -18,22 +18,22 @@ function scrPlayerAnimations()
 	{	
 		case scrPlayerStateGround:
 		{
-			image_speed = abs(hVel/hMaxVel);
+			image_speed = abs(stats.hVel/stats.hMaxVel);
 			
-			if hVel == 0 sprite_index = phSpriteIdle; //Idle animation
+			if stats.hVel == 0 sprite_index = phSpriteIdle; //Idle animation
 			else
 			{
 				sprite_index = phSpriteRun; //Run animation
-				sprite_xscale = sign(hVel);
+				sprite_xscale = sign(stats.hVel);
 			}
 			break;
 		}
 	
 		case scrPlayerStateAir:
 		{
-			image_speed = abs(vVel/vMaxVel) + 0.5
+			image_speed = abs(stats.vVel/stats.vMaxVel) + 0.5
 			
-			if vVel < 0 
+			if stats.vVel < 0 
 			{
 				sprite_index = phSpriteJumpRise;
 			}
@@ -46,7 +46,7 @@ function scrPlayerAnimations()
 	
 		case scrPlayerStateWallslide:
 		{
-			image_speed = abs(vVel/vMaxVel) + 0.2;
+			image_speed = abs(stats.vVel/stats.vMaxVel) + 0.2;
 			sprite_index = phSpriteWallslide;
 			
 			if onWall != 0 sprite_xscale = -onWall;
@@ -55,9 +55,9 @@ function scrPlayerAnimations()
 	
 		case scrPlayerStateCrouch:
 		{
-			image_speed = abs(hVel/hMaxVel)
+			image_speed = abs(stats.hVel/stats.hMaxVel)
 			
-			if hVel = 0
+			if stats.hVel = 0
 			{
 				sprite_index = phSpriteCrouch;
 				if moveDirection != 0 sprite_xscale = moveDirection;

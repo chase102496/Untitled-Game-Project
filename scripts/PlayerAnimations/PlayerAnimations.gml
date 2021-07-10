@@ -1,10 +1,14 @@
 function scrPlayerAnimationsInit()
 {
-	//Thereshold for bouncy/squishy animation calls
+	//Default scale stuff
+	sprite_xscale = 1;
+	sprite_yscale = 1;
+	spriteSize = 1
+	
+	//scrSquish() stuff
 	bounceThereshold = 0.5;		//When we will consider a quick velocity change a "bounce"
 	bounceSpeed = 0.05;			//How quickly you regain your normal non-stretchy shape
 	bounceStretch =	0.5;		//How squishy and stretchy your sprite is. Higher = squishier. Lower = firmer. Don't go below 0.1 or above 0.9
-	
 	vVelBefore = 0;
 }
 ///

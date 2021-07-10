@@ -1,5 +1,10 @@
 function scrEntityStateInit()
 {
+	//Default scale stuff
+	sprite_xscale = 1;
+	sprite_yscale = 1;
+	spriteSize = 1
+	
 	currentState = scrEntityStateGround;
 	subState = 0;
 	subState2 = 0;

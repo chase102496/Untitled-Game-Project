@@ -60,6 +60,11 @@ function scrBuffs() //Runs code for each buff in the ds_list currentBuffs
 
 //Changes the player's max velocity temporarily, up or down
 //_sec is how many seconds the buff is active, _str is the multiplicative value of the max speed. if it is less than 0, it will decrease the maxvel
+
+//
+// IDEA: MAKE A WAY TO ENTER DIFFERENT STAT CHANGES FOR A PERIOD OF TIME IN ONE BUFF! COULD BE MODIFYING ANY VARIABLE THE PLAYER HAS; HOWEVER THIS WOULD CONFLICT WITH BUFFSADD SYSTEM, THERE ARE WAYS AROUND IT THO
+//
+
 function scrBuffsMaxVelocity(_sec,_str)
 {
 	//Config

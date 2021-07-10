@@ -2,9 +2,11 @@ function scrDebugInit()
 {
 	global.drawDebug = false;
 	global.showHitbox = false;
-	global.debugVar = ds_list_create()
+	global.debugVar = ds_list_create();
 	global.debugVar[| 0] = []; //Velocities
 	global.debugVar[| 1] = []; //Buffs
+	
+	window_set_fullscreen(false);
 }
 //
 function scrDebugInputs()

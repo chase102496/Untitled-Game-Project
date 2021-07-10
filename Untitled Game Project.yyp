@@ -34,6 +34,7 @@
     {"id":{"name":"crvSimpleParabola","path":"animcurves/crvSimpleParabola/crvSimpleParabola.yy",},"order":0,},
     {"id":{"name":"objWeapon","path":"objects/objWeapon/objWeapon.yy",},"order":0,},
     {"id":{"name":"Debug","path":"scripts/Debug/Debug.yy",},"order":0,},
+    {"id":{"name":"Stats","path":"scripts/Stats/Stats.yy",},"order":8,},
     {"id":{"name":"seqBowHold","path":"sequences/seqBowHold/seqBowHold.yy",},"order":4,},
     {"id":{"name":"objLaternarius","path":"objects/objLaternarius/objLaternarius.yy",},"order":6,},
     {"id":{"name":"objAnchor","path":"objects/objAnchor/objAnchor.yy",},"order":2,},

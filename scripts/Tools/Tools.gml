@@ -92,41 +92,41 @@ function scrInSequence(_currentSequenceElement) //Used as alternative to in_sequ
 //
 function scrSquishVelocity()
 {
-	var _vBounceAmount = abs(stats.vVel - vVelBefore); //Change in velocity
+	var _vBounceAmount = abs(stats.vVel - stats.vVelBefore); //Change in velocity
 	var _vBounceCoefficient = scrRoundPrecise((_vBounceAmount/stats.vMaxVel),0.01); //Change bounce strength based on stats.vVel change
 	
 	//Bounce detection upon sudden stats.vVel change. Make sure abs(yscale) + abs(xscale) always equals 2
-	if _vBounceAmount > bounceThereshold
+	if _vBounceAmount > stats.bounceThereshold
 	{
-		if sign(vVelBefore) = 1 //stopped moving fast
+		if sign(stats.vVelBefore) = 1 //stopped moving fast
 		{
-			sprite_xscale *= (spriteSize + ((bounceStretch) * _vBounceCoefficient)); //widen
-			sprite_yscale *= (spriteSize - ((bounceStretch) * _vBounceCoefficient)); //shorten
+			stats.xScale *= (stats.size + ((stats.bounceStretch) * _vBounceCoefficient)); //widen
+			stats.yScale *= (stats.size - ((stats.bounceStretch) * _vBounceCoefficient)); //shorten
 		}
 		else //started moving fast
 		{
-			sprite_xscale *= (spriteSize - ((bounceStretch) * _vBounceCoefficient)); //thin
-			sprite_yscale *= (spriteSize + ((bounceStretch) * _vBounceCoefficient)); //tall
+			stats.xScale *= (stats.size - ((stats.bounceStretch) * _vBounceCoefficient)); //thin
+			stats.yScale *= (stats.size + ((stats.bounceStretch) * _vBounceCoefficient)); //tall
 		}
 	}
-	vVelBefore = stats.vVel;
+	stats.vVelBefore = stats.vVel;
 }
 //
 function scrSquish()
 {	
-	if abs(sprite_xscale - sign(sprite_xscale)) >= bounceSpeed //If subtracting would not overshoot 1 or -1
+	if abs(stats.xScale - sign(stats.xScale)) >= stats.bounceSpeed //If subtracting would not overshoot 1 or -1
 	{
-		if abs(sprite_xscale) > spriteSize sprite_xscale -= (sign(sprite_xscale) * bounceSpeed); //Should return xscale back to normal from being too wide
-		else if abs(sprite_xscale) < spriteSize sprite_xscale += (sign(sprite_xscale) * bounceSpeed); //Should return xscale back to normal from being too thin
+		if abs(stats.xScale) > stats.size stats.xScale -= (sign(stats.xScale) * stats.bounceSpeed); //Should return xscale back to normal from being too wide
+		else if abs(stats.xScale) < stats.size stats.xScale += (sign(stats.xScale) * stats.bounceSpeed); //Should return xscale back to normal from being too thin
 	}
-	else sprite_xscale = sign(sprite_xscale)*spriteSize;
+	else stats.xScale = sign(stats.xScale)*stats.size;
 
-	if abs(sprite_yscale - sign(sprite_yscale)) >= bounceSpeed //If subtracting would not overshoot 1 or -1
+	if abs(stats.yScale - sign(stats.yScale)) >= stats.bounceSpeed //If subtracting would not overshoot 1 or -1
 	{
-	if abs(sprite_yscale) > spriteSize sprite_yscale -= (sign(sprite_yscale) * bounceSpeed); //Should return xscale back to normal from being too wide
-	else if abs(sprite_yscale) < spriteSize sprite_yscale += (sign(sprite_yscale) * bounceSpeed); //Should return xscale back to normal from being too thin
+	if abs(stats.yScale) > stats.size stats.yScale -= (sign(stats.yScale) * stats.bounceSpeed); //Should return xscale back to normal from being too wide
+	else if abs(stats.yScale) < stats.size stats.yScale += (sign(stats.yScale) * stats.bounceSpeed); //Should return xscale back to normal from being too thin
 	}
-	else sprite_yscale = sign(sprite_yscale)*spriteSize;
+	else stats.yScale = sign(stats.yScale)*stats.size;
 }
 //
 

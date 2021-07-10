@@ -112,8 +112,7 @@ function scrDebugDraw()
 				draw_rectangle_color(_projInst.bbox_left,_projInst.bbox_top,_projInst.bbox_right,_projInst.bbox_bottom,255,255,255,50,true);
 			}
 		}
-
-		//
+	
 		for (var i = 0; i < ds_list_size(global.debugVar); i += 1)
 		{
 			draw_text_transformed(global.inputObject.x,global.inputObject.y-30-(8*i),global.debugVar[| i],0.5,0.5,0);

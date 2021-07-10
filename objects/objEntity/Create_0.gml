@@ -3,7 +3,6 @@ stats = new conStatsInit();
 
 //One-time init scripts
 scrEntityStateInit();
-scrEntityAnimationsInit();
 scrBuffsInit();
 
 //Placeholders for sprite animations;

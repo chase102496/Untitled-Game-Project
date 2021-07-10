@@ -1,7 +1,7 @@
 function scrEquipAnimations()
 {
-	var xDirection = sign(owner.sprite_xscale);
-	var yDirection = sign(owner.sprite_yscale);
+	var xDirection = sign(owner.stats.xScale);
+	var yDirection = sign(owner.stats.yScale);
 	
 	if changedDirection == 0
 	{
@@ -12,8 +12,8 @@ function scrEquipAnimations()
 }
 function scrPlayerChangedDirection()
 {
-	changedDirection = sign(sign(owner.sprite_xscale) - previousDirection); //Shows difference and direction, 1 for L to R, -1 for R to L
-	previousDirection = sign(owner.sprite_xscale); //Reset
+	changedDirection = sign(sign(owner.stats.xScale) - previousDirection); //Shows difference and direction, 1 for L to R, -1 for R to L
+	previousDirection = sign(owner.stats.xScale); //Reset
 }
 function scrBowAiming(_dir) //Points bow toward mouse cursor
 {

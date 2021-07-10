@@ -1,17 +1,3 @@
-function scrPlayerAnimationsInit()
-{
-	//Default scale stuff
-	sprite_xscale = 1;
-	sprite_yscale = 1;
-	spriteSize = 1
-	
-	//scrSquish() stuff
-	bounceThereshold = 0.5;		//When we will consider a quick velocity change a "bounce"
-	bounceSpeed = 0.05;			//How quickly you regain your normal non-stretchy shape
-	bounceStretch =	0.5;		//How squishy and stretchy your sprite is. Higher = squishier. Lower = firmer. Don't go below 0.1 or above 0.9
-	vVelBefore = 0;
-}
-///
 function scrPlayerAnimations()
 {
 	switch currentState
@@ -24,7 +10,7 @@ function scrPlayerAnimations()
 			else
 			{
 				sprite_index = phSpriteRun; //Run animation
-				sprite_xscale = sign(stats.hVel);
+				stats.xScale = sign(stats.hVel);
 			}
 			break;
 		}
@@ -49,7 +35,7 @@ function scrPlayerAnimations()
 			image_speed = abs(stats.vVel/stats.vMaxVel) + 0.2;
 			sprite_index = phSpriteWallslide;
 			
-			if onWall != 0 sprite_xscale = -onWall;
+			if onWall != 0 stats.xScale = -onWall;
 			break;
 		}
 	
@@ -60,7 +46,7 @@ function scrPlayerAnimations()
 			if stats.hVel = 0
 			{
 				sprite_index = phSpriteCrouch;
-				if moveDirection != 0 sprite_xscale = moveDirection;
+				if moveDirection != 0 stats.xScale = moveDirection;
 			}
 			else sprite_index = phSpriteSlide;
 			

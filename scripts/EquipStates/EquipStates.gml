@@ -24,7 +24,7 @@ function scrEquipBroadcastListener() //Used to run one-time evensts
 	    {
 		    case "seqGreatswordStab-2f":
 			{
-		        owner.stats.hVel += sign(owner.sprite_xscale)*1;
+		        owner.stats.hVel += sign(owner.stats.xScale)*1;
 		        break;
 			}
 		}
@@ -33,10 +33,13 @@ function scrEquipBroadcastListener() //Used to run one-time evensts
 ///
 function scrSequenceCreator(_sequence)
 {
-	currentSequence = _sequence;
-	currentSequenceElement = layer_sequence_create(currentLayer,owner.x,owner.y,currentSequence);
-	currentSequenceInstance = layer_sequence_get_instance(currentSequenceElement);
-	sequence_instance_override_object(currentSequenceInstance,object_index,id)
+	if currentSequence != _sequence
+	{
+		currentSequence = _sequence;
+		currentSequenceElement = layer_sequence_create(currentLayer,owner.x,owner.y,currentSequence);
+		currentSequenceInstance = layer_sequence_get_instance(currentSequenceElement);
+		sequence_instance_override_object(currentSequenceInstance,object_index,id)
+	}
 }
 //
 #endregion
@@ -56,16 +59,12 @@ function scrEquipStateEmptyIdle()
 
 #region Greatsword states
 //
-function scrEquipStateGreatsword()
-{
-	if array_length(currentState) == 1 currentState[1] = scrEquipStateGreatswordIdle;
-	sprite_index = sprGreatswordIdle;
-}
+function scrEquipStateGreatsword() {}
 //
 function scrEquipStateGreatswordChangeDirection() //Switching directions
 {
 	//Sequence init
-	if currentSequence != seqGreatswordChangeDirection scrSequenceCreator(seqGreatswordChangeDirection);
+	scrSequenceCreator(seqGreatswordChangeDirection);
 	
 	//Modules
 	scrEquipAnimations();
@@ -77,8 +76,11 @@ function scrEquipStateGreatswordChangeDirection() //Switching directions
 //
 function scrEquipStateGreatswordIdle() //Idle
 {
+	//Config
+	sprite_index = sprGreatswordIdle;
+	
 	//Sequence init
-	if currentSequence != seqGreatswordIdle scrSequenceCreator(seqGreatswordIdle);
+	scrSequenceCreator(seqGreatswordIdle);
 	
 	//Modules
 	scrEquipAnimations();
@@ -91,7 +93,7 @@ function scrEquipStateGreatswordIdle() //Idle
 function scrEquipStateGreatswordStab() //Stab Attack
 {
 	//Sequence init
-	if currentSequence != seqGreatswordStab scrSequenceCreator(seqGreatswordStab);	
+	scrSequenceCreator(seqGreatswordStab);	
 	with owner
 	{
 		currentState = scrPlayerStateAttack;
@@ -117,15 +119,12 @@ function scrEquipStateGreatswordStab() //Stab Attack
 
 #region Bow states
 //
-function scrEquipStateBow()
-{
-	if array_length(currentState) == 1 currentState[1] = scrEquipStateBowIdle;
-}
+function scrEquipStateBow() {}
 //
 function scrEquipStateBowChangeDirection() //Switching directions
 {
 	//Sequence init
-	if currentSequence != seqBowChangeDirection scrSequenceCreator(seqBowChangeDirection);
+	scrSequenceCreator(seqBowChangeDirection);
 	
 	//Modules
 	scrEquipAnimations();
@@ -143,7 +142,7 @@ function scrEquipStateBowIdle() //Idle
 	aimRange[1] = 75; //Aim limit up
 	
 	//Sequence init
-	if currentSequence != seqBowIdle scrSequenceCreator(seqBowIdle);
+	scrSequenceCreator(seqBowIdle);
 		
 	//Modules
 	scrEquipAnimations();
@@ -160,7 +159,7 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	var _slow = 0.5; //Slow during hold
 
 	//Sequence init
-	if currentSequence != seqBowDraw scrSequenceCreator(seqBowDraw);
+	scrSequenceCreator(seqBowDraw);
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 
 	//Extra
@@ -212,7 +211,7 @@ function scrEquipStateBowHold() //Primary Attack - Hold
 	owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*_slow,owner.stats.hMaxVel*_slow); //Limiting player movement during hold
 	
 	//Sequence init
-	if currentSequence != seqBowHold scrSequenceCreator(seqBowHold);
+	scrSequenceCreator(seqBowHold);
 	
 	//State switches
 	if !keyAttackPrimaryHold currentState[1] = scrEquipStateBowFire;
@@ -224,12 +223,14 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 	sprite_index = sprBowFire;
 
 	//Sequence init
-	if currentSequence != seqBowFire
+	scrSequenceCreator(seqBowFire);
+
+	if instance_exists(equipProjectile)
 	{
-		scrSequenceCreator(seqBowFire);
 		equipProjectile.currentState = equipProjectile.stateFree
 		equipProjectile = noone; //not associated with the object anymore
 	}
+
 	image_index = layer_sequence_get_headpos(currentSequenceElement);
 
 	//State switches
@@ -240,15 +241,12 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 
 #region Orb states
 
-function scrEquipStateOrb()
-{
-	if array_length(currentState) == 1 currentState[1] = scrEquipStateOrbIdle;
-}
+function scrEquipStateOrb() {}
 //
 function scrEquipStateOrbChangeDirection()
 {
 	//Sequence init
-	if currentSequence != seqOrbChangeDirection scrSequenceCreator(seqOrbChangeDirection);
+	scrSequenceCreator(seqOrbChangeDirection);
 	
 	//Modules
 	scrEquipAnimations();
@@ -262,11 +260,11 @@ function scrEquipStateOrbIdle()
 {
 	//Config
 	sprite_index = sprOrbIdle;
-	aimRange[0] = 15; //Aim limit, purely cosmetic
+	aimRange[0] = 15; //Aim limit, purely cosmetic for this use
 	aimRange[1] = 15; //
 	
 	//Sequence init
-	if currentSequence != seqOrbIdle scrSequenceCreator(seqOrbIdle);
+	scrSequenceCreator(seqOrbIdle);
 		
 	//Modules
 	scrEquipAnimations();
@@ -279,7 +277,7 @@ function scrEquipStateOrbIdle()
 function scrEquipStateOrbCharge()
 {
 	//Sequence init
-	if currentSequence != seqOrbCharge scrSequenceCreator(seqOrbCharge);
+	scrSequenceCreator(seqOrbCharge);
 	
 	//Extra
 	if sign(mouse_x - owner.x) >= 0 currentState[2] = [scrBowAiming,1];
@@ -315,7 +313,7 @@ function scrEquipStateOrbCharge()
 function scrEquipStateOrbCast()
 {
 	//Sequence init
-	if currentSequence != seqOrbCast scrSequenceCreator(seqOrbCast);
+	scrSequenceCreator(seqOrbCast);
 	
 	//Projectile init
 	if !instance_exists(equipProjectile)

@@ -7,7 +7,6 @@ stats = new conStatsInit();
 
 //One-time init scripts
 scrPlayerStateInit();
-scrPlayerAnimationsInit();
 scrBuffsInit();
 
 //Placeholders for sprite animations;

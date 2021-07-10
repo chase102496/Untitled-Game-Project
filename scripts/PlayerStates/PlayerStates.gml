@@ -11,7 +11,7 @@ function scrPlayerStateInit()
 
 #endregion
 
-#region Player states
+#region Player/Entity states
 
 function scrPlayerStateGround() //Player is idle or running
 {
@@ -84,7 +84,7 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 	if keyJumpDown
 	{
 		stats.vVel = -stats.wallJumpStr*0.6;
-		stats.hVel = sign(sprite_xscale)*stats.wallJumpStr*0.4;
+		stats.hVel = sign(stats.xScale)*stats.wallJumpStr*0.4;
 	}
 	
 	scrPhysicsVars();

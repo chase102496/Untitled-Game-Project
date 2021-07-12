@@ -104,7 +104,7 @@
     "spriteId": {"name":"sprArcaneBlast","path":"sprites/sprArcaneBlast/sprArcaneBlast.yy",},
     "timeUnits": 1,
     "playback": 1,
-    "playbackSpeed": 24.0,
+    "playbackSpeed": 14.0,
     "playbackSpeedType": 0,
     "autoRecord": true,
     "volume": 1.0,

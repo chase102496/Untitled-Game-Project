@@ -5,6 +5,7 @@ function scrDebugInit()
 	global.debugVar = ds_list_create();
 	global.debugVar[| 0] = []; //Velocities
 	global.debugVar[| 1] = []; //Buffs
+	global.debugVar[| 3] = []; //Misc
 	
 	window_set_fullscreen(false);
 }
@@ -47,8 +48,6 @@ function scrDebugVars()
 		//Tracking velocity
 		global.debugVar[| 0] = ["hVel: "+string(stats.hVel),"vVel: "+string(stats.vVel)];
 		
-		global.debugVar[| 2] = stats.basicStats();
-		
 		//Tracking buffs
 		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
 		{
@@ -62,7 +61,8 @@ function scrDebugVars()
 		}
 		if ds_list_size(currentBuffs) == 0 array_pop(global.debugVar[| 1]);
 		
-	
+		//Tracking basic stats
+		global.debugVar[| 2] = stats.basicStats();
 	}
 	
 	#endregion

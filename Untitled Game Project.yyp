@@ -17,6 +17,7 @@
     {"id":{"name":"sprPlayerCrouch","path":"sprites/sprPlayerCrouch/sprPlayerCrouch.yy",},"order":5,},
     {"id":{"name":"sprLaternariusRun","path":"sprites/sprLaternariusRun/sprLaternariusRun.yy",},"order":3,},
     {"id":{"name":"ProjectileGeneral","path":"scripts/ProjectileGeneral/ProjectileGeneral.yy",},"order":3,},
+    {"id":{"name":"sprArrowStuck","path":"sprites/sprArrowStuck/sprArrowStuck.yy",},"order":7,},
     {"id":{"name":"EntityStates","path":"scripts/EntityStates/EntityStates.yy",},"order":0,},
     {"id":{"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"order":0,},
     {"id":{"name":"objPlayer","path":"objects/objPlayer/objPlayer.yy",},"order":0,},

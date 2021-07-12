@@ -40,9 +40,11 @@ function scrBowAiming(_dir) //Points bow toward mouse cursor
 	
 	projectileDirection = layer_sequence_angle(currentSequenceElement,_final);
 }
-function scrSequenceRatio()
+function scrSequenceRatio(_imageNumber)
 {
-	return layer_sequence_get_headpos(currentSequenceElement)/layer_sequence_get_length(currentSequenceElement);
+	var _seqRatio = (layer_sequence_get_headpos(currentSequenceElement)+1)/(layer_sequence_get_length(currentSequenceElement)+1);
+	var _imageIndex = clamp(((_seqRatio*(_imageNumber+1)) - 1),0,_imageNumber-1);
+	return _imageIndex;
 }
 function scrCastRange(_originX,_originY,_pointX,_pointY,_range)
 {

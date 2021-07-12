@@ -159,7 +159,7 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 
 	//Sequence init
 	scrSequenceCreator(seqBowDraw);
-	image_index = layer_sequence_get_headpos(currentSequenceElement);
+	image_index = scrSequenceRatio(image_number);
 
 	//Extra
 	owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*_slow,owner.stats.hMaxVel*_slow); //Limiting player movement during draw
@@ -171,18 +171,18 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	if !instance_exists(equipProjectile)
 	{
 		equipProjectile = instance_create_layer(x,y,"layProjectile",objProjectile);
-		equipProjectile.owner = owner.id;
-		equipProjectile.equip = id;
 		with equipProjectile
 		{
-			sprite_index = sprArrow;
-			stateHold = [scrProjectileStateHoldArrow];
-			state.free = [[scrProjectileStateFree,true,true,true,true,3]];
-			state.collideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
-			state.collideEntity = [[scrProjectileStateCollide,objEntity,3]];
-			state.destroy = [scrProjectileStateDestroy];
-			state.current = stateHold;
+			equip = other.id;
+			owner = other.owner.id;
 			
+			//State init
+			state.free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,sprArrow],true,true,true,true,3]];
+			state.collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,sprArrowStuck],3]];
+			state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,sprArrowStuck],"Sticking",3]];
+			state.current = state.hold;
+			
+			//Buff and stat transfer init
 			entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
 			entityStats = [100,"Physical",true]; //Do 10 magical damage, with flinching
 		}
@@ -229,6 +229,7 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 
 	//Sequence init
 	scrSequenceCreator(seqBowFire);
+	image_index = round((image_number-1)*scrSequenceRatio());
 
 	if instance_exists(equipProjectile)
 	{
@@ -290,6 +291,30 @@ function scrEquipStateOrbCharge()
 	if sign(mouse_x - owner.x) >= 0 state.current[2] = [scrBowAiming,1];
 	else state.current[2] = [scrBowAiming,-1];
 	
+	//Projectile init
+	if !instance_exists(equipProjectile)
+	{
+		var _range = 128; //Sets cast range to 128 pixels
+		var _castRange = scrCastRange(owner.x,owner.y,mouse_x,mouse_y,_range);
+	
+		equipProjectile = instance_create_layer(_castRange[0],_castRange[1],"layProjectile",objProjectile);
+		with equipProjectile
+		{
+			equip = other.id;
+			owner = other.owner.id;
+			
+			//State init
+			state.hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsBasic,sprArcaneBlast]]]
+			state.free = [[scrProjectileStateFree,[scrProjectileAnimationsBasic,sprArcaneBlast],false,false,true,false,-2]]; //Static projectile, lasts until animation end
+			state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsBasic,sprArcaneBlast],"",-2]]; //Normal collision with entities, but last until animation end
+			state.current = state.hold;
+			
+			//Buff and stat transfer init
+			entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
+			entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
+		}
+	}
+	
 	with owner
 	{
 		var _mod = 2; //decel at twice the normal rate
@@ -301,8 +326,6 @@ function scrEquipStateOrbCharge()
 			else stats.hVel = 0;
 		}
 	}
-	
-	owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel/2,owner.stats.hMaxVel/2); //Limiting player movement during
 	
 	//State switches
 	if !keyAttackPrimaryHold
@@ -322,31 +345,12 @@ function scrEquipStateOrbCast()
 	//Sequence init
 	scrSequenceCreator(seqOrbCast);
 	
-	//Projectile init
-	if !instance_exists(equipProjectile)
+	//THIS THIS THIS
+	if instance_exists(equipProjectile)
 	{
-		var _range = 128; //Sets cast range to 128 pixels
-		var _castRange = scrCastRange(owner.x,owner.y,mouse_x,mouse_y,_range);
-		
-		equipProjectile = instance_create_layer(_castRange[0],_castRange[1],"layProjectile",objProjectile); //[0] is x, [1] is y
-		equipProjectile.owner = owner.id;
-		equipProjectile.equip = id;
-		with equipProjectile
-		{
-			sprite_index = sprArcaneBlast;
-			
-			//State init
-			state.free = [[scrProjectileStateFree,false,false,true,false,-2]]; //Static projectile, lasts until animation end
-			state.collideEntity = [[scrProjectileStateCollide,objEntity,-2]]; //Normal collision with entities, but last until animation end
-			state.destroy = [scrProjectileStateDestroy];
-			state.current = state.free;
-			
-			//Buff and stat transfer init
-			entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
-			entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
-		}
+		equipProjectile.state.current = equipProjectile.state.free;
+		equipProjectile = noone;
 	}
-	else equipProjectile.image_index = round((equipProjectile.image_number-1)*scrSequenceRatio());
 
 	//State switches, for some reason !in_sequence isn't working so i made a better script than YoYo
 	if !scrInSequence(currentSequenceElement) state.current = [scrEquipStateOrb,scrEquipStateOrbIdle];

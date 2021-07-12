@@ -5,7 +5,7 @@ function scrBuffsInit()
 {
 	currentBuffs = ds_list_create();
 	
-	global.buffsID = 
+	global.buffsID =
 	{
 		damageInstant : "Instant Damage",
 		swiftness : "Swiftness",

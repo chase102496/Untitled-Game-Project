@@ -1,6 +1,6 @@
 function scrEntityAnimations()
 {
-	switch currentState
+	switch state.current
 	{	
 		case scrEntityStateGround:
 		{
@@ -34,6 +34,7 @@ function scrEntityAnimations()
 		}
 	}
 	
+	scrColorChange();
 	scrSquishVelocity();
 	scrSquish();
 }

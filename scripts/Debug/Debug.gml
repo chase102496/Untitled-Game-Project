@@ -38,17 +38,20 @@ function scrDebugInputs()
 //
 function scrDebugVars()
 {		
+	
+	#region Polling-driven debug
+	
 	with global.inputObject
 	{
-		#region Polling-driven debug
-		
 		//Tracking velocity
-		global.debugVar[| 0] = ["Player stats.hVel: "+string(stats.hVel),"Player stats.vVel: "+string(stats.vVel)];
+		global.debugVar[| 0] = ["hVel: "+string(stats.hVel),"vVel: "+string(stats.vVel)];
+		
+		global.debugVar[| 2] = stats.basicStats();
 		
 		//Tracking buffs
 		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
 		{
-			var _buff = script_get_name(currentBuffs[| i][0][0]);
+			var _buff = string(currentBuffs[| i][0][1]);
 			var _timer = string(scrRoundPrecise(currentBuffs[| i][1]/room_speed,0.01));
 			global.debugVar[| 1][i] = _buff+" "+_timer;
 		}
@@ -58,11 +61,20 @@ function scrDebugVars()
 		}
 		if ds_list_size(currentBuffs) == 0 array_pop(global.debugVar[| 1]);
 		
-		#endregion
+	
 	}
+	
+	#endregion
 	
 	#region Input-driven debug
 		
+	with global.inputObject
+	{
+		if global.keyPress7 stats.damage(10,"Physical",true);
+		if global.keyPress8 stats.damage(25,"Physical",true);
+		if global.keyPress9 stats.damage(50,"Physical",true);
+	}
+	
 	//Changing input targets. Control a body with MMB!
 	if mouse_check_button_pressed(mb_middle)
 	{
@@ -79,14 +91,15 @@ function scrDebugVars()
 		
 	//Equipment change
 	var _playerEquip = global.playerObject.playerEquip;
-	if global.keyPress1 _playerEquip.currentState = [scrEquipStateEmpty,scrEquipStateEmptyIdle];
-	if global.keyPress2 _playerEquip.currentState = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
-	if global.keyPress3 _playerEquip.currentState = [scrEquipStateBow,scrEquipStateBowIdle];
-	if global.keyPress4 _playerEquip.currentState = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	if global.keyPress1 _playerEquip.state.current = [scrEquipStateEmpty,scrEquipStateEmptyIdle];
+	if global.keyPress2 _playerEquip.state.current = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
+	if global.keyPress3 _playerEquip.state.current = [scrEquipStateBow,scrEquipStateBowIdle];
+	if global.keyPress4 _playerEquip.state.current = [scrEquipStateOrb,scrEquipStateOrbIdle];
 		
 	//Add a buff to your currently controlled target
-	if global.keyPress5 scrBuffsAdd([scrBuffsMaxVelocity,7,2],global.inputObject);
-	if global.keyPress6 scrBuffsAdd([scrBuffsJumpStrength,7,2],global.inputObject);
+	if global.keyPress5 scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2],global.inputObject);
+	//if global.keyPress6 scrBuffsAdd([scrBuffsStats,buffsID.swiftness,buffsStat.__jumpStr,7,2],global.inputObject);
+	//if global.keyPress6 global.debugVar[| 3] = 
 
 	//Restart game
 	if global.keyEsc game_restart();
@@ -99,6 +112,11 @@ function scrDebugDraw()
 {
 	if global.drawDebug
 	{
+		for (var i = 0; i < ds_list_size(global.debugVar); i += 1)
+		{
+			draw_text_transformed(global.inputObject.x,global.inputObject.y-30-(8*i),global.debugVar[| i],0.5,0.5,0);
+		}
+		
 		//Player and equip bbox
 		//draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
 		//draw_rectangle(playerEquip.bbox_left,playerEquip.bbox_top,playerEquip.bbox_right,playerEquip.bbox_bottom,true);
@@ -111,11 +129,6 @@ function scrDebugDraw()
 				var _projInst = instance_find(objProjectile,i);
 				draw_rectangle_color(_projInst.bbox_left,_projInst.bbox_top,_projInst.bbox_right,_projInst.bbox_bottom,255,255,255,50,true);
 			}
-		}
-	
-		for (var i = 0; i < ds_list_size(global.debugVar); i += 1)
-		{
-			draw_text_transformed(global.inputObject.x,global.inputObject.y-30-(8*i),global.debugVar[| i],0.5,0.5,0);
 		}
 	}
 }

@@ -3,4 +3,4 @@ scrEquipStateMemory();
 scrPlayerChangedDirection();
 scrEquipPhysics();
 
-scrStateExecute(currentState);
+scrStateExecute(state.current);

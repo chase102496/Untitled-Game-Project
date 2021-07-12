@@ -1,1 +1,1 @@
-scrStateExecute(currentState);
+scrStateExecute(state.current);

@@ -1,5 +1,6 @@
 //NEW constructor instantiation
 stats = new conStatsInit();
+state = new scrEquipStateInit(scrEquipStateEmpty);
 
 scrEquipStateInit()
 //Init

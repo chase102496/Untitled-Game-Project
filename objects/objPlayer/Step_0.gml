@@ -1,4 +1,4 @@
 //Main
 scrInputs();
 scrStateMemory();
-script_execute(currentState);
+scrStateExecute(state.current);

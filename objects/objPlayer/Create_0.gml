@@ -4,10 +4,12 @@ playerEquip.owner = id;
 
 //NEW constructor instantiation
 stats = new conStatsInit();
+state = new conStateInit(scrPlayerStateGround);
 
 //One-time init scripts
-scrPlayerStateInit();
+conStateInit();
 scrBuffsInit();
+scrInputsInit()
 
 //Placeholders for sprite animations;
 phSpriteIdle = sprPlayerIdle;

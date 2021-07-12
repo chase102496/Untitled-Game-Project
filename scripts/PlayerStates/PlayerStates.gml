@@ -1,18 +1,3 @@
-#region Init config and tools
-
-function scrPlayerStateInit()
-{
-	currentState = scrPlayerStateGround;
-	subState = 0;
-	subState2 = 0;
-	previousState = scrPlayerStateGround;
-	storedState = scrPlayerStateGround;	
-}
-
-#endregion
-
-#region Player/Entity states
-
 function scrPlayerStateGround() //Player is idle or running
 {
 	scrPhysicsVars();
@@ -34,17 +19,16 @@ function scrPlayerStateGround() //Player is idle or running
 	if keyJumpDown stats.vVel -= stats.jumpStr; //Jump
 	
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
 	scrPlayerCombatOutputs(true); //Combat is enabled on the ground
 
 	//State switches
-	if !onGround currentState = scrPlayerStateAir;
-	else if keyDown currentState = scrPlayerStateCrouch;
+	if !onGround state.current = scrPlayerStateAir;
+	else if keyDown state.current = scrPlayerStateCrouch;
 }
-///
+//
 function scrPlayerStateAir() //Player is in air not touching walls or ground
 {
 	scrPhysicsVars();
@@ -64,20 +48,19 @@ function scrPlayerStateAir() //Player is in air not touching walls or ground
 	stats.vVel = clamp(stats.vVel,-stats.vMaxVel,stats.vMaxVel)
 
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
 	scrPlayerCombatOutputs(true); //Combat is not enabled in the air
 
 	//State switches
-	if onGround currentState = scrPlayerStateGround;
-	else if onWall != 0 currentState = scrPlayerStateWallslide;
+	if onGround state.current = scrPlayerStateGround;
+	else if onWall != 0 state.current = scrPlayerStateWallslide;
 	
 	//Extra
 	if (!keyJump and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount
 }
-///
+//
 function scrPlayerStateWallslide() //Player is sliding on wall
 {
 	//Movement
@@ -89,33 +72,31 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 	
 	scrPhysicsVars();
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
 	scrPlayerCombatOutputs(false);
 	
 	//State switches
-	if onGround currentState = scrPlayerStateGround;
-	else if onWall = 0 currentState = scrPlayerStateAir;
+	if onGround state.current = scrPlayerStateGround;
+	else if onWall = 0 state.current = scrPlayerStateAir;
 	
 	//Extra
 	stats.vVel = scrRoundPrecise(stats.vVel*stats.vSlideDecel,0.01) //Rounds to the hundredth (0.01)
 }
-///
+//
 function scrPlayerStateCrouch() //Player is crouching
 {	
 	scrPhysicsVars();
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
 	scrPlayerCombatOutputs(false);
 	
 	//State switches
-	if !keyDown currentState = scrPlayerStateGround;
-	else if !onGround currentState = scrPlayerStateAir;
+	if !keyDown state.current = scrPlayerStateGround;
+	else if !onGround state.current = scrPlayerStateAir;
 	
 	//Extra
 	if stats.hVel != 0
@@ -125,28 +106,24 @@ function scrPlayerStateCrouch() //Player is crouching
 	}
 
 }
-///
-function scrPlayerStateAttack() //Player is attacking from the ground state
+//
+function scrPlayerStateAttack() //Player is attacking
 {
 	scrPhysicsVars();
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
 	scrPlayerCombatOutputs(true);
 	
-	//State switches are located in equipStates.gml
+	//State switches are controlled in each weapon state
 }
-///
+//
 function scrPlayerStateHurt() //Player has been damaged by an attack
 {
 	scrPhysicsVars();
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
 }
-
-#endregion

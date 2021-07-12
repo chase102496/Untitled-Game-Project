@@ -1,11 +1,3 @@
-function scrEntityStateInit()
-{
-	currentState = scrEntityStateGround;
-	subState = 0;
-	subState2 = 0;
-	previousState = scrEntityStateGround;
-	storedState = scrEntityStateGround;
-}
 function scrEntityStateGround()
 {
 	scrPhysicsVars();
@@ -27,13 +19,12 @@ function scrEntityStateGround()
 	if keyJump stats.vVel -= stats.jumpStr; //Jump
 	
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrEntityAnimations();
 	scrBuffs();
 
 	//State switches
-	if !onGround currentState = scrEntityStateAir;
+	if !onGround state.current = scrEntityStateAir;
 }
 function scrEntityStateAir()
 {
@@ -54,13 +45,12 @@ function scrEntityStateAir()
 	stats.vVel = clamp(stats.vVel,-stats.vMaxVel,stats.vMaxVel)
 
 	scrGravity();
-	scrFractionRemoval();
 	scrCollision();
 	scrEntityAnimations();
 	scrBuffs();
 
 	//State switches
-	if onGround currentState = scrEntityStateGround;
+	if onGround state.current = scrEntityStateGround;
 	
 	//Extra
 	if (!keyJump and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount

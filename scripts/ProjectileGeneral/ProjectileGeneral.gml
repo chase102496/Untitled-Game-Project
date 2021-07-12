@@ -2,6 +2,21 @@
 /// --- States ---
 //
 
+//Init constructor
+function conProjectileStateInit(_default)
+{
+	free = [[scrProjectileStateFree,false,false,true,false,-2]];
+	hold = [scrProjectileStateHoldArrow];
+	collideEntity = [[scrProjectileStateCollide,objEntity,-2]];
+	collideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
+	state.destroy = [scrProjectileStateDestroy];
+	
+	entityDamage = [];
+	entityBuffs = [];
+	
+	current = _default;
+}
+
 #region Projectile states
 
 //Idle state
@@ -58,10 +73,14 @@ function scrProjectileStateCollide(_type,_aliveTimerMax)
 	{
 		case objEntity: //Runs a bunch of scripts (entityBuffs) that are translated by scrBuffs based on what is configured in equipment
 		{
-			for (var i = 0;i < array_length(entityBuffs);i ++) //Run each one through the buff add script for this target
+			if is_array(entityBuffs)
 			{
-				scrBuffsAdd(entityBuffs[i],entityColliding);
+				for (var i = 0;i < array_length(entityBuffs);i ++) //Run each one through the buff add script for this target
+				{
+					scrBuffsAdd(entityBuffs[i],entityColliding);
+				}
 			}
+			else scrBuffsAdd(entityBuffs,entityColliding);
 			
 			scrProjectileAliveTimer(_aliveTimerMax);
 			
@@ -96,7 +115,7 @@ function scrProjectileAliveTimer(_aliveTimerMax)
 		default: //anything else
 		{
 			aliveTimer += 1;
-			if aliveTimer >= _aliveTimerMax*room_speed currentState = stateDestroy;
+			if aliveTimer >= _aliveTimerMax*room_speed state.current = state.destroy;
 			break;
 		}
 	
@@ -105,7 +124,7 @@ function scrProjectileAliveTimer(_aliveTimerMax)
 	
 		case -2: //destroy on animation end
 		{
-			if image_index == image_number-1 currentState = stateDestroy;
+			if image_index == image_number-1 state.current = state.destroy;
 			break;
 		}
 	}
@@ -129,13 +148,13 @@ function scrProjectilePhysics(_angleVelocity)
 function scrProjectileDetectEntity()
 {
 	entityColliding = instance_place(x,y,objEntity)
-	if instance_exists(entityColliding) currentState = stateCollideEntity;
+	if instance_exists(entityColliding) state.current = state.collideEntity;
 }
 
 //Detects terrain and changes state when hit
 function scrProjectileDetectTerrain()
 {
-	if place_meeting(x,y,objTerrain) currentState = stateCollideTerrain;
+	if place_meeting(x,y,objTerrain) state.current = state.collideTerrain;
 }
 
 #endregion

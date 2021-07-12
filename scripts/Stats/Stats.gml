@@ -2,10 +2,14 @@ function conStatsInit() constructor
 {
 	#region Animations
 	
-	//Default scale stuff
+	//Default stuff
 	xScale = 1;						//Default sprite scale, similar to hVel and vVel. Can be modified directly, but will always return to stats.size
 	yScale = 1;						//
-	size = 1						//The fixed size of the sprite
+	size = 1;						//The fixed size of the sprite
+	
+	//Color stuff
+	spriteColor = [0,0,255];		//Hue, Saturation, and Value. Max is 255 for each
+	spriteColorSpeed = 5;			//Speed at which our color returns to normal from changing
 	
 	//scrSquish() stuff
 	bounceThereshold = 0.5;			//When we will consider a quick velocity change a "bounce"
@@ -41,11 +45,11 @@ function conStatsInit() constructor
 
 	#region Attributes
 	
-	hp = 100;
+	hp = 100;			//Health points
 	hpMax = 100;
 	hpRegen = 0;
 	ap = 20;
-	apMax = 20;
+	apMax = 20;			//Aura points
 	apRegen = 0;
 	
 	ccResist = 0;
@@ -53,7 +57,7 @@ function conStatsInit() constructor
 	castSpeed = 0;
 	evasion = 0;
 	
-	strength = 0;		//gives magic resist, physical damage, health, ?
+	strength = 0;		//gives magic armor, physical damage, health, ?
 	intelligence = 0;	//gives magic damage, apMax, apRegen, cooldownReduction, ?
 	dexterity = 0;		//gives crit, evasion, accuracy, movespeed, ?
 	
@@ -66,7 +70,44 @@ function conStatsInit() constructor
 	
 	armorPhysical = 0;
 	armorMagic = 0;
-		
+	
+	#endregion
+	
+	#region Attribute functions
+	
+	basicStats = function()
+	{
+		return [
+		"hp: "+string(hp),
+		"hpMax: "+string(hpMax),
+		"ap: "+string(ap),
+		"apMax: "+string(apMax)
+		];
+	}
+	
+	damage = function(_amount,_type,_flinch)
+	{
+		switch (_type)
+		{
+			case "Physical":
+				var _damage = _amount*(100/(100+armorPhysical));
+				var _scale = min((0.2+(_damage/hpMax)),0.5);
+			
+				hp -= _damage
+			
+				if _flinch
+				{
+					xScale = (size + _scale)*sign(xScale);
+					yScale = (size + _scale)*sign(yScale);
+					spriteColor = [0,(_scale*255),255]
+				}
+				
+				break;
+			
+			
+		}
+	}
+	
 	#endregion
 	
 	#region Inventory

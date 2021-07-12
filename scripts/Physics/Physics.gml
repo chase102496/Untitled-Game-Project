@@ -3,24 +3,12 @@ function scrPhysicsVars()
 	onWall = place_meeting(x+1,y,objTerrain) - place_meeting(x-1,y,objTerrain); //1 = left wall, 0 = no wall, -1 = right wall
 	onGround = place_meeting(x,y+1,objTerrain)
 }
-///
-function scrFractionRemoval()
-{
-	//Store and remove fractions for collision prep MUST GO BEFORE COLLISION
-	//stats.hVel += hVelFrac
-	//stats.vVel += vVelFrac
-	
-	//hVelFrac = stats.hVel - (floor(abs(stats.hVel))*sign(stats.hVel));
-	//stats.hVel -= hVelFrac;
-	//vVelFrac = stats.vVel - (floor(abs(stats.vVel))*sign(stats.vVel));
-	//stats.vVel -= vVelFrac;
-}
-///
+//
 function scrGravity()
 {
 	stats.vVel += stats.gravAccel;
 }
-///
+//
 function scrCollision(_noClip) //Enables object collision and physics, for no collision add true to the args
 {	
 	if _noClip == undefined or _noClip == false
@@ -56,4 +44,4 @@ function scrCollision(_noClip) //Enables object collision and physics, for no co
 		y += stats.vVel;	
 	}
 }
-///
+//

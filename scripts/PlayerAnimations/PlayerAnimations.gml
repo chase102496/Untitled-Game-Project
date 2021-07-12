@@ -1,6 +1,6 @@
 function scrPlayerAnimations()
 {
-	switch currentState
+	switch state.current
 	{	
 		case scrPlayerStateGround:
 		{
@@ -10,7 +10,7 @@ function scrPlayerAnimations()
 			else
 			{
 				sprite_index = phSpriteRun; //Run animation
-				stats.xScale = sign(stats.hVel);
+				stats.xScale = sign(stats.hVel)*abs(stats.xScale);
 			}
 			break;
 		}
@@ -35,7 +35,7 @@ function scrPlayerAnimations()
 			image_speed = abs(stats.vVel/stats.vMaxVel) + 0.2;
 			sprite_index = phSpriteWallslide;
 			
-			if onWall != 0 stats.xScale = -onWall;
+			if onWall != 0 stats.xScale = -onWall*abs(stats.xScale);
 			break;
 		}
 	
@@ -46,7 +46,7 @@ function scrPlayerAnimations()
 			if stats.hVel = 0
 			{
 				sprite_index = phSpriteCrouch;
-				if moveDirection != 0 stats.xScale = moveDirection;
+				if moveDirection != 0 stats.xScale = moveDirection*abs(stats.xScale);
 			}
 			else sprite_index = phSpriteSlide;
 			
@@ -56,14 +56,14 @@ function scrPlayerAnimations()
 		case scrPlayerStateHurt:
 		{
 			
-			break
+			break;
 		}
 		
 		#region Attack animations
 		
 		case scrPlayerStateAttack:
 		{
-			switch (playerEquip.currentState[1])
+			switch (playerEquip.state.current[1])
 			{
 				case scrEquipStateGreatswordStab: //Primary attack forward
 					image_speed = 1;
@@ -88,7 +88,8 @@ function scrPlayerAnimations()
 		
 		#endregion
 	}
-
+	
+	scrColorChange();
 	scrSquishVelocity();
 	scrSquish();
 }

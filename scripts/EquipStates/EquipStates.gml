@@ -177,6 +177,7 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 			owner = other.owner.id;
 			
 			//State init
+			state.hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,sprArrow]]];
 			state.free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,sprArrow],true,true,true,true,3]];
 			state.collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,sprArrowStuck],3]];
 			state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,sprArrowStuck],"Sticking",3]];
@@ -187,11 +188,12 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 			entityStats = [100,"Physical",true]; //Do 10 magical damage, with flinching
 		}
 	}
-	else equipProjectile.projectilePower = round(((image_index+1)/image_number) * equipProjectile.projectilePowerMax); //Projectile power updating var as bow pulls back, power goes up
+	else equipProjectile.projectilePower = image_index/(image_number-1) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
 	
 	//State switches
 	if !keyAttackPrimaryHold
 	{
+		
 		equipProjectile.state.current = equipProjectile.state.free;
 		equipProjectile = noone;
 		state.current = [scrEquipStateBow,scrEquipStateBowIdle];
@@ -229,7 +231,7 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 
 	//Sequence init
 	scrSequenceCreator(seqBowFire);
-	image_index = scrSequenceRatio(image_number);
+	image_index = scrSequenceRatio(image_number)/2;
 
 	if instance_exists(equipProjectile)
 	{
@@ -304,7 +306,7 @@ function scrEquipStateOrbCharge()
 			owner = other.owner.id;
 			
 			//State init
-			state.hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsBasic,sprArcaneBlast]]]
+			state.hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsBasic,-1]]]
 			state.free = [[scrProjectileStateFree,[scrProjectileAnimationsBasic,sprArcaneBlast],false,false,true,false,-2]]; //Static projectile, lasts until animation end
 			state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsBasic,sprArcaneBlast],"",-2]]; //Normal collision with entities, but last until animation end
 			state.current = state.hold;

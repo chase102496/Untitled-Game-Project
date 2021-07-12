@@ -1,6 +1,7 @@
 //NEW constructor instantiation
 stats = new conStatsInit();
 state = new conProjectileStateInit();
+sprite_index = -1;
 
 entityBuffs = [];
 entityStats = [];

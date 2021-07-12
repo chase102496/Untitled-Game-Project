@@ -229,7 +229,7 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 
 	//Sequence init
 	scrSequenceCreator(seqBowFire);
-	image_index = round((image_number-1)*scrSequenceRatio());
+	image_index = scrSequenceRatio(image_number);
 
 	if instance_exists(equipProjectile)
 	{

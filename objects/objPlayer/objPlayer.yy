@@ -10,7 +10,10 @@
     "path": "sprites/sprPlayerIdle/sprPlayerIdle.yy",
   },
   "persistent": false,
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "objEntity",
+    "path": "objects/objEntity/objEntity.yy",
+  },
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,

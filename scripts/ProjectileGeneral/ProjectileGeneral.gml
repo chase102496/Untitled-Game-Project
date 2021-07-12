@@ -5,16 +5,15 @@
 //Init constructor
 function conProjectileStateInit(_default)
 {
-	free = [[scrProjectileStateFree,false,false,true,false,-2]];
-	hold = [scrProjectileStateHoldArrow];
-	collideEntity = [[scrProjectileStateCollide,objEntity,-2]];
-	collideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
+	state.free = [[scrProjectileStateFree,false,false,true,false,-2]];
+	state.hold = [scrProjectileStateHoldArrow];
+	state.collideEntity = [[scrProjectileStateCollide,objEntity,-2]];
+	state.collideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
 	state.destroy = [scrProjectileStateDestroy];
+	state.current = _default;
 	
-	entityDamage = [];
 	entityBuffs = [];
-	
-	current = _default;
+	entityStats = [];
 }
 
 #region Projectile states
@@ -69,32 +68,34 @@ function scrProjectileStateFree(_physicsEnabled,_angleVelocity,_entityCollision,
 //_aliveTimerMax is how long in seconds we want to wait before running the destroy script. -1 for no timer, -2 for end of animation timer
 function scrProjectileStateCollide(_type,_aliveTimerMax)
 {
-	switch(_type)
-	{
-		case objEntity: //Runs a bunch of scripts (entityBuffs) that are translated by scrBuffs based on what is configured in equipment
+		if _type == objEntity
 		{
-			if is_array(entityBuffs)
+			if entityColliding != noone
 			{
-				for (var i = 0;i < array_length(entityBuffs);i ++) //Run each one through the buff add script for this target
+				//Runs a bunch of scripts (entityBuffs) that are translated by scrBuffs based on what is configured in equipment
+				if is_array(entityBuffs)
 				{
-					scrBuffsAdd(entityBuffs[i],entityColliding);
+					for (var i = 0;i < array_length(entityBuffs);i ++) //Run each one through the buff add script for this target
+					{
+						scrBuffsAdd(entityBuffs[i],entityColliding);
+					}
 				}
+				else scrBuffsAdd(entityBuffs,entityColliding);
+				
+				entityColliding.stats.damage(entityStats[0],entityStats[1],entityStats[2]);
+				
+				entityColliding = noone;
 			}
-			else scrBuffsAdd(entityBuffs,entityColliding);
 			
 			scrProjectileAliveTimer(_aliveTimerMax);
-			
-			break;
 		}
 		
-		case objTerrain:
+		if _type == objTerrain
 		{
 			stats.hVel = 0;
 			stats.vVel = 0;
 			scrProjectileAliveTimer(_aliveTimerMax);
-			break;
 		}
-	}
 }
 
 // Destroy states
@@ -147,8 +148,9 @@ function scrProjectilePhysics(_angleVelocity)
 //Detects entities and changes state when hit
 function scrProjectileDetectEntity()
 {
-	entityColliding = instance_place(x,y,objEntity)
-	if instance_exists(entityColliding) state.current = state.collideEntity;
+	entityColliding = instance_place(x,y,objEntity);
+	
+	if instance_exists(entityColliding) and entityColliding != owner state.current = state.collideEntity;
 }
 
 //Detects terrain and changes state when hit

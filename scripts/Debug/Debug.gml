@@ -14,6 +14,7 @@ function scrDebugInputs()
 	//Debug inputs
 	global.keyEsc = keyboard_check_pressed(vk_escape);
 	//
+	global.keyCtrl = keyboard_check(vk_control);
 	global.key0 = keyboard_check(vk_numpad0);
 	global.key1 = keyboard_check(vk_numpad1);
 	global.key2 = keyboard_check(vk_numpad2);
@@ -70,16 +71,19 @@ function scrDebugVars()
 		
 	with global.inputObject
 	{
-		if global.keyPress7 stats.damage(10,"Physical",true);
-		if global.keyPress8 stats.damage(25,"Physical",true);
-		if global.keyPress9 stats.damage(50,"Physical",true);
+		if global.keyCtrl var _type = "Magical";
+		else var _type = "Physical";
+
+		if global.keyPress7 stats.damage(10,_type,true);
+		if global.keyPress8 stats.damage(25,_type,true);
+		if global.keyPress9 stats.damage(50,_type,true);
 	}
 	
 	//Changing input targets. Control a body with MMB!
 	if mouse_check_button_pressed(mb_middle)
 	{
-		if position_meeting(mouse_x,mouse_y,global.playerObject) global.inputObject = global.playerObject.id;
-		if position_meeting(mouse_x,mouse_y,objEntity) global.inputObject = objEntity.id;
+		entityClick = instance_nearest(mouse_x,mouse_y,objEntity);
+		if instance_exists(entityClick) global.inputObject = entityClick.id;
 	}
 		
 	//Debug toggle

@@ -69,7 +69,7 @@ function conStatsInit() constructor
 	resistPoison = 0;
 	
 	armorPhysical = 0;
-	armorMagic = 0;
+	armorMagical = 0;
 	
 	#endregion
 	
@@ -99,7 +99,22 @@ function conStatsInit() constructor
 				{
 					xScale = (size + _scale)*sign(xScale);
 					yScale = (size + _scale)*sign(yScale);
-					spriteColor = [0,(_scale*255),255]
+					spriteColor = [0,_scale*255,255]
+				}
+				
+				break;
+				
+			case "Magical":
+				var _damage = _amount*(100/(100+armorMagical));
+				var _scale = min((0.2+(_damage/hpMax)),0.5);
+			
+				hp -= _damage
+			
+				if _flinch
+				{
+					xScale = (size + _scale)*sign(xScale);
+					yScale = (size + _scale)*sign(yScale);
+					spriteColor = [180,_scale*255,255]
 				}
 				
 				break;

@@ -177,10 +177,14 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 		{
 			sprite_index = sprArrow;
 			stateHold = [scrProjectileStateHoldArrow];
-			state.free = [[scrProjectileStateFree,true,true,false,true,3]];
+			state.free = [[scrProjectileStateFree,true,true,true,true,3]];
 			state.collideTerrain = [[scrProjectileStateCollide,objTerrain,3]];
+			state.collideEntity = [[scrProjectileStateCollide,objEntity,3]];
 			state.destroy = [scrProjectileStateDestroy];
 			state.current = stateHold;
+			
+			entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
+			entityStats = [100,"Physical",true]; //Do 10 magical damage, with flinching
 		}
 	}
 	else equipProjectile.projectilePower = round(((image_index+1)/image_number) * equipProjectile.projectilePowerMax); //Projectile power updating var as bow pulls back, power goes up
@@ -330,11 +334,16 @@ function scrEquipStateOrbCast()
 		with equipProjectile
 		{
 			sprite_index = sprArcaneBlast;
-			state.free = [[scrProjectileStateFree,false,false,true,false,-2]];
-			state.collideEntity = [[scrProjectileStateCollide,objEntity,-2]];
+			
+			//State init
+			state.free = [[scrProjectileStateFree,false,false,true,false,-2]]; //Static projectile, lasts until animation end
+			state.collideEntity = [[scrProjectileStateCollide,objEntity,-2]]; //Normal collision with entities, but last until animation end
 			state.destroy = [scrProjectileStateDestroy];
-			entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
 			state.current = state.free;
+			
+			//Buff and stat transfer init
+			entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
+			entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
 		}
 	}
 	else equipProjectile.image_index = round((equipProjectile.image_number-1)*scrSequenceRatio());

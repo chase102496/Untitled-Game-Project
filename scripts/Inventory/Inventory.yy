@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Player",
-    "path": "folders/Scripts/Player.yy",
+    "name": "General",
+    "path": "folders/Scripts/General.yy",
   },
   "resourceVersion": "1.0",
-  "name": "PlayerInventory",
+  "name": "Inventory",
   "tags": [],
   "resourceType": "GMScript",
 }

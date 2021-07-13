@@ -1,6 +1,7 @@
 //NEW constructor instantiation
 stats = new conStatsInit();
 state = new conStateInit(scrEntityStateGround);
+inv = new conInventoryInit();
 
 //One-time init scripts
 scrBuffsInit();

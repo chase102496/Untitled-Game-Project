@@ -5,6 +5,7 @@ playerEquip.owner = id;
 //NEW constructor instantiation
 stats = new conStatsInit();
 state = new conStateInit(scrPlayerStateGround);
+inv = new conInventoryInit();
 
 //One-time init scripts
 conStateInit();

@@ -19,4 +19,4 @@ y += random_range(-shakeRemain,shakeRemain);
 
 shakeRemain = max(0,shakeRemain-((1/shakeLength)*shakeAmp));
 
-camera_set_view_pos(cam,x-viewWidthHalf,y-viewHeightHalf);
+camera_set_view_pos(global.camera,x-viewWidthHalf,y-viewHeightHalf);

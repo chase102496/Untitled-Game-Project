@@ -1,8 +1,9 @@
 //NEW constructor instantiation
 stats = new conStatsInit();
-state = new scrEquipStateInit(scrEquipStateEmpty);
+state = new conEquipStateInit(scrEquipStateEmpty);
+inv = new conInventoryInit();
 
-scrEquipStateInit()
+conEquipStateInit()
 //Init
 currentLayer = "layEquip";
 currentSequence = 0;

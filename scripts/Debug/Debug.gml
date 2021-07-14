@@ -116,6 +116,12 @@ function scrDebugDraw()
 {
 	if global.drawDebug
 	{
+		var _mousePosRelative = scrGuiAbsoluteToRelative(mouse_x,mouse_y);
+		
+		//Debug mouse position in window
+		draw_text_transformed(mouse_x,mouse_y,["Absolute",mouse_x,mouse_y,"\nRelative",_mousePosRelative[0],_mousePosRelative[1]],0.5,0.5,0);
+		
+		//Debug values shown for inputObject
 		for (var i = 0; i < ds_list_size(global.debugVar); i += 1)
 		{
 			draw_text_transformed(global.inputObject.x,global.inputObject.y-30-(8*i),global.debugVar[| i],0.5,0.5,0);

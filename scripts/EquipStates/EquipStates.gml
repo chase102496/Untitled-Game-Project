@@ -1,6 +1,6 @@
 #region Init config and tools
 //
-function scrEquipStateInit(_default) : conStateInit(_default) constructor
+function conEquipStateInit(_default) : conStateInit(_default) constructor
 {
 }
 ///

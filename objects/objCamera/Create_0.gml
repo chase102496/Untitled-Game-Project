@@ -1,7 +1,8 @@
-cam = view_camera[0];
+global.camera = view_camera[0];
 follow = objPlayer;
-viewWidthHalf = camera_get_view_width(cam) * 0.5;
-viewHeightHalf = camera_get_view_height(cam) * 0.5;
+
+viewWidthHalf = camera_get_view_width(global.camera) * 0.5;
+viewHeightHalf = camera_get_view_height(global.camera) * 0.5;
 xTo = xstart;
 yTo = ystart;
 

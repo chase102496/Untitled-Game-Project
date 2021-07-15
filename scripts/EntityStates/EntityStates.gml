@@ -16,7 +16,7 @@ function scrEntityStateGround()
 		if sign(stats.hVel) != moveDirection stats.hVel = 0; //If our velocity isn't the same as our move direction, turn instantly
 	}
 	
-	if keyJump stats.vVel -= stats.jumpStr; //Jump
+	if keyJumpHold stats.vVel -= stats.jumpStr; //Jump
 	
 	scrGravity();
 	scrCollision();
@@ -53,5 +53,5 @@ function scrEntityStateAir()
 	if onGround state.current = scrEntityStateGround;
 	
 	//Extra
-	if (!keyJump and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount
+	if (!keyJumpHold and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount
 }

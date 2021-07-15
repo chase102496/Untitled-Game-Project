@@ -16,7 +16,7 @@ function scrPlayerStateGround() //Player is idle or running
 		if sign(stats.hVel) != moveDirection stats.hVel = 0; //If our velocity isn't the same as our move direction, turn instantly
 	}
 	
-	if keyJumpDown stats.vVel -= stats.jumpStr; //Jump
+	if keyJumpPress stats.vVel -= stats.jumpStr; //Jump
 	
 	scrGravity();
 	scrCollision();
@@ -26,7 +26,8 @@ function scrPlayerStateGround() //Player is idle or running
 
 	//State switches
 	if !onGround state.current = scrPlayerStateAir;
-	else if keyDown state.current = scrPlayerStateCrouch;
+	else if keyDownHold state.current = scrPlayerStateCrouch;
+	if keyMenuPress state.current = scrPlayerStateMenu;
 }
 //
 function scrPlayerStateAir() //Player is in air not touching walls or ground
@@ -56,15 +57,16 @@ function scrPlayerStateAir() //Player is in air not touching walls or ground
 	//State switches
 	if onGround state.current = scrPlayerStateGround;
 	else if onWall != 0 state.current = scrPlayerStateWallslide;
+	if keyMenuPress state.current = scrPlayerStateMenu;
 	
 	//Extra
-	if (!keyJump and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount
+	if (!keyJumpHold and (stats.vVel < -stats.jumpControl)) stats.vVel += stats.jumpControl; //Shaves off some velocity by a set amount
 }
 //
 function scrPlayerStateWallslide() //Player is sliding on wall
 {
 	//Movement
-	if keyJumpDown
+	if keyJumpPress
 	{
 		stats.vVel = -stats.wallJumpStr*0.6;
 		stats.hVel = sign(stats.xScale)*stats.wallJumpStr*0.4;
@@ -80,6 +82,7 @@ function scrPlayerStateWallslide() //Player is sliding on wall
 	//State switches
 	if onGround state.current = scrPlayerStateGround;
 	else if onWall = 0 state.current = scrPlayerStateAir;
+	if keyMenuPress state.current = scrPlayerStateMenu;
 	
 	//Extra
 	stats.vVel = scrRoundPrecise(stats.vVel*stats.vSlideDecel,0.01) //Rounds to the hundredth (0.01)
@@ -95,8 +98,9 @@ function scrPlayerStateCrouch() //Player is crouching
 	scrPlayerCombatOutputs(false);
 	
 	//State switches
-	if !keyDown state.current = scrPlayerStateGround;
+	if !keyDownHold state.current = scrPlayerStateGround;
 	else if !onGround state.current = scrPlayerStateAir;
+	if keyMenuPress state.current = scrPlayerStateMenu;
 	
 	//Extra
 	if stats.hVel != 0
@@ -126,4 +130,27 @@ function scrPlayerStateHurt() //Player has been damaged by an attack
 	scrCollision();
 	scrPlayerAnimations();
 	scrBuffs();
+}
+//
+function scrPlayerStateMenu() //Player went into their menus
+{
+	scrPhysicsVars();
+	
+	if stats.hVel != 0
+	{
+		if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
+		else stats.hVel = 0;
+	}
+	
+	scrGravity();
+	scrCollision();
+	scrPlayerAnimations();
+	scrBuffs();
+
+	global.menu = true
+	if keyMenuPress
+	{
+		global.menu = false;
+		state.current = state.previous;
+	}
 }

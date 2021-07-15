@@ -55,7 +55,11 @@ function scrPlayerAnimations()
 		
 		case scrPlayerStateHurt:
 		{
-			
+			break;
+		}
+		
+		case scrPlayerStateMenu:
+		{
 			break;
 		}
 		

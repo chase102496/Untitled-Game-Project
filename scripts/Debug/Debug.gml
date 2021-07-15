@@ -13,7 +13,7 @@ function scrDebugInit()
 function scrDebugInputs()
 {
 	//Debug inputs
-	global.keyEsc = keyboard_check_pressed(vk_escape);
+	global.keyReset = keyboard_check_pressed(vk_escape) and keyboard_check(vk_shift); //shift-esc for reset
 	//
 	global.keyCtrl = keyboard_check(vk_control);
 	global.key0 = keyboard_check(vk_numpad0);
@@ -47,7 +47,7 @@ function scrDebugVars()
 	{
 		//Tracking velocity
 		global.debugVar[| 0] = ["hVel: "+string(stats.hVel),"vVel: "+string(stats.vVel)];
-		
+
 		//Tracking buffs
 		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
 		{
@@ -71,12 +71,13 @@ function scrDebugVars()
 		
 	with global.inputObject
 	{
-		if global.keyCtrl var _type = "Magical";
-		else var _type = "Physical";
-
-		if global.keyPress7 stats.damage(10,_type,true);
-		if global.keyPress8 stats.damage(25,_type,true);
-		if global.keyPress9 stats.damage(50,_type,true);
+		if global.keyPress6 ds_list_add(inv.id,new conInventoryItem(sprGreatswordIdle,"Name"+string(random_range(1,100)),"Descr","1","Test"));
+		
+		//if global.keyCtrl var _type = "Magical";
+		//else var _type = "Physical";
+		//if global.keyPress7 stats.damage(10,_type,true);
+		//if global.keyPress8 stats.damage(25,_type,true);
+		//if global.keyPress9 stats.damage(50,_type,true);
 	}
 	
 	//Changing input targets. Control a body with MMB!
@@ -106,7 +107,7 @@ function scrDebugVars()
 	//if global.keyPress6 global.debugVar[| 3] = 
 
 	//Restart game
-	if global.keyEsc game_restart();
+	if global.keyReset game_restart();
 		
 	#endregion
 	

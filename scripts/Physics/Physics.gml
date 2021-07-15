@@ -9,39 +9,31 @@ function scrGravity()
 	stats.vVel += stats.gravAccel;
 }
 //
-function scrCollision(_noClip) //Enables object collision and physics, for no collision add true to the args
+function scrCollision() //Enables object collision and physics, for no collision add true to the args
 {	
-	if _noClip == undefined or _noClip == false
+	// OLD Horizontal Collision
+	// Make sure the sprite mask width is an even number for using this
+	if place_meeting(x+stats.hVel,y,objTerrain) // Colliding with terrain horizontally
 	{
-		// OLD Horizontal Collision
-		// Make sure the sprite mask width is an even number for using this
-		if place_meeting(x+stats.hVel,y,objTerrain) // Colliding with terrain horizontally
+		while (!place_meeting(x+sign(stats.hVel),y,objTerrain))
 		{
-			while (!place_meeting(x+sign(stats.hVel),y,objTerrain))
-			{
-			x += sign(stats.hVel);
-			}
-			stats.hVel = 0;
+		x += sign(stats.hVel);
 		}
+		stats.hVel = 0;
+	}
 	
-		x += stats.hVel;
+	x += stats.hVel;
 
-		// OLD Vertical Collision
-		if place_meeting(x,y+stats.vVel,objTerrain) // Colliding with terrain vertically
-		{
-			while (!place_meeting(x,y+sign(stats.vVel),objTerrain))
-			{
-				y += sign(stats.vVel);
-			}
-			stats.vVel = 0;
-		}
-	
-		y += stats.vVel;
-	}
-	else if _noClip == true
+	// OLD Vertical Collision
+	if place_meeting(x,y+stats.vVel,objTerrain) // Colliding with terrain vertically
 	{
-		x += stats.hVel;
-		y += stats.vVel;	
+		while (!place_meeting(x,y+sign(stats.vVel),objTerrain))
+		{
+			y += sign(stats.vVel);
+		}
+		stats.vVel = 0;
 	}
+	
+	y += stats.vVel;
 }
 //

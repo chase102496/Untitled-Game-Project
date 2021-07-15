@@ -1,16 +1,16 @@
 function scrInputsInit()
 {
 		//Movement inputs
-		keyLeft = 0
-		keyRight = 0
-		keyDown = 0
-		keyJump = 0
-		keyJumpDown = 0
-		keyJumpUp = 0
+		keyLeftHold = 0
+		keyRightHold = 0
+		keyDownHold = 0
+		keyJumpHold = 0
+		keyJumpPress = 0
+		keyJumpRelease = 0
 		
 		//Misc inputs
-		keyInteract = 0
-		keyBack = 0
+		keyInteractPress = 0
+		keyMenuPress = 0;
 		
 		//Combat inputs
 		keyAttackPrimaryPress = 0
@@ -28,16 +28,16 @@ function scrInputs()
 	if global.inputObject == id
 	{
 		//Movement inputs
-		keyLeft = keyboard_check(ord("A"));
-		keyRight = keyboard_check(ord("D"));
-		keyDown = keyboard_check(ord("S"));
-		keyJump = keyboard_check(vk_space);
-		keyJumpDown = keyboard_check_pressed(vk_space);
-		keyJumpUp = keyboard_check_released(vk_space);
+		keyLeftHold = keyboard_check(ord("A"));
+		keyRightHold = keyboard_check(ord("D"));
+		keyDownHold = keyboard_check(ord("S"));
+		keyJumpHold = keyboard_check(vk_space);
+		keyJumpPress = keyboard_check_pressed(vk_space);
+		keyJumpRelease = keyboard_check_released(vk_space);
 		
 		//Misc inputs
-		keyInteract = keyboard_check(ord("W"));
-		keyBack = keyboard_check(vk_escape);
+		keyInteractPress = keyboard_check_pressed(ord("W"));
+		keyMenuPress = keyboard_check_pressed(vk_escape);
 		
 		//Combat inputs
 		keyAttackPrimaryPress = mouse_check_button_pressed(mb_left);
@@ -48,6 +48,6 @@ function scrInputs()
 		keyAttackSecondaryHold = mouse_check_button(mb_right);
 		keyAttackSecondaryRelease = mouse_check_button_released(mb_right);
 		
-		moveDirection = keyRight - keyLeft
+		moveDirection = keyRightHold - keyLeftHold
 	}
 }

@@ -10,7 +10,8 @@ inv = new conInventoryInit();
 //One-time init scripts
 conStateInit();
 scrBuffsInit();
-scrInputsInit()
+scrInputsInit();
+scrGUIInit();
 
 //Placeholders for sprite animations;
 phSpriteIdle = sprPlayerIdle;

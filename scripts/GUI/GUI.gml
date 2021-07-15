@@ -2,15 +2,28 @@ function conGUIInit() constructor
 {
 	// Draw the camera relative to the coordinates on the camera screen (game window)
 	// All positive values. 0,0 is top left corner, cam height and width is bottom right
-	inventoryDraw = function(_sprite,_x1,_y1,_x2,_y2)
+	//_gridScale multiplies the x and y values to fit to a grid
+	window = function(_sprite,mainWindowX,mainWindowY,mainWindowX2,mainWindowY2,_gridScale) constructor
 	{
-		var _winStart = scrGuiRelativeToAbsolute(_x1,_y1);
+		sprite = _sprite;
+		x1 = mainWindowX;
+		y1 = mainWindowY;
+		x2 = mainWindowX2;
+		y2 = mainWindowY2;
+		gridScale = _gridScale;
 		
-		var _winEnd = scrGuiRelativeToAbsolute(_x2,_y2);
+		draw = function()
+		{
+			winStart = scrGuiRelativeToAbsolute(x1*gridScale,y1*gridScale);
+			winEnd = scrGuiRelativeToAbsolute(x2*gridScale,y2*gridScale);
+			var _winEndDist = [(winEnd[0] - winStart[0])/sprite_get_width(sprite),(winEnd[1] - winStart[1])/sprite_get_height(sprite)];
+			draw_sprite_ext(sprite,0,winStart[0],winStart[1],_winEndDist[0],_winEndDist[1],0,-1,255);
+		}
 		
-		var _winEndDist = [(_winEnd[0] - _winStart[0])/sprite_get_width(_sprite),(_winEnd[1] - _winStart[1])/sprite_get_height(_sprite)];
-		
-		draw_sprite_ext(_sprite,0,_winStart[0],_winStart[1],_winEndDist[0],_winEndDist[1],0,-1,255);
+		text = function(_text)
+		{
+			draw_text(winStart[0],winStart[1],_text);
+		}
 	}
 }
 //

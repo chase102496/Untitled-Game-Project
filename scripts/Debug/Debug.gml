@@ -16,6 +16,8 @@ function scrDebugInputs()
 	global.keyReset = keyboard_check_pressed(vk_escape) and keyboard_check(vk_shift); //shift-esc for reset
 	//
 	global.keyCtrl = keyboard_check(vk_control);
+	//global.keyScrollUp = mouse_wheel_up()
+	//global.keyScrollDown = mouse_wheel_down()
 	global.key0 = keyboard_check(vk_numpad0);
 	global.key1 = keyboard_check(vk_numpad1);
 	global.key2 = keyboard_check(vk_numpad2);
@@ -36,6 +38,10 @@ function scrDebugInputs()
 	global.keyPress7 = keyboard_check_pressed(vk_numpad7);
 	global.keyPress8 = keyboard_check_pressed(vk_numpad8);
 	global.keyPress9 = keyboard_check_pressed(vk_numpad9);
+	global.keyPressUp = keyboard_check_pressed(vk_up);
+	global.keyPressDown = keyboard_check_pressed(vk_down);
+	global.keyPressLeft = keyboard_check_pressed(vk_left);
+	global.keyPressRight = keyboard_check_pressed(vk_right);
 }
 //
 function scrDebugVars()
@@ -71,7 +77,13 @@ function scrDebugVars()
 		
 	with global.inputObject
 	{
-		if global.keyPress6 ds_list_add(inv.id,new conInventoryItem(sprGreatswordIdle,"Name"+string(random_range(1,100)),"Descr","1","Test"));
+		if global.keyPress6
+		{
+			var _sprRand = choose(sprGreatswordIdle,sprArrow,sprLaternariusIdle,sprOrbIdle,sprPlayerIdle,sprTerrain);
+			
+			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test1"));
+			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test2"));
+		}
 		
 		//if global.keyCtrl var _type = "Magical";
 		//else var _type = "Physical";

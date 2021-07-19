@@ -1,15 +1,19 @@
 function scrInputsInit()
 {
 		//Movement inputs
-		keyLeftHold = 0
-		keyRightHold = 0
-		keyDownHold = 0
-		keyJumpHold = 0
-		keyJumpPress = 0
-		keyJumpRelease = 0
+		keyLeftHold = 0;
+		keyLeftPress = 0;
+		keyRightHold = 0;
+		keyRightPress = 0;
+		keyDownHold = 0;
+		keyDownPress = 0;
+		keyUpHold = 0;
+		keyUpPress = 0;
+		keyJumpHold = 0;
+		keyJumpPress = 0;
+		keyJumpRelease = 0;
 		
 		//Misc inputs
-		keyInteractPress = 0
 		keyMenuPress = 0;
 		
 		//Combat inputs
@@ -29,14 +33,25 @@ function scrInputs()
 	{
 		//Movement inputs
 		keyLeftHold = keyboard_check(ord("A"));
+		keyLeftPress = keyboard_check_pressed(ord("A"));
+		
 		keyRightHold = keyboard_check(ord("D"));
+		keyRightPress = keyboard_check_pressed(ord("D"));
+		
 		keyDownHold = keyboard_check(ord("S"));
+		keyDownPress = keyboard_check_pressed(ord("S"));
+		
+		keyUpHold = keyboard_check(ord("W"));
+		keyUpPress = keyboard_check_pressed(ord("W"));
+		//
+		keyScrollUp = mouse_wheel_up();
+		keyScrollDown = mouse_wheel_down();
+		//
 		keyJumpHold = keyboard_check(vk_space);
 		keyJumpPress = keyboard_check_pressed(vk_space);
 		keyJumpRelease = keyboard_check_released(vk_space);
 		
 		//Misc inputs
-		keyInteractPress = keyboard_check_pressed(ord("W"));
 		keyMenuPress = keyboard_check_pressed(vk_escape);
 		
 		//Combat inputs

@@ -148,8 +148,18 @@ function scrPlayerStateMenu() //Player went into their menus
 	scrBuffs();
 
 	global.menu = true
+	
+	if keyUpPress gui.cursorChange("Up");
+	if keyDownPress gui.cursorChange("Down");
+	if keyLeftPress gui.cursorChange("LeftReset");
+	if keyRightPress gui.cursorChange("RightReset");
+	//
+	if keyScrollUp gui.cursorChange("Up");
+	if keyScrollDown gui.cursorChange("Down");
+	
 	if keyMenuPress
 	{
+		gui.cursorChange("Reset");
 		global.menu = false;
 		state.current = state.previous;
 	}

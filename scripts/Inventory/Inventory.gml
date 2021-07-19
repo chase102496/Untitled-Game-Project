@@ -16,25 +16,32 @@ function conInventoryInit() constructor
 		
 		return _categoryList;
 	}
+	
+	add = function(_itemStruct)
+	{
+		ds_list_add(id,_itemStruct);
+	}
 }
 
 // Base item template
 function conInventoryItem(_sprite,_name,_description,_amount,_category) constructor
 {
-	sprite_index = _sprite;
+	sprite = _sprite;
 	name = _name;
 	description = _description;
 	amount = _amount;
-	category = _category;		//This will be like Pokemon's inventory system (Key Items, Equipment, Consumables, Tools,
+	category = _category; //This will be like Pokemon's inventory system (Key Items, Equipment, Consumables, Tools,
 	
-	add = function(_targetID,_listID)
+	interact = function(_category) //This will be used when interacted with in inventory and take a list of string-represented functions in a list from the function (use, destroy, etc)
 	{
-		with _targetID ds_list_add(_listID,other);
+		
 	}
 }
 
 // Equipment Item
-function conInventoryItemEquipment(_sprite,_name,_description,_tier) : conInventoryItem(_sprite,_name,_description,1,"Equipment") constructor
+function conInventoryItemEquipment(_sprite,_name,_description) : conInventoryItem(_sprite,_name,_description,1,"Equipment") constructor
 {
-	tier = _tier;
+	sprite = _sprite;
+	name = _name;
+	description = _description;
 }

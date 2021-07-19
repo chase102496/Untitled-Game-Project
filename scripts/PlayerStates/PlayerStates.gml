@@ -33,7 +33,7 @@ function scrPlayerStateGround() //Player is idle or running
 function scrPlayerStateAir() //Player is in air not touching walls or ground
 {
 	scrPhysicsVars();
-
+	
 	// Movement
 	if (moveDirection == 0 and stats.hVel != 0)
 	{

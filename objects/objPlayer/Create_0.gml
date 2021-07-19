@@ -5,6 +5,10 @@ playerEquip.owner = id;
 //NEW constructor instantiation
 stats = new conStatsInit();
 state = new conStateInit(scrPlayerStateGround);
+
+//NEW state machine
+//snowState = new SnowState("ground");
+
 inv = new conInventoryInit();
 
 //One-time init scripts

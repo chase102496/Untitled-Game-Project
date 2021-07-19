@@ -3,6 +3,21 @@
 *	Documentation: https://github.com/sohomsahaun/SnowState/wiki
 *
 *	Author: Sohom Sahaun | @sohomsahaun
+
+So basically, you have this structure:
+
+- State system
+ - State
+  - Event
+
+The code that is run is on the event-level, like this:
+
+Step will have: State system name . "step" event
+
+And the code that is run will depend on the state's "step" function and if it exists
+
+To run the code, just reference it with State system.Event();
+
 */
 
 /// @func SnowState(initial_state, [execute_enter])

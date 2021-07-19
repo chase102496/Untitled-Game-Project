@@ -11,7 +11,10 @@ function conGUIInit() constructor
 /// Player-driven GUI
 	
 	//Cursor control
-	cursorChange = function(_dir)
+	/// @description cursorChange(_dir)
+	/// @param {string} message
+	/// @function test
+	static cursorChange = function(_dir)
 	{
 		switch _dir
 		{
@@ -40,14 +43,14 @@ function conGUIInit() constructor
 	}
 	
 	//mainWindow draw
-	drawMain = function()
+	static drawMain = function()
 	{
 		mainWindow.drawWindow();
 		mainWindow.drawText("M");
 	}
 		
 	//subWindow draw
-	drawSub = function()
+	static drawSub = function()
 	{
 		for (var i = 0;i < array_length(subWindow);i ++)
 		{
@@ -74,7 +77,7 @@ function conGUIInit() constructor
 	}
 	
 	//listWindow draw for inventory categories
-	drawInventoryList = function(_listWindow,_categoryString)
+	static drawInventoryList = function(_listWindow,_categoryString)
 	{		
 		for (var i = 0;i < array_length(_listWindow);i ++)
 		{
@@ -106,7 +109,7 @@ function conGUIInit() constructor
 /// Main constructors for GUI
 
 	// Creates the window with parameters
-	window = function(_sprite,_x1,_y1,_x2,_y2,_grid) constructor
+	static window = function(_sprite,_x1,_y1,_x2,_y2,_grid) constructor
 	{
 		sprite = _sprite;
 		x1 = _x1;
@@ -115,7 +118,7 @@ function conGUIInit() constructor
 		y2 = _y2;
 		grid = _grid;
 
-		drawWindow = function(_grid)
+		static drawWindow = function(_grid)
 		{
 			winStart = scrGuiRelativeToAbsolute(x1*grid,y1*grid);
 			winEnd = scrGuiRelativeToAbsolute(x2*grid,y2*grid);
@@ -123,7 +126,7 @@ function conGUIInit() constructor
 			draw_sprite_ext(sprite,0,winStart[0],winStart[1],_winEndDist[0],_winEndDist[1],0,-1,255);
 		}
 		
-		drawText = function(_text,_offsetX = 0,_offsetY = 0)
+		static drawText = function(_text,_offsetX = 0,_offsetY = 0)
 		{
 			var _totalOffsetX = (_offsetX*grid);
 			var _totalOffsetY = (_offsetY*grid);
@@ -132,13 +135,13 @@ function conGUIInit() constructor
 			draw_text_ext_transformed(winStart[0]+_totalOffsetX,winStart[1]+_totalOffsetY,_text,1,-1,0.5,0.5,0);
 		}
 		
-		drawSprite = function(_sprite)
+		static drawSprite = function(_sprite)
 		{
 			winStart = scrGuiRelativeToAbsolute(x1*grid,y1*grid);
 			draw_sprite(_sprite,0,winStart[0],winStart[1]);
 		}
 		
-		drawDetails = function(_offsetX,_offsetY,_object)
+		static drawDetails = function(_offsetX,_offsetY,_object)
 		{
 			var _scale = 2;
 			var _spriteOffsetX = sprite_get_xoffset(_object.sprite)*_scale + (_offsetX*grid);
@@ -152,7 +155,7 @@ function conGUIInit() constructor
 			
 		}
 		
-		drawCursor = function(_offsetX,_offsetY,_sprite)
+		static drawCursor = function(_offsetX,_offsetY,_sprite)
 		{
 			
 			draw_sprite(_sprite,0,winStart[0]+_offsetX,winStart[1]+_offsetY);

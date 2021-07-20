@@ -5,7 +5,7 @@ function conStateInit(_default) constructor //Default state init
 	stored = _default;
 }
 //
-function scrStateExecute(_currentState) //Script to run the list of states and substates (e.g. currentstate = [scrMainState,Substate1,[Substate2withargs,arg0,arg1]])
+function scrStateExecute(_currentState) //OLD - Script to run the list of states and substates (e.g. currentstate = [scrMainState,Substate1,[Substate2withargs,arg0,arg1]])
 {
 	if is_array(_currentState)
 	{

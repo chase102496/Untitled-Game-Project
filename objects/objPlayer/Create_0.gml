@@ -5,24 +5,13 @@ playerEquip.owner = id;
 //NEW constructor instantiation
 stats = new conStatsInit();
 state = new conStateInit(scrPlayerStateGround);
+inv = new conInventoryInit();
 
 //NEW state machine
 snowState = new SnowState("ground");
-snowState.add("ground",
-{
-	step: function()
-	{
-		static test = 0;
-		global.debugVar[| 4] = test;
-		test ++;
-	}
-}
-);
-
-inv = new conInventoryInit();
+scrSnowStateInit();
 
 //One-time init scripts
-conStateInit();
 scrBuffsInit();
 scrInputsInit();
 scrGUIInit();

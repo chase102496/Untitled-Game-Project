@@ -11,7 +11,7 @@ function scrEquipStateMemory() //Used to store the previous state in memory
 	state.stored = state.current;
 }
 ///
-function scrEquipBroadcastListener() //Used to run one-time evensts
+function scrEquipBroadcastListener() //Used to run one-time events from sequences
 {
 	if event_data[? "event_type"] == "sequence event"
 	{

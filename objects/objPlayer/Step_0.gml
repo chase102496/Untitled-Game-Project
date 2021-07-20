@@ -1,5 +1,5 @@
 //Main
 scrInputs();
-scrStateMemory();
-scrStateExecute(state.current);
+//scrStateMemory();
+//scrStateExecute(state.current);
 snowState.step();

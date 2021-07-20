@@ -1,6 +1,6 @@
 //State machine handler under equipStates.gml
-scrEquipStateMemory();
+//scrEquipStateMemory();
 scrPlayerChangedDirection();
 scrEquipPhysics();
-
-scrStateExecute(state.current);
+snowState.step();
+//scrStateExecute(state.current);

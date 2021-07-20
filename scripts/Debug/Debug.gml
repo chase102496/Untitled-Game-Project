@@ -108,10 +108,10 @@ function scrDebugVars()
 		
 	//Equipment change
 	var _playerEquip = global.playerObject.playerEquip;
-	if global.keyPress1 _playerEquip.state.current = [scrEquipStateEmpty,scrEquipStateEmptyIdle];
-	if global.keyPress2 _playerEquip.state.current = [scrEquipStateGreatsword,scrEquipStateGreatswordIdle];
-	if global.keyPress3 _playerEquip.state.current = [scrEquipStateBow,scrEquipStateBowIdle];
-	if global.keyPress4 _playerEquip.state.current = [scrEquipStateOrb,scrEquipStateOrbIdle];
+	if global.keyPress1 _playerEquip.snowState.change("Empty");
+	if global.keyPress2 _playerEquip.snowState.change("Greatsword Idle");
+	if global.keyPress3 _playerEquip.snowState.change("Bow Idle");
+	if global.keyPress4 _playerEquip.snowState.change("Orb Idle");
 		
 	//Add a buff to your currently controlled target
 	if global.keyPress5 scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2],global.inputObject);

@@ -8,8 +8,8 @@ state = new conStateInit(scrPlayerStateGround);
 inv = new conInventoryInit();
 
 //NEW state machine
-snowState = new SnowState("ground");
-scrSnowStateInit();
+snowState = new SnowState("Ground");
+scrPlayerStateInit();
 
 //One-time init scripts
 scrBuffsInit();

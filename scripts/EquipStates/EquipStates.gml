@@ -1,8 +1,4 @@
 #region Init config and tools
-//
-function conEquipStateInit(_default) : conStateInit(_default) constructor
-{
-}
 ///
 function scrEquipStateMemory() //Used to store the previous state in memory
 {

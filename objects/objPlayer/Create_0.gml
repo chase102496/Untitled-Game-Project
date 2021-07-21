@@ -2,9 +2,11 @@
 playerEquip = instance_create_layer(x,y,"layEquip",objEquip);
 playerEquip.owner = id;
 
+//Input stuff
+scrInputsInit();
+
 //NEW constructor instantiation
 stats = new conStatsInit();
-state = new conStateInit(scrPlayerStateGround);
 inv = new conInventoryInit();
 
 //NEW state machine
@@ -13,7 +15,6 @@ scrPlayerStateInit();
 
 //One-time init scripts
 scrBuffsInit();
-scrInputsInit();
 scrGUIInit();
 
 //Placeholders for sprite animations;

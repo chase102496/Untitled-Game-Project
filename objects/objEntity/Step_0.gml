@@ -1,4 +1,3 @@
 //Main
-scrInputs();
-scrStateMemory();
+scrInputsGeneral();
 script_execute(state.current);

@@ -199,7 +199,7 @@ function scrProjectileAnimationsBasic(_sprite)
 {
 	image_speed = 0;
 	sprite_index = _sprite;
-	if sprite_index != -1 with equip other.image_index = scrSequenceRatio(other.image_number);
+	if sprite_index != -1 with equip other.image_index = scrSequenceRatio(other.image_number,currentSequenceElement);
 }
 
 #endregion

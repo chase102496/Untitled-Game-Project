@@ -37,6 +37,7 @@ function scrStateMemory() //Used to store the previous state in memory
 
 function scrPlayerStateInit() //All player states
 {
+	snowState.history_enable();
 	//Parent free state
 	snowState.add("Free",{
 			step: function()
@@ -211,7 +212,7 @@ function scrPlayerStateInit() //All player states
 function scrEquipStateInit() //All equip states
 {
 	snowState.add("Empty",{
-		step: function()
+		enter: function()
 		{
 			image_index = 1;
 			sprite_index = sprStick;
@@ -219,15 +220,17 @@ function scrEquipStateInit() //All equip states
 	});
 	
 	#region Greatsword
+	
 	snowState.add("Greatsword Idle",{
+		enter: function()
+		{
+			sprite_index = sprGreatswordIdle;
+		},
 		step: function()
 		{
-			//Config
-			sprite_index = sprGreatswordIdle;
-	
 			//Sequence init
 			scrSequenceCreator(seqGreatswordIdle);
-	
+			
 			//Modules
 			scrEquipAnimations();
 	
@@ -241,7 +244,7 @@ function scrEquipStateInit() //All equip states
 		{
 			//Sequence init
 			scrSequenceCreator(seqGreatswordChangeDirection);
-	
+			
 			//Modules
 			scrEquipAnimations();
 	
@@ -251,21 +254,28 @@ function scrEquipStateInit() //All equip states
 		}
 	});
 	snowState.add("Greatsword Stab",{
+		enter: function()
+		{
+			owner.snowState.change("Attack");
+			owner.image_speed = 1;
+			owner.sprite_index = owner.phSpriteAttackForward;
+		},
 		step: function()
 		{
 			//Sequence init
 			scrSequenceCreator(seqGreatswordStab);	
 			
+			//Player code
 			with owner
 			{
-				state.current = scrPlayerStateAttack;
+				image_index = scrSequenceRatio(image_number,other.currentSequenceElement)
 				if stats.hVel != 0
 				{
-				if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
-				else stats.hVel = 0;
+					if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
+					else stats.hVel = 0;
 				}
 			}
-	
+
 			//Modules
 			scrEquipAnimations();
 	
@@ -277,5 +287,148 @@ function scrEquipStateInit() //All equip states
 			}
 		}
 	});
+	
+	#endregion
+	
+	#region Bow
+	
+	snowState.add("Bow Idle",{
+		enter: function()
+		{
+			sprite_index = sprBowIdle;
+			aimRange[0] = 75;
+			aimRange[1] = 75;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqBowIdle);
+		
+			//Modules
+			scrEquipAnimations();
+	
+			//State switches
+			if changedDirection != 0 snowState.change("Bow Change Direction");
+			if keyAttackPrimaryHold snowState.change("Bow Draw");
+		}
+	});
+	snowState.add("Bow Change Direction",{
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqBowChangeDirection);
+	
+			//Modules
+			scrEquipAnimations();
+	
+			//State switches
+			if !in_sequence snowState.change("Bow Idle")
+			if keyAttackPrimaryPress snowState.change("Bow Draw")
+		}
+	});
+	snowState.add("Bow Draw",{
+		enter: function()
+		{
+			sprite_index = sprBowDraw;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqBowDraw);
+			image_index = scrSequenceRatio(image_number,currentSequenceElement);
+
+			//Extra
+			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5); //Limiting player movement during draw
+	
+			//Bow direction aim
+			bowDirection = sign(mouse_x - owner.x);
+			scrBowAiming(bowDirection);
+
+			//Projectile init
+			if !instance_exists(equipProjectile)
+			{
+				equipProjectile = instance_create_layer(x,y,"layProjectile",objProjectile);
+				with equipProjectile
+				{
+					equip = other.id;
+					owner = other.owner.id;
+			
+					//State init
+					state.hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,sprArrow]]];
+					state.free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,sprArrow],true,true,true,true,3]];
+					state.collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,sprArrowStuck],3]];
+					state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,sprArrowStuck],"Sticking",3]];
+					state.current = state.hold;
+			
+					//Buff and stat transfer init
+					entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
+					entityStats = [100,"Physical",true]; //Do 10 magical damage, with flinching
+				}
+			}
+			else equipProjectile.projectilePower = image_index/(image_number-1) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
+	
+			//State switches
+			if !in_sequence
+			{
+				snowState.change("Bow Hold");
+			}
+			else if !keyAttackPrimaryHold
+			{
+				equipProjectile.state.current = equipProjectile.state.free;
+				equipProjectile = noone;
+				snowState.change("Bow Idle");
+			}
+		}
+	});
+	snowState.add("Bow Hold",{
+		enter: function()
+		{
+			sprite_index = sprBowDraw;
+			equipProjectile.projectilePower = equipProjectile.projectilePowerMax;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqBowHold);
+			
+			//Bow direction aiming
+			scrBowAiming(bowDirection);
+			
+			//Extra
+			image_index = image_number-1; //set to last frame of scrEquipStateBowDraw
+			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5); //Limiting player movement during hold
+	
+			//State switches
+			if !keyAttackPrimaryHold snowState.change("Bow Fire");
+		}
+	});
+	snowState.add("Bow Fire",{
+		enter: function()
+		{
+			sprite_index = sprBowFire;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqBowFire);
+			image_index = scrSequenceRatio(image_number,currentSequenceElement)/2;
+
+			if instance_exists(equipProjectile)
+			{
+				equipProjectile.state.current = equipProjectile.state.free
+				equipProjectile = noone; //not associated with the object anymore
+			}
+
+			//State switches
+			if !in_sequence snowState.change("Bow Idle");
+		}
+	});
+	
+	#endregion
+	
+	#region Orb
+	
+	
+	
 	#endregion
 }

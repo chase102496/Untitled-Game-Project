@@ -60,7 +60,7 @@
     {"id":{"name":"sprBorderSquaredNoOverlay","path":"sprites/sprBorderSquaredNoOverlay/sprBorderSquaredNoOverlay.yy",},"order":3,},
     {"id":{"name":"crvSimpleParabola","path":"animcurves/crvSimpleParabola/crvSimpleParabola.yy",},"order":0,},
     {"id":{"name":"__scribble_class_event","path":"scripts/__scribble_class_event/__scribble_class_event.yy",},"order":1,},
-    {"id":{"name":"objWeapon","path":"objects/objWeapon/objWeapon.yy",},"order":0,},
+    {"id":{"name":"objEquip","path":"objects/objEquip/objEquip.yy",},"order":0,},
     {"id":{"name":"Debug","path":"scripts/Debug/Debug.yy",},"order":0,},
     {"id":{"name":"Stats","path":"scripts/Stats/Stats.yy",},"order":7,},
     {"id":{"name":"seqBowHold","path":"sequences/seqBowHold/seqBowHold.yy",},"order":4,},

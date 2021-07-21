@@ -60,7 +60,7 @@
             {"resourceVersion":"1.0","resourceType":"InvisibleModifier",},
           ],"isCreationTrack":false,"resourceVersion":"1.0","name":"objHitbox","tags":[],"resourceType":"GMInstanceTrack",},
         {"keyframes":{"Keyframes":[
-              {"id":"05c6beeb-b43d-4dfb-9db7-cde3272ddf16","Key":0.0,"Length":8.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"objWeapon","path":"objects/objWeapon/objWeapon.yy",},"resourceVersion":"1.0","resourceType":"AssetInstanceKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<AssetInstanceKeyframe>",},
+              {"id":"05c6beeb-b43d-4dfb-9db7-cde3272ddf16","Key":0.0,"Length":8.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"objEquip","path":"objects/objEquip/objEquip.yy",},"resourceVersion":"1.0","resourceType":"AssetInstanceKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<AssetInstanceKeyframe>",},
             ],"resourceVersion":"1.0","resourceType":"KeyframeStore<AssetInstanceKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[
             {"keyframes":{"Keyframes":[
                   {"id":"86b13e99-06b6-4954-b856-62bb8a518851","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":true,"Channels":{"0":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},

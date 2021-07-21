@@ -1,3 +1,4 @@
+/// @description Changes the direction of the sequence to the way our player is facing. Adjusted so the sequence for turning can run before it flips directions
 function scrEquipAnimations()
 {
 	var xDirection = sign(owner.stats.xScale);
@@ -40,9 +41,9 @@ function scrBowAiming(_dir) //Points bow toward mouse cursor
 	
 	projectileDirection = layer_sequence_angle(currentSequenceElement,_final);
 }
-function scrSequenceRatio(_imageNumber)
+function scrSequenceRatio(_imageNumber,_currentSequenceElement)
 {
-	var _seqRatio = layer_sequence_get_headpos(currentSequenceElement)/(layer_sequence_get_length(currentSequenceElement)-1);
+	var _seqRatio = layer_sequence_get_headpos(_currentSequenceElement)/(layer_sequence_get_length(_currentSequenceElement)-1);
 	var _imageIndex = clamp((_seqRatio*(_imageNumber-1)),0,_imageNumber-1);
 	return _imageIndex;
 }

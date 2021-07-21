@@ -42,17 +42,10 @@ function scrEquipStateEmpty()
 	image_index = 1;
 	sprite_index = sprStick;
 }
-function scrEquipStateEmptyIdle()
-{
-}
 //
 #endregion
 
 #region Greatsword states
-//
-function scrEquipStateGreatsword()
-{
-}
 //
 function scrEquipStateGreatswordChangeDirection() //Switching directions
 {
@@ -112,10 +105,6 @@ function scrEquipStateGreatswordStab() //Stab Attack
 
 #region Bow states
 //
-function scrEquipStateBow()
-{
-}
-//
 function scrEquipStateBowChangeDirection() //Switching directions
 {
 	//Sequence init
@@ -155,7 +144,7 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 
 	//Sequence init
 	scrSequenceCreator(seqBowDraw);
-	image_index = scrSequenceRatio(image_number);
+	image_index = scrSequenceRatio(image_number,currentSequenceElement);
 
 	//Extra
 	owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*_slow,owner.stats.hMaxVel*_slow); //Limiting player movement during draw
@@ -189,7 +178,6 @@ function scrEquipStateBowDraw() //Primary Attack - Draw
 	//State switches
 	if !keyAttackPrimaryHold
 	{
-		
 		equipProjectile.state.current = equipProjectile.state.free;
 		equipProjectile = noone;
 		state.current = [scrEquipStateBow,scrEquipStateBowIdle];
@@ -227,7 +215,7 @@ function scrEquipStateBowFire() //Primary Attack - Fire
 
 	//Sequence init
 	scrSequenceCreator(seqBowFire);
-	image_index = scrSequenceRatio(image_number)/2;
+	image_index = scrSequenceRatio(image_number,currentSequenceElement)/2;
 
 	if instance_exists(equipProjectile)
 	{

@@ -1,5 +1,5 @@
 //Combat stuff
-playerEquip = instance_create_layer(x,y,"layEquip",objWeapon);
+playerEquip = instance_create_layer(x,y,"layEquip",objEquip);
 playerEquip.owner = id;
 
 //NEW constructor instantiation

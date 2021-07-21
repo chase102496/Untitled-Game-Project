@@ -33,7 +33,7 @@
     "path": "folders/Objects/Equipment.yy",
   },
   "resourceVersion": "1.0",
-  "name": "objWeapon",
+  "name": "objEquip",
   "tags": [],
   "resourceType": "GMObject",
 }

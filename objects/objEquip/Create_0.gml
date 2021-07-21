@@ -8,9 +8,9 @@ scrEquipStateInit();
 
 //Init
 currentLayer = "layEquip";
-currentSequence = 0;
-currentSequenceElement = 0;
-currentSequenceInstance = 0;
+currentSequence = 0; //ERROR
+currentSequenceElement = 0; //ERROR
+currentSequenceInstance = 0; //ERROR
 previousDirection = 1;
 changedDirection = 1;
 equipProjectile = noone;

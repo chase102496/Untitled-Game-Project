@@ -16,8 +16,17 @@ function conProjectileStateInit() constructor
 	{
 		hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,_sprite]]];
 		free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,_sprite],true,true,true,true,5]];
-		collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,_sprite],"Sticking",1.5]];
-		collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,_sprite],1]];
+		collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,_sprite],"Sticking",10]];
+		collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,_sprite],10]];
+		destroy = scrProjectileStateDestroy;
+		current = hold;
+	};
+	
+	templateSpellStatic = function(_spriteHold,_spriteFree,_spriteCollide)
+	{
+		hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsSync,_spriteHold]]]
+		free = [[scrProjectileStateFree,[scrProjectileAnimationsSync,_spriteFree],false,false,true,false,-2]]; //Static projectile, lasts until animation end
+		collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsSync,_spriteCollide],"",-2]]; //Normal collision with entities, but last until animation end
 		destroy = scrProjectileStateDestroy;
 		current = hold;
 	}
@@ -27,8 +36,8 @@ function conProjectileCreate(_x,_y,_layer,_object,_owner) constructor
 {
 	var _proj = instance_create_layer(_x,_y,_layer,_object);
 	
-	_proj.equip = id;
-	_proj.owner = owner.id;
+	_proj.owner = _owner.id;
+	_proj.equip = _owner.playerEquip.id;
 	
 	return _proj;
 }
@@ -36,6 +45,7 @@ function conProjectileCreate(_x,_y,_layer,_object,_owner) constructor
 #region States
 
 #region Hold states
+
 function scrProjectileStateHoldArrow(_animScript)
 {
 	var _degVel;

@@ -169,15 +169,9 @@ function scrEquipStateInit() //All equip states
 			if !instance_exists(equipProjectile)
 			{
 				equipProjectile = conProjectileCreate(x,y,"layProjectile",objProjectile,owner);
-				with equipProjectile
-				{
-					//State init
-					state.templateArrow(sprArrow);
-			
-					//Buff and stat transfer init
-					entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
-					entityStats = [100,"Physical",true]; //Do 10 magical damage, with flinching
-				}
+				equipProjectile.state.templateArrow(sprArrow);
+				equipProjectile.entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]];
+				equipProjectile.entityStats = [100,"Physical",true]; //Damage amount, type, flinch effect
 			}
 			else equipProjectile.projectilePower = image_index/(image_number-1) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
 	
@@ -229,8 +223,8 @@ function scrEquipStateInit() //All equip states
 
 			if instance_exists(equipProjectile)
 			{
-				equipProjectile.state.current = equipProjectile.state.free
-				equipProjectile = noone; //not associated with the object anymore
+				equipProjectile.state.current = equipProjectile.state.free;
+				equipProjectile = noone;
 			}
 
 			//State switches
@@ -290,22 +284,10 @@ function scrEquipStateInit() //All equip states
 			//Projectile init
 			if !instance_exists(equipProjectile)
 			{
-				equipProjectile = instance_create_layer(_castRange[0],_castRange[1],"layProjectile",objProjectile);
-				with equipProjectile
-				{
-					equip = other.id;
-					owner = other.owner.id;
-			
-					//State init
-					state.hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsSync,-1]]]
-					state.free = [[scrProjectileStateFree,[scrProjectileAnimationsSync,sprArcaneBlast],false,false,true,false,-2]]; //Static projectile, lasts until animation end
-					state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsSync,sprArcaneBlast],"",-2]]; //Normal collision with entities, but last until animation end
-					state.current = state.hold;
-			
-					//Buff and stat transfer init
-					entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
-					entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
-				}
+				equipProjectile = conProjectileCreate(_castRange[0],_castRange[1],"layProjectile",objProjectile,owner);
+				equipProjectile.state.templateSpellStatic(-1,sprArcaneBlast,sprArcaneBlast);
+				equipProjectile.entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
+				equipProjectile.entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
 			}
 			else
 			{

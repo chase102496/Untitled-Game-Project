@@ -81,8 +81,8 @@ function scrDebugVars()
 		{
 			var _sprRand = choose(sprGreatswordIdle,sprArrow,sprLaternariusIdle,sprOrbIdle,sprPlayerIdle,sprTerrain);
 			
-			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test1"));
-			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test2"));
+			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test1",["Equip","Use","Drop","Destroy"]));
+			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test2",["Destroy","Use","Drop"]));
 		}
 		
 		global.debugVar[| 4] = input.general.menuPress

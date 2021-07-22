@@ -1,7 +1,6 @@
 function scrInputsInit()
 {
 	//init all inputs
-	
 	input =
 	{
 		//Set all inputs to 0 for this substruct
@@ -23,21 +22,31 @@ function scrInputsInit()
 			rightPress : 0,
 			upPress : 0,
 			downPress : 0,
+			
+			selectPress : 0,
+			backPress : 0,
+			
+			pageUp : 0,
+			pageDown : 0,
+			
 			scrollUp : 0,
 			scrollDown : 0,
+			
 			menuPress : 0,
 			
 			//Run to poll keys for input
 			active : function()
 			{
-				leftHold = keyboard_check(ord("A"));
 				leftPress = keyboard_check_pressed(ord("A"));
-				rightHold = keyboard_check(ord("D"));
 				rightPress = keyboard_check_pressed(ord("D"));
-				upHold = keyboard_check(ord("W"));
 				upPress = keyboard_check_pressed(ord("W"));
-				downHold = keyboard_check(ord("S"));
 				downPress = keyboard_check_pressed(ord("S"));
+				
+				selectPress = keyboard_check_pressed(vk_space);
+				backPress = keyboard_check_pressed(vk_backspace);
+				
+				pageUp = keyboard_check_pressed(ord("E"));
+				pageDown = keyboard_check_pressed(ord("Q"));
 				
 				scrollUp = mouse_wheel_up();
 				scrollDown = mouse_wheel_down();
@@ -110,9 +119,6 @@ function scrInputsInit()
 			}
 		}
 	}
-	
-	snowStateInput = new SnowState("General + Combat");
-	snowStateInput.history_enable();
 	
 	//Menu input state only
 	snowStateInput.add("Menu",{

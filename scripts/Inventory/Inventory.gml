@@ -19,29 +19,48 @@ function conInventoryInit() constructor
 	
 	add = function(_itemStruct)
 	{
+		_itemStruct.inventory = self;
 		ds_list_add(id,_itemStruct);
+	}
+	
+	remove = function(_itemStruct)
+	{
+		var _ind = ds_list_find_index(id,_itemStruct);
+		ds_list_delete(id,_ind);
 	}
 }
 
 // Base item template
-function conInventoryItem(_sprite,_name,_description,_amount,_category) constructor
+function conInventoryItem(_sprite,_name,_description,_amount,_category,_interactList) constructor
 {
 	sprite = _sprite;
 	name = _name;
 	description = _description;
 	amount = _amount;
-	category = _category; //This will be like Pokemon's inventory system (Key Items, Equipment, Consumables, Tools,
+	category = _category; //This will be like Pokemon's inventory system (Key Items, Equipment, Consumables, Tools
+	interactList = _interactList; //This is what we can do when we select the item in our inventory
 	
-	interact = function(_category) //This will be used when interacted with in inventory and take a list of string-represented functions in a list from the function (use, destroy, etc)
+	interact = function(_option) //This will be used when interacted with in inventory and take a list of string-represented functions in a list from the function (use, destroy, etc)
 	{
-		
+		switch(_option)
+		{
+			case "Equip":
+				for (var i = 0;i < array_length(interactList);i ++)
+				{
+					if interactList[i] == "Equip" interactList[i] = "Unequip";
+				}
+				break;
+			
+			case "Unequip":
+				for (var i = 0;i < array_length(interactList);i ++)
+				{
+					if interactList[i] == "Unequip" interactList[i] = "Equip";
+				}
+				break;
+			
+			case "Destroy":
+				inventory.remove(self);
+				break;
+		}
 	}
-}
-
-// Equipment Item
-function conInventoryItemEquipment(_sprite,_name,_description) : conInventoryItem(_sprite,_name,_description,1,"Equipment") constructor
-{
-	sprite = _sprite;
-	name = _name;
-	description = _description;
 }

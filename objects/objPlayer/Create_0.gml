@@ -2,19 +2,24 @@
 playerEquip = instance_create_layer(x,y,"layEquip",objEquip);
 playerEquip.owner = id;
 
-//Input stuff
-scrInputsInit();
-
 //NEW constructor instantiation
+snowStateInput = new SnowState("General + Combat");
+snowStateInput.history_enable();
+scrInputsInit();
+//
 stats = new conStatsInit();
+//
 inv = new conInventoryInit();
+//
 gui = new conGUIInit();
+scrGUIInit();
+//
 snowState = new SnowState("Ground");
+snowState.history_enable();
+scrPlayerStateInit();
 
 //One-time init scripts
-scrPlayerStateInit();
 scrBuffsInit();
-scrGUIInit();
 
 //Placeholders for sprite animations;
 phSpriteIdle = sprPlayerIdle;

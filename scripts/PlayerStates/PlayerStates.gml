@@ -1,12 +1,9 @@
 function scrPlayerStateInit()
 {
-	snowState.history_enable();
-	
 	//Parent free state, combat inputs enabled by default
 	snowState.add("Free",{
 			enter: function()
 			{
-				snowStateInput.change("General + Combat");
 			},
 			step: function()
 			{

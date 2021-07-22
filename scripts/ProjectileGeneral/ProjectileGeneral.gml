@@ -5,29 +5,42 @@
 //Init constructor
 function conProjectileStateInit() constructor
 {
-	free = [[scrProjectileStateFree,-1,false,false,true,false,1]];
-	hold = [[scrProjectileStateHoldArrow,-1]];
-	collideEntity = [[scrProjectileStateCollideEntity,-1,"Sticking",1]];
-	collideTerrain = [[scrProjectileStateCollideTerrain,-1,1]];
-	destroy = scrProjectileStateDestroy;
-	current = scrProjectileStateIdle;
+	hold = -1;
+	free = -1;
+	collideEntity = -1;
+	collideTerrain = -1;
+	destroy = -1;
+	current = -1;
+	
+	templateArrow = function(_sprite)
+	{
+		hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,_sprite]]];
+		free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,_sprite],true,true,true,true,5]];
+		collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,_sprite],"Sticking",1.5]];
+		collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,_sprite],1]];
+		destroy = scrProjectileStateDestroy;
+		current = hold;
+	}
 }
 
-#region Projectile states
-
-//Idle state
-function scrProjectileStateIdle() //Default, not doing anything
+function conProjectileCreate(_x,_y,_layer,_object,_owner) constructor
 {
+	var _proj = instance_create_layer(_x,_y,_layer,_object);
+	
+	_proj.equip = id;
+	_proj.owner = owner.id;
+	
+	return _proj;
 }
 
-//Hold states
+#region States
+
+#region Hold states
 function scrProjectileStateHoldArrow(_animScript)
 {
 	var _degVel;
 	var _vVelRatio;
 	var _hVelRatio;
-	
-	if _animScript != -1 script_execute_ext(_animScript[0],_animScript,1);
 	
 	if sign(equip.image_xscale) >= 1
 	{
@@ -48,36 +61,39 @@ function scrProjectileStateHoldArrow(_animScript)
 
 	x = equip.anchor.x;
 	y = equip.anchor.y;
+	
+	scrProjectileAnimationHandler(_animScript);
 }
 //
 function scrProjectileStateHoldCast(_animScript)
 {
-	//First basic module of animations. [0] is script, [1+] are args
-	script_execute_ext(_animScript[0],_animScript,1);
+	scrProjectileAnimationHandler(_animScript);
 }
 
-//Active states
-// Should be pretty self-explanatory. enabled or disabled physics with angled image toward velocity
-// and hitdetect for entities/terrain
-// _aliveTimerMax is seconds the projectile should live for in the scrProjectileStateFree state. -1 is forever
+#endregion
+
+#region Free states
+
+// Default run script for free state. Provides an animation script input, physics toggle, collision detection and an alive timer
 function scrProjectileStateFree(_animScript,_physicsEnabled,_angleVelocity,_entityCollision,_terrainCollision,_aliveTimerMax)
 {
-	script_execute_ext(_animScript[0],_animScript,1);
-	
 	if _physicsEnabled scrProjectilePhysics(_angleVelocity);
 	
 	if _entityCollision scrProjectileDetectEntity();
 	
 	if _terrainCollision scrProjectileDetectTerrain();
 	
+	scrProjectileAnimationHandler(_animScript);
 	scrProjectileAliveTimer(_aliveTimerMax);
 }
+
+#endregion
+
+#region Collide states
 
 //Collide with entity
 function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 {
-	script_execute_ext(_animScript[0],_animScript,1);
-	
 	//One-time run script for entity
 	if entityColliding != noone
 	{
@@ -109,25 +125,30 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 				break;
 		}
 	}
-			
+	
+	scrProjectileAnimationHandler(_animScript);
 	scrProjectileAliveTimer(_aliveTimerMax);
 }
-// Collide with terrain
+//Collide with terrain
 function scrProjectileStateCollideTerrain(_animScript,_aliveTimerMax)
 {
-	script_execute_ext(_animScript[0],_animScript,1);
-	
 	stats.hVel = 0;
 	stats.vVel = 0;
 	
+	scrProjectileAnimationHandler(_animScript);
 	scrProjectileAliveTimer(_aliveTimerMax);
 }
 
-// Destroy states
+#endregion
+
+#region Destroy states
+
 function scrProjectileStateDestroy()
 {
 	instance_destroy();
 }
+
+#endregion
 
 #endregion
 
@@ -187,6 +208,11 @@ function scrProjectileDetectTerrain()
 
 #region Animation scripts
 
+function scrProjectileAnimationHandler(_animScript)
+{
+	if _animScript != -1 script_execute_ext(_animScript[0],_animScript,1);
+}
+
 //Static sprites
 function scrProjectileAnimationsStatic(_sprite)
 {
@@ -195,7 +221,7 @@ function scrProjectileAnimationsStatic(_sprite)
 }
 
 //Basic animation that correlates with frame of sequence currently playing
-function scrProjectileAnimationsBasic(_sprite)
+function scrProjectileAnimationsSync(_sprite)
 {
 	image_speed = 0;
 	sprite_index = _sprite;

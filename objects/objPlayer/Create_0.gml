@@ -8,12 +8,11 @@ scrInputsInit();
 //NEW constructor instantiation
 stats = new conStatsInit();
 inv = new conInventoryInit();
-
-//NEW state machine
+gui = new conGUIInit();
 snowState = new SnowState("Ground");
-scrPlayerStateInit();
 
 //One-time init scripts
+scrPlayerStateInit();
 scrBuffsInit();
 scrGUIInit();
 

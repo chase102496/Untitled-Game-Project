@@ -112,7 +112,7 @@ function scrEquipStateInit() //All equip states
 	#endregion
 	
 	#region Bow
-	
+
 	snowState.add("Bow Idle",{
 		enter: function()
 		{
@@ -168,18 +168,11 @@ function scrEquipStateInit() //All equip states
 			//Projectile init
 			if !instance_exists(equipProjectile)
 			{
-				equipProjectile = instance_create_layer(x,y,"layProjectile",objProjectile);
+				equipProjectile = conProjectileCreate(x,y,"layProjectile",objProjectile,owner);
 				with equipProjectile
 				{
-					equip = other.id;
-					owner = other.owner.id;
-			
 					//State init
-					state.hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,sprArrow]]];
-					state.free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,sprArrow],true,true,true,true,3]];
-					state.collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,sprArrowStuck],3]];
-					state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,sprArrowStuck],"Sticking",3]];
-					state.current = state.hold;
+					state.templateArrow(sprArrow);
 			
 					//Buff and stat transfer init
 					entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
@@ -292,13 +285,11 @@ function scrEquipStateInit() //All equip states
 			//Orb direction aim
 			bowDirection = sign(mouse_x - owner.x);
 			scrBowAiming(bowDirection);
+			var _castRange = scrCastRange(owner.x,owner.y,mouse_x,mouse_y,128); //Sets cast range to 128 pixels
 			
 			//Projectile init
 			if !instance_exists(equipProjectile)
 			{
-				var _range = 128; //Sets cast range to 128 pixels
-				var _castRange = scrCastRange(owner.x,owner.y,mouse_x,mouse_y,_range);
-	
 				equipProjectile = instance_create_layer(_castRange[0],_castRange[1],"layProjectile",objProjectile);
 				with equipProjectile
 				{
@@ -306,15 +297,20 @@ function scrEquipStateInit() //All equip states
 					owner = other.owner.id;
 			
 					//State init
-					state.hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsBasic,-1]]]
-					state.free = [[scrProjectileStateFree,[scrProjectileAnimationsBasic,sprArcaneBlast],false,false,true,false,-2]]; //Static projectile, lasts until animation end
-					state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsBasic,sprArcaneBlast],"",-2]]; //Normal collision with entities, but last until animation end
+					state.hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsSync,-1]]]
+					state.free = [[scrProjectileStateFree,[scrProjectileAnimationsSync,sprArcaneBlast],false,false,true,false,-2]]; //Static projectile, lasts until animation end
+					state.collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsSync,sprArcaneBlast],"",-2]]; //Normal collision with entities, but last until animation end
 					state.current = state.hold;
 			
 					//Buff and stat transfer init
 					entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
 					entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
 				}
+			}
+			else
+			{
+				equipProjectile.x = _castRange[0];
+				equipProjectile.y = _castRange[1];
 			}
 	
 			//Limiting movement during cast

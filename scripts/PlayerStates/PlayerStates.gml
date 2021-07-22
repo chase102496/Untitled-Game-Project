@@ -28,6 +28,21 @@ function scrPlayerStateInit()
 			input: function()
 			{
 				scrInputsGeneral();
+				
+				if input.general.menuPress
+				{
+					global.menu = true;
+					input.reset(input.general);
+					input.reset(input.combat);
+					snowStateInput.change("Menu");
+				}
+				if input.menu.menuPress
+				{
+					global.menu = false;
+					gui.cursorChange("Reset");
+					var _prev = snowStateInput.get_history();
+					snowStateInput.change(_prev[1],input.reset(input.menu));
+				};
 			}
 	});
 	
@@ -194,36 +209,4 @@ function scrPlayerStateInit()
 			scrPlayerCombatOutputs(true);
 		}
 	});
-}
-
-function scrPlayerStateMenu() //Player went into their menus
-{
-	scrPhysicsVars();
-	
-	if stats.hVel != 0
-	{
-		if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
-		else stats.hVel = 0;
-	}
-	
-	scrGravity();
-	scrCollision();
-	scrBuffs();
-
-	global.menu = true
-	
-	if input.general.upPress gui.cursorChange("Up");
-	if input.general.downPress gui.cursorChange("Down");
-	if input.general.leftPress gui.cursorChange("LeftReset");
-	if input.general.rightPress gui.cursorChange("RightReset");
-	//
-	if keyScrollUp gui.cursorChange("Up");
-	if keyScrollDown gui.cursorChange("Down");
-	
-	if input.general.input.general.menuPress
-	{
-		gui.cursorChange("Reset");
-		global.menu = false;
-		state.current = state.previous;
-	}
 }

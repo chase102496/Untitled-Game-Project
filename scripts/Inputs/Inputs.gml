@@ -34,9 +34,15 @@ function scrInputsInit()
 				leftPress = keyboard_check_pressed(ord("A"));
 				rightHold = keyboard_check(ord("D"));
 				rightPress = keyboard_check_pressed(ord("D"));
+				upHold = keyboard_check(ord("W"));
+				upPress = keyboard_check_pressed(ord("W"));
 				downHold = keyboard_check(ord("S"));
 				downPress = keyboard_check_pressed(ord("S"));
-				upHold = keyboard_check(ord("W"));
+				
+				scrollUp = mouse_wheel_up();
+				scrollDown = mouse_wheel_down();
+				
+				menuPress = keyboard_check_pressed(vk_escape);
 			}
 		},
 		
@@ -66,10 +72,10 @@ function scrInputsInit()
 				leftPress = keyboard_check_pressed(ord("A"));
 				rightHold = keyboard_check(ord("D"));
 				rightPress = keyboard_check_pressed(ord("D"));
-				downHold = keyboard_check(ord("S"));
-				downPress = keyboard_check_pressed(ord("S"));
 				upHold = keyboard_check(ord("W"));
 				upPress = keyboard_check_pressed(ord("W"));
+				downHold = keyboard_check(ord("S"));
+				downPress = keyboard_check_pressed(ord("S"));
 		
 				jumpHold = keyboard_check(vk_space);
 				jumpPress = keyboard_check_pressed(vk_space);
@@ -113,13 +119,6 @@ function scrInputsInit()
 		step: function()
 		{
 			input.menu.active();
-			
-			gui.drawMain();
-			gui.drawSub();
-			
-			//State switches
-			var _prev = snowStateInput.get_history();
-			if input.general.menuPress snowStateInput.change(_prev[1],input.reset(input.menu));
 		}
 	});
 	//General input state only
@@ -127,9 +126,6 @@ function scrInputsInit()
 		step: function()
 		{
 			input.general.active();
-			
-			//State switches
-			if input.general.menuPress snowStateInput.change("Menu",input.reset(input.general));
 		}
 	});	
 	//General input state and combat input state
@@ -146,6 +142,6 @@ function scrInputsInit()
 	});
 }
 function scrInputsGeneral()
-{	
+{
 	if global.inputObject == id snowStateInput.step();
 }

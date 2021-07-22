@@ -1,7 +1,5 @@
 function scrGUIInit()
 {
-	gui = new conGUIInit();
-
 	var _mainWindowX = 2; //Position of main window, relative to game window
 	var _mainWindowY = 2;
 	var _guiGrid = 8
@@ -45,4 +43,17 @@ function scrGUIInit()
 		gui.listWindow[i] = new gui.window(sprBorderSimpleNoOverlay,_xSub1,_ySub1,_xSub2,_ySub2,_guiGrid);
 	}
 
+}
+function scrGUI()
+{
+	gui.drawMain();
+	gui.drawSub();
+	
+	if input.menu.upPress gui.cursorChange("Up");
+	if input.menu.downPress gui.cursorChange("Down");
+	if input.menu.leftPress gui.cursorChange("LeftReset");
+	if input.menu.rightPress gui.cursorChange("RightReset");
+	
+	if input.menu.scrollUp gui.cursorChange("Up");
+	if input.menu.scrollDown gui.cursorChange("Down");
 }

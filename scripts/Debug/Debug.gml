@@ -85,6 +85,8 @@ function scrDebugVars()
 			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test2"));
 		}
 		
+		global.debugVar[| 4] = input.general.menuPress
+		
 		//if global.keyCtrl var _type = "Magical";
 		//else var _type = "Physical";
 		//if global.keyPress7 stats.damage(10,_type,true);

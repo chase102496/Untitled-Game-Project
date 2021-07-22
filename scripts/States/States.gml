@@ -23,7 +23,7 @@ function scrStateExecute(_currentState) //OLD - Script to run the list of states
 			else script_execute(_currentState[i]);
 		}
 	}
-	else script_execute(_currentState);
+	else if script_exists(_currentState) script_execute(_currentState);
 }
 //
 

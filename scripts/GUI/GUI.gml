@@ -5,7 +5,7 @@ function conGUIInit() constructor
 	
 	//Controls
 	scroll = 0;
-	cursorGrid = [0,0,0,-1];	//Coordinates of the cursor
+	cursorGrid = [0,0,0,-2];	//Coordinates of the cursor
 	cursorObject = noone; //Object selected by the cursor
 	
 /// Player-driven GUI
@@ -18,7 +18,7 @@ function conGUIInit() constructor
 		switch _dir
 		{
 			case "Reset":
-				cursorGrid = [0,0,0,-1] //Page, Submenu, List (x,y,z), Select
+				cursorGrid = [0,0,0,-2] //Page, Submenu, List (x,y,z), Select
 				break;
 				
 			case "Select Open":
@@ -34,21 +34,21 @@ function conGUIInit() constructor
 				break;
 				
 			case "Back":
-				cursorGrid[3] = -1;
+				cursorGrid[3] = -2;
 				break;
 				
 			case "Page Up Reset":
 				cursorGrid[0] ++;
 				cursorGrid[1] = 0;
 				cursorGrid[2] = 0;
-				cursorGrid[3] = -1;
+				cursorGrid[3] = -2;
 				break;
 				
 			case "Page Down Reset":
 				cursorGrid[0] --;
 				cursorGrid[1] = 0;
 				cursorGrid[2] = 0;
-				cursorGrid[3] = -1;
+				cursorGrid[3] = -2;
 				break;
 		
 			case "Up":
@@ -72,15 +72,22 @@ function conGUIInit() constructor
 	}
 		
 	//subTab draw
-	drawSub = function(_guiOwner,_windowArray,_cursorDimension)
+	drawSub = function(_guiOwner,_windowArray,_cursorDimension,_text = -1,_textOffset = [0,0],_sprite = -1,_spriteOffset = [0,0])
 	{
-		cursorGrid[@ _cursorDimension] = clamp(cursorGrid[_cursorDimension],0,array_length(_windowArray)-1);
-		
+		//Controls whether the clamp is active. if the grid is at
+		if cursorGrid[_cursorDimension] != -2 cursorGrid[@ _cursorDimension] = clamp(cursorGrid[_cursorDimension],0,array_length(_windowArray)-1);
+
 		for (var i = 0;i < array_length(_windowArray);i ++)
 		{
-			_windowArray[i].drawText(string(i));
-			
-			if cursorGrid[_cursorDimension] == i _windowArray[i].drawWindow(); //If selected
+			//If selected, draw window
+			if cursorGrid[_cursorDimension] == i _windowArray[i].drawWindow();
+			//If text set, draw text either as one value or per window custom
+			if is_array(_text) _windowArray[i].drawText(_text[i],_textOffset[0],_textOffset[1]);
+			else if _text != -1 _windowArray[i].drawText(_text,_textOffset[0],_textOffset[1]);
+			//If sprite set, draw sprite either as one value or per window custom
+			if is_array(_sprite) _windowArray[i].drawSprite(_sprite[i],_spriteOffset[0],_spriteOffset[1]);
+			else if _sprite != -1 _windowArray[i].drawSprite(_sprite,_spriteOffset[0],_spriteOffset[1]);
+
 		}
 			
 	}
@@ -103,6 +110,8 @@ function conGUIInit() constructor
 				if cursorGrid[2] == _iScroll //If selected by cursor currently
 				{
 					cursorObject = _pocketList[_iScroll];
+					cursorWindow = _listWindow[i];
+					
 					_listWindow[i].drawWindow();
 					_listWindow[i].drawCursor(-1.5,8,sprCursor);
 					//
@@ -153,10 +162,10 @@ function conGUIInit() constructor
 			draw_text_ext_transformed(winStart[0]+_totalOffsetX,winStart[1]+_totalOffsetY,_text,1,-1,0.5,0.5,0);
 		}
 		
-		drawSprite = function(_sprite)
+		drawSprite = function(_sprite,_offsetX = 0,_offsetY = 0)
 		{
 			winStart = scrGuiRelativeToAbsolute(x1*grid,y1*grid);
-			draw_sprite(_sprite,0,winStart[0],winStart[1]);
+			draw_sprite(_sprite,0,winStart[0]+_offsetX,winStart[1]+_offsetY);
 		}
 		
 		drawDetails = function(_offsetX,_offsetY,_object,_scale) //Draws a window and some details about the selected object

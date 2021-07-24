@@ -1,6 +1,7 @@
 event_inherited();
 
 //Placeholders for sprite animations;
+mask_index = sprPlayerIdle;
 phSpriteIdle = sprPlayerIdle;
 phSpriteCrouch = sprPlayerCrouch;
 phSpriteRun = sprPlayerRun;
@@ -11,3 +12,4 @@ phSpriteWallslide = sprPlayerWallslide;
 phSpriteAttackDownward = sprPlayerAttackDownward;
 phSpriteAttackForward = sprPlayerAttackForward;
 phSpriteAttackUpward = sprPlayerAttackUpward;
+

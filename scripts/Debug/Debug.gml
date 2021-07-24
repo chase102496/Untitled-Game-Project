@@ -109,11 +109,11 @@ function scrDebugVars()
 	}
 		
 	//Equipment change
-	var _playerEquip = global.playerObject.playerEquip;
-	if global.keyPress1 _playerEquip.snowState.change("Empty");
-	if global.keyPress2 _playerEquip.snowState.change("Greatsword Idle");
-	if global.keyPress3 _playerEquip.snowState.change("Bow Idle");
-	if global.keyPress4 _playerEquip.snowState.change("Orb Idle");
+	var _entityEquip = global.inputObject.entityEquip;
+	if global.keyPress1 _entityEquip.snowState.change("Empty");
+	if global.keyPress2 _entityEquip.snowState.change("Greatsword Idle");
+	if global.keyPress3 _entityEquip.snowState.change("Bow Idle");
+	if global.keyPress4 _entityEquip.snowState.change("Orb Idle");
 		
 	//Add a buff to your currently controlled target
 	if global.keyPress5 scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2],global.inputObject);
@@ -144,7 +144,7 @@ function scrDebugDraw()
 		
 		//Player and equip bbox
 		//draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
-		//draw_rectangle(playerEquip.bbox_left,playerEquip.bbox_top,playerEquip.bbox_right,playerEquip.bbox_bottom,true);
+		//draw_rectangle(entityEquip.bbox_left,entityEquip.bbox_top,entityEquip.bbox_right,entityEquip.bbox_bottom,true);
 		//Anchor and Projectile bbox
 		
 		if instance_exists(objProjectile)

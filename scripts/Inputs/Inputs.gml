@@ -147,7 +147,3 @@ function scrInputsInit()
 		}
 	});
 }
-function scrInputsGeneral()
-{
-	if global.inputObject == id snowStateInput.step();
-}

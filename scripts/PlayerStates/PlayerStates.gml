@@ -24,8 +24,6 @@ function scrPlayerStateInit()
 			},
 			input: function()
 			{
-				scrInputsGeneral();
-				
 				if input.general.menuPress
 				{
 					global.menu = true;

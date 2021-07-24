@@ -1,3 +1,3 @@
 //Main
-snowState.input();
 snowState.step();
+if global.inputObject == id snowStateInput.step() snowState.input();

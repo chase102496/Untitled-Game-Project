@@ -1,3 +1,3 @@
 //Main
-scrInputsGeneral();
-script_execute(state.current);
+snowState.step();
+if global.inputObject == id snowStateInput.step() snowState.input(); //If we are selected, poll our inputs

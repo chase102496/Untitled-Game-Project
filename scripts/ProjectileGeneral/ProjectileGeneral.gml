@@ -37,7 +37,7 @@ function conProjectileCreate(_x,_y,_layer,_object,_owner) constructor
 	var _proj = instance_create_layer(_x,_y,_layer,_object);
 	
 	_proj.owner = _owner.id;
-	_proj.equip = _owner.playerEquip.id;
+	_proj.equip = _owner.entityEquip.id;
 	
 	return _proj;
 }

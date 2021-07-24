@@ -1,17 +1,26 @@
 //NEW constructor instantiation
 snowStateInput = new SnowState("General + Combat");
-scrInputsInit();
 snowStateInput.history_enable();
+scrInputsInit();
 //
 stats = new conStatsInit();
 //
-state = new conStateInit(scrEntityStateGround); //REMOVE
-//
 inv = new conInventoryInit();
 //
+gui = new conGUIInit();
+scrGUIInit();
+//
+snowState = new SnowState("Ground");
+snowState.history_enable();
+scrEntityStateInit();
+
 //One-time init scripts
 scrBuffsInit();
-scrInputsInit()
+
+//Combat stuff
+entityEquip = instance_create_layer(x,y,"layEquip",objEquip);
+entityEquip.owner = id;
+
 
 //Placeholders for sprite animations;
 phSpriteIdle = sprPlayerIdle;

@@ -1,2 +1,2 @@
 scrDebugDraw();
-if global.menu with global.playerObject scrGUI(self);
+if global.menu with global.inputObject scrGUI(self);

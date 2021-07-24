@@ -4,13 +4,10 @@ function scrGUIInit()
 	var _mainWindowY = 2;
 	var _guiGrid = 8
 		
-	gui.selectionList = ["Equip","Use","Drop","Destroy"]; //All possible item selectors
 	gui.subMenuInventoryTabs = ["Test1","Test2","Equipped"];
+	gui.subMenuInventorySprites = [sprIconSword,sprIconPotion,sprIconKey]
 	gui.pageTabs = ["Inventory","Stats","Journal","Runicon"];
 	gui.pageSprites = [sprIconBag,sprIconBookOpen,sprIconBookClosed,sprIconBookClosed];
-	gui.subMenuInventorySprites = [sprIconSword,sprIconPotion,sprIconKey]
-	
-	var _subWindowCount = 4;
 	
 	//Main window default
 	gui.mainWindow = new gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/gui.grid - _mainWindowX,camera_get_view_height(view_camera[0])/gui.grid - _mainWindowY,gui.grid); //Creation of main window object
@@ -21,7 +18,7 @@ function scrGUIInit()
 		var _sprite = sprBorderSimpleNoOverlay;
 		var _spacing = 0; //between
 		var _offset = [0.5,-2]; //from main menu left, x,y
-		var _size = [3,2]; //size of submenu length,width
+		var _size = [3,2.2]; //size of submenu length,width
 		
 		var _xSub1 = _mainWindowX + _offset[0] + (_size[0]*i) + (_spacing*i);
 		var _xSub2 = _xSub1 + _size[0];
@@ -79,17 +76,16 @@ function scrGUI(_guiOwner)
 		if _input.pageUp cursorChange("Page Up Reset");
 		if _input.pageDown cursorChange("Page Down Reset");
 
-		drawSub(_guiOwner,pageTab,0,-1,[0,0],pageSprites,[0,0]); //Page tab drawing
-		
-		if _input.leftPress cursorChange("Left Reset");
-		if _input.rightPress cursorChange("Right Reset");
+		drawSub(_guiOwner,pageTab,0,-1,[0,0],pageSprites,["Center",0.8,[0,0]]); //Page tab drawing
 
 		switch cursorGrid[0]
 		{
 			//Inventory page
 			case 0:
 			{
-				
+				//Drawing stuff
+				drawSub(_guiOwner,subTab,1,-1,-1,subMenuInventorySprites,["Center",1.1,[0,0]]); //Draws subTab
+				drawInventoryList(listWindow,subMenuInventoryTabs[cursorGrid[1]],_guiOwner); //Inventory list drawing, depending on submenu tab
 				
 				//Selection tree
 				if cursorGrid[3] == -2
@@ -99,6 +95,8 @@ function scrGUI(_guiOwner)
 					if _input.downPress cursorChange("Down");
 					if _input.scrollUp cursorChange("Up");
 					if _input.scrollDown cursorChange("Down");
+					if _input.leftPress cursorChange("Left Reset");
+					if _input.rightPress cursorChange("Right Reset");
 					
 					if _input.selectPress
 					{
@@ -135,13 +133,8 @@ function scrGUI(_guiOwner)
 					if _input.backPress cursorChange("Back");
 					
 					selectWindowBox.drawWindow();
-					drawSub(_guiOwner,selectWindow,3,cursorObject.interactList,[0.5,0.3]);
+					drawSub(_guiOwner,selectWindow,3,cursorObject.interactList,["Center",0.5,[0,0]]);
 				}
-				
-				//Drawing stuff
-				drawSub(_guiOwner,subTab,1,-1,[0,0],subMenuInventorySprites,[0,0]); //Draws subTab
-				drawInventoryList(listWindow,subMenuInventoryTabs[cursorGrid[1]],_guiOwner); //Inventory list drawing, depending on submenu tab
-				
 				break;
 			}
 			

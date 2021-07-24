@@ -1,5 +1,6 @@
 {
   "resources": [
+    {"id":{"name":"sprEmpty","path":"sprites/sprEmpty/sprEmpty.yy",},"order":11,},
     {"id":{"name":"sprCursor","path":"sprites/sprCursor/sprCursor.yy",},"order":4,},
     {"id":{"name":"Text_Formatting","path":"notes/Text_Formatting/Text_Formatting.yy",},"order":10,},
     {"id":{"name":"scribble_font_combine","path":"scripts/scribble_font_combine/scribble_font_combine.yy",},"order":2,},

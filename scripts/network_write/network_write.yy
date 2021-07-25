@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Magpie Inventory",
-    "path": "folders/Scripts/Libraries/Magpie Inventory.yy",
+    "name": "Networking",
+    "path": "folders/Scripts/Libraries/Online Framework/Networking.yy",
   },
   "resourceVersion": "1.0",
-  "name": "Magpie_Inventory",
+  "name": "network_write",
   "tags": [],
   "resourceType": "GMScript",
 }

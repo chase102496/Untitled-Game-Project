@@ -25,8 +25,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "General",
-    "path": "folders/Objects/General.yy",
+    "name": "Networking",
+    "path": "folders/Objects/Networking.yy",
   },
   "resourceVersion": "1.0",
   "name": "oClient",

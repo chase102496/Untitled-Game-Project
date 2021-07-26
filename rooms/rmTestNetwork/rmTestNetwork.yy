@@ -6,7 +6,7 @@
     "path": "rooms/rmTest/rmTest.yy",
   },
   "views": [
-    {"inherit":true,"visible":true,"xview":0,"yview":0,"wview":480,"hview":270,"xport":0,"yport":0,"wport":1920,"hport":1080,"hborder":32,"vborder":32,"hspeed":-1,"vspeed":-1,"objectId":null,},
+    {"inherit":false,"visible":true,"xview":0,"yview":0,"wview":480,"hview":270,"xport":0,"yport":0,"wport":960,"hport":540,"hborder":32,"vborder":32,"hspeed":-1,"vspeed":-1,"objectId":null,},
     {"inherit":true,"visible":false,"xview":0,"yview":0,"wview":320,"hview":180,"xport":0,"yport":0,"wport":1366,"hport":768,"hborder":32,"vborder":32,"hspeed":-1,"vspeed":-1,"objectId":null,},
     {"inherit":true,"visible":false,"xview":0,"yview":0,"wview":1366,"hview":768,"xport":0,"yport":0,"wport":1366,"hport":768,"hborder":32,"vborder":32,"hspeed":-1,"vspeed":-1,"objectId":null,},
     {"inherit":true,"visible":false,"xview":0,"yview":0,"wview":1366,"hview":768,"xport":0,"yport":0,"wport":1366,"hport":768,"hborder":32,"vborder":32,"hspeed":-1,"vspeed":-1,"objectId":null,},
@@ -19,6 +19,7 @@
     {"instances":[
         {"properties":[],"isDnd":false,"objectId":{"name":"objCamera","path":"objects/objCamera/objCamera.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":true,"x":32.0,"y":224.0,"resourceVersion":"1.0","name":"inst_28AB1D88","tags":[],"resourceType":"GMRInstance",},
         {"properties":[],"isDnd":false,"objectId":{"name":"objGame","path":"objects/objGame/objGame.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.3125,"scaleY":0.3125,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":true,"x":32.0,"y":192.0,"resourceVersion":"1.0","name":"inst_79EF1523","tags":[],"resourceType":"GMRInstance",},
+        {"properties":[],"isDnd":false,"objectId":{"name":"oClient","path":"objects/oClient/oClient.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":64.0,"y":192.0,"resourceVersion":"1.0","name":"inst_6FDDBB40","tags":[],"resourceType":"GMRInstance",},
       ],"visible":true,"depth":200,"userdefinedDepth":true,"inheritLayerDepth":true,"inheritLayerSettings":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layGame","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[
         {"properties":[],"isDnd":false,"objectId":{"name":"objTerrain","path":"objects/objTerrain/objTerrain.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":30.0,"scaleY":0.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":true,"x":3.05175781E-05,"y":264.0,"resourceVersion":"1.0","name":"inst_6D28B752","tags":[],"resourceType":"GMRInstance",},
@@ -56,6 +57,7 @@
     {"name":"inst_50186893","path":"rooms/rmTestNetwork/rmTestNetwork.yy",},
     {"name":"inst_3C1122E4","path":"rooms/rmTestNetwork/rmTestNetwork.yy",},
     {"name":"inst_314E0CE1","path":"rooms/rmTestNetwork/rmTestNetwork.yy",},
+    {"name":"inst_6FDDBB40","path":"rooms/rmTestNetwork/rmTestNetwork.yy",},
   ],
   "inheritCreationOrder": true,
   "sequenceId": null,
@@ -67,7 +69,7 @@
   },
   "viewSettings": {
     "inheritViewSettings": true,
-    "enableViews": false,
+    "enableViews": true,
     "clearViewBackground": false,
     "clearDisplayBuffer": true,
   },

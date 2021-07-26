@@ -1,4 +1,15 @@
-// All send* functions go here
+//
+function sendSomeStuff() {
+	send({cmd: "some stuff", foo: "blah", bar: 123})
+}
+//
+function netSendPlayerCreate(_objectID)
+{
+	send({cmd: "netSendPlayerCreate"})
+}
+//
+#region Preset functions
+
 function sendHello() {
 	send({cmd: "hello", kappa: "Kappa Pepega"})
 }
@@ -10,8 +21,6 @@ function sendHello2() {
 function sendMessage(msg) {
 	send({cmd: "message", msg: msg})
 }
-
-// Preset functions:
 
 function sendJoinLobby(lobbyid) {
 	send({cmd: "lobby join", lobbyid: lobbyid})
@@ -37,9 +46,4 @@ function sendRegister(username, password) {
 	send({cmd: "register", username: username, password: password})
 }
 
-// ##################################
-// Write your own functions down here:
-
-function sendSomeStuff() {
-	send({cmd: "some stuff", foo: "blah", bar: 123})
-}
+#endregion

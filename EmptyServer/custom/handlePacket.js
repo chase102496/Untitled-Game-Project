@@ -8,6 +8,9 @@ module.exports = async function handlePacket(c, data) {
     // console.log('received command: ' + cmd);
     
     switch(cmd) {
+		
+		#region Preset functions
+		
         case 'hello':
             console.log("Hello from client: "+data.kappa);
             c.sendHello();
@@ -68,7 +71,9 @@ module.exports = async function handlePacket(c, data) {
                 lobby.kickPlayer(c, 'you left the lobby', false);
             }
             break;
-
+		
+		#endregion
+		
         // #######################
         // Add your commands here:
     }

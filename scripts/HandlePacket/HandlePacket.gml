@@ -1,24 +1,31 @@
 function handlePacket(pack) {
-	//trace(buffer_base64_encode(pack, 0, buffer_get_size(pack)))
 	
 	var data = snap_from_messagepack(pack)	// Deserialize/unpack msgpack into a struct
 	var cmd = string_lower(data.cmd) // you can get rid of this line, 
 									 // i just like the commands being lowercase
-	
 	//trace("Received cmd: %", cmd)
+	//trace(buffer_base64_encode(pack, 0, buffer_get_size(pack)))
 	
-	switch(cmd) {
+	switch(cmd)
+	{
 		case "hello":
-			trace(data.str)
-			break
+			trace(data.str);
+			break;
+			
 		case "hello2":
-			trace(data.str)
-			break
+			trace(data.str);
+			break;
+			
 		case "message":
-			show_message_async(data.msg+"\n (c) Server")
-			break
+			show_message_async(data.msg+"\n (c) Server");
+			break;
+			
+		case "netReceivePlayerCreate":
+			
+			break;
 		
-		// Predefined events:
+#region Predefined events
+
 		case "login":
 			var status = data.status
 			if (status == "fail") {
@@ -97,16 +104,12 @@ function handlePacket(pack) {
 			
 			room_goto(rm)
 			break
-		
-		
-		// ##############################
-		// Add your custom commands here:
-		
-		case "haha":
-			trace("haha")
-			break
+
 		default:
-			throw ("Error: Unknown command: " + string(data.cmd))
-			break
+			throw ("Error: Unknown command: " + string(data.cmd));
+			break;
+			
+#endregion
+	
 	}
 }

@@ -12,14 +12,18 @@ module.exports = async function handlePacket(c, data) {
             console.log("Hello from client: "+data.kappa);
             c.sendHello();
             break;
+			
         case 'hello2':
             console.log('Second hello from client: '+data.kappa);
             break;
+
+		//data.??? is the variable we send over
+		//So we send 
         case 'message':
             console.log('Message from client: '+data.msg);
             c.sendMessage(data.msg+' indeed');
             break;
-
+			
         // preset commands
         case 'login':
             var { username, password } = data;

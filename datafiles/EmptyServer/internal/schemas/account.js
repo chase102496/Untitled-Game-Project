@@ -1,6 +1,6 @@
 // this section contains a schema for saving players' account info
 const mongoose = require('mongoose'); // MongoDB driver
-const { hash_password, verify_password } = require('../password_encryption.js'); // gotta encrypt out passwords!
+const { hash_password, verify_password } = require('../password_encryption.js'); // gotta encrypt our passwords!
 const Profile = require('./profile.js');
 
 // you can edit this schema!

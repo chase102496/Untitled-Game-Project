@@ -34,10 +34,15 @@ function netSetVariable(_clientID,_name,_value,_instanceID = id)
 {
 	send({cmd: "netSetVariable", instanceID: _instanceID, name: _name, value: _value });
 }
-
+//Sync the variable to the server so others can check it. Used any time you need to use netGetVariable
+function netSyncVariable(_instanceID,_name)
+{
+	send({cmd: "netSyncVariable", instanceID: _instanceID, name: _name});
+}
+//Grab the variable for the instanceID on the specified clientID
 function netGetVariable(_clientID,_instanceID,_name)
 {
-	send({cmd: "netGetVariable", instanceID: _instanceID, name: _name});
+	send({cmd: "netGetVariable", clientID: _clientID, instanceID: _instanceID, name: _name});
 }
 //
 function netSendPlayerInit() 

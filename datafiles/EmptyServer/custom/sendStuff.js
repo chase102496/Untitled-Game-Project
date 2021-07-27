@@ -12,11 +12,6 @@ module.exports = class SendStuff {
         return this.write(data);
     }
 
-    netAskVariable(clientID, name, instanceID)
-    {
-
-    }
-
     // different types of broadcast
     broadcastList(clients, pack, notme) {
         if (notme) {
@@ -54,7 +49,8 @@ module.exports = class SendStuff {
         this.write({cmd: 'message', msg: msg})
     }
 
-//#region these are some preset functions
+// Preset functions
+//{
 
     sendRegister(status, reason) {
         if (!reason)
@@ -102,5 +98,5 @@ module.exports = class SendStuff {
         this.write({ cmd: 'play', lobby: lobby.serialize(), start_pos: start_pos });
     }
 
-//#endregion
+//}
 }

@@ -1,9 +1,10 @@
-function getClientObj(clientID){
+function getClientObj(clientID)
+{
     for (var i = 0; i < global.clients.length; i++)
     {
-        if (myArray[i].clientID === clientID)
+        if (global.clients[i].clientID === clientID)
         {
-            return myArray[i];
+            return global.clients[i];
         }
     }
 }

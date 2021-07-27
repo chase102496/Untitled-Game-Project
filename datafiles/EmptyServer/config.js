@@ -18,7 +18,7 @@ const prod_config = {
     },
     env_name: 'prod',
     port: args.port || 1337,
-    db: args.db || 'mongodb://127.0.0.1:27017/oniline-game'
+    db: args.db || 'mongodb://127.0.0.1:27017/online-game'
 }
 
 

@@ -17,7 +17,9 @@ module.exports = async function handlePacket(c, data) {
             console.log('Message from client: '+data.msg);
             c.sendMessage(data.msg+' indeed');
             break;
-// #region preset commands
+			
+// Preset commands 
+//{
         case 'login':
             var { username, password } = data;
             Account.login(username, password)
@@ -65,25 +67,31 @@ module.exports = async function handlePacket(c, data) {
                 lobby.kickPlayer(c, 'you left the lobby', false);
             }
             break;
-// #endregion
+//}
 
         // #######################
         // Add your commands here:
 
         case "getClientID":
-            c.instanceID = data.instanceID;
-            console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: ");
-            c.write({ cmd: "clientID", msg: c.id }); //Grabs client id
+            c.instanceID = data.instanceID; //Stores instanceID in client obj
+			c.write({ cmd: "clientID", msg: c.clientID }); //Sends clientID to client
+            console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: "+ c.instanceID);
             break;
 
-        // set a client's variable, defaults to the client itself (player)
-        case "netSetVariable":
-            getClientObj(data.clientID).write({ cmd: "netSetVariable", instanceID: data.instanceID, name: data.name, value: data.value });
+        // Sync the variable to the server so others can check it. Used any time you need to use netGetVariable
+		// Need to set the variable in a list inside clientID. The list name will be the instanceID.
+		// Use instanceID["name"] = value
+        case "netSyncVariable":
+			 //Search for instance
+			//eval("c." + data.instanceID + data.name + " = " + data.value)
+			//eval(data.name + " = " + data.value); //evaluates the string received into a variable that is set to data.value
+			//c.eval(data.instanceID).eval(data.name);
+            //write({ cmd: "netSyncVariable", instanceID: data.instanceID, name: data.name, value: data.value });
             break;
 
         // get a client's variable, defaults to the client itself (player)
         case "netGetVariable":
-            this.write({ cmd: "netGetVariable", instanceID: data.instanceID, name: data.name, value: data.value });
+            //getClientObj(data.clientID).write({ cmd: "netAskVariable", instanceID: data.instanceID, name: data.name});
             break;
     }
 }

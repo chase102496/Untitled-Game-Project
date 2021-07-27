@@ -1,10 +1,15 @@
 const SendStuff = require("../../custom/sendStuff.js");
 const { Profile, freshProfile } = require('./../schemas/profile.js');
+const mongoose = require('mongoose');
 
 // this is a wrapper around sockets
-module.exports = class Client extends SendStuff {
-    constructor(socket) {
+module.exports = class Client extends SendStuff 
+{
+    constructor(socket) 
+	{
         super();
+
+		this.instances = [];
 
         this.socket = socket;
 
@@ -15,6 +20,61 @@ module.exports = class Client extends SendStuff {
         this.profile = null; // gameplay info
     }
 
+	//Instance object
+	function instance(_instanceID)
+	{
+		this.instanceID = _instanceID; //Set ID
+	}
+	
+	//Find an instance
+	findInstance(_instanceID)
+	{
+		for (var i = 0; i < instances.length; i++)
+		{
+			if (instances[i].instanceID === _instanceID)
+			{
+				return instances[i];
+			}
+		}
+		return null;
+	}
+	
+	//get
+	getInstanceVariable(_instanceID,_var)
+	{
+		if findInstance(data.instanceID) === null
+		{
+			return undefined;
+		}
+		else
+		{
+			return eval(findInstance(_instanceID)+"."+_var);
+		}
+	}
+	
+	//set
+	setInstanceVariable(_instanceID,_var,_value)
+	{
+		if c.findInstance(data.instanceID) === null
+		{
+			instances.push(new instance(_instanceID)) 				//Create new instance
+			eval(findInstance(_instanceID)+"."+_var+" = "+_value);  //Set var
+		}
+		else
+		{
+			eval(findInstance(_instanceID)+"."+_var+" = "+_value);	//Set var
+		}
+	}
+	
+	//Add an instance
+	createInstance(_instanceID)
+	{
+		instances.push(new instance(_instanceID))
+	}
+		
+	// preset functions
+	//{
+	
     // some events
     onJoinLobby(lobby) {
         this.sendJoinLobby(lobby);
@@ -46,9 +106,6 @@ module.exports = class Client extends SendStuff {
             this.lobby.kickPlayer(this, 'disconnected', true);
     }
 
-    // preset functions
-
-    // this one saves everything
     save() {
         if (this.account !== null) {
             this.account.save(function(err) {
@@ -95,9 +152,6 @@ module.exports = class Client extends SendStuff {
             }
         })
     }
-
-    // you can also add methods/functions below
-    // e.x.
 
     setUsername(name) {
         this.profile.username = name;

@@ -8,12 +8,15 @@ function handlePacket(pack) {
 	
 	switch(cmd)
 	{
+		// Sets the variable for self to the one received
 		case "netSetVariable":
-			variable_instance_set(data.id,data.name,data.value);
+			variable_instance_set(id,data.name,data.value);
 			break;
-			
-		case "netGetVariable":
-			variable_instance_get(data.id,data.name);
+		
+		// Server asks for a variable from us, send it back
+		case "netAskVariable":
+			variable_instance_get(id,data.name);
+			send({cmd: "netAnswerVariable", instanceID: _instanceID, name: _name});
 			break;
 			
 		case "endGame":

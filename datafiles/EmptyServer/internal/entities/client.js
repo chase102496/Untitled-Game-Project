@@ -5,8 +5,9 @@ const { Profile, freshProfile } = require('./../schemas/profile.js');
 module.exports = class Client extends SendStuff {
     constructor(socket) {
         super();
-        
+
         this.socket = socket;
+
         this.lobby = null; // no lobby
 
         // these are the objects that contain all the meaningful data

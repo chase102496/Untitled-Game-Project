@@ -32,6 +32,8 @@ function scrSequenceCreator(_sequence)
 
 function scrEquipStateInit() //All equip states
 {
+	///NOTE: ASYNC BROADCAST EVENT WORKS FOR ALL ENTITIES LISTENING NO MATTER WHAT STATE (E.G. OUR SWORD VELOCITY)
+
 	snowState.add("Empty",{
 		enter: function()
 		{

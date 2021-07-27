@@ -4,30 +4,20 @@ const Profile = require('../internal/schemas/profile.js');
 const Account = require('../internal/schemas/account.js');
 
 module.exports = async function handlePacket(c, data) {
-    var cmd = data.cmd.toLowerCase();
+    var cmd = data.cmd;
     // console.log('received command: ' + cmd);
     
     switch(cmd) {
-		
-		#region Preset functions
-		
         case 'hello':
             console.log("Hello from client: "+data.kappa);
-            c.sendHello();
-            break;
-			
-        case 'hello2':
-            console.log('Second hello from client: '+data.kappa);
+            c.sendMessage(data.kappa + ' indeed');
             break;
 
-		//data.??? is the variable we send over
-		//So we send 
         case 'message':
             console.log('Message from client: '+data.msg);
             c.sendMessage(data.msg+' indeed');
             break;
-			
-        // preset commands
+// #region preset commands
         case 'login':
             var { username, password } = data;
             Account.login(username, password)
@@ -75,10 +65,25 @@ module.exports = async function handlePacket(c, data) {
                 lobby.kickPlayer(c, 'you left the lobby', false);
             }
             break;
-		
-		#endregion
-		
+// #endregion
+
         // #######################
         // Add your commands here:
+
+        case "getClientID":
+            c.instanceID = data.instanceID;
+            console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: ");
+            c.write({ cmd: "clientID", msg: c.id }); //Grabs client id
+            break;
+
+        // set a client's variable, defaults to the client itself (player)
+        case "netSetVariable":
+            getClientObj(data.clientID).write({ cmd: "netSetVariable", instanceID: data.instanceID, name: data.name, value: data.value });
+            break;
+
+        // get a client's variable, defaults to the client itself (player)
+        case "netGetVariable":
+            this.write({ cmd: "netGetVariable", instanceID: data.instanceID, name: data.name, value: data.value });
+            break;
     }
 }

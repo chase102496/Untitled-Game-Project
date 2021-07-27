@@ -1,22 +1,4 @@
-//
-function sendSomeStuff() {
-	send({cmd: "some stuff", foo: "blah", bar: 123})
-}
-//
-function netSendPlayerCreate(_objectID)
-{
-	send({cmd: "netSendPlayerCreate"})
-}
-//
 #region Preset functions
-
-function sendHello() {
-	send({cmd: "hello", kappa: "Kappa Pepega"})
-}
-
-function sendHello2() {
-	send({cmd: "hello2", kappa: "Second Kappa"})
-}
 
 function sendMessage(msg) {
 	send({cmd: "message", msg: msg})
@@ -47,3 +29,20 @@ function sendRegister(username, password) {
 }
 
 #endregion
+//
+function netSetVariable(_clientID,_name,_value,_instanceID = id)
+{
+	send({cmd: "netSetVariable", instanceID: _instanceID, name: _name, value: _value });
+}
+
+function netGetVariable(_clientID,_instanceID,_name)
+{
+	send({cmd: "netGetVariable", instanceID: _instanceID, name: _name});
+}
+//
+function netSendPlayerInit() 
+{
+	//Get client ID
+	send({cmd: "netSendPlayerInit", instanceID: id})
+}
+//

@@ -5,5 +5,3 @@ global.insCamera = instance_create_layer(0,0,"layGame",objCamera);
 
 global.inputObject = global.playerObject;
 global.menu = false;
-
-mw_open_windows("Client",2);

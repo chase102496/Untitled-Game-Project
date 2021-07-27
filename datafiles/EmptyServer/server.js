@@ -22,7 +22,8 @@ const server = net.createServer(function(socket) {
     console.log("Socket connected!");
     
     var c = new Client(socket);
-    global.clients.push(c); // add the client to clients list (unnecessary)
+    global.clients.push(c); // add the client to clients list
+    c.clientID = global.clients.length;
 
     // Bind functions on events
 

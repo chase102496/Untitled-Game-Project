@@ -27,18 +27,17 @@ if (!CONFIGS_SET) {
 	trace("Remember to set your config by pressing the 'target' icon in the top-right corner of IDE! (Dev = Development, Prod = Production)")
 }
 
-
 // Allow up to 4000 ping (YYG recommends ~1000 for LAN-only games)
 network_set_config(network_config_connect_timeout, 4000)
-
 
 // This can be used to initiate the server interaction
 // (send the first packet)
 onConnect = function() {
-	sendHello();
-	sendHello2();
+	//Test
+	send({cmd: "hello", kappa: "Kappa Pepega"});
+	netSendPlayerInit();
 	
-	netPlayerInit();
+	
 }
 
 onDisconnect = function() {

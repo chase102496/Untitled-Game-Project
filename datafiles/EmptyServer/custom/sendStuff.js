@@ -1,7 +1,7 @@
 const packet = require('./../internal/packet.js');
 
 module.exports = class SendStuff {
-    constructor() {}
+    constructor() { }
 
     // basic send
     write(data) {
@@ -11,7 +11,12 @@ module.exports = class SendStuff {
     send(data) { // just another name
         return this.write(data);
     }
-    
+
+    netAskVariable(clientID, name, instanceID)
+    {
+
+    }
+
     // different types of broadcast
     broadcastList(clients, pack, notme) {
         if (notme) {
@@ -49,7 +54,7 @@ module.exports = class SendStuff {
         this.write({cmd: 'message', msg: msg})
     }
 
-    // these are some preset functions
+//#region these are some preset functions
 
     sendRegister(status, reason) {
         if (!reason)
@@ -97,6 +102,5 @@ module.exports = class SendStuff {
         this.write({ cmd: 'play', lobby: lobby.serialize(), start_pos: start_pos });
     }
 
-    // #################################
-    // You can write your wrappers here:
+//#endregion
 }

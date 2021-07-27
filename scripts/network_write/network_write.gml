@@ -4,7 +4,7 @@
 function network_write(data, sock) {
 	// most of the time you just want to send the data to oClient.socket
 	if is_undefined(argument[1]) /* is_undefined(sock) */ {
-		sock = oClient.socket
+		sock = global.playerObject.socket
 	}
 	
 	//trace("Encoding data: %", data)

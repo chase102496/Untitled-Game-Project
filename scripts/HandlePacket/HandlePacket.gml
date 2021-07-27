@@ -1,13 +1,26 @@
 function handlePacket(pack) {
 	
-	var data = snap_from_messagepack(pack)	// Deserialize/unpack msgpack into a struct
-	var cmd = string_lower(data.cmd) // you can get rid of this line, 
-									 // i just like the commands being lowercase
-	//trace("Received cmd: %", cmd)
+	var data = snap_from_messagepack(pack);	// Deserialize/unpack msgpack into a struct
+	var cmd = data.cmd;
+
+	trace("Received cmd: %", cmd)
 	//trace(buffer_base64_encode(pack, 0, buffer_get_size(pack)))
 	
 	switch(cmd)
 	{
+		case "netSetVariable":
+			variable_instance_set(data.id,data.name,data.value);
+			break;
+			
+		case "netGetVariable":
+			variable_instance_get(data.id,data.name);
+			
+			break;
+			
+		case "endGame":
+			script_execute(method_get_index(data.msg));
+			break
+		
 		case "hello":
 			trace(data.str);
 			break;
@@ -20,11 +33,12 @@ function handlePacket(pack) {
 			show_message_async(data.msg+"\n (c) Server");
 			break;
 			
-		case "netReceivePlayerCreate":
-			
+		case "clientID":
+			clientID = data.msg;
+			global.debugVar[| 6] = clientID;
 			break;
 		
-#region Predefined events
+	#region Predefined events
 
 		case "login":
 			var status = data.status
@@ -109,7 +123,7 @@ function handlePacket(pack) {
 			throw ("Error: Unknown command: " + string(data.cmd));
 			break;
 			
-#endregion
+	#endregion
 	
 	}
 }

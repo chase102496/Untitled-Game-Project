@@ -10,10 +10,12 @@ inv = new conInventoryInit();
 gui = new conGUIInit();
 scrGUIInit();
 //
+netState = new SnowState("Offline");
+//
 snowState = new SnowState("Ground");
 snowState.history_enable();
 scrEntityStateInit();
-
+//
 //One-time init scripts
 scrBuffsInit();
 

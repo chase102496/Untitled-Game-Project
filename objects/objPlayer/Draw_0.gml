@@ -1,2 +1,1 @@
-snowState.animation();
-snowState.draw();
+event_inherited();

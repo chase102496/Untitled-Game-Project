@@ -1,62 +1,62 @@
 {
   "Favourites": [
     {
-      "name": "Objects",
-      "path": "folders/Objects.yy"
-    },
-    {
       "name": "Scripts",
       "path": "folders/Scripts.yy"
     },
     {
-      "name": "Sequences",
-      "path": "folders/Sequences.yy"
-    },
-    {
       "name": "Sprites",
       "path": "folders/Sprites.yy"
+    },
+    {
+      "name": "Objects",
+      "path": "folders/Objects.yy"
+    },
+    {
+      "name": "Sequences",
+      "path": "folders/Sequences.yy"
     }
   ],
   "RecentItems": [
     {
-      "name": "rmTest",
-      "path": "rooms/rmTest/rmTest.yy"
+      "name": "objEntity",
+      "path": "objects/objEntity/objEntity.yy"
     },
     {
-      "name": "rmFree",
-      "path": "rooms/rmFree/rmFree.yy"
+      "name": "Multiple_Windows",
+      "path": "scripts/Multiple_Windows/Multiple_Windows.yy"
     },
     {
-      "name": "EquipStates",
-      "path": "scripts/EquipStates/EquipStates.yy"
+      "name": "objGame",
+      "path": "objects/objGame/objGame.yy"
     },
     {
-      "name": "HandlePacket",
-      "path": "scripts/HandlePacket/HandlePacket.yy"
-    },
-    {
-      "name": "SendStuff",
-      "path": "scripts/SendStuff/SendStuff.yy"
-    },
-    {
-      "name": "__NetworkingConfig",
-      "path": "scripts/__NetworkingConfig/__NetworkingConfig.yy"
-    },
-    {
-      "name": "rmTestNetwork",
-      "path": "rooms/rmTestNetwork/rmTestNetwork.yy"
+      "name": "Networking",
+      "path": "scripts/Networking/Networking.yy"
     },
     {
       "name": "oClient",
       "path": "objects/oClient/oClient.yy"
     },
     {
-      "name": "ProjectStructure",
-      "path": "notes/ProjectStructure/ProjectStructure.yy"
+      "name": "rmTestNetwork",
+      "path": "rooms/rmTestNetwork/rmTestNetwork.yy"
     },
     {
-      "name": "Buffs",
-      "path": "scripts/Buffs/Buffs.yy"
+      "name": "bgrTest",
+      "path": "sprites/bgrTest/bgrTest.yy"
+    },
+    {
+      "name": "rmFree",
+      "path": "rooms/rmFree/rmFree.yy"
+    },
+    {
+      "name": "rmTest",
+      "path": "rooms/rmTest/rmTest.yy"
+    },
+    {
+      "name": "objCamera",
+      "path": "objects/objCamera/objCamera.yy"
     }
   ],
   "Filters": [],
@@ -76,22 +76,6 @@
     "#FFFF0000",
     "#FFFF00FF",
     "#FF4040FF",
-    "#FFFF80FF",
-    "#FF4040FF",
-    "#FFFF80FF",
-    "#FFFF8080",
-    "#FFFF8000",
-    "#FFFFFF80",
-    "#FF80FF00",
-    "#FF80C0FF",
-    "#FF0000FF",
-    "#FF00FFFF",
-    "#FF00FF00",
-    "#FFFFFF00",
-    "#FFFF0000",
-    "#FFFF00FF",
-    "#FF4040FF",
-    "#FFFF80FF",
-    "#FF4040FF"
+    "#FFFF80FF"
   ]
 }

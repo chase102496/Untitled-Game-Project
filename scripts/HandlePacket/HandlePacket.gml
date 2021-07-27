@@ -14,7 +14,6 @@ function handlePacket(pack) {
 			
 		case "netGetVariable":
 			variable_instance_get(data.id,data.name);
-			
 			break;
 			
 		case "endGame":

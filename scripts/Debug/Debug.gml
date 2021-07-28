@@ -51,6 +51,8 @@ function scrDebugVars()
 	
 	with global.inputObject
 	{
+		global.debugVar[| 3] = netState.get_current_state();
+		
 		//Tracking velocity
 		global.debugVar[| 0] = ["hVel: "+string(stats.hVel),"vVel: "+string(stats.vVel)];
 

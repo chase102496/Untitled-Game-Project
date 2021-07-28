@@ -25,8 +25,7 @@ module.exports = class Client extends SendStuff {
 
     onDisconnect()
     {
-        global.clients.splice(global.clients.indexOf(this)) //Remove from clients list
-        delete this;
+        global.clients.splice(global.clients.indexOf(this),1) //Remove from clients list
 
         //this.save();
         //if (this.lobby !== null)
@@ -52,9 +51,11 @@ module.exports = class Client extends SendStuff {
     }
 
     //Creates instance object within client, pushes to instances list, and returns it so we don't have to search immediately after creating
-    createInstance(_instanceID) {
+    createInstance(_instanceID)
+    {
         var _newInstance = new this.instance(_instanceID, this);
         this.instances.push(_newInstance)
+
         return _newInstance;
     }
 

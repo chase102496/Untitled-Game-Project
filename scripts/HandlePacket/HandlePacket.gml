@@ -19,23 +19,19 @@ function handlePacket(pack) {
 		//Player X and Y is sent to server "netPositionPlayer"
 		//Server broadcasts X and Y to any client besides the sender "netPositionPlayer"
 		
-		// Getting a variable from some other prompt we received it in
+		//Sent back from server when we send netSendInit, local
 		
-		case "netGetClientInfo":
-			var _clientList = json_parse(data.clientInfoList)
-			var _selfList = json_parse(data.selfInfoList)
-
-			global.debugVar[| 5] = "other: "+string(_clientList); //TODO Develop a script to scan through the clientList and find a client based on ID
-			global.debugVar[| 4] = "self: "+string(_selfList.instances);
+		case "netGetClientInfoAll":
+			global.clientDataSelf.data = json_parse(data.dataSelf);
+			global.clientDataOther.data = json_parse(data.dataOther);
 			
-			//global.debugVar[| 3] = _selfList.clientID; THIS WORKS, NEAT
+			global.debugVar[| 4] = "self: "+string(global.clientDataSelf.data);
+			global.debugVar[| 5] = "other: "+string(global.clientDataOther.getDataList("clientID"));
+			break;
 			
+		case "netSetClientVariable":
 			break;
-		
-		case "netSendInit":
-			//if data.instanceID == id clientID = data.clientID;
-			break;
-
+			
 	#region Samples
 
 		case "hello":

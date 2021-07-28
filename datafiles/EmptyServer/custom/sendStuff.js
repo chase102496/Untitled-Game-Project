@@ -23,7 +23,7 @@ module.exports = class SendStuff {
         clients.forEach(function (c) {
             if (c === client && notme) { }
             else {
-                clientInfoList.push(c); //pushes the object in string form to a list
+                clientInfoList.push({ "clientID": c.clientID, "instances": c.instances }); //pushes the object in string form to a list
             }
         });
 

@@ -30,36 +30,78 @@ function sendRegister(username, password) {
 
 #endregion
 
-//Sync the specified string version of a variable to the server to be pulled later. Used for client-server updating.
-//Syncing a player's position
-function netSendSyncVariable(_varStr,_instanceID = id)
+////Sync the specified string version of a variable to the server to be pulled later. Used for client-server updating.
+////Syncing a player's position
+//function netSendSyncVariable(_varStr,_instanceID = id)
+//{
+//	var _varValue = variable_instance_get(_instanceID,_varStr);
+//	send({cmd: "netSendSyncVariable", instanceID: _instanceID, varStr: _varStr, varValue: _varValue});
+//}
+
+////Find the specified variable on the instance and client ID. Used for client-server updating. For a value to come out, that instance has to be syncing it using netSendSyncVariable
+//function netSendGetVariable(_varStr,_instanceID,_clientID)
+//{
+//	//variable_global_set()
+//	//set all
+//	//if ds_map_exists(global.clients,data.whatever) return it
+//	send({cmd: "netSendGetVariable", clientID: _clientID, instanceID: _instanceID, varStr: _varStr});
+//}
+
+////Update the specified variable on the specified instance on the specified client id. Used for client-client updating
+////Updating a player getting hit, receiving an item, a chat message, etc
+//function netSendUpdateVariable(_varStr,_varValue,_instanceID,_clientID)
+//{
+//	send({cmd: "netSendUpdateVariable", clientID: _clientID, instanceID: _instanceID, varStr: _varStr, varValue: _varValue});
+//}
+
+//Runs on connect
+function netSendConnect(_instanceID = id)
 {
-	var _varValue = variable_instance_get(_instanceID,_varStr);
-	send({cmd: "netSendSyncVariable", instanceID: _instanceID, varStr: _varStr, varValue: _varValue});
+	global.clientDataSelf = new netClientDataSelf();
+		global.clientDataSelf.data.instances[0] = self; //adding our instance object to the instances list
+		
+	global.clientDataOther = new netClientDataOther();
+	send({cmd: "netSendConnect", instanceID: _instanceID});
 }
 
-//Find the specified variable on the instance and client ID. Used for client-server updating. For a value to come out, that instance has to be syncing it using netSendSyncVariable
-function netSendGetVariable(_varStr,_instanceID,_clientID)
-{
-	//variable_global_set()
-	//set all
-	//if ds_map_exists(global.clients,data.whatever) return it
-	send({cmd: "netSendGetVariable", clientID: _clientID, instanceID: _instanceID, varStr: _varStr});
-}
-
-//Update the specified variable on the specified instance on the specified client id. Used for client-client updating
-//Updating a player getting hit, receiving an item, a chat message, etc
-function netSendUpdateVariable(_varStr,_varValue,_instanceID,_clientID)
-{
-	send({cmd: "netSendUpdateVariable", clientID: _clientID, instanceID: _instanceID, varStr: _varStr, varValue: _varValue});
-}
-
-//Initialize this instance
-function netSendInit(_instanceID = id)
+//Runs on disconnect
+function netSendDisonnect(_instanceID = id)
 {
 	//global.clients = {}; //Initialize our netStruct to add clients, instances, and variables to
 	// global.clients.
 	
-	send({cmd: "netSendInit", instanceID: _instanceID});
-	send({cmd: "netGetClientInfo", instanceID: _instanceID});
 }
+
+//Runs while connected
+function netUpdate(_instanceID = id)
+{	
+	static tick = 0;
+
+	//Priority: instant
+	{
+		
+	}
+	
+	//Priority high - every second
+	if (tick mod room_speed) == 0
+	{
+		//Sends a request to change an instance variable, within a specific client, to the server
+		//netSetClientInfoOther
+		
+		//Syncs our info client info to the server
+		var _clientData = json_stringify(global.clientDataSelf.data)
+		send({cmd: "netSyncClientInfoSelf", dataSelf: _clientData});
+		
+		//Gets both our client info and others, separates into two global obj
+		send({cmd: "netGetClientInfoAll", instanceID: _instanceID});
+	}
+	
+	//Priority low - 60s
+	if (tick mod (room_speed*60)) == 0
+	{
+		
+	}
+	
+	tick ++;
+}
+

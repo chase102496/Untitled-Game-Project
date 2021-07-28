@@ -14,12 +14,12 @@ function scrEntityStateInit()
 			
 			netOnConnect = function()
 			{
-				netSendInit();
+				netSendConnect();
 			}
 			
 			netOnDisonnect = function()
 			{
-				
+				netSendDisonnect();
 			}
 			
 			// connect/disconnect events defined in __NetworkingConfig.gml
@@ -111,7 +111,7 @@ function scrEntityStateInit()
 		},
 		step: function()
 		{
-			
+			netUpdate();
 		},
 		leave: function()
 		{

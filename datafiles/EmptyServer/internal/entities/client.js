@@ -12,9 +12,10 @@ module.exports = class Client extends SendStuff {
 
         this.socket = socket;
 
-        global.clients.push(this); // add the client to clients list
+        this.clientID = global.clientCountID; // set clientID to global counter and increment
+        global.clientCountID++;
 
-        this.clientID = global.clients.length; // set clientID
+        global.clients.push(this); // add the client to clients list
 
         // these are the objects that contain all the meaningful data
         this.lobby = null; // no lobby
@@ -22,12 +23,21 @@ module.exports = class Client extends SendStuff {
         this.profile = null; // gameplay info
     }
 
+    onDisconnect()
+    {
+        global.clients.splice(global.clients.indexOf(this)) //Remove from clients list
+        delete this;
+
+        //this.save();
+        //if (this.lobby !== null)
+        //    this.lobby.kickPlayer(this, 'disconnected', true);
+    }
+
     instance = class Instance //blueprint for creating an instance
     {
         constructor(_instanceID, _clientObj)
         {
             this.instanceID = _instanceID;
-            _clientObj.instances.push(this);
         }
 
         setVariable(_varName, _varValue)
@@ -113,12 +123,6 @@ module.exports = class Client extends SendStuff {
 
     onPlay(lobby, start_pos) {
         this.sendPlay(lobby, start_pos);
-    }
-
-    onDisconnect() {
-        this.save();
-        if (this.lobby !== null)
-            this.lobby.kickPlayer(this, 'disconnected', true);
     }
 
     save() {

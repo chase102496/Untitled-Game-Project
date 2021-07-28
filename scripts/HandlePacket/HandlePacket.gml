@@ -20,17 +20,24 @@ function handlePacket(pack) {
 		//Server broadcasts X and Y to any client besides the sender "netPositionPlayer"
 		
 		// Getting a variable from some other prompt we received it in
+		
+		case "netGetClientInfo":
+			var _clientList = json_parse(data.clientInfoList)
+			var _selfList = json_parse(data.selfInfoList)
+
+			global.debugVar[| 5] = "other: "+string(_clientList); //TODO Develop a script to scan through the clientList and find a client based on ID
+			global.debugVar[| 4] = "self: "+string(_selfList.instances);
+			
+			//global.debugVar[| 3] = _selfList.clientID; THIS WORKS, NEAT
+			
+			break;
+		
 		case "netSendInit":
-			if data.instanceID == id clientID = data.clientID;
+			//if data.instanceID == id clientID = data.clientID;
 			break;
-		
-		case "netReceiveGetVariable":
-			break;
-		
-		case "endGame":
-			script_execute(method_get_index(data.msg));
-			break
-		
+
+	#region Samples
+
 		case "hello":
 			trace(data.str);
 			break;
@@ -42,6 +49,8 @@ function handlePacket(pack) {
 		case "message":
 			show_message_async(data.msg+"\n (c) Server");
 			break;
+		
+	#endregion
 		
 	#region Predefined events
 

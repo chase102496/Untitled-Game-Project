@@ -57,8 +57,9 @@ function netSendUpdateVariable(_varStr,_varValue,_instanceID,_clientID)
 //Initialize this instance
 function netSendInit(_instanceID = id)
 {
-	send({cmd: "netSendInit", 
-		instanceID: _instanceID});
-	//send initialize object for other clients send
+	//global.clients = {}; //Initialize our netStruct to add clients, instances, and variables to
+	// global.clients.
+	
+	send({cmd: "netSendInit", instanceID: _instanceID});
+	send({cmd: "netGetClientInfo", instanceID: _instanceID});
 }
-//

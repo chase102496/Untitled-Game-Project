@@ -111,7 +111,7 @@ function scrEntityStateInit()
 		},
 		step: function()
 		{
-			global.debugVar[| 3] = clientID;
+			
 		},
 		leave: function()
 		{

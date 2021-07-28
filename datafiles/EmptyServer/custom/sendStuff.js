@@ -12,6 +12,24 @@ module.exports = class SendStuff {
         return this.write(data);
     }
 
+    //Get all the objects from global.clients and convert to json string
+    getOtherClientsInfo(clients, notme) {
+        if (notme) {
+            notme = true;
+        }
+        var client = this;
+        var clientInfoList = [];
+
+        clients.forEach(function (c) {
+            if (c === client && notme) { }
+            else {
+                clientInfoList.push(c); //pushes the object in string form to a list
+            }
+        });
+
+        return clientInfoList;
+    }
+
     // different types of broadcast
     broadcastList(clients, pack, notme) {
         if (notme) {

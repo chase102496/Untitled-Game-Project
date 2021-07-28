@@ -5,15 +5,26 @@ function scrEntityStateInit()
 	netState.add("Online",{
 		enter: function()
 		{
+			clientID = -1
 			// --- This is when the connection is created
 			socket = network_create_socket(network_socket_tcp)
 			
 			// Async = Don't crash the game if the server is down
 			network_connect_raw_async(socket, IP, real(PORT));
-
+			
+			netOnConnect = function()
+			{
+				netSendInit();
+			}
+			
+			netOnDisonnect = function()
+			{
+				
+			}
+			
 			// connect/disconnect events defined in __NetworkingConfig.gml
-			onConnect = global.onConnect
-			onDisconnect = global.onDisconnect
+			//onConnect = global.onConnect
+			//onDisconnect = global.onDisconnect
 
 			// if a packet is split in half, we use this
 			// -1 if no half-pack, a buffer otherwise
@@ -89,18 +100,18 @@ function scrEntityStateInit()
 					break
 				case network_type_non_blocking_connect:
 				case network_type_connect:
-					trace("Connected to the server!")
-					onConnect()
+					trace("Connected to the server!");
+					netOnConnect();
 					break
 				case network_type_disconnect:
-					trace("Disconnected from the server!")
-					onDisconnect()
+					trace("Disconnected from the server!");
+					netOnDisonnect();
 					break
 			}
 		},
 		step: function()
 		{
-			global.debugVar[| 4] = socket;
+			global.debugVar[| 3] = clientID;
 		},
 		leave: function()
 		{

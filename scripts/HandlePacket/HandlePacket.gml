@@ -1,24 +1,32 @@
 function handlePacket(pack) {
 	
-	var data = snap_from_messagepack(pack);	// Deserialize/unpack msgpack into a struct
-	var cmd = data.cmd;
+	data = snap_from_messagepack(pack);	// Deserialize/unpack msgpack into a struct
+	var _cmd = data.cmd;
 
-	trace("Received cmd: %", cmd)
+	trace("Received cmd: %", _cmd)
 	//trace(buffer_base64_encode(pack, 0, buffer_get_size(pack)))
 	
-	switch(cmd)
+	switch(_cmd)
 	{
-		// Sets the variable for self to the one received
-		case "netSetVariable":
-			variable_instance_set(id,data.name,data.value);
+		//Basics
+		
+		//Just need the player to be created, position logged, and animations logged
+		//For this, we need a netobjPlayer created
+		//The netobjPlayer will simply exist with animations and position mirroring its clientID.instanceID
+		
+		//Player net init script gets sent to server "netInitPlayer"
+		//Server broadcasts net init script to other players to create that player "netInitPlayer" netobjPlayer
+		//Player X and Y is sent to server "netPositionPlayer"
+		//Server broadcasts X and Y to any client besides the sender "netPositionPlayer"
+		
+		// Getting a variable from some other prompt we received it in
+		case "netSendInit":
+			if data.instanceID == id clientID = data.clientID;
 			break;
 		
-		// Server asks for a variable from us, send it back
-		case "netAskVariable":
-			variable_instance_get(id,data.name);
-			send({cmd: "netAnswerVariable", instanceID: _instanceID, name: _name});
+		case "netReceiveGetVariable":
 			break;
-			
+		
 		case "endGame":
 			script_execute(method_get_index(data.msg));
 			break
@@ -33,11 +41,6 @@ function handlePacket(pack) {
 			
 		case "message":
 			show_message_async(data.msg+"\n (c) Server");
-			break;
-			
-		case "clientID":
-			clientID = data.msg;
-			global.debugVar[| 6] = clientID;
 			break;
 		
 	#region Predefined events

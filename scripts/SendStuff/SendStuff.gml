@@ -29,25 +29,36 @@ function sendRegister(username, password) {
 }
 
 #endregion
-//
-function netSetVariable(_clientID,_name,_value,_instanceID = id)
+
+//Sync the specified string version of a variable to the server to be pulled later. Used for client-server updating.
+//Syncing a player's position
+function netSendSyncVariable(_varStr,_instanceID = id)
 {
-	send({cmd: "netSetVariable", instanceID: _instanceID, name: _name, value: _value });
+	var _varValue = variable_instance_get(_instanceID,_varStr);
+	send({cmd: "netSendSyncVariable", instanceID: _instanceID, varStr: _varStr, varValue: _varValue});
 }
-//Sync the variable to the server so others can check it. Used any time you need to use netGetVariable
-function netSyncVariable(_instanceID,_name)
+
+//Find the specified variable on the instance and client ID. Used for client-server updating. For a value to come out, that instance has to be syncing it using netSendSyncVariable
+function netSendGetVariable(_varStr,_instanceID,_clientID)
 {
-	send({cmd: "netSyncVariable", instanceID: _instanceID, name: _name});
+	//variable_global_set()
+	//set all
+	//if ds_map_exists(global.clients,data.whatever) return it
+	send({cmd: "netSendGetVariable", clientID: _clientID, instanceID: _instanceID, varStr: _varStr});
 }
-//Grab the variable for the instanceID on the specified clientID
-function netGetVariable(_clientID,_instanceID,_name)
+
+//Update the specified variable on the specified instance on the specified client id. Used for client-client updating
+//Updating a player getting hit, receiving an item, a chat message, etc
+function netSendUpdateVariable(_varStr,_varValue,_instanceID,_clientID)
 {
-	send({cmd: "netGetVariable", clientID: _clientID, instanceID: _instanceID, name: _name});
+	send({cmd: "netSendUpdateVariable", clientID: _clientID, instanceID: _instanceID, varStr: _varStr, varValue: _varValue});
 }
-//
-function netSendPlayerInit() 
+
+//Initialize this instance
+function netSendInit(_instanceID = id)
 {
-	//Get client ID
-	send({cmd: "netSendPlayerInit", instanceID: id})
+	send({cmd: "netSendInit", 
+		instanceID: _instanceID});
+	//send initialize object for other clients send
 }
 //

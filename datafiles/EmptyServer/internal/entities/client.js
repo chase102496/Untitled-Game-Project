@@ -3,37 +3,59 @@ const { Profile, freshProfile } = require('./../schemas/profile.js');
 const mongoose = require('mongoose');
 
 // this is a wrapper around sockets
-module.exports = class Client extends SendStuff 
-{
-    constructor(socket) 
-	{
+module.exports = class Client extends SendStuff {
+
+    constructor(socket) {
         super();
 
-		this.instances = [];
+        this.instances = [];
 
         this.socket = socket;
 
-        this.lobby = null; // no lobby
+        global.clients.push(this); // add the client to clients list
+
+        this.clientID = global.clients.length; // set clientID
 
         // these are the objects that contain all the meaningful data
+        this.lobby = null; // no lobby
         this.account = null; // account info
         this.profile = null; // gameplay info
     }
 
-	//Instance object
-	function instance(_instanceID)
-	{
-		this.instanceID = _instanceID; //Set ID
-	}
-	
-	//Find an instance
+    instance = class Instance //blueprint for creating an instance
+    {
+        constructor(_instanceID, _clientObj)
+        {
+            this.instanceID = _instanceID;
+            _clientObj.instances.push(this);
+        }
+
+        setVariable(_varName, _varValue)
+        {
+            eval("this." + _varName + " = " + _varValue);
+        }
+
+        getVariable(_var)
+        {
+            return eval("this." + _var);
+        }
+    }
+
+    //Creates instance object within client, pushes to instances list, and returns it so we don't have to search immediately after creating
+    createInstance(_instanceID) {
+        var _newInstance = new this.instance(_instanceID, this);
+        this.instances.push(_newInstance)
+        return _newInstance;
+    }
+
+	//Find an instance by its ID, return the object for accessing
 	findInstance(_instanceID)
 	{
-		for (var i = 0; i < instances.length; i++)
+		for (var i = 0; i < this.instances.length; i++)
 		{
-			if (instances[i].instanceID === _instanceID)
+			if (this.instances[i].instanceID === _instanceID)
 			{
-				return instances[i];
+				return this.instances[i];
 			}
 		}
 		return null;
@@ -42,7 +64,7 @@ module.exports = class Client extends SendStuff
 	//get
 	getInstanceVariable(_instanceID,_var)
 	{
-		if findInstance(data.instanceID) === null
+        if (findInstance(_instanceID) === null)
 		{
 			return undefined;
 		}
@@ -55,7 +77,7 @@ module.exports = class Client extends SendStuff
 	//set
 	setInstanceVariable(_instanceID,_var,_value)
 	{
-		if c.findInstance(data.instanceID) === null
+		if (findInstance(data.instanceID) === null)
 		{
 			instances.push(new instance(_instanceID)) 				//Create new instance
 			eval(findInstance(_instanceID)+"."+_var+" = "+_value);  //Set var
@@ -64,16 +86,9 @@ module.exports = class Client extends SendStuff
 		{
 			eval(findInstance(_instanceID)+"."+_var+" = "+_value);	//Set var
 		}
-	}
-	
-	//Add an instance
-	createInstance(_instanceID)
-	{
-		instances.push(new instance(_instanceID))
-	}
-		
-	// preset functions
-	//{
+	}	
+// #region preset functions
+//{
 	
     // some events
     onJoinLobby(lobby) {
@@ -156,4 +171,13 @@ module.exports = class Client extends SendStuff
     setUsername(name) {
         this.profile.username = name;
     }
+	
+//}
+// #endregion
 }
+
+//function instance(_instanceID,_clientObj)
+//{
+//    this.instanceID = _instanceID;  //Set instanceID
+//    _clientObj.instances.push(this);
+//}

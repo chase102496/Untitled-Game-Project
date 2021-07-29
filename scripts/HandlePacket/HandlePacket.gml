@@ -9,15 +9,26 @@ function handlePacket(pack) {
 	switch(_cmd)
 	{
 		case "netGetClientInfoAll":
-			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.findInstance(id));
-			global.clientDataSelf.data.clientID = json_parse(data.dataSelf); //Retrieve our client ID
-			global.clientDataOther.clients = json_parse(data.dataOther); //Update our clients and their variables
+			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.findInstance(id));
 			
+			global.clientDataSelf.clientID = json_parse(data.clientID); //Retrieve our client ID
+			global.debugVar[| 4] = "self: " + string(global.clientDataSelf.clientID); //Display it
 			
+			var _clients = json_parse(data.clients);
 			
-			global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.clientID);
-			global.debugVar[| 5] = "others: " + string(global.clientDataOther.getAllClientVar("clientID")) + string(global.clientDataOther.getAllInstanceVarList(["x","y"]));
+			for (var i = 0;i < array_length(_clients);i ++) //splits up all other client data received, which is the clients array, into individual clients
+			{
+				global.clientDataOther.clients[i] = new netClientData();
+				global.clientDataOther.clients[i].clientID = _clients[i].clientID;
+				global.clientDataOther.clients[i].instances = _clients[i].instances;
+			}
+			
 			global.debugVar[| 6] = "raw: "+ string(global.clientDataOther.clients);
+			global.debugVar[| 7] = "raw clientID: "+ string(global.clientDataOther.clients[0].clientID);
+			global.debugVar[| 8] = "raw instance[0]: "+ string(global.clientDataOther.clients[0].findInstance(id));
+			
+			//global.clientDataOther.data = json_parse(data.dataOther); //Update our clients and their variables
+			//global.debugVar[| 5] = "others: " + string(global.clientDataOther.getAllClientVar("clientID")) + string(global.clientDataOther.getAllInstanceVarList(["x","y"]));
 			break;
 			
 		case "netSetClientVariable":

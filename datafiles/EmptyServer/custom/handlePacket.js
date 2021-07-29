@@ -33,27 +33,27 @@ module.exports = async function handlePacket(c, data) {
             //console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: " + "TODO");
             break;
 
+        //Stores data about the client in an object called "data"
+        case "netSyncClientInfoSelf":
+            c.data = JSON.parse(data.dataSelf);
+            //console.log(global.clients.length); check for desync
+            break;
+
         //Gets the info about all clients connected, including itself
         //Server sends all client structs in an array to the client
         case "netGetClientInfoAll":
             //Sending
-            var _clientInfoList = c.getOtherClientsInfo(global.clients, c);
-            var _selfInfoList = c.clientID;
             c.write({
                 cmd: "netGetClientInfoAll",
-                dataSelf: JSON.stringify(_selfInfoList),
-                dataOther: JSON.stringify(_clientInfoList)
+                clientID: JSON.stringify(c.clientID),
+                clients: JSON.stringify(c.getOtherClientsInfo(global.clients, c))
             })
             //Logging
             //console.log("Clients info list sent to " + c.clientID + ": \n" + JSON.stringify(_clientInfoList));
             //console.log("Self info list sent to " + c.clientID + ": \n" + JSON.stringify([c.instances, c.clientID]));
             break;
 
-        case "netSyncClientInfoSelf":
-            var _dataSelf = JSON.parse(data.dataSelf);
-            c.instances = _dataSelf.instances;
-            console.log(global.clients.length);
-            break;
+        
 
         // get a client's variable, defaults to the client itself (player)
         case "netSendUpdateVariable":

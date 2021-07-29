@@ -13,6 +13,8 @@ module.exports = class Client extends SendStuff {
         this.lobby = null; // no lobby
         this.account = null; // account info
         this.profile = null; // gameplay info
+
+        this.data = { instances: [], clientID: -1 };
     }
 
     onConnect()

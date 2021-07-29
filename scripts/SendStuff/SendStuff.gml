@@ -34,8 +34,8 @@ function sendRegister(username, password) {
 function netSendConnect(_instanceID = id)
 {
 	global.connected = true;
-	global.clientDataSelf = new netClientDataSelf();
-	global.clientDataOther = new netClientDataOther();
+	global.clientDataSelf = new netClientData();
+	global.clientDataOther = new netClients();
 	
 	//send({cmd: "netSendConnect"});
 	show_debug_message("Connected");

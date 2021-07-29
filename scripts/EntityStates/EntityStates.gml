@@ -119,16 +119,17 @@ function scrEntityStateInit()
 			if global.connected
 			{
 				//Set data to be sent in netSyncClientInfoSelf
-				global.clientDataSelf.data.findInstance(id, true).sprite_index = sprite_index;
-				global.clientDataSelf.data.findInstance(id).image_index = image_index;
-				global.clientDataSelf.data.findInstance(id).image_angle = image_angle;
-				global.clientDataSelf.data.findInstance(id).image_alpha = image_alpha;
-				global.clientDataSelf.data.findInstance(id).x = x;
-				global.clientDataSelf.data.findInstance(id).y = y;
-				global.clientDataSelf.data.findInstance(id).stats = stats;
+				global.clientDataSelf.findInstance(id, true);
+				global.clientDataSelf.findInstance(id).sprite_index = sprite_index;
+				global.clientDataSelf.findInstance(id).image_index = image_index;
+				global.clientDataSelf.findInstance(id).image_angle = image_angle;
+				global.clientDataSelf.findInstance(id).image_alpha = image_alpha;
+				global.clientDataSelf.findInstance(id).x = x;
+				global.clientDataSelf.findInstance(id).y = y;
+				global.clientDataSelf.findInstance(id).stats = stats;
 			
 				//Push our data to the server object, and pull every other client's data
-				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf.data)});
+				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf)});
 				send({cmd: "netGetClientInfoAll"});
 			}
 		},

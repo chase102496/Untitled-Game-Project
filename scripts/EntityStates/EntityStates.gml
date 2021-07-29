@@ -126,11 +126,14 @@ function scrEntityStateInit()
 				global.clientDataSelf.findInstance(id).image_alpha = image_alpha;
 				global.clientDataSelf.findInstance(id).x = x;
 				global.clientDataSelf.findInstance(id).y = y;
+				global.clientDataSelf.findInstance(id).layer = layer;
+				global.clientDataSelf.findInstance(id).object_index = object_index;
 				global.clientDataSelf.findInstance(id).stats = stats;
 			
 				//Push our data to the server object, and pull every other client's data
 				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf)});
 				send({cmd: "netGetClientInfoAll"});
+				
 			}
 		},
 		leave: function()

@@ -25,8 +25,7 @@ module.exports = class Client extends SendStuff {
 
     onDisconnect()
     {
-        global.clients.splice(global.clients.indexOf(this),1) //Remove from clients list
-        delete this;
+        global.clients.splice(global.clients.indexOf(this)) //Remove from clients list
         //this.save();
         //if (this.lobby !== null)
         //    this.lobby.kickPlayer(this, 'disconnected', true);

@@ -4,11 +4,10 @@
 		<Workspaces>
 			<Workspace active="False" chain="False" title="Game" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="1" isActive="False">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="0" isActive="False">
 						<Script column="0" file="${project_dir}\objects\objGame\Create_0.gml" resource="objGame" subResource="0_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Debug\Debug.gml" resource="Debug" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\States\States.gml" resource="States" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\scripts\Networking\Networking.gml" resource="Networking" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Inputs\Inputs.gml" resource="Inputs" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\GUI\GUI.gml" resource="GUI" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Inventory\Inventory.gml" resource="Inventory" overridden_title="False" view_readonly="False" />
@@ -24,10 +23,11 @@
 			</Workspace>
 			<Workspace active="True" chain="False" title="Networking" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="3" isActive="True">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="2" isActive="False">
 						<Script column="0" file="${project_dir}\notes\ProjectStructure\ProjectStructure.txt" resource="ProjectStructure" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\__NetworkingConfig\__NetworkingConfig.gml" resource="__NetworkingConfig" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\SendStuff\SendStuff.gml" resource="SendStuff" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\scripts\Networking\Networking.gml" resource="Networking" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\HandlePacket\HandlePacket.gml" resource="HandlePacket" overridden_title="False" view_readonly="False" />
 					</DocumentWindow>
 				</Module>
@@ -53,7 +53,7 @@
 			</Workspace>
 			<Workspace active="False" chain="False" title="Equip" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="3" isActive="False">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="2" isActive="False">
 						<Script column="0" file="${project_dir}\objects\objEquip\Create_0.gml" resource="objEquip" subResource="0_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\objects\objEquip\Step_0.gml" resource="objEquip" subResource="3_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\EquipStates\EquipStates.gml" resource="EquipStates" overridden_title="False" view_readonly="False" />
@@ -106,7 +106,7 @@
 			</Workspace>
 			<Workspace active="False" chain="True" title="Workspace 1" localise_title="Workspace_TabTitle" localise_arguments="[&#xD;&#xA;    &quot;1&quot;&#xD;&#xA;]" workspace_offset="[0, 25]" workspace_scale="1">
 				<Module Command="open_object_editor">
-					<ObjectEditor objectName="objEntity" eventsOpen="true" parentOpen="true" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="code">
+					<ObjectEditor objectName="objEntity" eventsOpen="true" parentOpen="true" physicsOpen="false" physicsEditorOpen="false" propertiesOpen="false" activeWindow="editor">
 						<WorkspaceChain left="560dpi_px" top="125dpi_px" />
 						<DocumentWindow columns="1" fullscreen="False" activeTab="0" isActive="False" w="0dpi_px" h="600dpi_px" linkIndex="-1">
 							<Script column="0" file="${project_dir}\objects\objEntity\Other_68.gml" resource="objEntity" subResource="7_68" overridden_title="False" view_readonly="False" />
@@ -179,19 +179,20 @@
 	</Modules>
 	<FoldRegions>
 		<FoldState docFile="scripts/Physics/Physics.gml" foldedRegions="0,1" />
-		<FoldState docFile="scripts/EquipStates/EquipStates.gml" foldedRegions="0,1,2,5,9,10,12,13,30,32,33,36,38,44" />
-		<FoldState docFile="scripts/EntityStates/EntityStates.gml" foldedRegions="6,20,26,27,28,32,39,40,44" />
+		<FoldState docFile="scripts/EquipStates/EquipStates.gml" foldedRegions="0,1,2,5,9,10,12,13,30,32,33,35,37,43" />
+		<FoldState docFile="scripts/EntityStates/EntityStates.gml" foldedRegions="6,14,19,26,27,28,32,34,39,40,44" />
 		<FoldState docFile="scripts/Tools/Tools.gml" foldedRegions="1,2,4" />
-		<FoldState docFile="scripts/ProjectileGeneral/ProjectileGeneral.gml" foldedRegions="4,5,6,9,10,13,16" />
+		<FoldState docFile="scripts/ProjectileGeneral/ProjectileGeneral.gml" foldedRegions="4,5,6,9,10,12,15" />
 		<FoldState docFile="scripts/EquipAnimations/EquipAnimations.gml" foldedRegions="0,2,3,6" />
 		<FoldState docFile="scripts/Stats/Stats.gml" foldedRegions="2,4" />
 		<FoldState docFile="scripts/Buffs/Buffs.gml" foldedRegions="3,8" />
 		<FoldState docFile="scripts/GUI/GUI.gml" foldedRegions="2,3" />
-		<FoldState docFile="scripts/Inputs/Inputs.gml" foldedRegions="1,2,16" />
+		<FoldState docFile="scripts/Inputs/Inputs.gml" foldedRegions="1,2" />
 		<FoldState docFile="scripts/States/States.gml" foldedRegions="1" />
 		<FoldState docFile="scripts/SnowState/SnowState.gml" foldedRegions="70,71,72,76,81,83,85,87,88,89,104,109" />
-		<FoldState docFile="scripts/SendStuff/SendStuff.gml" foldedRegions="0,1,2,3,4,5,6,7,8,9,10" />
+		<FoldState docFile="scripts/SendStuff/SendStuff.gml" foldedRegions="0,1,2,3,4,5,6,7" />
 		<FoldState docFile="scripts/Debug/Debug.gml" foldedRegions="1" />
 		<FoldState docFile="scripts/HandlePacket/HandlePacket.gml" foldedRegions="2,3" />
+		<FoldState docFile="scripts/Networking/Networking.gml" foldedRegions="1,4" />
 	</FoldRegions>
 </Project>

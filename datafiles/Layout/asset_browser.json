@@ -19,6 +19,26 @@
   ],
   "RecentItems": [
     {
+      "name": "objNetEntity",
+      "path": "objects/objNetEntity/objNetEntity.yy"
+    },
+    {
+      "name": "ProjectStructure",
+      "path": "notes/ProjectStructure/ProjectStructure.yy"
+    },
+    {
+      "name": "buffer_visualize",
+      "path": "scripts/buffer_visualize/buffer_visualize.yy"
+    },
+    {
+      "name": "HandlePacket",
+      "path": "scripts/HandlePacket/HandlePacket.yy"
+    },
+    {
+      "name": "NetworkInitializers",
+      "path": "scripts/NetworkInitializers/NetworkInitializers.yy"
+    },
+    {
       "name": "objEntity",
       "path": "objects/objEntity/objEntity.yy"
     },
@@ -37,26 +57,6 @@
     {
       "name": "oClient",
       "path": "objects/oClient/oClient.yy"
-    },
-    {
-      "name": "rmTestNetwork",
-      "path": "rooms/rmTestNetwork/rmTestNetwork.yy"
-    },
-    {
-      "name": "bgrTest",
-      "path": "sprites/bgrTest/bgrTest.yy"
-    },
-    {
-      "name": "rmFree",
-      "path": "rooms/rmFree/rmFree.yy"
-    },
-    {
-      "name": "rmTest",
-      "path": "rooms/rmTest/rmTest.yy"
-    },
-    {
-      "name": "objCamera",
-      "path": "objects/objCamera/objCamera.yy"
     }
   ],
   "Filters": [],
@@ -76,6 +76,22 @@
     "#FFFF0000",
     "#FFFF00FF",
     "#FF4040FF",
-    "#FFFF80FF"
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80",
+    "#FF80FF00",
+    "#FF80C0FF",
+    "#FF0000FF",
+    "#FF00FFFF",
+    "#FF00FF00",
+    "#FFFFFF00",
+    "#FFFF0000",
+    "#FFFF00FF",
+    "#FF4040FF",
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80"
   ]
 }

@@ -23,10 +23,6 @@ module.exports = class SendStuff {
         clients.forEach(function (c) {
             if (c === client && notme) { }
             else {
-                if (c.data.instances == undefined)
-                {
-                    c.data.instances = [];
-                }
                 clientInfoList.push({ "clientID": c.clientID, "instances": c.data.instances }); //pushes the object in string form to a list
             }
         });

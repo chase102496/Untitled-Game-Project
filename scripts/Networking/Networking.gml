@@ -3,16 +3,43 @@ function netClientDataOther() constructor
 {	
 	clients = []; //This will be the array of client objects
 	
-	//Returns a list showing the specified var for each instance, for each client
-	/// @func getInstanceVarAll(_dataObjectStr)
-	getInstanceVarAll = function(_dataObjectStr)
+	forEachInstance = function(_script)
+	{
+		//for (var i = 0;i < array_length(getAllClientVar("instances");i ++)
+		{
+			
+		}
+	}
+	
+	//Returns a list showing all the specified var (in the specified var) for each instance, for each client
+	/// @func getAllInstanceVarList(_dataObjectStrList)
+	getAllInstanceVarList = function(_dataObjectStrList)
 	{
 		var _dataList = [];
 		for (var i = 0;i < array_length(clients);i ++)
 		{
 			for (var j = 0;j < array_length(clients[i].instances);j ++)
 			{
-				var _index = variable_struct_get(clients[i].instances[j],_dataObjectStr);
+				for (var k = 0;k < array_length(_dataObjectStrList);k ++)
+				{
+					var _index = variable_struct_get(clients[i].instances[j],_dataObjectStrList[k]);
+					array_push(_dataList,_index);
+				}
+			}
+		}
+		return _dataList;
+	}
+	
+	//Returns a list showing the specified var for each instance, for each client
+	/// @func getAllInstanceVar(_dataObjectStr)
+	getAllInstanceVar = function(_dataObjectStr)
+	{
+		var _dataList = [];
+		for (var i = 0;i < array_length(clients);i ++)
+		{
+			for (var j = 0;j < array_length(clients[i].instances);k ++)
+			{
+				var _index = variable_struct_get(clients[i].instances[k],_dataObjectStr);
 				array_push(_dataList,_index);
 			}
 		}
@@ -20,8 +47,8 @@ function netClientDataOther() constructor
 	}
 	
 	//Returns a list showing the specified var for each client
-	/// @func getClientVarAll(_dataObjectStr)
-	getClientVarAll = function(_dataObjectStr)
+	/// @func getAllClientVar(_dataObjectStr)
+	getAllClientVar = function(_dataObjectStr)
 	{
 		var _dataList = [];
 		for (var i = 0;i < array_length(clients);i ++)
@@ -30,11 +57,6 @@ function netClientDataOther() constructor
 			array_push(_dataList,_index);
 		}
 		return _dataList;
-	}
-	
-	findClient = function(_clientID)
-	{
-		
 	}
 }
 

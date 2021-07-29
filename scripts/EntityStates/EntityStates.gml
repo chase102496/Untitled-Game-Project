@@ -7,40 +7,33 @@ function scrEntityStateInit()
 		{
 			global.connected = false;
 			clientID = -1;
+			halfpack = -1; // if a packet is split in half, we use this
+			
+			onConnect = function()
+			{
+				netSendConnect();
+			};
+			
+			onDisconnect = function() //DOESN'T WORK
+			{
+				netSendDisconnect();
+			};
 			
 			// --- This is when the connection is created
-			socket = network_create_socket(network_socket_tcp)
+			socket = network_create_socket(network_socket_tcp);
 			
 			// Async = Don't crash the game if the server is down
 			network_connect_raw_async(socket, IP, real(PORT));
-			
-			netOnConnect = function()
-			{
-				netSendConnect();
-			}
-			
-			netOnDisonnect = function()
-			{
-				netSendDisonnect();
-			}
-			
-			// connect/disconnect events defined in __NetworkingConfig.gml
-			//onConnect = global.onConnect
-			//onDisconnect = global.onDisconnect
-
-			// if a packet is split in half, we use this
-			// -1 if no half-pack, a buffer otherwise
-			halfpack = -1
 		},
 		async: function()
 		{
 			// --- This is when we receive any packet
-			
 			var type = async_load[? "type"]
 			var buff = async_load[? "buffer"]
 
 			switch(type) {
 				case network_type_data:
+				{
 					// if this is the second half of a packet
 					if (buffer_exists(halfpack)) {
 						var new_buff = buffer_create(1, buffer_grow, 1);
@@ -60,7 +53,7 @@ function scrEntityStateInit()
 					var size = buffer_get_size(buff)
 					var pack_count = 0
 		
-					trace("global pack size: %", size)
+					//trace("global pack size: %", size)
 		
 					for(var i = 0; i < size;) { // Break up the binary blob into single packets
 						// Read the packet size
@@ -80,11 +73,13 @@ function scrEntityStateInit()
 			
 						i += packSize;
 			
-						try {
+						try 
+						{
 							// Handle the packet
 							handlePacket(pack);
 						}
-						catch(e) {
+						catch(e) 
+						{
 							trace("an error occured while parsing the packet: " + e.message)
 						}
 			
@@ -94,29 +89,52 @@ function scrEntityStateInit()
 						buffer_delete(pack);
 					}
 		
-					trace("packet_count: %", pack_count);
+					//trace("packet_count: %", pack_count);
 		
 					buffer_delete(buff);
 		
 					//trace("Packs received: %", pack_count);
-					break
+					break;
+				}
+					
 				case network_type_non_blocking_connect:
+				{
+				}
+					
 				case network_type_connect:
-					trace("Connected to the server!");
-					netOnConnect();
-					break
+				{
+					onConnect();
+					break;
+				}
+				
 				case network_type_disconnect:
-					trace("Disconnected from the server!");
-					netOnDisonnect();
-					break
+				{
+					//onDisconnect(); NOT WORKING
+					break;
+				}
 			}
 		},
 		step: function()
 		{
-			if global.connected netUpdate();
+			if global.connected
+			{
+				//Set data to be sent in netSyncClientInfoSelf
+				global.clientDataSelf.data.findInstance(id, true).sprite_index = sprite_index;
+				global.clientDataSelf.data.findInstance(id).image_index = image_index;
+				global.clientDataSelf.data.findInstance(id).image_angle = image_angle;
+				global.clientDataSelf.data.findInstance(id).image_alpha = image_alpha;
+				global.clientDataSelf.data.findInstance(id).x = x;
+				global.clientDataSelf.data.findInstance(id).y = y;
+				global.clientDataSelf.data.findInstance(id).stats = stats;
+			
+				//Push our data to the server object, and pull every other client's data
+				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf.data)});
+				send({cmd: "netGetClientInfoAll"});
+			}
 		},
 		leave: function()
 		{
+			onDisconnect();
 			network_destroy(socket);
 		}
 	});

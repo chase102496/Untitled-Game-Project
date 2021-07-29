@@ -18,24 +18,24 @@ console.log('loaded initializers!');
 
 
 // The Actual Server
-const server = net.createServer(function(socket) {
-    console.log("Socket connected!");
-    
+const server = net.createServer(function (socket)
+{
     var c = new Client(socket);
+    c.onConnect();
 
     // Bind functions on events
+    socket.on('error', function (err) {
+        if (err.message.includes('ECONNRESET')) {
 
-    socket.on('error', function(err) {
-        if (err.message.includes('ECONNRESET')) { // this is a disconnect
-            console.log('Socket violently disconnected.');
-            // handle disconnect here
         }
-
-        console.log(`Error! ${err}`);
+        console.log(`${err}`);
     });
     
     // When data arrived
-    socket.on('data', function(data) {
+    socket.on('data', function (data)
+    {
+        //console.log("Data received");
+
         // create artificial_delay
         if (delayReceive.enabled) {
             setTimeout(function() {
@@ -48,10 +48,9 @@ const server = net.createServer(function(socket) {
     });
 
     // When a socket/connection closed
-    socket.on('close', function() {
+    socket.on('close', function () {
         c.onDisconnect();
-        console.log('Socket closed.');
-    })
+    });
 });
 
 server.listen(port);

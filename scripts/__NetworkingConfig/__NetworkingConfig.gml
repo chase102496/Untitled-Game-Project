@@ -32,12 +32,12 @@ network_set_config(network_config_connect_timeout, 4000)
 
 //This can be used to initiate the server interaction
 //(send the first packet)
-onConnect = function() 
-{
+//onConnect = function() 
+//{
 	
-}
+//}
 
-onDisconnect = function()
-{
+//onDisconnect = function()
+//{
 	
-}
+//}

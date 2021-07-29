@@ -7,15 +7,7 @@ module.exports = class Client extends SendStuff {
 
     constructor(socket) {
         super();
-
-        this.instances = [];
-
         this.socket = socket;
-
-        this.clientID = global.clientCountID; // set clientID to global counter and increment
-        global.clientCountID++;
-
-        global.clients.push(this); // add the client to clients list
 
         // these are the objects that contain all the meaningful data
         this.lobby = null; // no lobby
@@ -23,30 +15,21 @@ module.exports = class Client extends SendStuff {
         this.profile = null; // gameplay info
     }
 
+    onConnect()
+    {
+        this.clientID = global.clientCountID; // set clientID to global counter and increment
+        global.clientCountID++;
+        global.clients.push(this); // add the client to clients list
+        console.log("Client connected! | " + "clientID: " + this.clientID);
+    }
+
     onDisconnect()
     {
-        global.clients.splice(global.clients.indexOf(this)) //Remove from clients list
+        console.log("Client disconnected! | " + "clientID: " + this.clientID);
+        global.clients.splice(global.clients.indexOf(this),1) //Remove from clients list
         //this.save();
         //if (this.lobby !== null)
         //    this.lobby.kickPlayer(this, 'disconnected', true);
-    }
-
-    instance = class Instance //blueprint for creating an instance
-    {
-        constructor(_instanceID, _clientObj)
-        {
-            this.instanceID = _instanceID;
-        }
-
-        setVariable(_varName, _varValue)
-        {
-            eval("this." + _varName + " = " + _varValue);
-        }
-
-        getVariable(_var)
-        {
-            return eval("this." + _var);
-        }
     }
 
     //Creates instance object within client, pushes to instances list, and returns it so we don't have to search immediately after creating

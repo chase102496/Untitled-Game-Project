@@ -3,32 +3,21 @@ function handlePacket(pack) {
 	data = snap_from_messagepack(pack);	// Deserialize/unpack msgpack into a struct
 	var _cmd = data.cmd;
 
-	trace("Received cmd: %", _cmd)
+	//trace("Received cmd: %", _cmd)
 	//trace(buffer_base64_encode(pack, 0, buffer_get_size(pack)))
 	
 	switch(_cmd)
 	{
-		//Basics
-		
-		//Just need the player to be created, position logged, and animations logged
-		//For this, we need a netobjPlayer created
-		//The netobjPlayer will simply exist with animations and position mirroring its clientID.instanceID
-		
-		//Player net init script gets sent to server "netInitPlayer"
-		//Server broadcasts net init script to other players to create that player "netInitPlayer" netobjPlayer
-		//Player X and Y is sent to server "netPositionPlayer"
-		//Server broadcasts X and Y to any client besides the sender "netPositionPlayer"
-		
-		//Sent back from server when we send netSendInit, local
-		
 		case "netGetClientInfoAll":
+			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.findInstance(id));
 			global.clientDataSelf.data.clientID = json_parse(data.dataSelf); //Retrieve our client ID
 			global.clientDataOther.clients = json_parse(data.dataOther); //Update our clients and their variables
 			
-			global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.clientID);
-			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.findInstance(id));
-			global.debugVar[| 5] = "others: " + string(global.clientDataOther.getClientVarAll("clientID"));
 			
+			
+			global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.clientID);
+			global.debugVar[| 5] = "others: " + string(global.clientDataOther.getAllClientVar("clientID")) + string(global.clientDataOther.getAllInstanceVarList(["x","y"]));
+			global.debugVar[| 6] = "raw: "+ string(global.clientDataOther.clients);
 			break;
 			
 		case "netSetClientVariable":

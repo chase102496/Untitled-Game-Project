@@ -27,14 +27,10 @@ module.exports = async function handlePacket(c, data) {
 
     switch (cmd) {
 
-        //Creates a new instance for the client instance, and sends them the clientID they've been assigned
-        //
         case "netSendConnect":
-            //Keep the instanceID of the client that sent the message
-            //c.createInstance(data.instanceID);
-
+            //console.log("Player connected\n" + "clientID: " + c.clientID);
             //Logging
-            console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: " + "TODO");
+            //console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: " + "TODO");
             break;
 
         //Gets the info about all clients connected, including itself
@@ -56,7 +52,7 @@ module.exports = async function handlePacket(c, data) {
         case "netSyncClientInfoSelf":
             var _dataSelf = JSON.parse(data.dataSelf);
             c.instances = _dataSelf.instances;
-            //console.log(c);
+            console.log(global.clients.length);
             break;
 
         // get a client's variable, defaults to the client itself (player)

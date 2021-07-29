@@ -22,11 +22,13 @@ function handlePacket(pack) {
 		//Sent back from server when we send netSendInit, local
 		
 		case "netGetClientInfoAll":
-			global.clientDataSelf.data = json_parse(data.dataSelf);
-			global.clientDataOther.data = json_parse(data.dataOther);
+			global.clientDataSelf.data.clientID = json_parse(data.dataSelf); //Retrieve our client ID
+			global.clientDataOther.clients = json_parse(data.dataOther); //Update our clients and their variables
 			
-			global.debugVar[| 4] = "self: "+string(global.clientDataSelf.data);
-			global.debugVar[| 5] = "other: "+string(global.clientDataOther.getDataList("clientID"));
+			global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.clientID);
+			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.data.findInstance(id));
+			global.debugVar[| 5] = "others: " + string(global.clientDataOther.getClientVarAll("clientID"));
+			
 			break;
 			
 		case "netSetClientVariable":

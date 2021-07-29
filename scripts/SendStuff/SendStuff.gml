@@ -57,19 +57,22 @@ function sendRegister(username, password) {
 //Runs on connect
 function netSendConnect(_instanceID = id)
 {
+	global.connected = true;
+	
 	global.clientDataSelf = new netClientDataSelf();
-		global.clientDataSelf.data.instances[0] = self; //adding our instance object to the instances list
-		
 	global.clientDataOther = new netClientDataOther();
+	
 	send({cmd: "netSendConnect", instanceID: _instanceID});
 }
 
 //Runs on disconnect
 function netSendDisonnect(_instanceID = id)
 {
-	//global.clients = {}; //Initialize our netStruct to add clients, instances, and variables to
-	// global.clients.
-	
+	global.connected = false;
+
+	game_end();
+
+	show_debug_message("Disconnected");
 }
 
 //Runs while connected
@@ -79,7 +82,16 @@ function netUpdate(_instanceID = id)
 
 	//Priority: instant
 	{
+		global.clientDataSelf.data.findInstance(id, true).sprite_index = _instanceID.sprite_index;
+		global.clientDataSelf.data.findInstance(id, true).image_index = _instanceID.image_index;
+		global.clientDataSelf.data.findInstance(id, true).image_angle = _instanceID.image_angle;
+		global.clientDataSelf.data.findInstance(id, true).image_alpha = _instanceID.image_alpha;
+		global.clientDataSelf.data.findInstance(id, true).x = _instanceID.x;
+		global.clientDataSelf.data.findInstance(id, true).y = _instanceID.y;
+		global.clientDataSelf.data.findInstance(id, true).stats = _instanceID.stats;
 		
+		send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf.data)}); //Sends our data to the server so others can get it
+		send({cmd: "netGetClientInfoAll"}); //Requests all other client info, and grabs our clientID from the server
 	}
 	
 	//Priority high - every second
@@ -87,13 +99,6 @@ function netUpdate(_instanceID = id)
 	{
 		//Sends a request to change an instance variable, within a specific client, to the server
 		//netSetClientInfoOther
-		
-		//Syncs our info client info to the server
-		var _clientData = json_stringify(global.clientDataSelf.data)
-		send({cmd: "netSyncClientInfoSelf", dataSelf: _clientData});
-		
-		//Gets both our client info and others, separates into two global obj
-		send({cmd: "netGetClientInfoAll", instanceID: _instanceID});
 	}
 	
 	//Priority low - 60s

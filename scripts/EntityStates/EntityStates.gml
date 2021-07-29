@@ -5,7 +5,9 @@ function scrEntityStateInit()
 	netState.add("Online",{
 		enter: function()
 		{
-			clientID = -1
+			global.connected = false;
+			clientID = -1;
+			
 			// --- This is when the connection is created
 			socket = network_create_socket(network_socket_tcp)
 			
@@ -111,7 +113,7 @@ function scrEntityStateInit()
 		},
 		step: function()
 		{
-			netUpdate();
+			if global.connected netUpdate();
 		},
 		leave: function()
 		{

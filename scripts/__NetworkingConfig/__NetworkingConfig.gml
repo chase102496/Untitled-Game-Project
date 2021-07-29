@@ -30,11 +30,14 @@ if (!CONFIGS_SET) {
 // Allow up to 4000 ping (YYG recommends ~1000 for LAN-only games)
 network_set_config(network_config_connect_timeout, 4000)
 
-// This can be used to initiate the server interaction
-// (send the first packet)
-onConnect = function() {
+//This can be used to initiate the server interaction
+//(send the first packet)
+onConnect = function() 
+{
+	
 }
 
-onDisconnect = function() {
-	trace("Warning: Unhandled disconnect event!")
+onDisconnect = function()
+{
+	
 }

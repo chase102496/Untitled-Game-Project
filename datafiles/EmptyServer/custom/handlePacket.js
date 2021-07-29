@@ -31,40 +31,33 @@ module.exports = async function handlePacket(c, data) {
         //
         case "netSendConnect":
             //Keep the instanceID of the client that sent the message
-            c.createInstance(data.instanceID);
+            //c.createInstance(data.instanceID);
 
             //Logging
-            console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: " + _newInstance.instanceID);
+            console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: " + "TODO");
             break;
 
         //Gets the info about all clients connected, including itself
-        //Server sends all the client structs in an array
+        //Server sends all client structs in an array to the client
         case "netGetClientInfoAll":
             //Sending
             var _clientInfoList = c.getOtherClientsInfo(global.clients, c);
-            var _selfInfoList = { "clientID": c.clientID, "instances": c.instances };
+            var _selfInfoList = c.clientID;
             c.write({
                 cmd: "netGetClientInfoAll",
                 dataSelf: JSON.stringify(_selfInfoList),
                 dataOther: JSON.stringify(_clientInfoList)
             })
-
             //Logging
             //console.log("Clients info list sent to " + c.clientID + ": \n" + JSON.stringify(_clientInfoList));
             //console.log("Self info list sent to " + c.clientID + ": \n" + JSON.stringify([c.instances, c.clientID]));
             break;
 
         case "netSyncClientInfoSelf":
-            //JSON.parse(data.dataSelf)
-            
+            var _dataSelf = JSON.parse(data.dataSelf);
+            c.instances = _dataSelf.instances;
+            //console.log(c);
             break;
-            //var _newInstance = c.findInstance(data.instanceID)
-            //eval("_newInstance." + data.varStr + " = " + data.varValue);
-            //Search for instance
-            //eval("c." + data.instanceID + data.name + " = " + data.value)
-            //eval(data.name + " = " + data.value); //evaluates the string received into a variable that is set to data.value
-            //c.eval(data.instanceID).eval(data.name);
-            //write({ cmd: "netSyncVariable", instanceID: data.instanceID, name: data.name, value: data.value });
 
         // get a client's variable, defaults to the client itself (player)
         case "netSendUpdateVariable":

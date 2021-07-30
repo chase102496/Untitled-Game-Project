@@ -19,6 +19,18 @@
   ],
   "RecentItems": [
     {
+      "name": "EntityStates",
+      "path": "scripts/EntityStates/EntityStates.yy"
+    },
+    {
+      "name": "objNetInstance",
+      "path": "objects/objNetInstance/objNetInstance.yy"
+    },
+    {
+      "name": "sprNetEntity",
+      "path": "sprites/sprNetEntity/sprNetEntity.yy"
+    },
+    {
       "name": "objNetEntity",
       "path": "objects/objNetEntity/objNetEntity.yy"
     },
@@ -45,18 +57,6 @@
     {
       "name": "Multiple_Windows",
       "path": "scripts/Multiple_Windows/Multiple_Windows.yy"
-    },
-    {
-      "name": "objGame",
-      "path": "objects/objGame/objGame.yy"
-    },
-    {
-      "name": "Networking",
-      "path": "scripts/Networking/Networking.yy"
-    },
-    {
-      "name": "oClient",
-      "path": "objects/oClient/oClient.yy"
     }
   ],
   "Filters": [],
@@ -76,6 +76,22 @@
     "#FFFF0000",
     "#FFFF00FF",
     "#FF4040FF",
-    "#FFFF80FF"
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80",
+    "#FF80FF00",
+    "#FF80C0FF",
+    "#FF0000FF",
+    "#FF00FFFF",
+    "#FF00FF00",
+    "#FFFFFF00",
+    "#FFFF0000",
+    "#FFFF00FF",
+    "#FF4040FF",
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80"
   ]
 }

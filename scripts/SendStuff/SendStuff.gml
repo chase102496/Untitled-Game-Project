@@ -31,27 +31,25 @@ function sendRegister(username, password) {
 #endregion
 
 //Runs on connect
-function netSendConnect(_instanceID = id)
+function netSendConnect()
 {
-	global.connected = true;
 	global.clientDataSelf = new netClientData();
 	global.clientDataOther = new netClients();
-	
-	//send({cmd: "netSendConnect"});
-	show_debug_message("Connected");
+	send({cmd: "netSendConnect"});
 }
 
 //Runs on disconnect
-function netSendDisconnect(_instanceID = id)
+function netSendDisconnect()
 {
 	global.connected = false;
-
-	//send({cmd: "netSendDisonnect"});
+	
+	with objNetEntity instance_destroy();
+	
 	show_debug_message("Disconnected");
 }
 
 //Runs while connected
-function netUpdate(_frequencyInSeconds,_packetObject,_instanceID = id)
+function netUpdate(_frequencyInSeconds,_packetObject)
 {	
 	static tick = 0;
 	

@@ -8,7 +8,7 @@ function scrDebugInit()
 	
 	window_set_fullscreen(false);
 	
-	mw_open_windows("Client",2);
+	mw_open_windows("Client",3);
 	//ExecuteShell("cd \"C:\Users\Chase\Documents\GameMakerStudio2\Untitled Game Project\datafiles\EmptyServer\" && start.bat",false,false);
 	//ExecuteShell("notepad.exe",false,false);
 }

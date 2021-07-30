@@ -8,45 +8,62 @@ function handlePacket(pack) {
 	
 	switch(_cmd)
 	{
+		case "netSendConnect":
+			//Grabs our client ID, and includes 999 spots ahead of it for unique instance IDs
+			global.clientDataSelf.clientID = data.clientID;
+			global.connected = true;
+			show_debug_message("Connected");
+			break;
+		
 		case "netGetClientInfoAll":
 		{
-			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.findInstance(id));
-			
-			global.clientDataSelf.clientID = json_parse(data.clientID); //Retrieve our client ID
+			global.clientDataSelf.clientID = data.clientID; //Retrieve our client ID
 			global.debugVar[| 4] = "self: " + string(global.clientDataSelf.clientID); //Display it
 			
 			var _clients = json_parse(data.clients);
 			
+			global.clientDataOther = new netClients();
+			
 			for (var i = 0;i < array_length(_clients);i ++) //splits up all other client data received, which is the clients array, into individual clients
 			{
-				//if _clients[i].instances != global.clientDataOther.getInstances() //New information, it changed
-				//{
-				//	for (var j = 0;j < array_length(_clients[i].instances); j ++) //For all instances
-				//	{
-				//		//If our previous list searches for the current iteration's instance ID and cannot find
-				//		if global.clientDataOther.clients[i].findInstance(_clients[i].instances[j].id) == -1
-				//		{
-				//			//Eventually the instance will be self-governing, no need to modify stuff other than for combat
-				//			//It will sync based on the variables we set up
-				//			instance_create_layer(
-				//			_clients[i].instances[j].x,
-				//			_clients[i].instances[j].y,
-				//			_clients[i].instances[j].layer,
-				//			objNetEntity
-				//			)
-				//		}
-				//	}
-				//}
-				
-				
+				global.clientDataOther = new netClients();
 				global.clientDataOther.clients[i] = new netClientData();
 				global.clientDataOther.clients[i].clientID = _clients[i].clientID;
 				global.clientDataOther.clients[i].instances = _clients[i].instances;
 			}
 			
-			global.debugVar[| 6] = "raw: "+ string(global.clientDataOther.clients);
-			global.debugVar[| 7] = "raw clientID: "+ string(global.clientDataOther.clients[0].clientID);
-			global.debugVar[| 8] = "raw instance[0]: "+ string(global.clientDataOther.clients[0].findInstance(id));
+			global.debugVar[| 6] = "clients: "+ string(global.clientDataOther.clients);
+			global.debugVar[| 7] = "instances: "+ string(global.clientDataOther.getInstances());
+			
+			////Creation detector
+			//for (var i = 0;i < array_length(global.clientDataOther.getInstances());i ++)
+			//{
+			//	var _inst = global.clientDataOther.getInstances()[i];
+			//	var _continue = false;
+				
+			//	with objNetEntity
+			//	{
+			//		if instanceID == global.clientDataOther.getInstances()[i].instanceID _continue = true
+			//	}
+				
+			//	if _continue continue;
+
+			//	//Only creates if it can't find it
+			//	var _newInst = instance_create_layer(_inst.x,_inst.y,_inst.layer,objNetEntity);
+			//}
+			
+			////Deletion detector
+			//with objNetEntity
+			//{
+			//	var _destroy = true;
+				
+			//	for (var i = 0;i < array_length(global.clientDataOther.getInstances());i ++)
+			//	{
+			//		if global.clientDataOther.getInstances()[i].instanceID == instanceID _destroy = false;
+			//	}
+				
+			//	//if _destroy instance_destroy();
+			//}
 			
 			break;
 		}

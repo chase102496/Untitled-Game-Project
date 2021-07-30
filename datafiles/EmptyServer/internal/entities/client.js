@@ -20,7 +20,7 @@ module.exports = class Client extends SendStuff {
     onConnect()
     {
         this.clientID = global.clientCountID; // set clientID to global counter and increment
-        global.clientCountID++;
+        global.clientCountID += 1000;
         global.clients.push(this); // add the client to clients list
         console.log("Client connected! | " + "clientID: " + this.clientID);
     }

@@ -28,6 +28,7 @@ module.exports = async function handlePacket(c, data) {
     switch (cmd) {
 
         case "netSendConnect":
+            c.write({ cmd: "netSendConnect", clientID: c.clientID });
             //console.log("Player connected\n" + "clientID: " + c.clientID);
             //Logging
             //console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: " + "TODO");
@@ -45,15 +46,13 @@ module.exports = async function handlePacket(c, data) {
             //Sending
             c.write({
                 cmd: "netGetClientInfoAll",
-                clientID: JSON.stringify(c.clientID),
+                clientID: c.clientID,
                 clients: JSON.stringify(c.getOtherClientsInfo(global.clients, c))
             })
             //Logging
-            //console.log("Clients info list sent to " + c.clientID + ": \n" + JSON.stringify(_clientInfoList));
+            console.log("Clients info list sent: " + global.clients);
             //console.log("Self info list sent to " + c.clientID + ": \n" + JSON.stringify([c.instances, c.clientID]));
             break;
-
-        
 
         // get a client's variable, defaults to the client itself (player)
         case "netSendUpdateVariable":

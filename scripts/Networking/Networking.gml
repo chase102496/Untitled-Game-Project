@@ -1,17 +1,31 @@
+//
+function netInstanceUpdateID()
+{
+	instanceID = global.clientDataSelf.clientID + instanceOffsetID;
+}
+//
+function netInstanceCreateID()
+{
+	static offSet = 0;
+	offSet += 1;
+	return offSet;
+}
+
 // Parent of netClientData, holds a bunch of em
 function netClients() constructor
 {	
 	clients = [];
-	
+
 	/// @func getInstances()
 	getInstances = function()
 	{
 		var _returnList = [];
 		for (var i = 0;i < array_length(clients);i ++)
 		{
-			for (var j = 0;j < array_length(clients[i].instances);j ++)
+			var _client = clients[i];
+			for (var j = 0;j < array_length(_client.instances);j ++)
 			{
-				array_push(_returnList,clients[i].instances[j]);
+				array_push(_returnList,_client.instances[j]);
 			}
 		}
 		return _returnList;
@@ -32,22 +46,23 @@ function netClientData() constructor
 {	
 	clientID = -1;
 	
+	//My instances
 	instances = [];
-		
+	
 	/// @func createInstance(_instanceID)
 	createInstance = function(_instanceID)
 	{
-		var _inst = {id: _instanceID};
+		var _inst = {instanceID: _instanceID};
 		array_push(instances,_inst);
 		return findInstance(_instanceID); //Send the reference back to us
 	}
-		
+
 	/// @func findInstance(_instanceID)
 	findInstance = function(_instanceID, _createIfNotFound = false)
 	{
 		for (var i = 0;i < array_length(instances); i ++)
 		{
-			if instances[i].id = _instanceID return instances[i];
+			if instances[i].instanceID == _instanceID return instances[i];
 		}
 			
 		//If it can't find the instance, create one

@@ -1,3 +1,5 @@
+//For getting our unique network instance ID
+instanceOffsetID = netInstanceCreateID();
 //NEW constructor instantiation
 snowStateInput = new SnowState("General + Combat");
 snowStateInput.history_enable();

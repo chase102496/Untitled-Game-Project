@@ -118,17 +118,22 @@ function scrEntityStateInit()
 		{
 			if global.connected
 			{
+				netInstanceUpdateID();
+				
+				global.debugVar[| 8] = "client count: "+ string(array_length(global.clientDataOther.clients));
+				
 				//Set data to be sent in netSyncClientInfoSelf
-				global.clientDataSelf.findInstance(id, true);
-				global.clientDataSelf.findInstance(id).sprite_index = sprite_index;
-				global.clientDataSelf.findInstance(id).image_index = image_index;
-				global.clientDataSelf.findInstance(id).image_angle = image_angle;
-				global.clientDataSelf.findInstance(id).image_alpha = image_alpha;
-				global.clientDataSelf.findInstance(id).x = x;
-				global.clientDataSelf.findInstance(id).y = y;
-				global.clientDataSelf.findInstance(id).layer = layer;
-				global.clientDataSelf.findInstance(id).object_index = object_index;
-				global.clientDataSelf.findInstance(id).stats = stats;
+				//Get an allocation of instance IDs
+				global.clientDataSelf.findInstance(instanceID, true);
+				global.clientDataSelf.findInstance(instanceID).sprite_index = sprite_index;
+				global.clientDataSelf.findInstance(instanceID).image_index = image_index;
+				global.clientDataSelf.findInstance(instanceID).image_angle = image_angle;
+				global.clientDataSelf.findInstance(instanceID).image_alpha = image_alpha;
+				global.clientDataSelf.findInstance(instanceID).x = x;
+				global.clientDataSelf.findInstance(instanceID).y = y;
+				global.clientDataSelf.findInstance(instanceID).layer = layer;
+				global.clientDataSelf.findInstance(instanceID).object_index = object_index;
+				global.clientDataSelf.findInstance(instanceID).stats = stats;
 			
 				//Push our data to the server object, and pull every other client's data
 				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf)});

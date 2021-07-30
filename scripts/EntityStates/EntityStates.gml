@@ -119,9 +119,7 @@ function scrEntityStateInit()
 			if global.connected
 			{
 				netInstanceUpdateID();
-				
-				global.debugVar[| 8] = "client count: "+ string(array_length(global.clientDataOther.clients));
-				
+
 				//Set data to be sent in netSyncClientInfoSelf
 				//Get an allocation of instance IDs
 				global.clientDataSelf.findInstance(instanceID, true);
@@ -138,7 +136,6 @@ function scrEntityStateInit()
 				//Push our data to the server object, and pull every other client's data
 				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf)});
 				send({cmd: "netGetClientInfoAll"});
-				
 			}
 		},
 		leave: function()

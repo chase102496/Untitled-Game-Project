@@ -17,39 +17,42 @@ function handlePacket(pack) {
 		
 		case "netGetClientInfoAll":
 		{
-			global.clientDataSelf.clientID = data.clientID; //Retrieve our client ID
-			global.debugVar[| 4] = "self: " + string(global.clientDataSelf.clientID); //Display it
-			
 			var _clients = json_parse(data.clients);
+			var _clientID = data.clientID;
 			
+			global.clientDataSelf.clientID = _clientID; //Retrieve our client ID
+			
+			//splits up all other client data received, which is the clients array, into individual clients
 			global.clientDataOther = new netClients();
-			
-			for (var i = 0;i < array_length(_clients);i ++) //splits up all other client data received, which is the clients array, into individual clients
+			for (var i = 0;i < array_length(_clients);i ++)
 			{
-				global.clientDataOther = new netClients();
 				global.clientDataOther.clients[i] = new netClientData();
 				global.clientDataOther.clients[i].clientID = _clients[i].clientID;
 				global.clientDataOther.clients[i].instances = _clients[i].instances;
 			}
 			
-			global.debugVar[| 6] = "clients: "+ string(global.clientDataOther.clients);
-			global.debugVar[| 7] = "instances: "+ string(global.clientDataOther.getInstances());
+			for (var i = 0;i < array_length(global.clientDataOther.clients);i ++)
+			{
+				show_debug_message(i);
+				show_debug_message(global.clientDataOther.clients[i].clientID);
+			}
 			
-			////Creation detector
+			//Debug
+			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.clientID); //Display it
+			//global.debugVar[| 5] = "clientIDCount: "+ string(array_length(global.clientDataOther.getClients()));
+			//global.debugVar[| 6] = "instanceIDCount: "+ string(array_length(global.clientDataOther.clients[0].instances));
+			
+			//global.debugVar[| 5] = "clients: "+ string(array_length(global.clientDataOther.clients));
+			//global.debugVar[| 5] = "clientsIDs: "+ string(global.clientDataOther.getClients("clientID"));
+			
+			//global.debugVar[| 7] = "instanceCount: "+ string(array_length(global.clientDataOther.getInstances()));
+			
+			//Creation detector
 			//for (var i = 0;i < array_length(global.clientDataOther.getInstances());i ++)
 			//{
-			//	var _inst = global.clientDataOther.getInstances()[i];
-			//	var _continue = false;
-				
-			//	with objNetEntity
-			//	{
-			//		if instanceID == global.clientDataOther.getInstances()[i].instanceID _continue = true
-			//	}
-				
-			//	if _continue continue;
-
-			//	//Only creates if it can't find it
-			//	var _newInst = instance_create_layer(_inst.x,_inst.y,_inst.layer,objNetEntity);
+			//	global.clientDataSimulated.findSimulatedInstance(
+			//		global.clientDataOther.getInstances()[i].instanceID,
+			//		global.clientDataOther.getInstances()[i]);
 			//}
 			
 			////Deletion detector

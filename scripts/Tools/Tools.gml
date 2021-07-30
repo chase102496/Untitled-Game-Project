@@ -1,5 +1,19 @@
 #region General tools
 
+/// @desc Runs a function for each on the list. To refer to the iteration, use argument0
+/// @func forEach(_list,_function)
+function forEach(_list,_function) //NEEDS REVISION
+{
+	for (var i = 0;i < array_length(_list);i ++)
+	{
+		__item = _list[i]
+		__num = i;
+		var _scr = method_get_index(_function);
+		script_execute(_scr);
+	}
+	delete __i;
+}
+
 //@scrRoundPrecise(value to be rounded, rounding frac)
 //e.g. to round to 0.01 scrRoundPrecise(10.354676, 0.01) = 10.35
 function scrRoundPrecise(_value,_decimal)

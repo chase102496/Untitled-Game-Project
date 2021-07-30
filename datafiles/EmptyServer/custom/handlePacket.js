@@ -49,8 +49,21 @@ module.exports = async function handlePacket(c, data) {
                 clientID: c.clientID,
                 clients: JSON.stringify(c.getOtherClientsInfo(global.clients, c))
             })
+
             //Logging
-            console.log("Clients info list sent: " + global.clients);
+            var _instances = [];
+            var _clients = [];
+            global.clients.forEach(function (_c) {
+
+                _clients.push(_c.clientID);
+
+                _c.data.instances.forEach(function (_i) {
+                    _instances.push(_i.instanceID);
+                })
+                
+            })
+            console.log(_clients,_instances);
+            //console.log("Clients info list sent: " + JSON.stringify(c.getOtherClientsInfo(global.clients, c)));
             //console.log("Self info list sent to " + c.clientID + ": \n" + JSON.stringify([c.instances, c.clientID]));
             break;
 

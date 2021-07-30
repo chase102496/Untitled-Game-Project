@@ -11,21 +11,65 @@ function netInstanceCreateID()
 	return offSet;
 }
 
+// Used for tracking current instances being manipulated by us that are from another client
+// e.g. to draw other players, other player's projectiles, equipment, etc
+function netSimulated() constructor
+{
+	//Simulated instances
+	instances = [];
+	
+	/// @func createSimulatedInstance(_instanceObject)
+	createSimulatedInstance = function(_instanceObject)
+	{
+		var _inst = instance_create_layer(_instanceObject.x,_instanceObject.y,_instanceObject.layer,objNetInstance)
+		_inst.instanceID = _instanceID;
+		array_push(instances,_inst);
+		return _inst;
+	}
+	
+	// Putting in an _instanceObject will create it if it isn't found from the template of _instanceObject
+	/// @func findSimulatedInstance(_instanceID, _instanceObject)
+	findSimulatedInstance = function(_instanceID, _instanceObject = noone)
+	{
+		for (var i = 0;i < array_length(instances); i ++)
+		{
+			if instances[i].instanceID == _instanceID return instances[i];
+		}
+			
+		//If it can't find the instance, create one
+		if _instanceObject != noone return createSimulatedInstance(_instanceObject); //Creates it and returns the reference
+		
+		return -1; //If nothing found
+	}
+}
+
 // Parent of netClientData, holds a bunch of em
 function netClients() constructor
 {	
 	clients = [];
 
-	/// @func getInstances()
-	getInstances = function()
+	/// @func getClients(_varStr)
+	getClients = function(_varStr = -1)
 	{
 		var _returnList = [];
 		for (var i = 0;i < array_length(clients);i ++)
 		{
-			var _client = clients[i];
-			for (var j = 0;j < array_length(_client.instances);j ++)
+			if _varStr == -1 array_push(_returnList,clients[i]);
+			else array_push(_returnList,variable_struct_get(clients[i],_varStr));
+		}
+		return _returnList;
+	}
+
+	/// @func getInstances(_varStr = -1)
+	getInstances = function(_varStr = -1)
+	{
+		var _returnList = [];
+		for (var i = 0;i < array_length(clients);i ++)
+		{
+			for (var j = 0;j < array_length(clients[i].instances);j ++)
 			{
-				array_push(_returnList,_client.instances[j]);
+				if _varStr == -1 array_push(_returnList,clients[i].instances[j]);
+				else array_push(_returnList,variable_struct_get(clients[i].instances[j],_varStr));
 			}
 		}
 		return _returnList;
@@ -65,8 +109,11 @@ function netClientData() constructor
 			if instances[i].instanceID == _instanceID return instances[i];
 		}
 			
-		//If it can't find the instance, create one
-		if _createIfNotFound return createInstance(_instanceID); //Creates it and returns the reference
+		//If it can't find the instance, create one and return the reference
+		if _createIfNotFound 
+		{
+			return  createInstance(_instanceID);
+		}
 		
 		return -1; //If nothing found
 	}

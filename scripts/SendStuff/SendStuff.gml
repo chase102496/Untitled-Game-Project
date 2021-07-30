@@ -34,7 +34,7 @@ function sendRegister(username, password) {
 function netSendConnect()
 {
 	global.clientDataSelf = new netClientData();
-	global.clientDataOther = new netClients();
+	global.clientDataSimulated = new netSimulated();
 	send({cmd: "netSendConnect"});
 }
 
@@ -43,7 +43,7 @@ function netSendDisconnect()
 {
 	global.connected = false;
 	
-	with objNetEntity instance_destroy();
+	instance_destroy(objNetInstance);
 	
 	show_debug_message("Disconnected");
 }

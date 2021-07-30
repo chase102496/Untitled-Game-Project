@@ -9,16 +9,19 @@ function handlePacket(pack) {
 	switch(_cmd)
 	{
 		case "netSendConnect":
+		{
 			//Grabs our client ID, and includes 999 spots ahead of it for unique instance IDs
 			global.clientDataSelf.clientID = data.clientID;
 			global.connected = true;
 			show_debug_message("Connected");
+			
 			break;
+		}
 		
 		case "netGetClientInfoAll":
 		{
-			var _clients = json_parse(data.clients);
 			var _clientID = data.clientID;
+			var _clients = json_parse(data.clients);
 			
 			global.clientDataSelf.clientID = _clientID; //Retrieve our client ID
 			
@@ -31,41 +34,12 @@ function handlePacket(pack) {
 				global.clientDataOther.clients[i].instances = _clients[i].instances;
 			}
 			
+			netSimulatedUpdate();
+			
 			//Debug
 			global.debugVar[| 4] = "self: " + string([global.clientDataSelf.clientID,global.clientDataSelf.getInstanceAll("instanceID")]); //Display it
 			global.debugVar[| 5] = "clientIDs: "+ string(global.clientDataOther.getClients("clientID"));
 			global.debugVar[| 6] = "instanceIDs: "+ string(global.clientDataOther.getClientInstances("instanceID"));
-			
-			//global.debugVar[| 5] = "clients: "+ string(array_length(global.clientDataOther.clients));
-			//global.debugVar[| 5] = "clientsIDs: "+ string(global.clientDataOther.getClients("clientID"));
-			
-			//global.debugVar[| 7] = "instanceCount: "+ string(array_length(global.clientDataOther.getClientInstances()));
-			
-			//Creation detector
-			for (var i = 0;i < array_length(global.clientDataOther.getClientInstances());i ++)
-			{
-				global.clientDataSimulated.findSimulatedInstance(
-				global.clientDataOther.getClientInstances()[i].instanceID,
-				global.clientDataOther.getClientInstances()[i]
-				);
-			}
-			
-			//Deletion detector
-			for (var i = 0;i < array_length(global.clientDataSimulated.instances);i ++)
-			{
-				var _destroy = true;
-				
-				for (var j = 0;j < array_length(global.clientDataOther.getClientInstances());j ++)
-				{
-					if global.clientDataOther.getClientInstances()[j].instanceID == global.clientDataSimulated.instances[i].instanceID _destroy = false;
-				}
-				
-				if _destroy
-				{
-					show_debug_message("Deleting...")
-					global.clientDataSimulated.deleteSimulatedInstance(global.clientDataSimulated.instances[i].instanceID);
-				}
-			}
 			
 			break;
 		}

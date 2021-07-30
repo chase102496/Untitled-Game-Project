@@ -1,9 +1,9 @@
-//
+// For local instances to be synced to our server, they need a separate, unique instance ID
+// Usually, on connect a player is allocated 999 instance IDs for use later
 function netInstanceUpdateID()
 {
 	instanceID = global.clientDataSelf.clientID + instanceOffsetID;
 }
-//
 function netInstanceCreateID()
 {
 	static offSet = 0;
@@ -85,6 +85,52 @@ function netSimulated() constructor
 		}
 		
 		return -1; //If nothing found
+	}
+}
+
+// Used to check if we need to create/delete any simulated instances. Makes sure we are synced up to global.clientDataOther instances
+function netSimulatedUpdate()
+{
+	if array_length(global.clientDataOther.getClientInstances()) != array_length(global.clientDataSimulated.instances)
+	{
+		show_debug_message("Updating simulated instances")
+		//Creation detector
+		for (var i = 0;i < array_length(global.clientDataOther.getClientInstances());i ++)
+		{
+			global.clientDataSimulated.findSimulatedInstance(
+			global.clientDataOther.getClientInstances()[i].instanceID,
+			global.clientDataOther.getClientInstances()[i]
+			);
+		}
+			
+		//Deletion detector
+		for (var i = 0;i < array_length(global.clientDataSimulated.instances);i ++)
+		{
+			var _destroy = true;
+				
+			for (var j = 0;j < array_length(global.clientDataOther.getClientInstances());j ++)
+			{
+				if global.clientDataOther.getClientInstances()[j].instanceID == global.clientDataSimulated.instances[i].instanceID _destroy = false;
+			}
+				
+			if _destroy
+			{
+				global.clientDataSimulated.deleteSimulatedInstance(global.clientDataSimulated.instances[i].instanceID);
+			}
+		}
+	}
+}
+
+// Used to sync variables in bulk from our local instances to the one in the server
+// ONLY writes the variablesto the clientDataSelf package, doesn't send them
+function netSyncVariables(_varStrList,_instanceID,_syncTo = id)
+{
+	var _data = global.clientDataSelf.findInstance(_instanceID, true)
+					
+	for (var i = 0;i < array_length(_varStrList);i ++)
+	{
+		var _value = variable_struct_get(_syncTo,_varStrList[i]);
+		variable_struct_set(_data,_varStrList[i],_value);
 	}
 }
 
@@ -199,10 +245,4 @@ function netClientData() constructor
 		var _inst = findInstance(_instanceID, true); // true creates the instance obj first if it wasn't found
 		variable_struct_set(_inst,_varStr,_value);
 	}
-}
-
-//Divides up the client.data packet into levels
-function netClientPacketDivide(_level)
-{
-	
 }

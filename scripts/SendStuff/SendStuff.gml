@@ -42,10 +42,8 @@ function netSendConnect()
 function netSendDisconnect()
 {
 	global.connected = false;
-	
 	global.clientDataSimulated.deleteSimulatedInstanceAll();
 	instance_destroy(objNetInstance);
-	
 	show_debug_message("Disconnected");
 }
 

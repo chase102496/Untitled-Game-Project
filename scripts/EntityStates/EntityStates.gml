@@ -122,16 +122,10 @@ function scrEntityStateInit()
 
 				//Set data to be sent in netSyncClientInfoSelf
 				//Get an allocation of instance IDs
-				global.clientDataSelf.findInstance(instanceID, true);
-				global.clientDataSelf.findInstance(instanceID).sprite_index = sprite_index;
-				global.clientDataSelf.findInstance(instanceID).image_index = image_index;
-				global.clientDataSelf.findInstance(instanceID).image_angle = image_angle;
-				global.clientDataSelf.findInstance(instanceID).image_alpha = image_alpha;
-				global.clientDataSelf.findInstance(instanceID).x = x;
-				global.clientDataSelf.findInstance(instanceID).y = y;
-				global.clientDataSelf.findInstance(instanceID).layer = layer;
-				global.clientDataSelf.findInstance(instanceID).object_index = object_index;
-				global.clientDataSelf.findInstance(instanceID).stats = stats;
+				
+				
+				
+				netSyncVariables(["sprite_index","image_index","image_angle","image_alpha","x","y","layer","object_index","stats"],instanceID);
 			
 				//Push our data to the server object, and pull every other client's data
 				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf)});

@@ -22,9 +22,50 @@ function netSimulated() constructor
 	createSimulatedInstance = function(_instanceObject)
 	{
 		var _inst = instance_create_layer(_instanceObject.x,_instanceObject.y,_instanceObject.layer,objNetInstance)
-		_inst.instanceID = _instanceID;
+		_inst.instanceID = _instanceObject.instanceID;
 		array_push(instances,_inst);
 		return _inst;
+	}
+	
+	/// @func deleteSimulatedInstance(_instanceID)
+	deleteSimulatedInstance = function(_instanceID)
+	{
+		var _inst = findSimulatedInstance(_instanceID);
+		
+		if _inst != -1
+		{
+			var _newInstances = []
+			
+			for (var i = 0;i < array_length(instances); i ++)
+			{
+				if instances[i] != _inst array_push(_newInstances,instances[i]);
+			}
+			instances = _newInstances;
+			
+			instance_destroy(_inst);
+		}
+		else return -1;
+	}
+	
+	/// @func deleteSimulatedInstanceAll()
+	deleteSimulatedInstanceAll = function()
+	{
+		for (var i = 0;i < array_length(instances); i ++)
+		{
+			instance_destroy(instances[i]);
+		}
+		instances = [];
+	}
+	
+	/// @func findSimulatedInstanceIndex(_instanceID)
+	findSimulatedInstanceIndex = function(_instanceID)
+	{
+		for (var i = 0;i < array_length(instances); i ++)
+		{
+			if instances[i].instanceID == _instanceID return i;
+		}
+		
+		return -1;
 	}
 	
 	// Putting in an _instanceObject will create it if it isn't found from the template of _instanceObject
@@ -35,9 +76,13 @@ function netSimulated() constructor
 		{
 			if instances[i].instanceID == _instanceID return instances[i];
 		}
-			
+		
 		//If it can't find the instance, create one
-		if _instanceObject != noone return createSimulatedInstance(_instanceObject); //Creates it and returns the reference
+		if _instanceObject != noone
+		{
+			var _newInst = createSimulatedInstance(_instanceObject);
+			return _newInst;
+		}
 		
 		return -1; //If nothing found
 	}
@@ -60,8 +105,17 @@ function netClients() constructor
 		return _returnList;
 	}
 
-	/// @func getInstances(_varStr = -1)
-	getInstances = function(_varStr = -1)
+	/// @func findClient(_clientID)
+	findClient = function(_clientID)
+	{
+		for (var i = 0;i < array_length(data); i ++)
+		{
+			if clients[i].clientID == _clientID return clients[i];
+		}
+	}
+
+	/// @func getClientInstances(_varStr = -1)
+	getClientInstances = function(_varStr = -1)
 	{
 		var _returnList = [];
 		for (var i = 0;i < array_length(clients);i ++)
@@ -75,14 +129,15 @@ function netClients() constructor
 		return _returnList;
 	}
 	
-	/// @func findClient(_clientID)
-	findClient = function(_clientID)
+	/// @func findClientInstance
+	findClientInstance = function(_instanceID)
 	{
-		for (var i = 0;i < array_length(data); i ++)
+		for (var i = 0;i < array_length(getClientInstances()); i ++)
 		{
-			if clients[i].clientID == _clientID return clients[i];
+			if getClientInstances()[i].instanceID == _instanceID return getClientInstances()[i];
 		}
 	}
+	
 }
 
 // Child of netClients, holds one client's data
@@ -92,6 +147,19 @@ function netClientData() constructor
 	
 	//My instances
 	instances = [];
+	
+	
+	/// @func getInstanceAll(_varStr = -1)
+	getInstanceAll = function(_varStr = -1)
+	{
+		var _returnList = [];
+		for (var i = 0;i < array_length(instances);i ++)
+		{
+			if _varStr == -1 array_push(_returnList,instances[i]);
+			else array_push(_returnList,variable_struct_get(instances[i],_varStr));
+		}
+		return _returnList;
+	}
 	
 	/// @func createInstance(_instanceID)
 	createInstance = function(_instanceID)
@@ -131,11 +199,6 @@ function netClientData() constructor
 		var _inst = findInstance(_instanceID, true); // true creates the instance obj first if it wasn't found
 		variable_struct_set(_inst,_varStr,_value);
 	}
-}
-
-function netInstance(_instanceID) constructor
-{
-	
 }
 
 //Divides up the client.data packet into levels

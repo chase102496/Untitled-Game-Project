@@ -31,42 +31,41 @@ function handlePacket(pack) {
 				global.clientDataOther.clients[i].instances = _clients[i].instances;
 			}
 			
-			for (var i = 0;i < array_length(global.clientDataOther.clients);i ++)
-			{
-				show_debug_message(i);
-				show_debug_message(global.clientDataOther.clients[i].clientID);
-			}
-			
 			//Debug
-			//global.debugVar[| 4] = "self: " + string(global.clientDataSelf.clientID); //Display it
-			//global.debugVar[| 5] = "clientIDCount: "+ string(array_length(global.clientDataOther.getClients()));
-			//global.debugVar[| 6] = "instanceIDCount: "+ string(array_length(global.clientDataOther.clients[0].instances));
+			global.debugVar[| 4] = "self: " + string([global.clientDataSelf.clientID,global.clientDataSelf.getInstanceAll("instanceID")]); //Display it
+			global.debugVar[| 5] = "clientIDs: "+ string(global.clientDataOther.getClients("clientID"));
+			global.debugVar[| 6] = "instanceIDs: "+ string(global.clientDataOther.getClientInstances("instanceID"));
 			
 			//global.debugVar[| 5] = "clients: "+ string(array_length(global.clientDataOther.clients));
 			//global.debugVar[| 5] = "clientsIDs: "+ string(global.clientDataOther.getClients("clientID"));
 			
-			//global.debugVar[| 7] = "instanceCount: "+ string(array_length(global.clientDataOther.getInstances()));
+			//global.debugVar[| 7] = "instanceCount: "+ string(array_length(global.clientDataOther.getClientInstances()));
 			
 			//Creation detector
-			//for (var i = 0;i < array_length(global.clientDataOther.getInstances());i ++)
-			//{
-			//	global.clientDataSimulated.findSimulatedInstance(
-			//		global.clientDataOther.getInstances()[i].instanceID,
-			//		global.clientDataOther.getInstances()[i]);
-			//}
+			for (var i = 0;i < array_length(global.clientDataOther.getClientInstances());i ++)
+			{
+				global.clientDataSimulated.findSimulatedInstance(
+				global.clientDataOther.getClientInstances()[i].instanceID,
+				global.clientDataOther.getClientInstances()[i]
+				);
+			}
 			
-			////Deletion detector
-			//with objNetEntity
-			//{
-			//	var _destroy = true;
+			//Deletion detector
+			for (var i = 0;i < array_length(global.clientDataSimulated.instances);i ++)
+			{
+				var _destroy = true;
 				
-			//	for (var i = 0;i < array_length(global.clientDataOther.getInstances());i ++)
-			//	{
-			//		if global.clientDataOther.getInstances()[i].instanceID == instanceID _destroy = false;
-			//	}
+				for (var j = 0;j < array_length(global.clientDataOther.getClientInstances());j ++)
+				{
+					if global.clientDataOther.getClientInstances()[j].instanceID == global.clientDataSimulated.instances[i].instanceID _destroy = false;
+				}
 				
-			//	//if _destroy instance_destroy();
-			//}
+				if _destroy
+				{
+					show_debug_message("Deleting...")
+					global.clientDataSimulated.deleteSimulatedInstance(global.clientDataSimulated.instances[i].instanceID);
+				}
+			}
 			
 			break;
 		}

@@ -1,3 +1,6 @@
+//Network
+netInstanceUpdateID();
+
 //State machine handler under equipStates.gml
 scrPlayerChangedDirection();
 scrEquipPhysics();

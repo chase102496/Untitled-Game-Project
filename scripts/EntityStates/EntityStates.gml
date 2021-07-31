@@ -6,7 +6,6 @@ function scrEntityStateInit()
 		enter: function()
 		{
 			global.connected = false;
-			clientID = -1;
 			halfpack = -1; // if a packet is split in half, we use this
 			
 			onConnect = function()
@@ -120,13 +119,23 @@ function scrEntityStateInit()
 			{
 				netInstanceUpdateID();
 
-				//Set data to be sent in netSyncClientInfoSelf
-				//Get an allocation of instance IDs
+				//Set data to be sent in netSyncClientInfoSelf, and also create the data entry
+				netSyncVariablesTo(["x","y","sprite_index","image_index","image_angle","image_alpha","layer","stats","netObject"],instanceID);
 				
+				with entityEquip
+				{
+					if layer_sequence_exists(layer,currentSequenceElement)
+					{
+						var _seq = currentSequenceElement
+	
+						netSyncVariablesTo(["x","y","sprite_index","image_index","image_alpha","layer","stats","netObject"],instanceID,);
+						global.clientDataSelf.findInstance(instanceID).image_angle = layer_sequence_get_angle(_seq);
+						global.clientDataSelf.findInstance(instanceID).image_xscale = layer_sequence_get_xscale(_seq);
+						global.clientDataSelf.findInstance(instanceID).image_yscale = layer_sequence_get_yscale(_seq);
+					}
+					else netSyncVariablesTo(["x","y","sprite_index","image_index","image_angle","image_alpha","layer","stats","netObject"],instanceID);
+				}
 				
-				
-				netSyncVariables(["sprite_index","image_index","image_angle","image_alpha","x","y","layer","object_index","stats"],instanceID);
-			
 				//Push our data to the server object, and pull every other client's data
 				send({cmd: "netSyncClientInfoSelf", dataSelf: json_stringify(global.clientDataSelf)});
 				send({cmd: "netGetClientInfoAll"});

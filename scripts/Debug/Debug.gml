@@ -8,7 +8,7 @@ function scrDebugInit()
 	
 	window_set_fullscreen(false);
 	
-	mw_open_windows("Client",3);
+	mw_open_windows("Client",2);
 	//ExecuteShell("cd \"C:\Users\Chase\Documents\GameMakerStudio2\Untitled Game Project\datafiles\EmptyServer\" && start.bat",false,false);
 	//ExecuteShell("notepad.exe",false,false);
 }
@@ -50,7 +50,9 @@ function scrDebugVars()
 	#region Polling-driven debug
 	
 	with global.inputObject
-	{
+	{	
+		//5 and 6 reserved
+		global.debugVar[| 4] = "self: " + string([global.clientDataSelf.clientID,global.clientDataSelf.getInstanceAll("instanceID")]);
 		global.debugVar[| 3] = netState.get_current_state();
 		
 		//Tracking velocity

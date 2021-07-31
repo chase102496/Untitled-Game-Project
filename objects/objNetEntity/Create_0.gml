@@ -1,2 +1,0 @@
-instanceOffsetID = netInstanceCreateID();
-netInstanceUpdateID();

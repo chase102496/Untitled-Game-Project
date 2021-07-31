@@ -1,5 +1,7 @@
-//For getting our unique network instance ID
-instanceOffsetID = netInstanceCreateID();
+//Network
+netInstanceCreateID();
+netObject = objNetInstance; //Sets what other clients create to simulate us
+
 //NEW constructor instantiation
 snowStateInput = new SnowState("General + Combat");
 snowStateInput.history_enable();

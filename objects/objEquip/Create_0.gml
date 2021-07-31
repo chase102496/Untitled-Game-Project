@@ -1,3 +1,7 @@
+//Network
+netInstanceCreateID();
+netObject = objNetEquip;
+
 //NEW constructor instantiation
 stats = new conStatsInit();
 inv = new conInventoryInit();

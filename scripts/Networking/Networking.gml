@@ -1,15 +1,18 @@
 // For local instances to be synced to our server, they need a separate, unique instance ID
 // Usually, on connect a player is allocated 999 instance IDs for use later
-function netInstanceUpdateID()
-{
-	instanceID = global.clientDataSelf.clientID + instanceOffsetID;
-}
-function netInstanceCreateID()
+function netInstanceCreateID(_target = id)
 {
 	static offSet = 0;
 	offSet += 1;
-	return offSet;
+	_target.instanceOffsetID = offSet;
+	netInstanceUpdateID(_target);
 }
+function netInstanceUpdateID(_target = id)
+{
+	_target.instanceID = global.clientDataSelf.clientID + _target.instanceOffsetID;
+	return _target.instanceID;
+}
+
 
 // Used for tracking current instances being manipulated by us that are from another client
 // e.g. to draw other players, other player's projectiles, equipment, etc
@@ -21,7 +24,7 @@ function netSimulated() constructor
 	/// @func createSimulatedInstance(_instanceObject)
 	createSimulatedInstance = function(_instanceObject)
 	{
-		var _inst = instance_create_layer(_instanceObject.x,_instanceObject.y,_instanceObject.layer,objNetInstance)
+		var _inst = instance_create_layer(_instanceObject.x,_instanceObject.y,_instanceObject.layer,_instanceObject.netObject)
 		_inst.instanceID = _instanceObject.instanceID;
 		array_push(instances,_inst);
 		return _inst;
@@ -123,15 +126,37 @@ function netSimulatedUpdate()
 
 // Used to sync variables in bulk from our local instances to the one in the server
 // ONLY writes the variablesto the clientDataSelf package, doesn't send them
-function netSyncVariables(_varStrList,_instanceID,_syncTo = id)
+function netSyncVariablesTo(_varStrList,_instanceID,_syncTarget = id)
 {
-	var _data = global.clientDataSelf.findInstance(_instanceID, true)
+	var _verifyInstanceID = netInstanceUpdateID(_syncTarget);
+	
+	var _struct = global.clientDataSelf.findInstance(_verifyInstanceID, true)
 					
 	for (var i = 0;i < array_length(_varStrList);i ++)
 	{
-		var _value = variable_struct_get(_syncTo,_varStrList[i]);
-		variable_struct_set(_data,_varStrList[i],_value);
+		var _value = _syncTarget[$ _varStrList[i]];
+		_struct[$ _varStrList[i]] = _value;
 	}
+}
+
+//Used to set whoever runs its variables to the ones its instance id
+function netSyncVariablesFromAll(_instanceID,_syncTarget = id)
+{
+	var _struct = global.clientDataOther.findClientInstance(_instanceID);
+	
+	if _struct != -1 and !is_undefined(_struct)
+	{
+		var _varStrList = variable_struct_get_names(_struct);
+
+		for (var i = 0;i < array_length(_varStrList);i ++)
+		{
+			var _value = _struct[$ _varStrList[i]];
+			_syncTarget[$ _varStrList[i]] = _value;
+		}
+		
+		return _struct;
+	}
+	else return -1;
 }
 
 // Parent of netClientData, holds a bunch of em

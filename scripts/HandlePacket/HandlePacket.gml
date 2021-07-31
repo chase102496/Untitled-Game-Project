@@ -37,7 +37,6 @@ function handlePacket(pack) {
 			netSimulatedUpdate();
 			
 			//Debug
-			global.debugVar[| 4] = "self: " + string([global.clientDataSelf.clientID,global.clientDataSelf.getInstanceAll("instanceID")]); //Display it
 			global.debugVar[| 5] = "clientIDs: "+ string(global.clientDataOther.getClients("clientID"));
 			global.debugVar[| 6] = "instanceIDs: "+ string(global.clientDataOther.getClientInstances("instanceID"));
 			

@@ -18,6 +18,7 @@
     {"id":{"name":"seqOrbCharge","path":"sequences/seqOrbCharge/seqOrbCharge.yy",},"order":2,},
     {"id":{"name":"sprStick","path":"sprites/sprStick/sprStick.yy",},"order":1,},
     {"id":{"name":"sprPlayerRun","path":"sprites/sprPlayerRun/sprPlayerRun.yy",},"order":1,},
+    {"id":{"name":"objNetEquip","path":"objects/objNetEquip/objNetEquip.yy",},"order":3,},
     {"id":{"name":"sprPlayerSlide","path":"sprites/sprPlayerSlide/sprPlayerSlide.yy",},"order":6,},
     {"id":{"name":"objNetEntity","path":"objects/objNetEntity/objNetEntity.yy",},"order":1,},
     {"id":{"name":"seqBowChangeDirection","path":"sequences/seqBowChangeDirection/seqBowChangeDirection.yy",},"order":2,},

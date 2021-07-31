@@ -1,6 +1,6 @@
 {
   "resources": [
-    {"id":{"name":"sprEmpty","path":"sprites/sprEmpty/sprEmpty.yy",},"order":11,},
+    {"id":{"name":"sprEmpty","path":"sprites/sprEmpty/sprEmpty.yy",},"order":5,},
     {"id":{"name":"sprCursor","path":"sprites/sprCursor/sprCursor.yy",},"order":4,},
     {"id":{"name":"Text_Formatting","path":"notes/Text_Formatting/Text_Formatting.yy",},"order":10,},
     {"id":{"name":"scribble_font_combine","path":"scripts/scribble_font_combine/scribble_font_combine.yy",},"order":2,},
@@ -1184,9 +1184,9 @@
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/internal/initializers","resourceVersion":"1.0","name":"01_globals.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/custom","resourceVersion":"1.0","name":"sendStuff.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/internal/entities","resourceVersion":"1.0","name":"client.js","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/custom","resourceVersion":"1.0","name":"handlePacket.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer","resourceVersion":"1.0","name":"package.json","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer","resourceVersion":"1.0","name":"server.js","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/custom","resourceVersion":"1.0","name":"handlePacket.js","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.3.570",

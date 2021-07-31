@@ -51,18 +51,18 @@ module.exports = async function handlePacket(c, data) {
             })
 
             //Logging
-            var _instances = [];
-            var _clients = [];
-            global.clients.forEach(function (_c) {
+            //var _instances = [];
+            //var _clients = [];
+            //global.clients.forEach(function (_c) {
 
-                _clients.push(_c.clientID);
+            //    _clients.push(_c.clientID);
 
-                _c.data.instances.forEach(function (_i) {
-                    _instances.push(_i.instanceID);
-                })
+            //    _c.data.instances.forEach(function (_i) {
+            //        _instances.push(_i.instanceID);
+            //    })
                 
-            })
-            console.log(_clients,_instances);
+            //})
+            //console.log(_clients,_instances);
             //console.log("Clients info list sent: " + JSON.stringify(c.getOtherClientsInfo(global.clients, c)));
             //console.log("Self info list sent to " + c.clientID + ": \n" + JSON.stringify([c.instances, c.clientID]));
             break;

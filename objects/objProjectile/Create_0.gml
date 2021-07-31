@@ -1,9 +1,13 @@
+//Network
+netInstanceCreateID();
+netObject = objNetInstance;
+
 //NEW constructor instantiation
 stats = new conStatsInit();
 state = new conProjectileStateInit();
 
 //Init
-sprite_index = -1;
+sprite_index = sprEmpty;
 entityBuffs = [];
 entityStats = [];
 aliveTimer = 0;

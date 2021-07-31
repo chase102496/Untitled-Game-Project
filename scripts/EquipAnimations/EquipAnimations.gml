@@ -64,3 +64,13 @@ function scrCastRange(_originX,_originY,_pointX,_pointY,_range)
 	
 	return [_x,_y];
 }
+function scrSequenceCreator(_sequence)
+{
+	if currentSequence != _sequence
+	{
+		currentSequence = _sequence;
+		currentSequenceElement = layer_sequence_create(currentLayer,owner.x,owner.y,currentSequence);
+		currentSequenceInstance = layer_sequence_get_instance(currentSequenceElement);
+		sequence_instance_override_object(currentSequenceInstance,object_index,id)
+	}
+}

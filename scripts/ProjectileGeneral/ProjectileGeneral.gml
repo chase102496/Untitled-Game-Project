@@ -12,6 +12,7 @@ function conProjectileStateInit() constructor
 	destroy = -1;
 	current = -1;
 	
+	/// @func templateArrow(_sprite)
 	templateArrow = function(_sprite)
 	{
 		hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,_sprite]]];
@@ -22,6 +23,7 @@ function conProjectileStateInit() constructor
 		current = hold;
 	};
 	
+	/// @func templateSpellStatic(_spriteHold,_spriteFree,_spriteCollide)
 	templateSpellStatic = function(_spriteHold,_spriteFree,_spriteCollide)
 	{
 		hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsSync,_spriteHold]]]
@@ -155,6 +157,7 @@ function scrProjectileStateCollideTerrain(_animScript,_aliveTimerMax)
 
 function scrProjectileStateDestroy()
 {
+	global.clientDataSelf.deleteInstance();
 	instance_destroy();
 }
 

@@ -1,1 +1,1 @@
-if !instance_exists(equip.equipProjectile) instance_destroy();
+if !instance_exists(equip) or !instance_exists(equip.equipProjectile) instance_destroy();

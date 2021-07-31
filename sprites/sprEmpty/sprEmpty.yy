@@ -69,8 +69,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "GUI",
-    "path": "folders/Sprites/GUI.yy",
+    "name": "General",
+    "path": "folders/Sprites/General.yy",
   },
   "resourceVersion": "1.0",
   "name": "sprEmpty",

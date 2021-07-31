@@ -35,9 +35,7 @@
     {"instances":[],"visible":true,"depth":400,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layEquip","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[],"visible":true,"depth":500,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layProjectile","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[],"visible":true,"depth":600,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":4,"gridY":4,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layPlayer","tags":[],"resourceType":"GMRInstanceLayer",},
-    {"instances":[
-        {"properties":[],"isDnd":false,"objectId":{"name":"objLaternarius","path":"objects/objLaternarius/objLaternarius.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.7037037,"scaleY":0.6666667,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":false,"x":183.999969,"y":252.0,"resourceVersion":"1.0","name":"inst_61E1B722","tags":[],"resourceType":"GMRInstance",},
-      ],"visible":true,"depth":700,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":4,"gridY":4,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layEntities","tags":[],"resourceType":"GMRInstanceLayer",},
+    {"instances":[],"visible":true,"depth":700,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":4,"gridY":4,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layEntities","tags":[],"resourceType":"GMRInstanceLayer",},
     {"spriteId":{"name":"bgrTest","path":"sprites/bgrTest/bgrTest.yy",},"colour":4294967295,"x":0,"y":0,"htiled":true,"vtiled":true,"hspeed":0.0,"vspeed":0.0,"stretch":false,"animationFPS":14.0,"animationSpeedType":0,"userdefinedAnimFPS":true,"visible":true,"depth":800,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":true,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layBackground","tags":[],"resourceType":"GMRBackgroundLayer",},
   ],
   "inheritLayers": false,
@@ -46,7 +44,6 @@
   "instanceCreationOrder": [
     {"name":"inst_28AB1D88","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_79EF1523","path":"rooms/rmTest/rmTest.yy",},
-    {"name":"inst_61E1B722","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_6D28B752","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_55217B86","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_32E3AFC7","path":"rooms/rmTest/rmTest.yy",},

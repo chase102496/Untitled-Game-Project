@@ -119,21 +119,23 @@ function scrEntityStateInit()
 			{
 				netInstanceUpdateID();
 
-				//Set data to be sent in netSyncClientInfoSelf, and also create the data entry
-				netSyncVariablesTo(["x","y","sprite_index","image_index","image_angle","image_alpha","layer","stats","netObject"],instanceID);
+				//Player data sync
+				netSyncVariablesTo(["x","y","sprite_index","image_index","image_angle","image_alpha","layer","stats","netObject"]);
 				
+				//Equip data sync
 				with entityEquip
 				{
-					if layer_sequence_exists(layer,currentSequenceElement)
+					netSyncVariablesTo(["x","y","layer","stats","netObject"]);
+					netSyncVariablesTo(["sprite_index","image_index_actual","image_xscale","image_yscale","image_angle","image_blend","image_alpha","spriteFrame"]);
+				}
+				
+				//Player projectiles sync
+				with objProjectile
+				{
+					if equip.owner = global.playerObject //If this is owned by the player
 					{
-						var _seq = currentSequenceElement
-	
-						netSyncVariablesTo(["x","y","sprite_index","image_index","image_alpha","layer","stats","netObject"],instanceID,);
-						global.clientDataSelf.findInstance(instanceID).image_angle = layer_sequence_get_angle(_seq);
-						global.clientDataSelf.findInstance(instanceID).image_xscale = layer_sequence_get_xscale(_seq);
-						global.clientDataSelf.findInstance(instanceID).image_yscale = layer_sequence_get_yscale(_seq);
+						netSyncVariablesTo(["x","y","sprite_index","image_speed","image_index","image_angle","image_alpha","layer","stats","netObject"]);
 					}
-					else netSyncVariablesTo(["x","y","sprite_index","image_index","image_angle","image_alpha","layer","stats","netObject"],instanceID);
 				}
 				
 				//Push our data to the server object, and pull every other client's data

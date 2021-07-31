@@ -1,3 +1,2 @@
-var _entity = instance_nearest(x,y,objEntity)
-equip = _entity.entityEquip;
-equip.anchor = id;
+equip = instance_find(objEquip,0);
+equip.anchor = id; 

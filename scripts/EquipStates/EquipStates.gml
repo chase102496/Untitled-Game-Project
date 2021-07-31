@@ -14,18 +14,7 @@ function scrEquipBroadcastListener() //Used to run one-time events from sequence
 		}
 	}
 }
-///
-function scrSequenceCreator(_sequence)
-{
-	if currentSequence != _sequence
-	{
-		currentSequence = _sequence;
-		currentSequenceElement = layer_sequence_create(currentLayer,owner.x,owner.y,currentSequence);
-		currentSequenceInstance = layer_sequence_get_instance(currentSequenceElement);
-		sequence_instance_override_object(currentSequenceInstance,object_index,id)
-	}
-}
-//
+
 #endregion
 
 #region States
@@ -287,7 +276,7 @@ function scrEquipStateInit() //All equip states
 			if !instance_exists(equipProjectile)
 			{
 				equipProjectile = conProjectileCreate(_castRange[0],_castRange[1],"layProjectile",objProjectile,owner);
-				equipProjectile.state.templateSpellStatic(-1,sprArcaneBlast,sprArcaneBlast);
+				equipProjectile.state.templateSpellStatic(sprEmpty,sprArcaneBlast,sprArcaneBlast);
 				equipProjectile.entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
 				equipProjectile.entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
 			}

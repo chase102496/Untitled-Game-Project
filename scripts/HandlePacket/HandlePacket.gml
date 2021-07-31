@@ -37,8 +37,11 @@ function handlePacket(pack) {
 			netSimulatedUpdate();
 			
 			//Debug
-			global.debugVar[| 5] = "clientIDs: "+ string(global.clientDataOther.getClients("clientID"));
-			global.debugVar[| 6] = "instanceIDs: "+ string(global.clientDataOther.getClientInstances("instanceID"));
+			global.debugVar[| 3] = netState.get_current_state();
+			global.debugVar[| 4] = "self: " + string([global.clientDataSelf.clientID,global.clientDataSelf.getInstanceAll("instanceID")]);
+			global.debugVar[| 5] = "simulatedIDs: "+ string(global.clientDataSimulated.getSimulatedInstanceAll("instanceID"));
+			global.debugVar[| 6] = "clientIDs: "+ string(global.clientDataOther.getClients("clientID"));
+			global.debugVar[| 7] = "instanceIDs: "+ string(global.clientDataOther.getClientInstances("instanceID"));
 			
 			break;
 		}

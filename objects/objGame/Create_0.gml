@@ -14,4 +14,4 @@ global.inputObject = global.playerObject;
 global.menu = false;
 
 //Display debug
-scrDebugDisplayInit();
+scrDisplayInit();

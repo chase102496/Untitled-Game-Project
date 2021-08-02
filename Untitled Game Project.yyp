@@ -58,6 +58,7 @@
     {"id":{"name":"ProjectStructure","path":"notes/ProjectStructure/ProjectStructure.yy",},"order":0,},
     {"id":{"name":"seqGreatswordStab","path":"sequences/seqGreatswordStab/seqGreatswordStab.yy",},"order":1,},
     {"id":{"name":"sprPlayerWallslide","path":"sprites/sprPlayerWallslide/sprPlayerWallslide.yy",},"order":4,},
+    {"id":{"name":"Display","path":"scripts/Display/Display.yy",},"order":12,},
     {"id":{"name":"HandlePacket","path":"scripts/HandlePacket/HandlePacket.yy",},"order":2,},
     {"id":{"name":"sprPlayerAttackForward","path":"sprites/sprPlayerAttackForward/sprPlayerAttackForward.yy",},"order":7,},
     {"id":{"name":"objHitbox","path":"objects/objHitbox/objHitbox.yy",},"order":3,},

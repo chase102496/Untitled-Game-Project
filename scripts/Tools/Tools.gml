@@ -16,9 +16,11 @@ function forEach(_list,_function) //NEEDS REVISION
 
 //@scrRoundPrecise(value to be rounded, rounding frac)
 //e.g. to round to 0.01 scrRoundPrecise(10.354676, 0.01) = 10.35
-function scrRoundPrecise(_value,_decimal)
+//scrRoundPrecise(10.354676, 0.25) = 10.25
+function scrRoundPrecise(_value,_interval)
 {
-	return round(_value/_decimal)*_decimal;
+	var _intervalMultiply = 1/_interval;
+	return round(_value*_intervalMultiply)/_intervalMultiply;
 }
 //Format is if *condition* _value = scrToggle(value);
 function scrToggle(_value) //Toggles a value true and false

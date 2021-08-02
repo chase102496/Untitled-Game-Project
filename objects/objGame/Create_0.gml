@@ -12,3 +12,6 @@ global.insCamera = instance_create_layer(0,0,"layGame",objCamera);
 //Misc
 global.inputObject = global.playerObject;
 global.menu = false;
+
+//Display debug
+scrDebugDisplayInit();

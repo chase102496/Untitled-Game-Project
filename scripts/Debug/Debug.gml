@@ -5,12 +5,23 @@ function scrDebugInit()
 	global.debugVar = ds_list_create();
 	global.debugVar[| 0] = []; //Velocities
 	global.debugVar[| 1] = []; //Buffs
-	
+}
+//
+function scrDebugDisplayInit()
+{
 	window_set_fullscreen(false);
-	
-	mw_open_windows("Client",2);
+	//application_surface_draw_enable(false);
+	//mw_open_windows("Client",2);
 	//ExecuteShell("cd \"C:\Users\Chase\Documents\GameMakerStudio2\Untitled Game Project\datafiles\EmptyServer\" && start.bat",false,false);
 	//ExecuteShell("notepad.exe",false,false);
+	
+	var _camera = global.insCamera;
+	
+	global.nativeResolution = [view_get_hport(_camera),view_get_hport(_camera)];
+	global.scale = 4;
+	global.scaleResolution = [global.nativeResolution[0]*global.scale,global.nativeResolution[1]*global.scale];
+	
+	window_set_size(global.scaleResolution[0],global.scaleResolution[1]);
 }
 //
 function scrDebugInputs()

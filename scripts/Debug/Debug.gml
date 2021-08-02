@@ -11,17 +11,19 @@ function scrDebugDisplayInit()
 {
 	window_set_fullscreen(false);
 	//application_surface_draw_enable(false);
-	//mw_open_windows("Client",2);
+	
 	//ExecuteShell("cd \"C:\Users\Chase\Documents\GameMakerStudio2\Untitled Game Project\datafiles\EmptyServer\" && start.bat",false,false);
 	//ExecuteShell("notepad.exe",false,false);
 	
+	mw_open_windows("Client",2);
+	
 	var _camera = global.insCamera;
 	
-	global.nativeResolution = [view_get_hport(_camera),view_get_hport(_camera)];
-	global.scale = 4;
-	global.scaleResolution = [global.nativeResolution[0]*global.scale,global.nativeResolution[1]*global.scale];
+	global.nativeResolution = [view_get_wport(_camera),view_get_hport(_camera)];
+	global.windowResolution = [1280,720];
+	global.pixelDuplication = global.windowResolution[0]/global.nativeResolution[0]; //1280x720 is 4x our view, 320x180
 	
-	window_set_size(global.scaleResolution[0],global.scaleResolution[1]);
+	window_set_size(global.windowResolution[0],global.windowResolution[1]);
 }
 //
 function scrDebugInputs()

@@ -19,6 +19,7 @@
     {"instances":[
         {"properties":[],"isDnd":false,"objectId":{"name":"objCamera","path":"objects/objCamera/objCamera.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":false,"x":32.0,"y":224.0,"resourceVersion":"1.0","name":"inst_28AB1D88","tags":[],"resourceType":"GMRInstance",},
         {"properties":[],"isDnd":false,"objectId":{"name":"objGame","path":"objects/objGame/objGame.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.3125,"scaleY":0.3125,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":false,"x":32.0,"y":192.0,"resourceVersion":"1.0","name":"inst_79EF1523","tags":[],"resourceType":"GMRInstance",},
+        {"properties":[],"isDnd":false,"objectId":{"name":"objLaternarius","path":"objects/objLaternarius/objLaternarius.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":288.0,"y":256.0,"resourceVersion":"1.0","name":"inst_669231F6","tags":[],"resourceType":"GMRInstance",},
       ],"visible":true,"depth":200,"userdefinedDepth":true,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layGame","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[
         {"properties":[],"isDnd":false,"objectId":{"name":"objTerrain","path":"objects/objTerrain/objTerrain.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":30.0,"scaleY":0.5,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":false,"x":3.05175781E-05,"y":264.0,"resourceVersion":"1.0","name":"inst_6D28B752","tags":[],"resourceType":"GMRInstance",},
@@ -54,6 +55,7 @@
     {"name":"inst_50186893","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_3C1122E4","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_314E0CE1","path":"rooms/rmTest/rmTest.yy",},
+    {"name":"inst_669231F6","path":"rooms/rmTest/rmTest.yy",},
   ],
   "inheritCreationOrder": true,
   "sequenceId": null,

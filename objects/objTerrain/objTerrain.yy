@@ -29,8 +29,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Entities",
-    "path": "folders/Objects/Entities.yy",
+    "name": "Terrain",
+    "path": "folders/Objects/Terrain.yy",
   },
   "resourceVersion": "1.0",
   "name": "objTerrain",

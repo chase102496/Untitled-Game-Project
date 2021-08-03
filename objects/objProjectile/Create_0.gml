@@ -1,6 +1,6 @@
 //Network
 netInstanceCreateID();
-netObject = objNetInstance;
+netObject = objNetProjectile;
 
 //NEW constructor instantiation
 stats = new conStatsInit();

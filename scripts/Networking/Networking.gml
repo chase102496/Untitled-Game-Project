@@ -54,10 +54,11 @@ function netSimulated() constructor
 	instances = [];
 	
 	/// @func createSimulatedInstance(_instanceObject = other.instanceID)
-	createSimulatedInstance = function(_instanceObject = other.instanceID)
+	createSimulatedInstance = function(_instanceObject = other)
 	{
 		var _inst = instance_create_layer(_instanceObject.x,_instanceObject.y,_instanceObject.layer,_instanceObject.netObject)
 		_inst.instanceID = _instanceObject.instanceID;
+		_inst.clientID = _instanceObject.clientID;
 		array_push(instances,_inst);
 		return _inst;
 	}
@@ -243,7 +244,7 @@ function netClientData() constructor
 	/// @func createInstance(_instanceID = other.instanceID)
 	createInstance = function(_instanceID = other.instanceID)
 	{
-		var _inst = {instanceID: _instanceID};
+		var _inst = {instanceID: _instanceID, clientID: clientID};
 		array_push(instances,_inst);
 		return findInstance(_instanceID); //Send the reference back to us
 	}

@@ -114,12 +114,16 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 	//One-time run script for entity
 	if entityColliding != noone
 	{	
-		var _scriptID = method_get_index(entityScript);
-		
 		with entityColliding
 		{
-			if object_is_ancestor(object_index,objEntity) script_execute(_scriptID);
-			else if object_is_ancestor(object_index,objNetEntity) game_end(); //FIX THIS
+			if object_is_ancestor(object_index,parEntity) script_execute(method_get_index(entityScript));
+			else if object_is_ancestor(object_index,parNetEntity)
+			{
+				send({cmd: "netSendClientScript",
+					scr: json_stringify(_scriptID),
+					clientID: entityColliding.clientID,
+					instanceID: entityColliding.instanceID});
+			}
 		}
 		
 		entityCollidingContinuous = entityColliding;
@@ -207,8 +211,8 @@ function scrProjectilePhysics(_angleVelocity)
 //Detects entities and changes state when hit
 function scrProjectileDetectEntity()
 {
-	if place_meeting(x,y,objEntity) entityColliding = instance_place(x,y,objEntity);
-	else if place_meeting(x,y,objNetEntity) entityColliding = instance_place(x,y,objNetEntity);
+	if place_meeting(x,y,parEntity) entityColliding = instance_place(x,y,parEntity);
+	else if place_meeting(x,y,parNetEntity) entityColliding = instance_place(x,y,parNetEntity);
 
 	if instance_exists(entityColliding) and entityColliding != owner state.current = state.collideEntity;
 }

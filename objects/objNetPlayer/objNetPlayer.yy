@@ -8,8 +8,8 @@
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "parNetInstance",
-    "path": "objects/parNetInstance/parNetInstance.yy",
+    "name": "parNetEntity",
+    "path": "objects/parNetEntity/parNetEntity.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -23,11 +23,7 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [
-    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-  ],
+  "eventList": [],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
@@ -35,7 +31,7 @@
     "path": "folders/Objects/Networking.yy",
   },
   "resourceVersion": "1.0",
-  "name": "objNetEquip",
+  "name": "objNetPlayer",
   "tags": [],
   "resourceType": "GMObject",
 }

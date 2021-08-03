@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "sprNetEntity",
-    "path": "sprites/sprNetEntity/sprNetEntity.yy",
+    "name": "sprTerrain",
+    "path": "sprites/sprTerrain/sprTerrain.yy",
   },
   "solid": false,
   "visible": true,
@@ -31,11 +31,11 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Networking",
-    "path": "folders/Objects/Networking.yy",
+    "name": "Parents",
+    "path": "folders/Objects/Networking/Parents.yy",
   },
   "resourceVersion": "1.0",
-  "name": "objNetEquip",
+  "name": "parNetEntity",
   "tags": [],
   "resourceType": "GMObject",
 }

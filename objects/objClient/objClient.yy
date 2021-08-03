@@ -25,11 +25,11 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Networking",
-    "path": "folders/Objects/Networking.yy",
+    "name": "General",
+    "path": "folders/Objects/General.yy",
   },
   "resourceVersion": "1.0",
-  "name": "oClient",
+  "name": "objClient",
   "tags": [],
   "resourceType": "GMObject",
 }

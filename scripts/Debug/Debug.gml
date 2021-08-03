@@ -47,7 +47,11 @@ function scrDebugVars()
 	{	
 		//Tracking velocity
 		global.debugVar[| 0] = ["hVel: "+string(stats.hVel),"vVel: "+string(stats.vVel)];
-
+		
+		var _test = [scrRoundPrecise,12]
+		
+		global.debugVar[| 9] = json_stringify(_test);
+		
 		//Tracking buffs
 		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
 		{
@@ -104,7 +108,7 @@ function scrDebugVars()
 	//Changing input targets. Control a body with MMB!
 	if mouse_check_button_pressed(mb_middle)
 	{
-		entityClick = instance_nearest(mouse_x,mouse_y,objEntity);
+		entityClick = instance_nearest(mouse_x,mouse_y,parEntity);
 		if instance_exists(entityClick) global.inputObject = entityClick.id;
 	}
 	

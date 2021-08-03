@@ -1,5 +1,8 @@
 event_inherited();
 
+//Network
+netObject = objNetPlayer;
+
 // Placeholders for sprite animations;
 mask_index = sprPlayerIdle;
 phSpriteIdle = sprPlayerIdle;

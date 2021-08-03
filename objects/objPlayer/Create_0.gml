@@ -1,6 +1,6 @@
 event_inherited();
 
-//Placeholders for sprite animations;
+// Placeholders for sprite animations;
 mask_index = sprPlayerIdle;
 phSpriteIdle = sprPlayerIdle;
 phSpriteCrouch = sprPlayerCrouch;

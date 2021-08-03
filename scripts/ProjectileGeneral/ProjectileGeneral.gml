@@ -3,6 +3,9 @@
 //
 
 //Init constructor
+
+#region Initialization
+
 function conProjectileStateInit() constructor
 {
 	hold = -1;
@@ -43,6 +46,8 @@ function conProjectileCreate(_x,_y,_layer,_object,_owner) constructor
 	
 	return _proj;
 }
+
+#endregion
 
 #region States
 
@@ -108,20 +113,15 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 {
 	//One-time run script for entity
 	if entityColliding != noone
-	{
-		//Runs a bunch of scripts (entityBuffs) that are translated by scrBuffs based on what is configured in equipment
-		if is_array(entityBuffs)
+	{	
+		var _scriptID = method_get_index(entityScript);
+		
+		with entityColliding
 		{
-			for (var i = 0;i < array_length(entityBuffs);i ++) //Run each one through the buff add script for this target
-			{
-				scrBuffsAdd(entityBuffs[i],entityColliding);
-			}
+			if object_is_ancestor(object_index,objEntity) script_execute(_scriptID);
+			else if object_is_ancestor(object_index,objNetEntity) game_end(); //FIX THIS
 		}
-		else scrBuffsAdd(entityBuffs,entityColliding);
-				
-		//Damages the entityColliding from the list given to us by entityStats[]
-		entityColliding.stats.damage(entityStats[0],entityStats[1],entityStats[2]);
-				
+		
 		entityCollidingContinuous = entityColliding;
 		entityColliding = noone;
 	}
@@ -207,7 +207,9 @@ function scrProjectilePhysics(_angleVelocity)
 //Detects entities and changes state when hit
 function scrProjectileDetectEntity()
 {
-	entityColliding = instance_place(x,y,objEntity);
+	if place_meeting(x,y,objEntity) entityColliding = instance_place(x,y,objEntity);
+	else if place_meeting(x,y,objNetEntity) entityColliding = instance_place(x,y,objNetEntity);
+
 	if instance_exists(entityColliding) and entityColliding != owner state.current = state.collideEntity;
 }
 

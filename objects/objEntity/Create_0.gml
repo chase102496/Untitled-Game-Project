@@ -1,6 +1,6 @@
 //Network
 netInstanceCreateID();
-netObject = objNetInstance; //Sets what other clients create to simulate us
+netObject = objNetEntity; //Sets what other clients create to simulate us
 
 //NEW constructor instantiation
 snowStateInput = new SnowState("General + Combat");

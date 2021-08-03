@@ -4,23 +4,6 @@ const Profile = require('../internal/schemas/profile.js');
 const Account = require('../internal/schemas/account.js');
 const { debug } = require('console');
 
-// safely handles circular references
-function safeStringify(obj, indent = 2) {
-    let cache = [];
-    const retVal = JSON.stringify(
-        obj,
-        (key, value) =>
-            typeof value === "object" && value !== null
-                ? cache.includes(value)
-                    ? undefined // Duplicate reference found, discard key
-                    : cache.push(value) && value // Store value in our collection
-                : value,
-        indent
-    );
-    cache = null;
-    return retVal;
-};
-
 module.exports = async function handlePacket(c, data) {
     var cmd = data.cmd;
     // console.log('received command: ' + cmd);
@@ -38,6 +21,12 @@ module.exports = async function handlePacket(c, data) {
         case "netSyncClientInfoSelf":
             c.data = JSON.parse(data.dataSelf);
             //console.log(global.clients.length); check for desync
+            break;
+
+        //Sends info to an individual client, denoted in the data from the sending client
+        //Sends info from one client to another. Useful for sending damage, buffs, kick requests, invites, etc.
+        case "netSendClientInfo":
+
             break;
 
         //Gets the info about all clients connected, including itself

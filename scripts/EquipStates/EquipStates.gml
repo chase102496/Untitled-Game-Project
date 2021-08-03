@@ -161,8 +161,11 @@ function scrEquipStateInit() //All equip states
 			{
 				equipProjectile = conProjectileCreate(x,y,"layProjectile",objProjectile,owner);
 				equipProjectile.state.templateArrow(sprArrow);
-				equipProjectile.entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]];
-				equipProjectile.entityStats = [100,"Physical",true]; //Damage amount, type, flinch effect
+				equipProjectile.entityScript = function() // Insert code to run target-side here
+				{
+					scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]);
+					stats.damage(100,"Physical",true);
+				};
 			}
 			else equipProjectile.projectilePower = image_index/(image_number-1) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
 	
@@ -277,8 +280,11 @@ function scrEquipStateInit() //All equip states
 			{
 				equipProjectile = conProjectileCreate(_castRange[0],_castRange[1],"layProjectile",objProjectile,owner);
 				equipProjectile.state.templateSpellStatic(sprEmpty,sprArcaneBlast,sprArcaneBlast);
-				equipProjectile.entityBuffs = [[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]; //script:scrBuffsStats id:swiftness statchange:hMaxVel time:7s strength:2.0
-				equipProjectile.entityStats = [10,"Magical",true]; //Do 10 magical damage, with flinching
+				equipProjectile.entityScript = function() // Insert code to run target-side here
+				{
+					scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]);
+					stats.damage(10,"Magical",true);
+				};
 			}
 			else
 			{

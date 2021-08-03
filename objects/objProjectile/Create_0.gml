@@ -10,6 +10,9 @@ state = new conProjectileStateInit();
 sprite_index = sprEmpty;
 entityBuffs = [];
 entityStats = [];
+
+entityScript = function() {};
+
 aliveTimer = 0;
 entityColliding = noone;
 projectilePower = 0;

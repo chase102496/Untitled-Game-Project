@@ -6,11 +6,11 @@ function scrDisplayInit()
 	//ExecuteShell("cd \"C:\Users\Chase\Documents\GameMakerStudio2\Untitled Game Project\datafiles\EmptyServer\" && start.bat",false,false);
 	//ExecuteShell("notepad.exe",false,false);
 	
-	//mw_open_windows("Client",2);
+	mw_open_windows("Client",2);
 	
-	global.pixelDuplication = 10//global.windowResolution[0]/global.nativeResolution[0]; //1280x720 is 4x our view, 320x180
+	global.pixelDuplication = 4//global.windowResolution[0]/global.nativeResolution[0]; //1280x720 is 4x our view, 320x180
 	
 	display_reset(1,false);
 	
-	window_set_size(1280,720);
+	window_set_size(960,540);
 }

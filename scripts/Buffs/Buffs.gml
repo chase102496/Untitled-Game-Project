@@ -22,7 +22,7 @@ function scrBuffsCleanup()
 // Adds the buff to the entity's buff list. Be sure to include the script and args in the same array, starting with the script as [0]
 // The buff will be added, as an array, to the list. [0] = script and args, [1] = buff timer, [2] = buff's saved info to revert back to (such as in a speed buff or slow buff)
 // [0][1] is always the buff ID, represented as a string constant, and [0][0] is the script itself
-function scrBuffsAdd(_scriptList,_targetID)
+function scrBuffsAdd(_scriptList,_targetID = id)
 {
 	var _index = scrBuffsFind(_scriptList[1],_targetID);
 	
@@ -38,7 +38,7 @@ function scrBuffsAdd(_scriptList,_targetID)
 }
 
 // Searches for the buff and sets the timer to 0, naturally expiring the buff
-function scrBuffsDelete(_buffID,_targetID)
+function scrBuffsDelete(_buffID,_targetID = id)
 {
 	var _index = scrBuffsFind(_buffID,_targetID);
 	
@@ -50,7 +50,7 @@ function scrBuffsDelete(_buffID,_targetID)
 }
 
 // Searches for the buff index in the given target. If it finds it, return the index. If not, return -1.
-function scrBuffsFind(_buffID,_targetID)
+function scrBuffsFind(_buffID,_targetID = id)
 {
 	for (var i = 0;i < ds_list_size(_targetID.currentBuffs);i ++)
 	{

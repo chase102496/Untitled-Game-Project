@@ -85,6 +85,7 @@ function conStatsInit() constructor
 		];
 	}
 	
+	/// @func damage(_amount,_type,_flinch)
 	damage = function(_amount,_type,_flinch)
 	{
 		switch (_type)

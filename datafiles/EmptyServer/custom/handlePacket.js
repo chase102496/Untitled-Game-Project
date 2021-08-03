@@ -25,7 +25,9 @@ module.exports = async function handlePacket(c, data) {
 
         //Sends info to an individual client, denoted in the data from the sending client
         //Sends info from one client to another. Useful for sending damage, buffs, kick requests, invites, etc.
-        case "netSendClientInfo":
+
+        // data.scr
+        case "netSendClientScript":
 
             break;
 

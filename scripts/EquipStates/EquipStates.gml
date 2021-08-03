@@ -161,12 +161,12 @@ function scrEquipStateInit() //All equip states
 			{
 				equipProjectile = conProjectileCreate(x,y,"layProjectile",objProjectile,owner);
 				equipProjectile.state.templateArrow(sprArrow);
-				equipProjectile.entityScript = function() // Insert code to run target-side here
-				{
-					stats.damage(100,"Physical",true);
-					scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]);
+				equipProjectile.entityScript = // Insert code to run target-side here
+				[
+					[damage,100,"Physical",true],
+					[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
 					
-				};
+				];
 			}
 			else equipProjectile.projectilePower = image_index/(image_number-1) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
 	

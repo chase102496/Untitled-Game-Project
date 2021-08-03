@@ -19,44 +19,44 @@
   ],
   "RecentItems": [
     {
-      "name": "EntityStates",
-      "path": "scripts/EntityStates/EntityStates.yy"
+      "name": "parEntity",
+      "path": "objects/parEntity/parEntity.yy"
     },
     {
-      "name": "objNetInstance",
-      "path": "objects/objNetInstance/objNetInstance.yy"
+      "name": "parNetInstance",
+      "path": "objects/parNetInstance/parNetInstance.yy"
     },
     {
-      "name": "sprNetEntity",
-      "path": "sprites/sprNetEntity/sprNetEntity.yy"
+      "name": "parNetEntity",
+      "path": "objects/parNetEntity/parNetEntity.yy"
     },
     {
-      "name": "objNetEntity",
-      "path": "objects/objNetEntity/objNetEntity.yy"
+      "name": "objNetEquip",
+      "path": "objects/objNetEquip/objNetEquip.yy"
     },
     {
-      "name": "ProjectStructure",
-      "path": "notes/ProjectStructure/ProjectStructure.yy"
+      "name": "objNetPlayer",
+      "path": "objects/objNetPlayer/objNetPlayer.yy"
     },
     {
-      "name": "buffer_visualize",
-      "path": "scripts/buffer_visualize/buffer_visualize.yy"
+      "name": "objNetProjectile",
+      "path": "objects/objNetProjectile/objNetProjectile.yy"
     },
     {
-      "name": "HandlePacket",
-      "path": "scripts/HandlePacket/HandlePacket.yy"
+      "name": "objLaternarius",
+      "path": "objects/objLaternarius/objLaternarius.yy"
     },
     {
-      "name": "NetworkInitializers",
-      "path": "scripts/NetworkInitializers/NetworkInitializers.yy"
+      "name": "objTerrain",
+      "path": "objects/objTerrain/objTerrain.yy"
     },
     {
-      "name": "objEntity",
-      "path": "objects/objEntity/objEntity.yy"
+      "name": "objNetPlayer",
+      "path": "objects/objNetPlayer/objNetPlayer.yy"
     },
     {
-      "name": "Multiple_Windows",
-      "path": "scripts/Multiple_Windows/Multiple_Windows.yy"
+      "name": "parHurtable",
+      "path": "objects/parHurtable/parHurtable.yy"
     }
   ],
   "Filters": [],

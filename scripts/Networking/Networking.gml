@@ -2,9 +2,8 @@
 // Usually, on connect a player is allocated 999 instance IDs for use later
 function netInstanceCreateID(_target = id)
 {
-	static offSet = 0;
-	offSet += 1;
-	_target.instanceOffsetID = offSet;
+	var _offSet = array_length(global.localInstances);
+	_target.instanceOffsetID = _offSet;
 	netInstanceUpdateID(_target);
 	array_push(global.localInstances,_target);
 }
@@ -12,6 +11,31 @@ function netInstanceUpdateID(_target = id)
 {
 	_target.instanceID = global.clientDataSelf.clientID + _target.instanceOffsetID;
 	return _target.instanceID;
+}
+
+// The local instances are the ones that are EXTRA that ONLY the HOST will sync to clientDataSelf
+function scrFindLocalInstance(_instanceID)
+{
+	for (var i = 0;i < array_length(global.localInstances);i ++)
+	{
+		if global.localInstances[i].instanceID == _instanceID return global.localInstances[i];
+	}
+	
+	return -1;
+}
+//
+function scrDeleteLocalInstance(_instanceID = other.instanceID)
+{
+	global.clientDataSelf.deleteInstance(_instanceID);
+	
+	var _newList = []
+	
+	for (var i = 0;i < array_length(global.localInstances);i ++)
+	{
+		if global.localInstances[i].instanceID != _instanceID array_push(_newList,global.localInstances[i])
+	}
+	
+	global.localInstances = _newList;
 }
 
 // Used to sync variables in bulk from our local instances to the one in the server
@@ -298,4 +322,20 @@ function netClientData() constructor
 		var _inst = findInstance(_instanceID, true); // true creates the instance obj first if it wasn't found
 		variable_struct_set(_inst,_varStr,_value);
 	}
+}
+
+// Finds the first joiner, and remembers it
+function netGetHost()
+{
+	var _lowest = infinity;
+					
+	for (var i = 0; i < array_length(global.clientDataOther.getClients());i ++)
+	{
+		var _current = global.clientDataOther.getClients()[i].clientID
+		if _current < _lowest _lowest = _current
+	}
+					
+	if global.clientDataSelf.clientID < _lowest _lowest = global.clientDataSelf.clientID;
+					
+	return _lowest;
 }

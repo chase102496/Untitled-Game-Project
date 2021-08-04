@@ -37,16 +37,20 @@ function netSendConnect()
 {
 	global.clientDataSelf = new netClientData();
 	global.clientDataSimulated = new netSimulated();
+	
 	send({cmd: "netSendConnect"});
 }
 //Runs on disconnect
 function netSendDisconnect()
 {
 	global.connected = false;
+	
 	global.clientDataSimulated.deleteSimulatedInstanceAll();
 	instance_destroy(parNetInstance);
+	
 	global.clientDataSelf = new netClientData();
 	global.clientDataOther = new netClients();
+	
 	show_debug_message("Disconnected");
 }
 //Runs while connected

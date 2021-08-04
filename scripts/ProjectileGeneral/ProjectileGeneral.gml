@@ -116,12 +116,16 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 	{	
 		if object_is_ancestor(entityColliding.object_index,parEntity)
 		{
+			show_debug_message("Entity")
 			with entityColliding scrExecuteScriptList(other.entityScriptList);
 		}
-		else if object_is_ancestor(entityColliding.object_index,parNetEntity)
+		else if object_is_ancestor(entityColliding.object_index,parNetEntity) or entityColliding.object_index == parNetEntity
 		{
+			show_debug_message("NetEntity")
 			netSendInstanceScript(entityScriptList,entityColliding.instanceID,entityColliding.clientID);
 		}
+		
+		show_debug_message("Entity")
 
 		entityCollidingContinuous = entityColliding;
 		entityColliding = noone;
@@ -158,7 +162,6 @@ function scrProjectileStateCollideTerrain(_animScript,_aliveTimerMax)
 
 function scrProjectileStateDestroy()
 {
-	global.clientDataSelf.deleteInstance();
 	instance_destroy();
 }
 

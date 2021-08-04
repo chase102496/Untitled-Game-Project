@@ -6,6 +6,7 @@ function scrEntityStateInit()
 		enter: function()
 		{
 			global.connected = false;
+			global.host = false;
 			halfpack = -1; // if a packet is split in half, we use this
 			
 			// --- This is when the connection is created
@@ -108,23 +109,48 @@ function scrEntityStateInit()
 			if global.connected
 			{
 				netInstanceUpdateID();
-
-				//Player data sync
-				netSyncVariablesTo(["x","y","sprite_index","image_index","image_angle","image_alpha","layer","stats","netObject"]);
 				
-				//Equip data sync
-				with entityEquip
-				{
-					netSyncVariablesTo(["x","y","layer","stats","netObject"]);
-					netSyncVariablesTo(["sprite_index","image_index_actual","image_xscale","image_yscale","image_angle","image_blend","image_alpha","spriteFrame"]);
-				}
+				//Finding host, first joiner
+				global.host = (netGetHost() == global.clientDataSelf.clientID);
 				
-				//Player projectiles sync
-				with objProjectile
+				//Syncing our data, if we're the host
+				if global.host
 				{
-					if equip.owner = global.playerObject //If this is owned by the player
+					for (var i = 0;i < array_length(global.localInstances);i ++)
 					{
-						netSyncVariablesTo(["x","y","sprite_index","image_speed","image_index","image_angle","image_alpha","layer","stats","netObject"]);
+						with global.localInstances[i]
+						{
+							if object_is_ancestor(object_index,parEntity) netSyncVariablesTo(["x","y","layer","stats","netObject","sprite_index","image_index","image_angle","image_alpha"]);
+							if object_index == objEquip netSyncVariablesTo(["x","y","layer","stats","netObject","sprite_index","image_index_actual","image_xscale","image_yscale","image_angle","image_alpha","spriteFrame"]);
+							else if object_index == objProjectile netSyncVariablesTo(["x","y","sprite_index","image_speed","image_index","image_angle","image_alpha","layer","stats","netObject"]);
+						}
+					}
+				}
+				else
+				{
+					for (var i = 0;i < array_length(global.localInstances);i ++)
+					{
+						with global.localInstances[i]
+						{
+							switch (object_index)
+							{
+								case objPlayer:
+									netSyncVariablesTo(["x","y","layer","stats","netObject","sprite_index","image_index","image_angle","image_alpha"]);
+									break;
+								
+								case objEquip:
+									if owner == global.playerObject netSyncVariablesTo(["x","y","layer","stats","netObject","sprite_index","image_index_actual","image_xscale","image_yscale","image_angle","image_alpha","spriteFrame"]);
+									break;
+								
+								case objProjectile:
+									if owner == global.playerObject netSyncVariablesTo(["x","y","sprite_index","image_speed","image_index","image_angle","image_alpha","layer","stats","netObject"]);
+									break;
+									
+								default:
+									instance_destroy();
+									break;
+							}
+						}
 					}
 				}
 				

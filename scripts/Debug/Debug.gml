@@ -42,13 +42,13 @@ function scrDebugVars()
 {		
 	
 	#region Polling-driven debug
-	
+
 	with global.inputObject
 	{	
-		//Tracking velocity
+		//0 - Tracking velocity
 		global.debugVar[| 0] = ["hVel: "+string(stats.hVel),"vVel: "+string(stats.vVel)];
 		
-		//Tracking buffs
+		//1 - Tracking buffs
 		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
 		{
 			var _buff = string(currentBuffs[| i][0][1]);
@@ -61,8 +61,19 @@ function scrDebugVars()
 		}
 		if ds_list_size(currentBuffs) == 0 array_pop(global.debugVar[| 1]);
 		
-		//Tracking basic stats
+		//2 - Tracking basic stats
 		global.debugVar[| 2] = stats.basicStats();
+		
+		//3-7 - Networking
+		global.debugVar[| 3] = netState.get_current_state();
+		global.debugVar[| 4] = "Host: "+string(global.host);
+		if global.connected
+		{
+			global.debugVar[| 5] = "self: " + string([global.clientDataSelf.clientID,global.clientDataSelf.getInstanceAll("instanceID")]);
+			global.debugVar[| 6] = "simulatedIDs: "+ string(global.clientDataSimulated.getSimulatedInstanceAll("instanceID"));
+			global.debugVar[| 7] = "clientIDs: "+ string(global.clientDataOther.getClients("clientID"));
+			global.debugVar[| 8] = "instanceIDs: "+ string(global.clientDataOther.getClientInstances("instanceID"));
+		}
 	}
 	
 	#endregion
@@ -75,7 +86,6 @@ function scrDebugVars()
 		{
 			var _newState = scrCustomToggle(netState.get_current_state(),"Online","Offline");
 			netState.change(_newState);
-			//variable_struct_get(global.playerObject,"stats.hVel")
 		}
 		
 		if global.keyPress0
@@ -88,9 +98,7 @@ function scrDebugVars()
 		if global.keyPress2 entityEquip.snowState.change("Greatsword Idle");
 		if global.keyPress3 entityEquip.snowState.change("Bow Idle");
 		if global.keyPress4 entityEquip.snowState.change("Orb Idle");
-		
-		if global.keyPress5 scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2],id);
-		
+
 		if global.keyPress6
 		{
 			var _sprRand = choose(sprGreatswordIdle,sprArrow,sprLaternariusIdle,sprOrbIdle,sprPlayerIdle,sprTerrain);

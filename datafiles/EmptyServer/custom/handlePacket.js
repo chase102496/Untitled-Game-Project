@@ -11,7 +11,8 @@ module.exports = async function handlePacket(c, data) {
     switch (cmd) {
 
         case "netSendConnect":
-            c.write({ cmd: "netSendConnect", clientID: c.clientID });
+            var _hostIndex = global.clients.indexOf(c);
+            c.write({ cmd: "netSendConnect", clientID: c.clientID, hostIndex: _hostIndex});
             //console.log("Player connected\n" + "clientID: " + c.clientID);
             //Logging
             //console.log("Player initialization...\n clientID: " + c.clientID + "\n instanceID: " + "TODO");

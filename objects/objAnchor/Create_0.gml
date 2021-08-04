@@ -1,2 +1,2 @@
-equip = instance_find(objEquip,0);
-equip.anchor = id; 
+equip = instance_nearest(x,y,objEquip);
+equip.anchor = id;

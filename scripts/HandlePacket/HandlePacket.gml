@@ -1,15 +1,4 @@
 //
-function scrFindLocalInstance(_instanceID)
-{
-	for (var i = 0;i < array_length(global.localInstances);i ++)
-	{
-		if global.localInstances[i].instanceID == _instanceID return global.localInstances[i];
-	}
-	
-	return -1;
-}
-
-//
 function handlePacket(pack) {
 	
 	data = snap_from_messagepack(pack);	// Deserialize/unpack msgpack into a struct
@@ -48,13 +37,6 @@ function handlePacket(pack) {
 			
 			netSimulatedUpdate();
 			
-			//Debug
-			global.debugVar[| 3] = netState.get_current_state();
-			global.debugVar[| 4] = "self: " + string([global.clientDataSelf.clientID,global.clientDataSelf.getInstanceAll("instanceID")]);
-			global.debugVar[| 5] = "simulatedIDs: "+ string(global.clientDataSimulated.getSimulatedInstanceAll("instanceID"));
-			global.debugVar[| 6] = "clientIDs: "+ string(global.clientDataOther.getClients("clientID"));
-			global.debugVar[| 7] = "instanceIDs: "+ string(global.clientDataOther.getClientInstances("instanceID"));
-			
 			break;
 		}
 		
@@ -62,6 +44,7 @@ function handlePacket(pack) {
 		{
 			var _parsedScript = json_parse(data.scriptList);
 			with scrFindLocalInstance(data.instanceID) scrExecuteScriptList(_parsedScript);
+			
 			break;
 		}
 			

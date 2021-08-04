@@ -1,6 +1,9 @@
 //Network
 global.clientDataSelf = new netClientData();
+global.clientDataOther = new netClients();
 global.localInstances = [];
+global.connected = false;
+global.host = false;
 
 //Debug
 scrDebugInit();

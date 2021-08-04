@@ -8,16 +8,6 @@ function scrEntityStateInit()
 			global.connected = false;
 			halfpack = -1; // if a packet is split in half, we use this
 			
-			onConnect = function()
-			{
-				netSendConnect();
-			};
-			
-			onDisconnect = function() //DOESN'T WORK
-			{
-				netSendDisconnect();
-			};
-			
 			// --- This is when the connection is created
 			socket = network_create_socket(network_socket_tcp);
 			
@@ -102,13 +92,13 @@ function scrEntityStateInit()
 					
 				case network_type_connect:
 				{
-					onConnect();
+					netSendConnect();
 					break;
 				}
 				
 				case network_type_disconnect:
 				{
-					//onDisconnect(); NOT WORKING
+					netSendDisconnect();
 					break;
 				}
 			}
@@ -145,7 +135,7 @@ function scrEntityStateInit()
 		},
 		leave: function()
 		{
-			onDisconnect();
+			netSendDisconnect();
 			network_destroy(socket);
 		}
 	});

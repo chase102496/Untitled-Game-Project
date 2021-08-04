@@ -161,9 +161,9 @@ function scrEquipStateInit() //All equip states
 			{
 				equipProjectile = conProjectileCreate(x,y,"layProjectile",objProjectile,owner);
 				equipProjectile.state.templateArrow(sprArrow);
-				equipProjectile.entityScript = // Insert code to run target-side here
+				equipProjectile.entityScriptList = // Insert code to run target-side here
 				[
-					[damage,100,"Physical",true],
+					[scrStatsDamage,100,"Physical",true],
 					[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
 					
 				];
@@ -281,11 +281,12 @@ function scrEquipStateInit() //All equip states
 			{
 				equipProjectile = conProjectileCreate(_castRange[0],_castRange[1],"layProjectile",objProjectile,owner);
 				equipProjectile.state.templateSpellStatic(sprEmpty,sprArcaneBlast,sprArcaneBlast);
-				equipProjectile.entityScript = function() // Insert code to run target-side here
-				{
-					scrBuffsAdd([scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]);
-					stats.damage(10,"Magical",true);
-				};
+				equipProjectile.entityScriptList = // Insert code to run target-side here
+				[
+					[scrStatsDamage,50,"Magical",true],
+					[scrBuffsAdd,[scrBuffsStats,global.buffsID.slowness,"vMaxVel",7,0.5]]
+					
+				];
 			}
 			else
 			{

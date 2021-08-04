@@ -9,7 +9,8 @@ function scrBuffsInit()
 	{
 		damageInstant : "Instant Damage",
 		swiftness : "Swiftness",
-		leaping : "Leaping"
+		leaping : "Leaping",
+		slowness : "Slowness"
 	}
 }
 

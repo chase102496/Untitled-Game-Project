@@ -1,3 +1,15 @@
+//
+function scrFindLocalInstance(_instanceID)
+{
+	for (var i = 0;i < array_length(global.localInstances);i ++)
+	{
+		if global.localInstances[i].instanceID == _instanceID return global.localInstances[i];
+	}
+	
+	return -1;
+}
+
+//
 function handlePacket(pack) {
 	
 	data = snap_from_messagepack(pack);	// Deserialize/unpack msgpack into a struct
@@ -46,8 +58,12 @@ function handlePacket(pack) {
 			break;
 		}
 		
-		case "netSetClientVariable":
+		case "netSendInstanceScript":
+		{
+			var _parsedScript = json_parse(data.scriptList);
+			with scrFindLocalInstance(data.instanceID) scrExecuteScriptList(_parsedScript);
 			break;
+		}
 			
 	#region Samples
 

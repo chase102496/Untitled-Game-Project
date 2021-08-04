@@ -48,10 +48,6 @@ function scrDebugVars()
 		//Tracking velocity
 		global.debugVar[| 0] = ["hVel: "+string(stats.hVel),"vVel: "+string(stats.vVel)];
 		
-		var _test = [scrRoundPrecise,12]
-		
-		global.debugVar[| 9] = json_stringify(_test);
-		
 		//Tracking buffs
 		for (var i = 0;i < ds_list_size(currentBuffs);i ++)
 		{

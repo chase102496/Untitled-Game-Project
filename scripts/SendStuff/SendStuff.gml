@@ -30,6 +30,8 @@ function sendRegister(username, password) {
 
 #endregion
 
+#region Event-based senders
+
 //Runs on connect
 function netSendConnect()
 {
@@ -37,7 +39,6 @@ function netSendConnect()
 	global.clientDataSimulated = new netSimulated();
 	send({cmd: "netSendConnect"});
 }
-
 //Runs on disconnect
 function netSendDisconnect()
 {
@@ -48,7 +49,6 @@ function netSendDisconnect()
 	global.clientDataOther = new netClients();
 	show_debug_message("Disconnected");
 }
-
 //Runs while connected
 function netUpdate(_frequencyInSeconds,_packetObject)
 {	
@@ -62,3 +62,20 @@ function netUpdate(_frequencyInSeconds,_packetObject)
 	tick ++;
 }
 
+#endregion
+
+#region Call-based senders
+
+function netSendInstanceScript(_scriptList,_instanceID,_clientID)
+{
+	var _scriptListNew = [];
+	
+	for (var i = 0;i < array_length(_scriptList);i ++)
+	{
+		_scriptListNew[i] = _scriptList[i];
+	}
+	
+	send({cmd: "netSendInstanceScript", scriptList: json_stringify(_scriptListNew), clientID: _clientID, instanceID: _instanceID});
+}
+
+#endregion

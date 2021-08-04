@@ -1,12 +1,8 @@
 ///@function network_write(data, *socket)
 ///@arg data
 ///@arg *socket
-function network_write(data, sock) {
-	// most of the time you just want to send the data to objClient.socket
-	if is_undefined(argument[1]) /* is_undefined(sock) */ {
-		sock = global.playerObject.socket
-	}
-	
+function network_write(data, sock = global.playerObject.socket) 
+{	
 	//trace("Encoding data: %", data)
 	
 	// the data buffer
@@ -31,7 +27,8 @@ function network_write(data, sock) {
 ///@function send(data, *socket)
 ///@arg data
 ///@arg *socket
-function send(data, sock) {
+function send(data, sock = global.playerObject.socket) 
+{
 	return network_write(data, sock)
 }
 

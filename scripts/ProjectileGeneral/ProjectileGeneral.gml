@@ -114,18 +114,15 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 	//One-time run script for entity
 	if entityColliding != noone
 	{	
-		with entityColliding
+		if object_is_ancestor(entityColliding.object_index,parEntity)
 		{
-			if object_is_ancestor(object_index,parEntity) script_execute(method_get_index(entityScript));
-			else if object_is_ancestor(object_index,parNetEntity)
-			{
-				send({cmd: "netSendClientScript",
-					scr: json_stringify(_scriptID),
-					clientID: entityColliding.clientID,
-					instanceID: entityColliding.instanceID});
-			}
+			with entityColliding scrExecuteScriptList(other.entityScriptList);
 		}
-		
+		else if object_is_ancestor(entityColliding.object_index,parNetEntity)
+		{
+			netSendInstanceScript(entityScriptList,entityColliding.instanceID,entityColliding.clientID);
+		}
+
 		entityCollidingContinuous = entityColliding;
 		entityColliding = noone;
 	}

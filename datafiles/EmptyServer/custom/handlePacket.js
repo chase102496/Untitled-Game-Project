@@ -27,8 +27,14 @@ module.exports = async function handlePacket(c, data) {
         //Sends info from one client to another. Useful for sending damage, buffs, kick requests, invites, etc.
 
         // data.scr
-        case "netSendClientScript":
-
+        case "netSendInstanceScript":
+            global.clients.forEach(function (_c)
+            {
+                if (_c.clientID == data.clientID)
+                {
+                    _c.write({ cmd: "netSendInstanceScript", instanceID: data.instanceID, scriptList: data.scriptList });
+                }
+            })
             break;
 
         //Gets the info about all clients connected, including itself

@@ -4,16 +4,19 @@ module.exports = class SendStuff {
     constructor() { }
 
     // basic send
-    write(data) {
+    write(data)
+    {
         this.socket.write(packet.build(data));
     }
 
-    send(data) { // just another name
+    send(data) // just another name
+    {
         return this.write(data);
     }
 
     //Get all the objects from global.clients and convert to json string
-    getOtherClientsInfo(clients, notme) {
+    getOtherClientsInfo(clients, notme)
+    {
         if (notme) {
             notme = true;
         }

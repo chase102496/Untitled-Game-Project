@@ -84,13 +84,26 @@ function conStatsInit() constructor
 		"apMax: "+string(apMax)
 		];
 	}
+
+	#endregion
 	
-	/// @func damage(_amount,_type,_flinch)
-	damage = function(_amount,_type,_flinch)
+	#region Inventory
+	
+	//inventory = ds_list_create();
+	
+	#endregion
+	
+}
+
+//Damages whoever runs it, checking all the necessary stats variables to modify damage taken
+function scrStatsDamage(_amount,_type,_flinch)
+{
+	with stats
 	{
 		switch (_type)
 		{
 			case "Physical":
+			{
 				var _damage = _amount*(100/(100+armorPhysical));
 				var _scale = min((0.2+(_damage/hpMax)),0.5);
 			
@@ -104,8 +117,10 @@ function conStatsInit() constructor
 				}
 				
 				break;
+			}
 				
 			case "Magical":
+			{
 				var _damage = _amount*(100/(100+armorMagical));
 				var _scale = min((0.2+(_damage/hpMax)),0.5);
 			
@@ -119,17 +134,7 @@ function conStatsInit() constructor
 				}
 				
 				break;
-			
-			
+			}
 		}
 	}
-	
-	#endregion
-	
-	#region Inventory
-	
-	//inventory = ds_list_create();
-	
-	#endregion
-	
 }

@@ -1190,10 +1190,10 @@
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/internal/initializers","resourceVersion":"1.0","name":"04_mongodb.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/custom","resourceVersion":"1.0","name":"customFunctions.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/internal/initializers","resourceVersion":"1.0","name":"01_globals.js","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/custom","resourceVersion":"1.0","name":"sendStuff.js","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/internal/entities","resourceVersion":"1.0","name":"client.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer","resourceVersion":"1.0","name":"package.json","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/custom","resourceVersion":"1.0","name":"sendStuff.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer","resourceVersion":"1.0","name":"server.js","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/internal/entities","resourceVersion":"1.0","name":"client.js","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/EmptyServer/custom","resourceVersion":"1.0","name":"handlePacket.js","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {

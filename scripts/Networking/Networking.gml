@@ -6,6 +6,7 @@ function netInstanceCreateID(_target = id)
 	offSet += 1;
 	_target.instanceOffsetID = offSet;
 	netInstanceUpdateID(_target);
+	array_push(global.localInstances,_target);
 }
 function netInstanceUpdateID(_target = id)
 {
@@ -135,7 +136,6 @@ function netSimulated() constructor
 		return _returnList;
 	}
 }
-
 // Checks for world updates on new instances to add to simulated instances. Manages create/delete
 function netSimulatedUpdate()
 {
@@ -220,7 +220,6 @@ function netClients() constructor
 	}
 	
 }
-
 // Child of netClients, holds one client's data
 function netClientData() constructor
 {	

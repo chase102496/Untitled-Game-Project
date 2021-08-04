@@ -14,6 +14,16 @@ function forEach(_list,_function) //NEEDS REVISION
 	delete __i;
 }
 
+/// @desc Runs each sub-list, the first item is the script index, the rest are args: [[ScriptName1,arg0],[ScriptName2,arg0,arg1]]
+/// @func scrExecuteScriptList(_scriptList)
+function scrExecuteScriptList(_scriptList)
+{
+	for (var i = 0;i < array_length(_scriptList);i ++)
+	{
+		script_execute_ext(_scriptList[i][0],_scriptList[i],1);
+	}
+}
+
 //@scrRoundPrecise(value to be rounded, rounding frac)
 //e.g. to round to 0.01 scrRoundPrecise(10.354676, 0.01) = 10.35
 //scrRoundPrecise(10.354676, 0.25) = 10.25

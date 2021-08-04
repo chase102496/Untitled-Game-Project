@@ -76,8 +76,8 @@ function scrProjectileStateHoldArrow(_animScript)
 	stats.vVel = projectilePower*_vVelRatio;
 	stats.hVel = projectilePower*_hVelRatio;
 
-	x = equip.anchor.x;
-	y = equip.anchor.y;
+	x = anchor.x;
+	y = anchor.y;
 	
 	scrProjectileAnimationHandler(_animScript);
 }
@@ -130,17 +130,20 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 		entityCollidingContinuous = entityColliding;
 		entityColliding = noone;
 	}
+	
+	switch(_afterHit)
+	{
+		case "Sticking":
+			stats.hVel = entityCollidingContinuous.stats.hVel;
+			stats.vVel = entityCollidingContinuous.stats.vVel;
+			scrProjectilePhysics(false,false,false);
 			
+			break;
+	}
+	
 	//Continuous run script for entity, as long as projectile is alive
 	if entityCollidingContinuous != noone
 	{
-		switch(_afterHit)
-		{
-			case "Sticking":
-				x += entityCollidingContinuous.stats.hVel;
-				y += entityCollidingContinuous.stats.vVel;
-				break;
-		}
 	}
 	
 	scrProjectileAnimationHandler(_animScript);
@@ -196,13 +199,13 @@ function scrProjectileAliveTimer(_aliveTimerMax)
 
 // Runs physics for object
 //_angleVelocity is true/false. Image turns toward its vector. Offset can be adjusted with angleVelocityOffset
-function scrProjectilePhysics(_angleVelocity)
+function scrProjectilePhysics(_angleVelocity = true, _gravity = true,_airFriction = true)
 {
 	//Angles the projectile toward the current velocity
 	if _angleVelocity image_angle = point_direction(0,0,stats.hVel,stats.vVel)+angleVelocityOffset;
 	
-	stats.vVel += stats.gravAccel;
-	stats.hVel -= sign(stats.hVel)*stats.hAirDecel;
+	if _gravity stats.vVel += stats.gravAccel;
+	if _airFriction stats.hVel -= sign(stats.hVel)*stats.hAirDecel;
 
 	x += stats.hVel;
 	y += stats.vVel;

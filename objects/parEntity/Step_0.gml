@@ -1,3 +1,5 @@
+//Network
+netInstanceUpdateID();
 //Main
 snowState.step();
 netState.step();

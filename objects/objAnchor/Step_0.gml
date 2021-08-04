@@ -1,1 +1,3 @@
-if !instance_exists(equip) or !instance_exists(equip.equipProjectile) instance_destroy();
+entityEquip = instance_nearest(x,y,objEquip);
+if instance_exists(entityEquip.equipProjectile) entityEquip.equipProjectile.anchor = id;
+else instance_destroy();

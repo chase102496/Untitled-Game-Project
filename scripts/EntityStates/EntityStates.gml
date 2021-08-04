@@ -108,8 +108,6 @@ function scrEntityStateInit()
 		{
 			if global.connected
 			{
-				netInstanceUpdateID();
-				
 				//Finding host, first joiner
 				global.host = (netGetHost() == global.clientDataSelf.clientID);
 				

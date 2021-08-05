@@ -136,28 +136,30 @@ function conGUIInit() constructor
 	}
 	
 	/// @desc Draw a selection of windows and highlight one based on cursorDimension input, specific to a scrolling inventory with one inventory category
-	/// @func drawInventoryList(_listWindow,_categoryString,_invOwner)
-	drawInventoryList = function(_listWindow,_categoryString,_invOwner)
+	/// @func drawInventoryList(_mainWindow,_categoryString,_invOwner,_itemsPerWindow = 8)
+	drawInventoryList = function(_mainWindow,_categoryString,_invOwner,_itemsPerWindow = 8)
 	{		
 		//Init
-		var _invText = [];
-		var _activeWindow = [];
+		var _invItems = [];
+		if _itemsPerWindow = "Max"
+		{
+			
+		}
 		var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
 		cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
 
 		//Poll
 		cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
-		scroll = clamp(scroll,0,max(array_length(_pocketList) - array_length(_listWindow),0));
+		scroll = clamp(scroll,0,max(array_length(_pocketList) - _itemsPerWindow,0));
 		
 		//Itemswindow calc
-		for (var i = 0;i < array_length(_listWindow);i ++)
+		for (var i = 0;i < _itemsPerWindow;i ++)
 		{
 			var _iScroll = i + scroll; //Adjusted index according to how far we scrolled down
 			
 			if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
 			{
-				_activeWindow[i] = _listWindow[i]; //Add this as an active window
-				_invText[i] = _pocketList[_iScroll].name;
+				_invItems[i] = _pocketList[_iScroll].name;
 				
 				if cursorGrid[2] == _iScroll //If selected by cursor currently
 				{
@@ -183,7 +185,8 @@ function conGUIInit() constructor
 		
 		//Itemswindow drawing
 		var _itemNameStack = [0,0];
-		mainWindow.drawDetails(_itemNameStack,8,8,_invText,"Down",cursorGrid[2]-scroll,0.5,0,sprBorderSimpleNoOverlay);
+		_mainWindow.drawDetails(_itemNameStack,8,8,_invItems,"Down",cursorGrid[2]-scroll,0.6,0,sprBorderSimpleNoOverlay);
+		
 		
 		//drawSub(_invOwner,_activeWindow,2,_invText,["vAlign",1,[4,0]],-1,-1,false,-scroll); //Inventory tab drawing
 	}

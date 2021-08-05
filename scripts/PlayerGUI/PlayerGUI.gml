@@ -85,7 +85,7 @@ function scrGUI(_guiOwner)
 			{
 				//Drawing stuff
 				drawSub(_guiOwner,subTab,1,-1,-1,subMenuInventorySprites,["Center",1.1,[0,0]]); //Draws subTab
-				drawInventoryList(listWindow,subMenuInventoryTabs[cursorGrid[1]],_guiOwner); //Inventory list drawing, depending on submenu tab
+				drawInventoryList(mainWindow,subMenuInventoryTabs[cursorGrid[1]],_guiOwner); //Inventory list drawing, depending on submenu tab
 				
 				//Selection tree
 				if cursorGrid[3] == -2

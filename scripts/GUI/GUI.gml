@@ -144,7 +144,7 @@ function conGUIInit() constructor
 		var _activeWindow = [];
 		var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
 		cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
-		
+
 		//Poll
 		cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
 		scroll = clamp(scroll,0,max(array_length(_pocketList) - array_length(_listWindow),0));
@@ -153,7 +153,7 @@ function conGUIInit() constructor
 		for (var i = 0;i < array_length(_listWindow);i ++)
 		{
 			var _iScroll = i + scroll; //Adjusted index according to how far we scrolled down
-
+			
 			if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
 			{
 				_activeWindow[i] = _listWindow[i]; //Add this as an active window
@@ -183,7 +183,7 @@ function conGUIInit() constructor
 		
 		//Itemswindow drawing
 		var _itemNameStack = [0,0];
-		mainWindow.drawDetails(_itemNameStack,8,8,_invText,"Down",cursorGrid[2]);
+		mainWindow.drawDetails(_itemNameStack,8,8,_invText,"Down",cursorGrid[2]-scroll,0.5,0,sprBorderSimpleNoOverlay);
 		
 		//drawSub(_invOwner,_activeWindow,2,_invText,["vAlign",1,[4,0]],-1,-1,false,-scroll); //Inventory tab drawing
 	}
@@ -238,12 +238,12 @@ function conGUIInit() constructor
 			winStart = scrGuiRelativeToAbsolute(x1*grid,y1*grid);
 			draw_sprite_ext(_sprite,0,winStart[0]+_offsetX,winStart[1]+_offsetY,_scale,_scale,0,-1,255);
 		}
-
+	
 		/// @desc Draws a stackable window and some details about the selected object for each item in the stack
 		/// _stackVar is the persistent variable to stack multiple functions
 		/// _stackDirection is the direction to stack in, Left, Right, Up, or Down
-		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_itemHighlight = "None",_scale = 1,_stackBuffer = 0,_windowSprite = -1,_windowBufferX = 8,_windowBufferY = 8)
-		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_cursorVar = -1,_scale = 1,_stackBuffer = 0,_windowSprite = -1,_windowBufferX = 8,_windowBufferY = 8)
+		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_cursorVar = -1,_scale = 1,_stackBuffer = 0,_windowSprite = sprEmpty,_windowBufferX = 8,_windowBufferY = 8)
+		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_cursorVar = -1,_scale = 1,_stackBuffer = 0,_windowSprite = sprEmpty,_windowBufferX = 8,_windowBufferY = 8)
 		{
 			static _subImage = 0;
 			var _maxStackWidth = 0;
@@ -317,11 +317,8 @@ function conGUIInit() constructor
 			
 			var _windowSpriteX2 = winStart[0] + _stackVar[0] + _maxStackWidth + _offsetX + (_windowBufferX*2)*_stackVarAdd[1];
 			var _windowSpriteY2 = winStart[1] + _stackVar[1] + _maxStackHeight + _offsetY + (_windowBufferY*2)*_stackVarAdd[0];
-			
-			if _windowSprite != -1
-			{
-				drawWindowSprite(_windowSprite,_windowSpriteX1,_windowSpriteY1,_windowSpriteX2,_windowSpriteY2);
-			}
+
+			drawWindowSprite(_windowSprite,_windowSpriteX1,_windowSpriteY1,_windowSpriteX2,_windowSpriteY2);
 			
 			_subImage =+ 1;
 		}

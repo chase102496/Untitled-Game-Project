@@ -15,9 +15,37 @@
     {
       "name": "Sequences",
       "path": "folders/Sequences.yy"
+    },
+    {
+      "name": "Fonts",
+      "path": "folders/Fonts.yy"
     }
   ],
   "RecentItems": [
+    {
+      "name": "PlayerGUI",
+      "path": "scripts/PlayerGUI/PlayerGUI.yy"
+    },
+    {
+      "name": "fntSilver",
+      "path": "fonts/fntSilver/fntSilver.yy"
+    },
+    {
+      "name": "__scribble_config_macros",
+      "path": "scripts/__scribble_config_macros/__scribble_config_macros.yy"
+    },
+    {
+      "name": "__scribble_config_default_template",
+      "path": "scripts/__scribble_config_default_template/__scribble_config_default_template.yy"
+    },
+    {
+      "name": "__scribble_config_colours",
+      "path": "scripts/__scribble_config_colours/__scribble_config_colours.yy"
+    },
+    {
+      "name": "objAnchor",
+      "path": "objects/objAnchor/objAnchor.yy"
+    },
     {
       "name": "objLaternarius",
       "path": "objects/objLaternarius/objLaternarius.yy"
@@ -27,36 +55,12 @@
       "path": "objects/parEntity/parEntity.yy"
     },
     {
-      "name": "objAnchor",
-      "path": "objects/objAnchor/objAnchor.yy"
-    },
-    {
       "name": "parNetInstance",
       "path": "objects/parNetInstance/parNetInstance.yy"
     },
     {
       "name": "parNetEntity",
       "path": "objects/parNetEntity/parNetEntity.yy"
-    },
-    {
-      "name": "objNetEquip",
-      "path": "objects/objNetEquip/objNetEquip.yy"
-    },
-    {
-      "name": "objNetPlayer",
-      "path": "objects/objNetPlayer/objNetPlayer.yy"
-    },
-    {
-      "name": "objNetProjectile",
-      "path": "objects/objNetProjectile/objNetProjectile.yy"
-    },
-    {
-      "name": "objTerrain",
-      "path": "objects/objTerrain/objTerrain.yy"
-    },
-    {
-      "name": "objNetPlayer",
-      "path": "objects/objNetPlayer/objNetPlayer.yy"
     }
   ],
   "Filters": [],
@@ -76,6 +80,22 @@
     "#FFFF0000",
     "#FFFF00FF",
     "#FF4040FF",
-    "#FFFF80FF"
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80",
+    "#FF80FF00",
+    "#FF80C0FF",
+    "#FF0000FF",
+    "#FF00FFFF",
+    "#FF00FF00",
+    "#FFFFFF00",
+    "#FFFF0000",
+    "#FFFF00FF",
+    "#FF4040FF",
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80"
   ]
 }

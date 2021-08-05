@@ -137,14 +137,10 @@ function conGUIInit() constructor
 	
 	/// @desc Draw a selection of windows and highlight one based on cursorDimension input, specific to a scrolling inventory with one inventory category
 	/// @func drawInventoryList(_mainWindow,_categoryString,_invOwner,_itemsPerWindow = 8)
-	drawInventoryList = function(_mainWindow,_categoryString,_invOwner,_itemsPerWindow = 8)
+	drawInventoryList = function(_mainWindow,_categoryString,_invOwner,_itemsPerWindow = 15)
 	{		
 		//Init
 		var _invItems = [];
-		if _itemsPerWindow = "Max"
-		{
-			
-		}
 		var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
 		cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
 
@@ -180,12 +176,12 @@ function conGUIInit() constructor
 			var _itemInfoStack = [0,0];
 			
 			//Item details pane
-			detailWindow.drawDetails(_itemInfoStack,8,8,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],"Down",-1,[0.5,2,0.5],4,sprBorderSimpleNoOverlay);
+			detailWindow.drawDetails(_itemInfoStack,8,8,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],"Down",[0.5,2,0.5],-1,8,8,-1,sprBorderSimpleNoOverlay);
 		}
 		
 		//Itemswindow drawing
 		var _itemNameStack = [0,0];
-		_mainWindow.drawDetails(_itemNameStack,8,8,_invItems,"Down",cursorGrid[2]-scroll,0.6,0,sprBorderSimpleNoOverlay);
+		_mainWindow.drawDetails(_itemNameStack,8,8,_invItems,"Down",0.6,0,8,8,cursorGrid[2]-scroll,sprEmpty,sprBorderSimpleNoOverlay);
 		
 		
 		//drawSub(_invOwner,_activeWindow,2,_invText,["vAlign",1,[4,0]],-1,-1,false,-scroll); //Inventory tab drawing
@@ -245,8 +241,8 @@ function conGUIInit() constructor
 		/// @desc Draws a stackable window and some details about the selected object for each item in the stack
 		/// _stackVar is the persistent variable to stack multiple functions
 		/// _stackDirection is the direction to stack in, Left, Right, Up, or Down
-		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_cursorVar = -1,_scale = 1,_stackBuffer = 0,_windowSprite = sprEmpty,_windowBufferX = 8,_windowBufferY = 8)
-		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_cursorVar = -1,_scale = 1,_stackBuffer = 0,_windowSprite = sprEmpty,_windowBufferX = 8,_windowBufferY = 8)
+		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_scale = 1,_stackBuffer = 0,_windowBufferX = 8,_windowBufferY = 8,_cursorVar = -1,_windowSprite = sprEmpty,_highlightSprite = sprEmpty)
+		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_scale = 1,_stackBuffer = 0,_windowBufferX = 8,_windowBufferY = 8,_cursorVar = -1,_windowSprite = sprEmpty,_highlightSprite = sprEmpty)
 		{
 			static _subImage = 0;
 			var _maxStackWidth = 0;
@@ -303,7 +299,7 @@ function conGUIInit() constructor
 					draw_sprite_ext(_list[i],_subImage,_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,_listScale,0,-1,1);
 				}
 				
-				if _highlighted drawWindowSprite(_windowSprite,_stackStartX,_stackStartY,_stackStartX+_itemWidth,_stackStartY+_itemHeight);
+				if _highlighted drawWindowSprite(_highlightSprite,_stackStartX,_stackStartY,_stackStartX+_itemWidth,_stackStartY+_itemHeight);
 				
 				//Adds the off stack info
 				_maxStackWidth = max(_maxStackWidth,_itemWidth*_stackVarAdd[1]);

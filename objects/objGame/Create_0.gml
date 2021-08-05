@@ -5,6 +5,11 @@ global.localInstances = [];
 global.connected = false;
 global.host = false;
 
+//Scribble
+scribble_font_add_all();
+scribble_font_set_default("fntSilver");
+//draw_set_font(fntSilver);
+
 //Debug
 scrDebugInit();
 

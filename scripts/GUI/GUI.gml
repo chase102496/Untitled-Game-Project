@@ -130,9 +130,9 @@ function conGUIInit() constructor
 			if _textIndex != -1 _windowArray[i].drawText(_textIndex,_textX,_textY,_textScale);
 			
 			//If selected, draw window
+			var _stackWindow = [0,0];
 			if _cursorResult == i _windowArray[i].drawWindow();
-		}
-			
+		}	
 	}
 	
 	/// @desc Draw a selection of windows and highlight one based on cursorDimension input, specific to a scrolling inventory with one inventory category
@@ -142,20 +142,21 @@ function conGUIInit() constructor
 		//Init
 		var _invText = [];
 		var _activeWindow = [];
-		cursorObject = new conInventoryItem(sprEmpty,"Empty","",1,"Empty",[]);
+		var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
+		cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
 		
+		//Poll
+		cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
+		scroll = clamp(scroll,0,max(array_length(_pocketList) - array_length(_listWindow),0));
+		
+		//Itemswindow calc
 		for (var i = 0;i < array_length(_listWindow);i ++)
 		{
-			var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
-			
-			cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
-			scroll = clamp(scroll,0,max(array_length(_pocketList) - array_length(_listWindow),0));
-			
 			var _iScroll = i + scroll; //Adjusted index according to how far we scrolled down
 
 			if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
 			{
-				_activeWindow[i] = _listWindow[i];
+				_activeWindow[i] = _listWindow[i]; //Add this as an active window
 				_invText[i] = _pocketList[_iScroll].name;
 				
 				if cursorGrid[2] == _iScroll //If selected by cursor currently
@@ -164,6 +165,7 @@ function conGUIInit() constructor
 				}
 			}
 		}
+		
 		if cursorGrid[2] > _iScroll scroll ++ //Scroll auto-adjusts for out of bounds values
 		else if cursorGrid[2] < scroll scroll --
 
@@ -171,13 +173,19 @@ function conGUIInit() constructor
 		if cursorObject != -1
 		{
 			detailWindow.drawWindow();
-			//stackVar is the ID that ties together a column of details. It will continue to add onto the bottom of the stack
-			var _stackVar = [0,0];
 			
-			detailWindow.drawDetails(_stackVar,8,8,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],[0.5,2,0.5],4,sprBorderSimpleNoOverlay); //Item sprite
+			//stackVar is the ID that ties together a column of details. It will continue to add onto the bottom of the stack
+			var _itemInfoStack = [0,0];
+			
+			//Item details pane
+			detailWindow.drawDetails(_itemInfoStack,8,8,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],"Down",-1,[0.5,2,0.5],4,sprBorderSimpleNoOverlay);
 		}
 		
-		drawSub(_invOwner,_activeWindow,2,_invText,["vAlign",0.5,[4,0]],-1,-1,false,-scroll);
+		//Itemswindow drawing
+		var _itemNameStack = [0,0];
+		mainWindow.drawDetails(_itemNameStack,8,8,_invText,"Down",cursorGrid[2]);
+		
+		//drawSub(_invOwner,_activeWindow,2,_invText,["vAlign",1,[4,0]],-1,-1,false,-scroll); //Inventory tab drawing
 	}
 	
 #endregion
@@ -216,8 +224,8 @@ function conGUIInit() constructor
 		}
 		
 		/// @desc Draws some text relative to the window
-		/// @func drawText(_text,_offsetX = 0,_offsetY = 0,_scale = 0.5)
-		drawText = function(_text,_offsetX = 0,_offsetY = 0,_scale = 0.5)
+		/// @func drawText(_text,_offsetX = 0,_offsetY = 0,_scale = 1)
+		drawText = function(_text,_offsetX = 0,_offsetY = 0,_scale = 1)
 		{
 			winStart = scrGuiRelativeToAbsolute(x1*grid,y1*grid);
 			draw_text_transformed(winStart[0]+_offsetX,winStart[1]+_offsetY,_text,_scale,_scale,0);
@@ -231,55 +239,84 @@ function conGUIInit() constructor
 			draw_sprite_ext(_sprite,0,winStart[0]+_offsetX,winStart[1]+_offsetY,_scale,_scale,0,-1,255);
 		}
 
-		/// @desc Draws an optional window and some details about the selected object
-		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_scale = 1,_stackBuffer = 0,_windowSprite = -1,_windowBufferX = 8,_windowBufferY = 8)
-		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_scale = 1,_stackBuffer = 0,_windowSprite = -1,_windowBufferX = 8,_windowBufferY = 8)
+		/// @desc Draws a stackable window and some details about the selected object for each item in the stack
+		/// _stackVar is the persistent variable to stack multiple functions
+		/// _stackDirection is the direction to stack in, Left, Right, Up, or Down
+		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_itemHighlight = "None",_scale = 1,_stackBuffer = 0,_windowSprite = -1,_windowBufferX = 8,_windowBufferY = 8)
+		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_cursorVar = -1,_scale = 1,_stackBuffer = 0,_windowSprite = -1,_windowBufferX = 8,_windowBufferY = 8)
 		{
 			static _subImage = 0;
 			var _maxStackWidth = 0;
+			var _maxStackHeight = 0;
+			var _maxStackResult = 0
+			var _stackVarAdd = [0,0];
+			var _listScale = _scale;
+			var _stackBufferAdd = _stackBuffer;
+			var _highlighted = false;
 
-			var _windowSpriteX1 = winStart[0] + _offsetX;
+			var _windowSpriteX1 = winStart[0] + _stackVar[0] + _offsetX;
 			var _windowSpriteY1 = winStart[1] + _stackVar[1] + _offsetY;
+			
+			switch (_stackDirection)
+			{
+				case "Down":
+					_stackVarAdd = [0,1];
+					break;
+				
+				case "Right":
+					_stackVarAdd = [1,0];
+					break;
+			}
 			
 			for (var i = 0;i < array_length(_list);i ++)
 			{
-				//Per-item scale adjusting
-				if is_array(_scale) var _listScale = _scale[i];
-				else var _listScale = _scale;
+				//Item starting locations
+				var _stackStartX = winStart[0]+_stackVar[0]+_offsetX+_windowBufferX;
+				var _stackStartY = winStart[1]+_stackVar[1]+_offsetY+_windowBufferY;
 				
-				if i == array_length(_list)-1 var _stackBufferAdd = 0
-				else var _stackBufferAdd = _stackBuffer
+				if _cursorVar != -1 and i == _cursorVar _highlighted = true;
+				else _highlighted = false;
+				
+				//Per item scale adjustment
+				if is_array(_scale) _listScale = _scale[i];
+				
+				//Removing buffer between items if last on list
+				if i == array_length(_list)-1 _stackBufferAdd = 0
 				
 				if is_string(_list[i]) //Handler for strings
 				{
-					draw_text_transformed(
-					winStart[0]+_offsetX+_windowBufferX,
-					winStart[1]+_offsetY+_stackVar[1]+_windowBufferY,
-					_list[i],_listScale,_listScale,0);
-
-					_maxStackWidth = max(_maxStackWidth,string_width(_list[i])*_listScale);
+					var _itemWidth = string_width(_list[i])*_listScale;
+					var _itemHeight = string_height(_list[i])*_listScale;
 					
-					_stackVar[@ 1] += (string_height(_list[i])*_listScale)+_stackBufferAdd;
+					draw_text_transformed(_stackStartX,_stackStartY,_list[i],_listScale,_listScale,0);
 				}
 				else if sprite_exists(_list[i])
 				{
 					var _spriteOffset = [sprite_get_xoffset(_list[i])*_listScale,sprite_get_yoffset(_list[i])*_listScale];
 					
-					draw_sprite_ext(_list[i],_subImage,
-					winStart[0]+_offsetX+_spriteOffset[0]+_windowBufferX,
-					winStart[1]+_offsetY+_stackVar[1]+_spriteOffset[1]+_windowBufferY,
-					_listScale,_listScale,0,-1,1);
+					var _itemWidth = sprite_get_width(_list[i])*_listScale;
+					var _itemHeight = sprite_get_height(_list[i])*_listScale;
 					
-					_maxStackWidth = max(_maxStackWidth,sprite_get_width(_list[i])*_listScale);
-					
-					_stackVar[@ 1] += (sprite_get_height(_list[i])*_listScale)+_stackBufferAdd;
+					draw_sprite_ext(_list[i],_subImage,_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,_listScale,0,-1,1);
 				}
+				
+				if _highlighted drawWindowSprite(_windowSprite,_stackStartX,_stackStartY,_stackStartX+_itemWidth,_stackStartY+_itemHeight);
+				
+				//Adds the off stack info
+				_maxStackWidth = max(_maxStackWidth,_itemWidth*_stackVarAdd[1]);
+				_maxStackHeight = max(_maxStackHeight,_itemHeight*_stackVarAdd[0]);
+					
+				//Adds the main stack info
+				_stackVar[@ 0] += (_itemWidth+_stackBufferAdd)*_stackVarAdd[0];
+				_stackVar[@ 1] += (_itemHeight+_stackBufferAdd)*_stackVarAdd[1];
 			}
 			
-			_stackVar[@ 1] += (_windowBufferY*2);
+			//Final buffer after adding the stack, this is the air pillow around the window
+			_stackVar[@ 0] += (_windowBufferX*2)*_stackVarAdd[0];
+			_stackVar[@ 1] += (_windowBufferY*2)*_stackVarAdd[1];
 			
-			var _windowSpriteX2 = winStart[0] + _maxStackWidth + (_windowBufferX*2) + _offsetX;
-			var _windowSpriteY2 = winStart[1] + _stackVar[1] + _offsetY;
+			var _windowSpriteX2 = winStart[0] + _stackVar[0] + _maxStackWidth + _offsetX + (_windowBufferX*2)*_stackVarAdd[1];
+			var _windowSpriteY2 = winStart[1] + _stackVar[1] + _maxStackHeight + _offsetY + (_windowBufferY*2)*_stackVarAdd[0];
 			
 			if _windowSprite != -1
 			{

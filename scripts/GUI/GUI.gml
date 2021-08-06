@@ -1,13 +1,12 @@
 function conGUIInit() constructor
 {
 	//GUI config
-	grid = 8; //Separation of coordinates into a simplified grid, multiplier
+	grid = 8;					//Separation of coordinates into a simplified grid, multiplier
 	//Controls
-	scroll = 0;
-	cursorGrid = [0,0,0,-2];	//Coordinates of the cursor
-	cursorObject = noone; //Object selected by the cursor
-
-#region Main constructors for GUI, considered "elements" of a fully-constructed window
+	scroll = 0;					//For scrolling menus, this is how far we've scrolled
+	cursorGrid = [0,0,0,-2];	//Internal coordinates of the cursor
+	cursorObject = noone;		//Object selected by the cursor
+	cursorLocation = [0,0];		//Screen location of cursor
 
 	/// @desc Creates the window with parameters
 	/// @func window(_sprite, _x1, _y1, _x2, _y2, _grid)
@@ -131,8 +130,11 @@ function conGUIInit() constructor
 			
 			var _itemVar = [0,0];
 			var _listVarAdd = [0,0];
+			
 			var _maxListWidth = 0;
 			var _maxListHeight = 0;
+			
+			var _subListVarAdd = [0,0];
 			
 			var _itemWidth = 0;
 			var _itemHeight = 0;
@@ -143,6 +145,17 @@ function conGUIInit() constructor
 			var _listBufferAdd = _bufferConfig[1];
 			var _highlighted = false;
 
+			switch (_dir[0])
+			{
+				case "Down":
+					_subListVarAdd = [0,1];
+					break;
+				
+				case "Right":
+					_subListVarAdd = [1,0];
+					break;
+			}	
+	
 			switch (_dir[1])
 			{
 				case "Down":
@@ -193,44 +206,56 @@ function conGUIInit() constructor
 				//Removing buffer between items if last on list
 				if i == array_length(_list)-1 _listBufferAdd = 0
 				
-				//Determining dimensions
-				var _dim = scrGuiGetItemDimensions(_list[i],_listScale);
-				var _itemWidth = _dim[0];
-				var _itemHeight = _dim[1];
-				
-				//Tiny stacks in the opposite direction of our _listDirection, _listVarAdd
+				//Tiny stacks, stacks within a stack
 				if is_array(_list[i])
 				{
+					var _subList = _list[i];
+					
 					_itemWidth = 0;
 					_itemHeight = 0;
 					
-					for (var j = 0;j < array_length(_list[i]);j ++)
+					for (var j = 0;j < array_length(_subList);j ++)
 					{
-						var _subList = _list[i][j];
+						//Determining dimensions
+						var _dim = scrGuiGetItemDimensions(_subList[j],_listScale);
 						
-						_dim = scrGuiGetItemDimensions(_subList,_listScale);
-
-						if is_string(_subList)
+						if is_string(_subList[j])
 						{
-							draw_text_transformed(_stackStartX,_stackStartY,_subList,_listScale,_listScale,0);
+							draw_text_transformed(
+							_stackStartX+(_itemWidth*_subListVarAdd[0]),
+							_stackStartY+(_itemHeight*_subListVarAdd[1]),
+							_subList[j],_listScale,_listScale,0);
 						}
-						else if sprite_exists(_subList)
+						else if sprite_exists(_subList[j])
 						{
-							var _spriteOffset = [sprite_get_xoffset(_subList)*_listScale,sprite_get_yoffset(_subList)*_listScale];
-							draw_sprite_ext(_subList,_subImage,_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,_listScale,0,-1,1);
+							var _spriteOffset = [sprite_get_xoffset(_subList[j])*_listScale,sprite_get_yoffset(_subList[j])*_listScale];
+							
+							var _spriteCenter = [min(_itemWidth,_dim[0]),min(_itemHeight,_dim[1])]
+							
+							draw_sprite_ext(_subList[j],_subImage,
+							_stackStartX+(_itemWidth*_subListVarAdd[0])+_spriteOffset[0]+_spriteCenter[0],
+							_stackStartY+(_itemHeight*_subListVarAdd[1])+_spriteOffset[1]+_spriteCenter[0],
+							_listScale,_listScale,0,-1,1);
 						}
 						
-						//Results in us stacking in whatever direction our listVar is not in
-						//e.g. a vertical list makes 
-						_itemWidth =+ _dim[0]*_listVarAdd[1];
-						_itemHeight =+ _dim[1]*_listVarAdd[0];
+						_itemWidth = _subListVarAdd[0] ? _dim[0] + _itemWidth + _bufferConfig[0] : max(_itemWidth,_dim[0]);
+						_itemHeight = _subListVarAdd[1] ? _dim[1] + _itemHeight + _bufferConfig[0] : max(_itemHeight,_dim[1]);
 					}
 				}
-				else if is_string(_list[i]) draw_text_transformed(_stackStartX,_stackStartY,_list[i],_listScale,_listScale,0);
-				else if sprite_exists(_list[i])
+				//Normal stack items
+				else
 				{
-					var _spriteOffset = [sprite_get_xoffset(_list[i])*_listScale,sprite_get_yoffset(_list[i])*_listScale];
-					draw_sprite_ext(_list[i],_subImage,_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,_listScale,0,-1,1);
+					//Determining dimensions
+					var _dim = scrGuiGetItemDimensions(_list[i],_listScale);
+					var _itemWidth = _dim[0];
+					var _itemHeight = _dim[1];
+					
+					if is_string(_list[i]) draw_text_transformed(_stackStartX,_stackStartY,_list[i],_listScale,_listScale,0);
+					else if sprite_exists(_list[i])
+					{
+						var _spriteOffset = [sprite_get_xoffset(_list[i])*_listScale,sprite_get_yoffset(_list[i])*_listScale];
+						draw_sprite_ext(_list[i],_subImage,_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,_listScale,0,-1,1);
+					}
 				}
 				
 				if _highlighted
@@ -248,10 +273,8 @@ function conGUIInit() constructor
 				_maxListHeight = max(_maxListHeight,_itemHeight)*_listVarAdd[0];
 				
 				//Adds the main stack info, if it's in our direction
-
 				_itemVar[0] += (_itemWidth+_listBufferAdd)*_listVarAdd[0];
 				_itemVar[1] += (_itemHeight+_listBufferAdd)*_listVarAdd[1];
-				
 			}
 			
 			var _windowSpriteX2 = _windowSpriteX1 + _itemVar[0] + _maxListWidth + (_bufferConfig[2]);
@@ -286,7 +309,9 @@ function conGUIInit() constructor
 			
 				if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
 				{
-					_invItems[i] = _pocketList[_iScroll].name;
+					_invItems[i][0] = _pocketList[_iScroll].sprite;
+					_invItems[i][1] = _pocketList[_iScroll].name;
+					
 					if cursorGrid[2] == _iScroll //If selected by cursor currently
 					{
 						cursorObject = _pocketList[_iScroll];
@@ -300,13 +325,12 @@ function conGUIInit() constructor
 			//Itemswindow drawing "Down","Right",0.6,0,sprEmpty,8,8,,4,4,);
 			_stackVar[0] += _offset[0];
 			_stackVar[1] += _offset[1];
+			
 			drawDetails(_stackVar,_invItems,[0,0],0.6,sprEmpty,[cursorGrid[2]-scroll,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,8,4]);
 			drawDetails(_stackVar,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],[0,0],[0.5,2,0.5],sprBorderSimpleNoOverlay);
 		}
 		
 	}
-
-#endregion
 
 }
 
@@ -321,6 +345,7 @@ function scrGuiGetItemDimensions(_item,_scale)
 	{
 		return [sprite_get_width(_item)*_scale,sprite_get_height(_item)*_scale];
 	}
+	else return undefined;
 }
 //
 function scrGuiAbsoluteToRelative(_x,_y)

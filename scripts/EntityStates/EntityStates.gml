@@ -214,7 +214,7 @@ function scrEntityStateInit()
 				if input.menu.menuPress
 				{
 					global.menu = false;
-					gui.cursorChange("Reset");
+					gui.mainWindow.cursorChange("Reset");
 					var _prev = snowStateInput.get_history();
 					snowStateInput.change(_prev[1],input.reset(input.menu));
 				}

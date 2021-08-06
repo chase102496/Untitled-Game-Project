@@ -30,8 +30,12 @@ function scrGUI(_guiOwner)
 		
 		if _input.pageUp cursorChange("Page Up Reset");
 		if _input.pageDown cursorChange("Page Down Reset");
-
-		drawDetails(menuStack,0,-24,pageTabIcons,"Right","Down",1,8,sprEmpty,8,8,sprBorderSimpleNoOverlay,8,8,cursorGrid[0]);
+		
+		//Clamps
+		cursorGrid[0] = clamp(cursorGrid[0],0,array_length(pageTabIcons)-1);
+		
+		//All Page Tabs
+		drawDetails(menuStack,pageTabIcons,[0,-24],1.2,sprEmpty,[cursorGrid[0],sprBorderSimpleNoOverlay],["Down","Right","Down"],[2,8,8,4]);
 
 		switch cursorGrid[0]
 		{
@@ -41,13 +45,11 @@ function scrGUI(_guiOwner)
 				//Clamps
 				cursorGrid[1] = clamp(cursorGrid[1],0,array_length(inventoryTabIcons)-1);
 				
-				//Inventory Tabs
-				drawDetails(menuStack,8,0,inventoryTabIcons,"Right","Down",1,8,sprEmpty,8,8,sprBorderSimpleNoOverlay,4,4,cursorGrid[1]);
+				//All Inventory Tabs
+				drawDetails(menuStack,inventoryTabIcons,[6,0],[1,1.5,1.5],sprEmpty,[cursorGrid[1],sprBorderSimpleNoOverlay],["Down","Right","Down"],[2,8,8,8]);
 				
-				//Inventory Items
-				//CHANGE THIS TO ACCEPT A LIST OF CATEGORIES
-				//NEEDS A LOT OF TWEAKS
-				drawInventoryList(inventoryTabCategories[cursorGrid[1]],_guiOwner);
+				//One Inventory Items Tab
+				drawInventoryList(inventoryTabCategories[cursorGrid[1]],_guiOwner,11,menuStack,[0,-6]);
 				
 				//Selection tree
 				if cursorGrid[3] == -2
@@ -70,7 +72,8 @@ function scrGUI(_guiOwner)
 					if _input.selectPress cursorObject.interact(cursorObject.interactList[cursorGrid[3]]);
 					if _input.backPress cursorChange("Back");
 					
-					drawDetails([0,0],cursorLocation[0],cursorLocation[1],cursorObject.interactList,"Down","Down",0.5,2,sprBorderSimple,8,8,sprBorderSimpleNoOverlay,4,4,cursorGrid[3]);
+					cursorGrid[3] = clamp(cursorGrid[3],0,array_length(cursorObject.interactList)-1);
+					drawDetails([0,0],cursorObject.interactList,[cursorLocation[0],cursorLocation[1]],0.5,sprBorderSimple,[cursorGrid[3],sprBorderSimpleNoOverlay],["Right","Down","Down"]);
 				}
 				break;
 			}

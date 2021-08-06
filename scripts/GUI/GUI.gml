@@ -104,19 +104,24 @@ function conGUIInit() constructor
 		}
 		
 		/// @desc Draws some text relative to the window
-		/// @func drawText(_text,_offsetX = 0,_offsetY = 0,_scale = 1)
-		drawText = function(_text,_offsetX = 0,_offsetY = 0,_scale = 1)
+		/// @func drawText(_text,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true)
+		drawText = function(_text,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true)
 		{
-			winStart = scrGuiRelativeToAbsolute(x1*grid,y1*grid);
-			draw_text_transformed(winStart[0]+_offsetX,winStart[1]+_offsetY,_text,_scale,_scale,0);
+			var _drawStart = _relative ? winStart : [0,0];
+			
+			var _sText = scribble(_text);
+			
+			_sText.transform(_scale,_scale,0);
+			_sText.draw(_drawStart[0]+_offsetX,_drawStart[1]+_offsetY);
 		}
 		
 		/// @desc Draws a sprite relative to the window
-		/// @func drawSprite(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1)
-		drawSprite = function(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1)
+		/// @func drawSprite(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true)
+		drawSprite = function(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true)
 		{
-			winStart = scrGuiRelativeToAbsolute(x1*grid,y1*grid);
-			draw_sprite_ext(_sprite,0,winStart[0]+_offsetX,winStart[1]+_offsetY,_scale,_scale,0,-1,255);
+			var _drawStart = _relative ? winStart : [0,0];
+			
+			draw_sprite_ext(_sprite,0,_drawStart[0]+_offsetX,_drawStart[1]+_offsetY,_scale,_scale,0,-1,255);
 		}
 	
 		/// @desc Draws a stackable window and some details about the selected object for each item in the stack
@@ -221,21 +226,21 @@ function conGUIInit() constructor
 						
 						if is_string(_subList[j])
 						{
-							draw_text_transformed(
-							_stackStartX+(_itemWidth*_subListVarAdd[0]),
-							_stackStartY+(_itemHeight*_subListVarAdd[1]),
-							_subList[j],_listScale,_listScale,0);
+							//Drawing
+							drawText(_subList[j],
+							(_stackStartX)+(_itemWidth*_subListVarAdd[0]),
+							(_stackStartY)+(_itemHeight*_subListVarAdd[1]),
+							_listScale,false);
 						}
 						else if sprite_exists(_subList[j])
 						{
 							var _spriteOffset = [sprite_get_xoffset(_subList[j])*_listScale,sprite_get_yoffset(_subList[j])*_listScale];
 							
-							var _spriteCenter = [min(_itemWidth,_dim[0]),min(_itemHeight,_dim[1])]
-							
-							draw_sprite_ext(_subList[j],_subImage,
-							_stackStartX+(_itemWidth*_subListVarAdd[0])+_spriteOffset[0]+_spriteCenter[0],
-							_stackStartY+(_itemHeight*_subListVarAdd[1])+_spriteOffset[1]+_spriteCenter[0],
-							_listScale,_listScale,0,-1,1);
+							//Drawing
+							drawSprite(_subList[j],
+							_stackStartX+(_itemWidth*_subListVarAdd[0])+_spriteOffset[0],
+							_stackStartY+(_itemHeight*_subListVarAdd[1])+_spriteOffset[1],
+							_listScale,false);
 						}
 						
 						_itemWidth = _subListVarAdd[0] ? _dim[0] + _itemWidth + _bufferConfig[0] : max(_itemWidth,_dim[0]);
@@ -250,17 +255,19 @@ function conGUIInit() constructor
 					var _itemWidth = _dim[0];
 					var _itemHeight = _dim[1];
 					
-					if is_string(_list[i]) draw_text_transformed(_stackStartX,_stackStartY,_list[i],_listScale,_listScale,0);
-					else if sprite_exists(_list[i])
+					//Drawing
+					if is_string(_list[i]) drawText(_list[i],_stackStartX,_stackStartY,_listScale,false);
+					else if sprite_exists(_list[i]) 
 					{
 						var _spriteOffset = [sprite_get_xoffset(_list[i])*_listScale,sprite_get_yoffset(_list[i])*_listScale];
-						draw_sprite_ext(_list[i],_subImage,_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,_listScale,0,-1,1);
+						drawSprite(_list[i],_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,false);
 					}
 				}
 				
 				if _highlighted
 				{
 					cursorLocation = [_stackVar[0]+_itemVar[0],_stackVar[1]+_itemVar[1]];
+					
 					drawWindowSprite(_cursorConfig[1],
 					_stackStartX-_bufferConfig[3],
 					_stackStartY-_bufferConfig[3],

@@ -59,7 +59,6 @@ function conInventoryItem(_sprite,_name,_description,_amount,_category,_interact
 				break;
 			
 			case "Destroy":
-				other.gui.cursorChange("Back");
 				inventory.remove(self);
 				break;
 		}

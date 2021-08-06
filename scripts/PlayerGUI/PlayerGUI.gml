@@ -54,7 +54,7 @@ function scrGUI(_guiOwner)
 				
 				//One Inventory Items Tab
 				var _listItems = inventoryTabCategories[cursorGrid[1]];
-				drawInventoryList(_listItems,_guiOwner,11,menuStack,[0,-6]);
+				drawInventoryList(_listItems,_guiOwner,8,menuStack,[0,-6]);
 				
 				//Selection tree
 				if cursorGrid[3] == -2
@@ -74,7 +74,11 @@ function scrGUI(_guiOwner)
 					//Inputs
 					if _input.upPress cursorChange("Select Up");
 					if _input.downPress cursorChange("Select Down");
-					if _input.selectPress cursorObject.interact(cursorObject.interactList[cursorGrid[3]]);
+					if _input.selectPress 
+					{
+						cursorObject.interact(cursorObject.interactList[cursorGrid[3]]);
+						cursorChange("Back");
+					}
 					if _input.backPress cursorChange("Back");
 					
 					cursorGrid[3] = clamp(cursorGrid[3],0,array_length(cursorObject.interactList)-1);

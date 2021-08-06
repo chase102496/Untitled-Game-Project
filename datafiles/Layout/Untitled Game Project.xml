@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ActiveConfig="Default" Platform="Windows" Runtime="VM" Device="Default">
-	<Desktop x="-8" y="32" width="1920" height="1137" id="19" title="Untitled Game Project - GameMaker Studio 2" windowState="Maximized">
+	<Desktop x="-8" y="32" width="3440" height="1377" id="19" title="Untitled Game Project - GameMaker Studio 2" windowState="Maximized">
 		<Workspaces>
 			<Workspace active="True" chain="False" title="Game" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="6" isActive="True">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="6" isActive="False">
 						<Script column="0" file="${project_dir}\objects\objGame\Create_0.gml" resource="objGame" subResource="0_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\objects\objGame\Draw_0.gml" resource="objGame" subResource="8_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Debug\Debug.gml" resource="Debug" overridden_title="False" view_readonly="False" />
@@ -23,14 +23,14 @@
 			</Workspace>
 			<Workspace active="False" chain="False" title="Entity" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="6" isActive="False">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="5" isActive="False">
 						<Script column="0" file="${project_dir}\objects\parEntity\Create_0.gml" resource="parEntity" subResource="0_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\objects\parEntity\Step_0.gml" resource="parEntity" subResource="3_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\objects\parEntity\Draw_0.gml" resource="parEntity" subResource="8_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\objects\parEntity\Destroy_0.gml" resource="parEntity" subResource="1_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\EntityStates\EntityStates.gml" resource="EntityStates" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\scripts\Physics\Physics.gml" resource="Physics" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\PlayerGUI\PlayerGUI.gml" resource="PlayerGUI" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\scripts\Physics\Physics.gml" resource="Physics" overridden_title="False" view_readonly="False" />
 					</DocumentWindow>
 				</Module>
 			</Workspace>
@@ -70,7 +70,7 @@
 			</Workspace>
 			<Workspace active="False" chain="False" title="Scribble" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="2" isActive="False">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="3" isActive="False">
 						<Script column="0" file="${project_dir}\scripts\__scribble_config_colours\__scribble_config_colours.gml" resource="__scribble_config_colours" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\__scribble_config_default_template\__scribble_config_default_template.gml" resource="__scribble_config_default_template" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\__scribble_config_macros\__scribble_config_macros.gml" resource="__scribble_config_macros" overridden_title="False" view_readonly="False" />
@@ -79,7 +79,7 @@
 				</Module>
 			</Workspace>
 		</Workspaces>
-		<Dock state="Collapsed" type="eLeft" restore_size="383.3978dpi_px" active_tab="0">
+		<Dock state="Expanded" type="eLeft" restore_size="172dpi_px" active_tab="1">
 			<DockTab title="Favorites" cell_sizes="[1000]" layout_id="dock_tab_3" layout_guid="887e0469-1e8c-48cd-8a64-709a78eb6e62">
 				<Module Command="open_asset_browser">
 					<AssetBrowser type="Favourites" sort="AtoZ" foldersFirst="True" zoom="100">
@@ -98,7 +98,7 @@
 				</Module>
 			</DockTab>
 		</Dock>
-		<Dock state="Expanded" type="eBottom" restore_size="485.55dpi_px" active_tab="0">
+		<Dock state="Expanded" type="eBottom" restore_size="568.0145dpi_px" active_tab="0">
 			<DockTab localise_title="OutputPanel_Output" cell_sizes="[1000]" layout_id="dock_tab_1" layout_guid="7282b19a-ead5-4544-b85a-589571c91514">
 				<Module Command="open_output_panel">
 					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Output" localise_title="OutputPanel_Title" />
@@ -134,28 +134,27 @@
 	<Modules>
 		<YoYoStudio.Plugins.CorePlugins.RoomEditorModule>
 			<RoomEditor>
-				<LayerProperties left="20dpi_px" right="" top="" bottom="350dpi_px" width="260dpi_px" height="330dpi_px" flags="Default" title="layEntities Layer Properties - rmTest" localise_title="RoomEditor_LayerProperties" dock_type="eLeft" dock_tab_index="2" dock_list_index="1" dock_proportion="0.3907933" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="f5a026a6-0546-469d-b976-8273d5c28d50" />
-				<Layers left="340dpi_px" right="" top="" bottom="270dpi_px" width="320dpi_px" height="250dpi_px" flags="CloseButton, MinimizeButton, ResizeButton" title="Layers - rmTest" localise_title="RoomEditor_Layers" dock_type="eLeft" dock_tab_index="2" dock_list_index="0" dock_proportion="0.9167483" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="f5a026a6-0546-469d-b976-8273d5c28d50" />
-				<RoomProperties left="10dpi_px" right="" top="125dpi_px" bottom="" width="300dpi_px" height="240dpi_px" flags="Default" title="Properties - rmTest" localise_title="RoomEditor_RoomProperties" dock_type="eLeft" dock_tab_index="2" dock_list_index="2" dock_proportion="1.692458" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="f5a026a6-0546-469d-b976-8273d5c28d50" />
+				<LayerProperties left="20dpi_px" right="" top="" bottom="350dpi_px" width="260dpi_px" height="330dpi_px" flags="Default" title="layGame Layer Properties - rmFree" localise_title="RoomEditor_LayerProperties" dock_type="eLeft" dock_tab_index="2" dock_list_index="1" dock_proportion="0.3907933" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="f5a026a6-0546-469d-b976-8273d5c28d50" />
+				<Layers left="340dpi_px" right="" top="" bottom="270dpi_px" width="320dpi_px" height="250dpi_px" flags="CloseButton, MinimizeButton, ResizeButton" title="Layers - rmFree" localise_title="RoomEditor_Layers" dock_type="eLeft" dock_tab_index="2" dock_list_index="0" dock_proportion="0.9167482" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="f5a026a6-0546-469d-b976-8273d5c28d50" />
+				<RoomProperties left="10dpi_px" right="" top="125dpi_px" bottom="" width="300dpi_px" height="240dpi_px" flags="Default" title="Properties - rmFree" localise_title="RoomEditor_RoomProperties" dock_type="eLeft" dock_tab_index="2" dock_list_index="2" dock_proportion="1.692458" dock_tab_name="Room Editor" dock_tab_localise_name="RoomEditor_DockTab" dock_tab_id="room_editor_tab" dock_tab_guid="f5a026a6-0546-469d-b976-8273d5c28d50" />
 			</RoomEditor>
 		</YoYoStudio.Plugins.CorePlugins.RoomEditorModule>
 	</Modules>
 	<FoldRegions>
 		<FoldState docFile="scripts/Physics/Physics.gml" foldedRegions="0,1" />
-		<FoldState docFile="scripts/EquipStates/EquipStates.gml" foldedRegions="0,1,2,7,9,10,13,20,22,25,31,33,35,37,40,43" />
-		<FoldState docFile="scripts/EntityStates/EntityStates.gml" foldedRegions="3,4,7,27" />
-		<FoldState docFile="scripts/Networking/Networking.gml" foldedRegions="0,1,7,8,9,12,17,19,23,24" />
+		<FoldState docFile="scripts/EquipStates/EquipStates.gml" foldedRegions="0,1,2,7,9,10,14,21,35,38" />
+		<FoldState docFile="scripts/EntityStates/EntityStates.gml" foldedRegions="2,3,4,7,25,27" />
+		<FoldState docFile="scripts/Networking/Networking.gml" foldedRegions="0,1,10,11,12,16,20,22,27,28" />
 		<FoldState docFile="scripts/ProjectileGeneral/ProjectileGeneral.gml" foldedRegions="1,10" />
 		<FoldState docFile="scripts/EquipAnimations/EquipAnimations.gml" foldedRegions="0,2,3,6" />
 		<FoldState docFile="scripts/Stats/Stats.gml" foldedRegions="2,8" />
 		<FoldState docFile="scripts/Buffs/Buffs.gml" foldedRegions="3,9" />
-		<FoldState docFile="scripts/GUI/GUI.gml" foldedRegions="3,4,6,7,15,16,17,18" />
+		<FoldState docFile="scripts/GUI/GUI.gml" foldedRegions="2,4,5,9,10,11" />
 		<FoldState docFile="scripts/Inputs/Inputs.gml" foldedRegions="1,2" />
 		<FoldState docFile="scripts/SnowState/SnowState.gml" foldedRegions="70,71,72,76,81,83,85,87,88,89,104,109" />
 		<FoldState docFile="scripts/SendStuff/SendStuff.gml" foldedRegions="0,1,2,3,4,5,6,7,11,13" />
-		<FoldState docFile="scripts/Debug/Debug.gml" foldedRegions="0,1" />
 		<FoldState docFile="scripts/HandlePacket/HandlePacket.gml" foldedRegions="7" />
 		<FoldState docFile="scripts/Tools/Tools.gml" foldedRegions="1" />
-		<FoldState docFile="scripts/PlayerGUI/PlayerGUI.gml" foldedRegions="0" />
+		<FoldState docFile="scripts/Debug/Debug.gml" foldedRegions="1,3" />
 	</FoldRegions>
 </Project>

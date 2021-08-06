@@ -1,91 +1,53 @@
+//Runs in create event
 function scrGUIInit()
 {
-	var _mainWindowX = 2; //Position of main window, relative to game window
-	var _mainWindowY = 2;
-	var _guiGrid = 8
-		
-	gui.subMenuInventoryTabs = ["Test1","Test2","Equipped"];
-	gui.subMenuInventorySprites = [sprIconSword,sprIconPotion,sprIconKey]
-	gui.pageTabs = ["Inventory","Stats","Journal","Runicon"];
-	gui.pageSprites = [sprIconBag,sprIconBookOpen,sprIconBookClosed,sprIconBookClosed];
+	gui = new conGUIInit();
 	
-	//Main window default
-	gui.mainWindow = new gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/gui.grid - _mainWindowX,camera_get_view_height(view_camera[0])/gui.grid - _mainWindowY,gui.grid); //Creation of main window object
-	
-	//Page tabs
-	for (var i = 0;i < array_length(gui.pageTabs);i ++)
-	{
-		var _sprite = sprBorderSimpleNoOverlay;
-		var _spacing = 0; //between
-		var _offset = [0.5,-2]; //from main menu left, x,y
-		var _size = [3,2.2]; //size of submenu length,width
-		
-		var _xSub1 = _mainWindowX + _offset[0] + (_size[0]*i) + (_spacing*i);
-		var _xSub2 = _xSub1 + _size[0];
-		var _ySub1 = _mainWindowY + _offset[1];
-		var _ySub2 = _ySub1 + _size[1];
-		
-		gui.pageTab[i] = new gui.window(_sprite,_xSub1,_ySub1,_xSub2,_ySub2,_guiGrid);
-	}
-	
-	//Inventory page > submenu tabs
-	for (var i = 0;i < array_length(gui.subMenuInventoryTabs);i ++)
-	{
-		var _sprite = sprBorderSimpleNoOverlay;
-		var _spacing = 0; //between
-		var _offset = [0.5,0.5]; //from main menu left, x,y
-		var _size = [4,3]; //size of submenu length,width
-		
-		var _xSub1 = _mainWindowX + _offset[0] + (_size[0]*i) + (_spacing*i);
-		var _xSub2 = _xSub1 + _size[0];
-		var _ySub1 = _mainWindowY + _offset[1];
-		var _ySub2 = _ySub1 + _size[1];
-		
-		gui.subTab[i] = new gui.window(_sprite,_xSub1,_ySub1,_xSub2,_ySub2,_guiGrid);
-	}
+	//Position of main window, relative to game window
+	var _mainWindowX = 2;
+	var _mainWindowY = 3;
+	var _guiGrid = 8;
 
-	//Details pane addon for inventory page
-	gui.detailWindow = new gui.window(sprBorderSquaredNoOverlay,_mainWindowX+24,_mainWindowY+2,camera_get_view_width(view_camera[0])/gui.grid - _mainWindowX - 2,camera_get_view_height(view_camera[0])/gui.grid - _mainWindowY - 2,gui.grid);
-	//Inventory page > submenu tab > itemlist windows
-	var _listWindowCount = 1;
-	for (var i = 0;i < _listWindowCount;i ++)
-	{
-		var _sprite = sprBorderSimpleNoOverlay
-		var _spacing = -0.5 //between
-		var _offset = [0.5,4] //from main menu left, x,y
-		var _size = [gui.detailWindow.x1-4,2] //size of submenu length,width
-		
-		var _xSub1 = _mainWindowX + _offset[0];
-		var _xSub2 = _xSub1 + _size[0];
-		var _ySub1 = _mainWindowY + _offset[1] + (_size[1]*i) + (_spacing*i);
-		var _ySub2 = _ySub1 + _size[1];
-		
-		if _ySub1 < gui.mainWindow.y2-_offset[1] _listWindowCount ++;
+	//Creation of main window object
+	gui.mainWindow = new gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _mainWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _mainWindowY,_guiGrid);
+
+	gui.mainWindow.inventoryTabIcons = [sprIconSword,sprIconPotion,sprIconKey];
+	gui.mainWindow.inventoryTabCategories = ["Test1","Test2","Equipped"];
 	
-		gui.listWindow[i] = new gui.window(_sprite,_xSub1,_ySub1,_xSub2,_ySub2,_guiGrid);
-	}
+	gui.mainWindow.pageTabIcons = [sprIconBag,sprIconBookOpen,sprIconBookClosed,sprIconBookClosed];
+	gui.mainWindow.pageTabCategories = ["Inventory","Stats","Journal","Runicon"];
 }
+
+//Runs in draw event
 function scrGUI(_guiOwner)
 {
-	with gui
+	with gui.mainWindow
 	{
+		menuStack = [0,0];
 		var _input = _guiOwner.input.menu;
-		
-		mainWindow.drawWindow(); //Draws main window element, referenced in other subwindows
 
+		drawWindow(); //Draws main window element, referenced in other subwindows
+		
 		if _input.pageUp cursorChange("Page Up Reset");
 		if _input.pageDown cursorChange("Page Down Reset");
 
-		drawSub(_guiOwner,pageTab,0,-1,[0,0],pageSprites,["Center",0.8,[0,0]]); //Page tab drawing
+		drawDetails(menuStack,0,-24,pageTabIcons,"Right","Down",1,8,sprEmpty,8,8,sprBorderSimpleNoOverlay,8,8,cursorGrid[0]);
 
 		switch cursorGrid[0]
 		{
 			//Inventory page
 			case 0:
 			{
-				//Drawing stuff
-				drawSub(_guiOwner,subTab,1,-1,-1,subMenuInventorySprites,["Center",1.1,[0,0]]); //Draws subTab
-				drawInventoryList(mainWindow,subMenuInventoryTabs[cursorGrid[1]],_guiOwner); //Inventory list drawing, depending on submenu tab
+				//Clamps
+				cursorGrid[1] = clamp(cursorGrid[1],0,array_length(inventoryTabIcons)-1);
+				
+				//Inventory Tabs
+				drawDetails(menuStack,8,0,inventoryTabIcons,"Right","Down",1,8,sprEmpty,8,8,sprBorderSimpleNoOverlay,4,4,cursorGrid[1]);
+				
+				//Inventory Items
+				//CHANGE THIS TO ACCEPT A LIST OF CATEGORIES
+				//NEEDS A LOT OF TWEAKS
+				drawInventoryList(inventoryTabCategories[cursorGrid[1]],_guiOwner);
 				
 				//Selection tree
 				if cursorGrid[3] == -2
@@ -98,31 +60,7 @@ function scrGUI(_guiOwner)
 					if _input.leftPress cursorChange("Left Reset");
 					if _input.rightPress cursorChange("Right Reset");
 					
-					if _input.selectPress
-					{
-						selectWindow = [];
-						selectWindowBox = -1;
-						for (var i = 0;i < array_length(cursorObject.interactList);i ++)
-						{
-							var _sprite = sprBorderSimpleNoOverlay;
-							var _spacing = -0.5; //between
-							var _offset = [listWindow[cursorGrid[2]].x2-listWindow[cursorGrid[2]].x1,0]; //from main menu left, x,y
-							var _size = [8,2]; //size of submenu length,width
-							var _anchorX = listWindow[cursorGrid[2]].x1;
-							var _anchorY = listWindow[cursorGrid[2]].y1;
-						
-							var _xSub1 = _anchorX + _offset[0];
-							var _xSub2 = _xSub1 + _size[0];
-							var _ySub1 = _anchorY + _offset[1] + (_size[1]*i) + (_spacing*i);
-							var _ySub2 = _ySub1 + _size[1];
-							
-							selectWindow[i] = new window(_sprite,_xSub1,_ySub1,_xSub2,_ySub2,grid);
-						}
-						//Insert encompassing window
-						var _winBuff = 0.2;
-						selectWindowBox = new window(sprBorderSimple,selectWindow[0].x1-_winBuff,selectWindow[0].y1-_winBuff,selectWindow[array_length(selectWindow)-1].x2+_winBuff,selectWindow[array_length(selectWindow)-1].y2+_winBuff,grid);
-						cursorChange("Select Open");
-					}
+					if _input.selectPress cursorChange("Select Open");
 				}
 				else //If selecting something
 				{
@@ -132,8 +70,7 @@ function scrGUI(_guiOwner)
 					if _input.selectPress cursorObject.interact(cursorObject.interactList[cursorGrid[3]]);
 					if _input.backPress cursorChange("Back");
 					
-					selectWindowBox.drawWindow();
-					drawSub(_guiOwner,selectWindow,3,cursorObject.interactList,["Center",0.5,[0,0]]);
+					drawDetails([0,0],cursorLocation[0],cursorLocation[1],cursorObject.interactList,"Down","Down",0.5,2,sprBorderSimple,8,8,sprBorderSimpleNoOverlay,4,4,cursorGrid[3]);
 				}
 				break;
 			}

@@ -9,7 +9,7 @@ function scrGravity()
 	stats.vVel += stats.gravAccel;
 }
 //
-function scrCollision(_noClip = true) //Enables object collision and physics, for no collision add true to the args
+function scrCollision(_noClip = false) //Enables object collision and physics, for no collision add true to the args
 {
 	// OLD Horizontal Collision
 	// Make sure the sprite mask width is an even number for using this

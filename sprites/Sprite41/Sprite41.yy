@@ -69,8 +69,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Untitled Game Project",
-    "path": "Untitled Game Project.yyp",
+    "name": "General",
+    "path": "folders/Sprites/General.yy",
   },
   "resourceVersion": "1.0",
   "name": "Sprite41",

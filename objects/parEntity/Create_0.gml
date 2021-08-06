@@ -11,7 +11,6 @@ stats = new conStatsInit();
 //
 inv = new conInventoryInit();
 //
-gui = new conGUIInit();
 scrGUIInit();
 //
 netState = new SnowState("Offline");

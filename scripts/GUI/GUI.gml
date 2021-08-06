@@ -2,7 +2,6 @@ function conGUIInit() constructor
 {
 	//GUI config
 	grid = 8; //Separation of coordinates into a simplified grid, multiplier
-	
 	//Controls
 	scroll = 0;
 	cursorGrid = [0,0,0,-2];	//Coordinates of the cursor
@@ -12,65 +11,6 @@ function conGUIInit() constructor
 
 #region Player-driven windows, constructed of GUI elements
 
-	//Cursor control
-	cursorChange = function(_dir)
-	{
-		switch _dir
-		{
-			case "Reset":
-				cursorGrid = [0,0,0,-2] //Page, Submenu, List (x,y,z), Select
-				break;
-				
-			case "Select Open":
-				cursorGrid[3] = 0;
-				break;
-			
-			case "Select Up":
-				cursorGrid[3] --;
-				break;
-				
-			case "Select Down":
-				cursorGrid[3] ++;
-				break;
-				
-			case "Back":
-				cursorGrid[3] = -2;
-				break;
-				
-			case "Page Up Reset":
-				cursorGrid[0] ++;
-				cursorGrid[1] = 0;
-				cursorGrid[2] = 0;
-				cursorGrid[3] = -2;
-				break;
-				
-			case "Page Down Reset":
-				cursorGrid[0] --;
-				cursorGrid[1] = 0;
-				cursorGrid[2] = 0;
-				cursorGrid[3] = -2;
-				break;
-		
-			case "Up":
-				cursorGrid[2] --;
-				break;
-			
-			case "Down":
-				cursorGrid[2] ++;
-				break;
-			
-			case "Left Reset":
-				cursorGrid[1] --;
-				cursorGrid[2] = 0;
-				break;
-			
-			case "Right Reset":
-				cursorGrid[1] ++
-				cursorGrid[2] = 0;
-				break;
-		}
-	}
-		
 	/// @desc Draw a selection of windows and highlight one based on cursorDimension input
 	/// @func drawSub(_guiOwner,_windowArray,_cursorDimension,_text = -1,_textConfig = -1,_sprite = -1,_spriteConfig = -1,_clamp = true,_cursorOffset = 0)
 	drawSub = function(_guiOwner,_windowArray,_cursorDimension,_text = -1,_textConfig = -1,_sprite = -1,_spriteConfig = -1,_clamp = true,_cursorOffset = 0)
@@ -135,58 +75,6 @@ function conGUIInit() constructor
 		}	
 	}
 	
-	/// @desc Draw a selection of windows and highlight one based on cursorDimension input, specific to a scrolling inventory with one inventory category
-	/// @func drawInventoryList(_mainWindow,_categoryString,_invOwner,_itemsPerWindow = 8)
-	drawInventoryList = function(_mainWindow,_categoryString,_invOwner,_itemsPerWindow = 15)
-	{		
-		//Init
-		var _invItems = [];
-		var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
-		cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
-
-		//Poll
-		cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
-		scroll = clamp(scroll,0,max(array_length(_pocketList) - _itemsPerWindow,0));
-		
-		//Itemswindow calc
-		for (var i = 0;i < _itemsPerWindow;i ++)
-		{
-			var _iScroll = i + scroll; //Adjusted index according to how far we scrolled down
-			
-			if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
-			{
-				_invItems[i] = _pocketList[_iScroll].name;
-				
-				if cursorGrid[2] == _iScroll //If selected by cursor currently
-				{
-					cursorObject = _pocketList[_iScroll];
-				}
-			}
-		}
-		
-		if cursorGrid[2] > _iScroll scroll ++ //Scroll auto-adjusts for out of bounds values
-		else if cursorGrid[2] < scroll scroll --
-
-		//Detailwindow calc and drawing
-		if cursorObject != -1
-		{
-			detailWindow.drawWindow();
-			
-			//stackVar is the ID that ties together a column of details. It will continue to add onto the bottom of the stack
-			var _itemInfoStack = [0,0];
-			
-			//Item details pane
-			detailWindow.drawDetails(_itemInfoStack,8,8,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],"Down",[0.5,2,0.5],-1,8,8,-1,sprBorderSimpleNoOverlay);
-		}
-		
-		//Itemswindow drawing
-		var _itemNameStack = [0,0];
-		_mainWindow.drawDetails(_itemNameStack,8,8,_invItems,"Down",0.6,0,8,8,cursorGrid[2]-scroll,sprEmpty,sprBorderSimpleNoOverlay);
-		
-		
-		//drawSub(_invOwner,_activeWindow,2,_invText,["vAlign",1,[4,0]],-1,-1,false,-scroll); //Inventory tab drawing
-	}
-	
 #endregion
 
 #region Main constructors for GUI, considered "elements" of a fully-constructed window
@@ -201,7 +89,71 @@ function conGUIInit() constructor
 		x2 = _x2;
 		y2 = _y2;
 		grid = _grid;
-
+		cursorGrid = [0,0,0,-2];
+		cursorObject = noone;
+		cursorLocation = [0,0];
+		scroll = 0;
+		
+		/// @desc Used to change the current state of the cursor. Interprets strings into calculations
+		/// @func cursorChange(_dir)
+		cursorChange = function(_dir)
+		{
+			switch _dir
+			{
+				case "Reset":
+					cursorGrid = [0,0,0,-2] //Page, Submenu, List (x,y,z), Select
+					break;
+				
+				case "Select Open":
+					cursorGrid[3] = 0;
+					break;
+			
+				case "Select Up":
+					cursorGrid[3] --;
+					break;
+				
+				case "Select Down":
+					cursorGrid[3] ++;
+					break;
+				
+				case "Back":
+					cursorGrid[3] = -2;
+					break;
+				
+				case "Page Up Reset":
+					cursorGrid[0] ++;
+					cursorGrid[1] = 0;
+					cursorGrid[2] = 0;
+					cursorGrid[3] = -2;
+					break;
+				
+				case "Page Down Reset":
+					cursorGrid[0] --;
+					cursorGrid[1] = 0;
+					cursorGrid[2] = 0;
+					cursorGrid[3] = -2;
+					break;
+		
+				case "Up":
+					cursorGrid[2] --;
+					break;
+			
+				case "Down":
+					cursorGrid[2] ++;
+					break;
+			
+				case "Left Reset":
+					cursorGrid[1] --;
+					cursorGrid[2] = 0;
+					break;
+			
+				case "Right Reset":
+					cursorGrid[1] ++
+					cursorGrid[2] = 0;
+					break;
+			}
+		}
+		
 		/// @desc Used to draw the main window created by new window() constructor. Must be called before referencing window location in below methods\/
 		/// @func drawWindow()
 		drawWindow = function()
@@ -241,20 +193,33 @@ function conGUIInit() constructor
 		/// @desc Draws a stackable window and some details about the selected object for each item in the stack
 		/// _stackVar is the persistent variable to stack multiple functions
 		/// _stackDirection is the direction to stack in, Left, Right, Up, or Down
-		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_scale = 1,_stackBuffer = 0,_windowBufferX = 8,_windowBufferY = 8,_cursorVar = -1,_windowSprite = sprEmpty,_highlightSprite = sprEmpty)
-		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_stackDirection = "Down",_scale = 1,_stackBuffer = 0,_windowBufferX = 8,_windowBufferY = 8,_cursorVar = -1,_windowSprite = sprEmpty,_highlightSprite = sprEmpty)
+		/// offsetX and Y are carried over by _stackVar
+		/// @func drawDetails(_stackVar,_offsetX,_offsetY,_list,_listDirection = "Down",_stackDirection = "Down",_scale = 1,_listBuffer = 2,_windowSprite = sprEmpty,_windowBufferX = 8,_windowBufferY = 8,_highlightSprite = sprEmpty,_highlightBufferX = 4,_hightlightBufferY = 4,_cursorVar = -1)
+		drawDetails = function(_stackVar,_offsetX,_offsetY,_list,_listDirection = "Down",_stackDirection = "Down",_scale = 1,_listBuffer = 2,_windowSprite = sprEmpty,_windowBufferX = 8,_windowBufferY = 8,_highlightSprite = sprEmpty,_highlightBufferX = 2,_highlightBufferY = 2,_cursorVar = -1)
 		{
 			static _subImage = 0;
-			var _maxStackWidth = 0;
-			var _maxStackHeight = 0;
-			var _maxStackResult = 0
+			
+			var _itemVar = [0,0];
+			var _listVarAdd = [0,0];
+			var _maxListWidth = 0;
+			var _maxListHeight = 0;
+			
 			var _stackVarAdd = [0,0];
+
 			var _listScale = _scale;
-			var _stackBufferAdd = _stackBuffer;
+			var _listBufferAdd = _listBuffer;
 			var _highlighted = false;
 
-			var _windowSpriteX1 = winStart[0] + _stackVar[0] + _offsetX;
-			var _windowSpriteY1 = winStart[1] + _stackVar[1] + _offsetY;
+			switch (_listDirection)
+			{
+				case "Down":
+					_listVarAdd = [0,1];
+					break;
+				
+				case "Right":
+					_listVarAdd = [1,0];
+					break;
+			}
 			
 			switch (_stackDirection)
 			{
@@ -266,12 +231,25 @@ function conGUIInit() constructor
 					_stackVarAdd = [1,0];
 					break;
 			}
+
+			//Add offset to stack
+			_stackVar[@ 0] += _offsetX;
+			_stackVar[@ 1] += _offsetY;
 			
+			//Position window start
+			var _windowSpriteX1 = winStart[0] + _stackVar[0];
+			var _windowSpriteY1 = winStart[1] + _stackVar[1];
+			
+			//Add buffer to stack for items
+			_itemVar[0] += _windowBufferX;
+			_itemVar[1] += _windowBufferY;
+			
+			//Run items
 			for (var i = 0;i < array_length(_list);i ++)
 			{
 				//Item starting locations
-				var _stackStartX = winStart[0]+_stackVar[0]+_offsetX+_windowBufferX;
-				var _stackStartY = winStart[1]+_stackVar[1]+_offsetY+_windowBufferY;
+				var _stackStartX = winStart[0]+_stackVar[0]+_itemVar[0];
+				var _stackStartY = winStart[1]+_stackVar[1]+_itemVar[1];
 				
 				if _cursorVar != -1 and i == _cursorVar _highlighted = true;
 				else _highlighted = false;
@@ -280,7 +258,7 @@ function conGUIInit() constructor
 				if is_array(_scale) _listScale = _scale[i];
 				
 				//Removing buffer between items if last on list
-				if i == array_length(_list)-1 _stackBufferAdd = 0
+				if i == array_length(_list)-1 _listBufferAdd = 0
 				
 				if is_string(_list[i]) //Handler for strings
 				{
@@ -299,27 +277,74 @@ function conGUIInit() constructor
 					draw_sprite_ext(_list[i],_subImage,_stackStartX+_spriteOffset[0],_stackStartY+_spriteOffset[1],_listScale,_listScale,0,-1,1);
 				}
 				
-				if _highlighted drawWindowSprite(_highlightSprite,_stackStartX,_stackStartY,_stackStartX+_itemWidth,_stackStartY+_itemHeight);
+				if _highlighted
+				{
+					cursorLocation = [_stackVar[0]+_itemVar[0],_stackVar[1]+_itemVar[1]];
+					drawWindowSprite(_highlightSprite,
+					_stackStartX-_highlightBufferX,
+					_stackStartY-_highlightBufferY,
+					_stackStartX+_itemWidth+_highlightBufferX,
+					_stackStartY+_itemHeight+_highlightBufferY);
+				}
 				
-				//Adds the off stack info
-				_maxStackWidth = max(_maxStackWidth,_itemWidth*_stackVarAdd[1]);
-				_maxStackHeight = max(_maxStackHeight,_itemHeight*_stackVarAdd[0]);
-					
-				//Adds the main stack info
-				_stackVar[@ 0] += (_itemWidth+_stackBufferAdd)*_stackVarAdd[0];
-				_stackVar[@ 1] += (_itemHeight+_stackBufferAdd)*_stackVarAdd[1];
+				//Sets the max single value, if it's not in our direction
+				_maxListWidth = max(_maxListWidth,_itemWidth)*_listVarAdd[1];
+				_maxListHeight = max(_maxListHeight,_itemHeight)*_listVarAdd[0];
+				
+				//Adds the main stack info, if it's in our direction
+
+					_itemVar[0] += (_itemWidth+_listBufferAdd)*_listVarAdd[0];
+					_itemVar[1] += (_itemHeight+_listBufferAdd)*_listVarAdd[1];
+				
 			}
 			
-			//Final buffer after adding the stack, this is the air pillow around the window
-			_stackVar[@ 0] += (_windowBufferX*2)*_stackVarAdd[0];
-			_stackVar[@ 1] += (_windowBufferY*2)*_stackVarAdd[1];
-			
-			var _windowSpriteX2 = winStart[0] + _stackVar[0] + _maxStackWidth + _offsetX + (_windowBufferX*2)*_stackVarAdd[1];
-			var _windowSpriteY2 = winStart[1] + _stackVar[1] + _maxStackHeight + _offsetY + (_windowBufferY*2)*_stackVarAdd[0];
+			var _windowSpriteX2 = _windowSpriteX1 + _itemVar[0] + _maxListWidth + (_windowBufferX);
+			var _windowSpriteY2 = _windowSpriteY1 + _itemVar[1] + _maxListHeight + (_windowBufferY);
+
+			//Adding end result and next stack location
+			_stackVar[@ 0] += (_itemVar[0] + _maxListWidth + (_windowBufferX)) * _stackVarAdd[0];
+			_stackVar[@ 1] += (_itemVar[1] + _maxListHeight + (_windowBufferY)) * _stackVarAdd[1];
 
 			drawWindowSprite(_windowSprite,_windowSpriteX1,_windowSpriteY1,_windowSpriteX2,_windowSpriteY2);
 			
 			_subImage =+ 1;
+		}
+		
+		/// @desc Draw a selection of windows and highlight one based on cursorDimension input, specific to a scrolling inventory with one inventory category
+		/// @func drawInventoryList(_categoryString,_invOwner,_itemsPerWindow = 14)
+		drawInventoryList = function(_categoryString,_invOwner,_itemsPerWindow = 14)
+		{		
+			//Init
+			var _invItems = [];
+			var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
+			cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
+		
+			//Clamps
+			cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
+			scroll = clamp(scroll,0,max(array_length(_pocketList) - _itemsPerWindow,0));
+		
+			//Itemswindow calc
+			for (var i = 0;i < _itemsPerWindow;i ++)
+			{
+				var _iScroll = i + scroll; //Adjusted index according to how far we scrolled down
+			
+				if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
+				{
+					_invItems[i] = _pocketList[_iScroll].name;
+					if cursorGrid[2] == _iScroll //If selected by cursor currently
+					{
+						cursorObject = _pocketList[_iScroll];
+					}
+				}
+			}
+			//Scroll auto-adjusts for out of bounds values
+			if cursorGrid[2] > _iScroll scroll ++;
+			else if cursorGrid[2] < scroll scroll --;
+		
+			//Itemswindow drawing
+			var _itemStack = [0,0];
+			drawDetails(_itemStack,8,24,_invItems,"Down","Right",0.6,0,sprEmpty,8,8,sprBorderSimpleNoOverlay,4,4,cursorGrid[2]-scroll);
+			drawDetails(_itemStack,0,0,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],"Down","Down",[0.5,2,0.5],0,sprBorderSimpleNoOverlay);
 		}
 		
 	}

@@ -179,6 +179,7 @@
     {"id":{"name":"ChatterboxGetCurrentMetadata","path":"scripts/ChatterboxGetCurrentMetadata/ChatterboxGetCurrentMetadata.yy",},"order":4,},
     {"id":{"name":"sprArcaneBlast","path":"sprites/sprArcaneBlast/sprArcaneBlast.yy",},"order":0,},
     {"id":{"name":"ChatterboxGetVisited","path":"scripts/ChatterboxGetVisited/ChatterboxGetVisited.yy",},"order":10,},
+    {"id":{"name":"fntOhrenstead","path":"fonts/fntOhrenstead/fntOhrenstead.yy",},"order":3,},
     {"id":{"name":"sprPlayerAttackDownward","path":"sprites/sprPlayerAttackDownward/sprPlayerAttackDownward.yy",},"order":9,},
     {"id":{"name":"scribble_flush_everything","path":"scripts/scribble_flush_everything/scribble_flush_everything.yy",},"order":0,},
     {"id":{"name":"__ChatterboxVM","path":"scripts/__ChatterboxVM/__ChatterboxVM.yy",},"order":7,},
@@ -1248,6 +1249,7 @@
     {"CopyToMask":-1,"filePath":"datafiles/Layout","resourceVersion":"1.0","name":"Default.xml","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Scribble","resourceVersion":"1.0","name":"fntSilver.yy","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Scribble","resourceVersion":"1.0","name":"font_console.yy","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Scribble","resourceVersion":"1.0","name":"fntOhrenstead.yy","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.3.570",

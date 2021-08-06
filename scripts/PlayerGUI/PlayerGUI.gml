@@ -21,6 +21,10 @@ function scrGUIInit()
 //Runs in draw event
 function scrGUI(_guiOwner)
 {
+	draw_set_font(fntOhrenstead);
+	//draw_set_halign(fa_left);
+	//draw_set_valign(fa_top);
+	
 	with gui.mainWindow
 	{
 		menuStack = [0,0];

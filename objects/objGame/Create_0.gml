@@ -1,14 +1,13 @@
+//Scirbble
+scribble_font_add_all();
+scribble_font_set_default("fntOhrenstead");
+
 //Network
 global.clientDataSelf = new netClientData();
 global.clientDataOther = new netClients();
 global.localInstances = [];
 global.connected = false;
 global.host = false;
-
-//Scribble
-scribble_font_add_all();
-scribble_font_set_default("fntSilver");
-//draw_set_font(fntSilver);
 
 //Debug
 scrDebugInit();

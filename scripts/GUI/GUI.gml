@@ -123,7 +123,7 @@ function conGUIInit() constructor
 		/// _stackVar is the persistent variable to stack multiple functions
 		/// _stackDirection is the direction to stack in, Left, Right, Up, or Down
 		/// offsetX and Y are carried over by _stackVar
-		/// @func drawDetails(_stackVar,_list,[_offsetX|_offsetY],_scale,_windowSprite,[_cursorVar|_cursorSprite],[_subStackDirection|_listDirection|_stackDirection],[_subListBuffer|_listBuffer|_windowPadding|_highlightPadding])
+		/// @func drawDetails(_stackVar, _list, [_offsetX|_offsetY], _scale, _windowSprite [_cursorVar|_cursorSprite], [_subStackDirection|_listDirection|_stackDirection], [_subListBuffer|_listBuffer|_windowPadding|_highlightPadding])
 		drawDetails = function(_stackVar,_list,_offset = [0,0],_scale = 1,_windowSprite = sprEmpty,_cursorConfig = [-1,sprEmpty],_dir = ["Right","Down","Down"],_bufferConfig = [2,2,8,8])
 		{
 			static _subImage = 0;
@@ -290,8 +290,8 @@ function conGUIInit() constructor
 		}
 		
 		/// @desc Draw a selection of windows and highlight one based on cursorDimension input, specific to a scrolling inventory with one inventory category
-		/// @func drawInventoryList(_categoryString,_invOwner,_itemsPerWindow = 14,_stackVar = [0,0],_offset = [0,0])
-		drawInventoryList = function(_categoryString,_invOwner,_itemsPerWindow = 13,_stackVar = [0,0],_offset = [0,0])
+		/// @func drawInventoryList(_categoryString,_invOwner,_itemsPerWindow = 14,_stackVar = [0|0],_offset = [0|0])
+		drawInventoryList = function(_categoryString,_invOwner,_itemsPerWindow = 13,_stackVar = [0,0],_offset = [0,0],_scale = 1)
 		{		
 			//Init
 			var _invItems = [];
@@ -326,8 +326,8 @@ function conGUIInit() constructor
 			_stackVar[0] += _offset[0];
 			_stackVar[1] += _offset[1];
 			
-			drawDetails(_stackVar,_invItems,[0,0],0.6,sprEmpty,[cursorGrid[2]-scroll,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,8,4]);
-			drawDetails(_stackVar,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],[0,0],[0.5,2,0.5],sprBorderSimpleNoOverlay);
+			drawDetails(_stackVar,_invItems,[0,0],_scale,sprEmpty,[cursorGrid[2]-scroll,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,8,4]);
+			drawDetails(_stackVar,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],[0,0],[_scale,_scale*2,_scale],sprBorderSimpleNoOverlay);
 		}
 		
 	}

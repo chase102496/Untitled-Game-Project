@@ -50,11 +50,12 @@ function scrGUI(_guiOwner)
 				cursorGrid[1] = clamp(cursorGrid[1],0,array_length(inventoryTabIcons)-1);
 				
 				//All Inventory Tabs
-				drawDetails(menuStack,inventoryTabIcons,[6,0],[1,1.5,1.5],sprEmpty,[cursorGrid[1],sprBorderSimpleNoOverlay],["Down","Right","Down"],[2,8,8,8]);
+				//Automatically make a tab for each category in our total inventory
+				var _invCategories = _guiOwner.inv.getCategoryAll();
+				drawDetails(menuStack,_invCategories,[6,0],1,sprEmpty,[cursorGrid[1],sprBorderSimpleNoOverlay],["Down","Right","Down"],[2,8,8,8]);
 				
 				//One Inventory Items Tab
-				var _listItems = inventoryTabCategories[cursorGrid[1]];
-				drawInventoryList(_listItems,_guiOwner,8,menuStack,[0,-6]);
+				drawInventoryList(_invCategories[cursorGrid[1]],_guiOwner,8,menuStack,[0,-6]);
 				
 				//Selection tree
 				if cursorGrid[3] == -2

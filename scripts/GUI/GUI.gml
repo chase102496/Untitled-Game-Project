@@ -132,20 +132,14 @@ function conGUIInit() constructor
 		drawDetails = function(_stackVar,_list,_offset = [0,0],_scale = 1,_windowSprite = sprEmpty,_cursorConfig = [-1,sprEmpty],_dir = ["Right","Down","Down"],_bufferConfig = [2,2,8,8])
 		{
 			static _subImage = 0;
-			
 			var _itemVar = [0,0];
 			var _listVarAdd = [0,0];
-			
 			var _maxListWidth = 0;
 			var _maxListHeight = 0;
-			
 			var _subListVarAdd = [0,0];
-			
 			var _itemWidth = 0;
 			var _itemHeight = 0;
-			
 			var _stackVarAdd = [0,0];
-
 			var _listScale = _scale;
 			var _listBufferAdd = _bufferConfig[1];
 			var _highlighted = false;
@@ -195,17 +189,18 @@ function conGUIInit() constructor
 			_itemVar[0] += _bufferConfig[2];
 			_itemVar[1] += _bufferConfig[2];
 			
-			//Run items
+			//Iterate through item list
 			for (var i = 0;i < array_length(_list);i ++)
 			{
 				//Item starting locations
 				var _stackStartX = winStart[0]+_stackVar[0]+_itemVar[0];
 				var _stackStartY = winStart[1]+_stackVar[1]+_itemVar[1];
 				
+				//If the highlight option is enabled, and we are selected by the cursor
 				if _cursorConfig[0] != -1 and i == _cursorConfig[0] _highlighted = true;
 				else _highlighted = false;
 				
-				//Per item scale adjustment
+				//If our scale is a list, apply to each item instead of across all
 				if is_array(_scale) _listScale = _scale[i];
 				
 				//Removing buffer between items if last on list
@@ -247,6 +242,7 @@ function conGUIInit() constructor
 						_itemHeight = _subListVarAdd[1] ? _dim[1] + _itemHeight + _bufferConfig[0] : max(_itemHeight,_dim[1]);
 					}
 				}
+				
 				//Normal stack items
 				else
 				{
@@ -256,7 +252,10 @@ function conGUIInit() constructor
 					var _itemHeight = _dim[1];
 					
 					//Drawing
-					if is_string(_list[i]) drawText(_list[i],_stackStartX,_stackStartY,_listScale,false);
+					if is_string(_list[i])
+					{
+						drawText(_list[i],_stackStartX,_stackStartY,_listScale,false);
+					}
 					else if sprite_exists(_list[i]) 
 					{
 						var _spriteOffset = [sprite_get_xoffset(_list[i])*_listScale,sprite_get_yoffset(_list[i])*_listScale];
@@ -302,7 +301,7 @@ function conGUIInit() constructor
 		{		
 			//Init
 			var _invItems = [];
-			var _pocketList = _invOwner.inv.getCategoryList(_categoryString);
+			var _pocketList = _invOwner.inv.getCategoryItems(_categoryString);
 			cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
 		
 			//Clamps

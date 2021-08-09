@@ -105,6 +105,9 @@ function scrDebugVars()
 			
 			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test1",["Equip","Use","Drop","Destroy"]));
 			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test2",["Destroy","Use","Drop"]));
+			inv.add(new conInventoryItem(_sprRand,"Test3 Object","Description for Test3",1,"Test3",[]));
+			
+			global.debugVar[| 9] = inv.getCategoryAll();
 		}
 
 	}

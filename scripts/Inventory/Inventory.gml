@@ -4,7 +4,40 @@ function conInventoryInit() constructor
 	//Creates an id for our inventory
 	id = ds_list_create();
 	
-	getCategoryList = function(_strCategory)
+	getCategoryAll = function()
+	{
+		var _categories = [];
+
+		for (var i = 0;i < ds_list_size(id);i ++)
+		{
+			var _add = true;
+			
+			for (var j = 0;j < array_length(_categories);j ++)
+			{
+				if _categories[j] == id[| i].category _add = false;
+			}
+			
+			if _add array_push(_categories,id[| i].category);
+		}
+		
+		return _categories;
+		
+	}
+
+	getCategorySprite = function(_strCategory)
+	{
+		switch (_strCategory)
+		{
+			case "Test1":
+				return sprIconBookOpen;
+			
+			default:
+				return sprIconBag;
+		}
+	}
+
+	// Get all of the items with a specific category string
+	getCategoryItems = function(_strCategory)
 	{
 		var _categoryList = [];
 		

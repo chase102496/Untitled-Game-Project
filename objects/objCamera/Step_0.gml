@@ -1,4 +1,6 @@
 //Update dest
+follow = global.inputObject;
+
 if instance_exists(follow)
 {
 	xTo = follow.x;

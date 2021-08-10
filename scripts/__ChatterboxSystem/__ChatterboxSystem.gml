@@ -97,7 +97,7 @@ function __ChatterboxTrace()
         ++_i;
     }
 
-    show_debug_message(string_format(current_time, 8, 0) + " Chatterbox: " + _string);
+    if CHATTERBOX_VERBOSE show_debug_message(string_format(current_time, 8, 0) + " Chatterbox: " + _string);
 
     return _string;
 }

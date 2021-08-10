@@ -1,5 +1,10 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function ChatterboxGetContentMetadata(){
+/// Returns a content string with the given index in the given chatterbox
+///
+/// @param chatterbox
+/// @param contentIndex
 
+function ChatterboxGetContentMetadata(_chatterbox, _index)
+{
+    if (!IsChatterbox(_chatterbox)) return undefined;
+    return _chatterbox.GetContentMetadata(_index);
 }

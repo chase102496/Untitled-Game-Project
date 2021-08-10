@@ -6,15 +6,16 @@
 #macro CHATTERBOX_WAIT_BEFORE_STOP              true
 #macro CHATTERBOX_SHOW_REJECTED_OPTIONS         true
 
-#macro CHATTERBOX_DIRECTION_MODE                  0 //0 = Pass direction to function (see below), 1 = treat directions as expressions, 2 = treat directions as Python-esque function calls
-#macro CHATTERBOX_DIRECTION_FUNCTION              TestCaseDirectionFunction
+#macro CHATTERBOX_DIRECTION_MODE                0 //0 = Pass direction to function (see below), 1 = treat directions as expressions, 2 = treat directions as Python-esque function calls
+#macro CHATTERBOX_DIRECTION_FUNCTION            TestCaseDirectionFunction
 
-#macro CHATTERBOX_ESCAPE_FILE_TAGS                true
-#macro CHATTERBOX_ESCAPE_NODE_TAGS                true
-#macro CHATTERBOX_ESCAPE_CONTENT                  true
-#macro CHATTERBOX_ESCAPE_EXPRESSION_STRINGS       false
+#macro CHATTERBOX_ESCAPE_FILE_TAGS              true
+#macro CHATTERBOX_ESCAPE_NODE_TAGS              true
+#macro CHATTERBOX_ESCAPE_CONTENT                true
+#macro CHATTERBOX_ESCAPE_EXPRESSION_STRINGS     false
+#macro CHATTERBOX_VERBOSE						false
 
-#macro CHATTERBOX_INCLUDED_FILES_SUBDIRECTORY     ""
+#macro CHATTERBOX_INCLUDED_FILES_SUBDIRECTORY   "Chatterbox"
 
 #region Advanced
 

@@ -1,6 +1,5 @@
 function scrDisplayInit()
 {
-	window_set_fullscreen(false);
 	//application_surface_draw_enable(false);
 	
 	//ExecuteShell("cd \"C:\Users\Chase\Documents\GameMakerStudio2\Untitled Game Project\datafiles\EmptyServer\" && start.bat",false,false);
@@ -12,5 +11,8 @@ function scrDisplayInit()
 	
 	display_reset(1,false);
 	
-	window_set_size(960,540);
+	window_set_fullscreen(false);
+	//window_set_size(960,540);
+	window_set_size(1440,810);
+	//window_set_size(1920,1080);
 }

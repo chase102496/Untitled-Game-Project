@@ -17,12 +17,13 @@
   ],
   "layers": [
     {"instances":[
-        {"properties":[],"isDnd":false,"objectId":{"name":"objCamera","path":"objects/objCamera/objCamera.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":false,"x":32.0,"y":224.0,"resourceVersion":"1.0","name":"inst_28AB1D88","tags":[],"resourceType":"GMRInstance",},
         {"properties":[],"isDnd":false,"objectId":{"name":"objGame","path":"objects/objGame/objGame.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":0.3125,"scaleY":0.3125,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":{"name":"rmFree","path":"rooms/rmFree/rmFree.yy",},"frozen":false,"ignore":false,"inheritItemSettings":false,"x":32.0,"y":192.0,"resourceVersion":"1.0","name":"inst_79EF1523","tags":[],"resourceType":"GMRInstance",},
       ],"visible":true,"depth":200,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layGame","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[],"visible":true,"depth":400,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layEquip","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[],"visible":true,"depth":500,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":32,"gridY":32,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layProjectile","tags":[],"resourceType":"GMRInstanceLayer",},
-    {"instances":[],"visible":true,"depth":600,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":4,"gridY":4,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layPlayer","tags":[],"resourceType":"GMRInstanceLayer",},
+    {"instances":[
+        {"properties":[],"isDnd":false,"objectId":{"name":"objPlayer","path":"objects/objPlayer/objPlayer.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":236.0,"y":244.0,"resourceVersion":"1.0","name":"inst_4E68A004","tags":[],"resourceType":"GMRInstance",},
+      ],"visible":true,"depth":600,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":4,"gridY":4,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layPlayer","tags":[],"resourceType":"GMRInstanceLayer",},
     {"instances":[
         {"properties":[],"isDnd":false,"objectId":{"name":"objLaternarius","path":"objects/objLaternarius/objLaternarius.yy",},"inheritCode":false,"hasCreationCode":false,"colour":4294967295,"rotation":0.0,"scaleX":1.0,"scaleY":1.0,"imageIndex":0,"imageSpeed":1.0,"inheritedItemId":null,"frozen":false,"ignore":false,"inheritItemSettings":false,"x":160.0,"y":236.0,"resourceVersion":"1.0","name":"inst_669231F6","tags":[],"resourceType":"GMRInstance",},
       ],"visible":true,"depth":700,"userdefinedDepth":false,"inheritLayerDepth":true,"inheritLayerSettings":false,"gridX":4,"gridY":4,"layers":[],"hierarchyFrozen":false,"resourceVersion":"1.0","name":"layEntities","tags":[],"resourceType":"GMRInstanceLayer",},
@@ -36,11 +37,11 @@
   "creationCodeFile": "",
   "inheritCode": false,
   "instanceCreationOrder": [
-    {"name":"inst_28AB1D88","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_79EF1523","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_6D28B752","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_669231F6","path":"rooms/rmTest/rmTest.yy",},
     {"name":"inst_F7EA73C","path":"rooms/rmTest/rmTest.yy",},
+    {"name":"inst_4E68A004","path":"rooms/rmTest/rmTest.yy",},
   ],
   "inheritCreationOrder": true,
   "sequenceId": null,

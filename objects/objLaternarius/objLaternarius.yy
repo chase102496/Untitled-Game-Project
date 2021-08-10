@@ -11,8 +11,8 @@
   },
   "persistent": false,
   "parentObjectId": {
-    "name": "parEntity",
-    "path": "objects/parEntity/parEntity.yy",
+    "name": "parNPC",
+    "path": "objects/parNPC/parNPC.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,

@@ -1,1 +1,0 @@
-netState.async();

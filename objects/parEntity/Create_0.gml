@@ -2,29 +2,18 @@
 netInstanceCreateID();
 netObject = parNetEntity; //Sets what other clients create to simulate us
 
-//NEW constructor instantiation
-snowStateInput = new SnowState("General + Combat");
-snowStateInput.history_enable();
-scrInputsInit();
-//
+//Stats
 stats = new conStatsInit();
-//
-inv = new conInventoryInit();
-//
-scrGUIInit();
-//
-netState = new SnowState("Offline");
-//
-snowState = new SnowState("Ground");
-snowState.history_enable();
+
+//States
+snowState = new SnowState("Free");
 scrEntityStateInit();
-//
-//One-time init scripts
+
+//Buffs
 scrBuffsInit();
 
-//Combat stuff
-entityEquip = instance_create_layer(x,y,"layEquip",objEquip);
-entityEquip.owner = id;
+//Outline shader
+outline_init();
 
 //Placeholders for sprite animations;
 mask_index = sprPlayerIdle;

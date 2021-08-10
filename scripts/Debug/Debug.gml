@@ -82,23 +82,27 @@ function scrDebugVars()
 		
 	with global.inputObject
 	{
+		//Online toggle
 		if global.keyPressStar
 		{
 			var _newState = scrCustomToggle(netState.get_current_state(),"Online","Offline");
 			netState.change(_newState);
 		}
 		
+		//Debug toggle
 		if global.keyPress0
 		{
 			global.drawDebug = scrToggle(global.drawDebug);
 			global.showHitbox = scrToggle(global.showHitbox);
 		}
 		
+		//Equipment
 		if global.keyPress1 entityEquip.snowState.change("Empty");
 		if global.keyPress2 entityEquip.snowState.change("Greatsword Idle");
 		if global.keyPress3 entityEquip.snowState.change("Bow Idle");
 		if global.keyPress4 entityEquip.snowState.change("Orb Idle");
-
+		
+		//Adding random items
 		if global.keyPress6
 		{
 			var _sprRand = choose(sprGreatswordIdle,sprArrow,sprLaternariusIdle,sprOrbIdle,sprPlayerIdle,sprTerrain);
@@ -109,8 +113,6 @@ function scrDebugVars()
 			inv.add(new conInventoryItem("Test3 Object","Description for Test3",1,_sprRand,"Keys",[],sprIconKey));
 			inv.add(new conInventoryItem("Test4 Object","Description for Test4",1,_sprRand,"Shards",[],_sprRand2));
 			inv.add(new conInventoryItem("Test4 Object","Description for Test4",2));
-			
-			global.debugVar[| 9] = inv.getCategoryStringsAll();
 		}
 
 	}
@@ -118,7 +120,7 @@ function scrDebugVars()
 	//Changing input targets. Control a body with MMB!
 	if mouse_check_button_pressed(mb_middle)
 	{
-		entityClick = instance_nearest(mouse_x,mouse_y,parEntity);
+		entityClick = instance_nearest(mouse_x,mouse_y,objPlayer);
 		if instance_exists(entityClick) global.inputObject = entityClick.id;
 	}
 	

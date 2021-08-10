@@ -23,44 +23,44 @@
   ],
   "RecentItems": [
     {
-      "name": "fntSilver",
-      "path": "fonts/fntSilver/fntSilver.yy"
+      "name": "parNPC",
+      "path": "objects/parNPC/parNPC.yy"
     },
     {
-      "name": "font_console",
-      "path": "fonts/font_console/font_console.yy"
-    },
-    {
-      "name": "fntOhrenstead",
-      "path": "fonts/fntOhrenstead/fntOhrenstead.yy"
-    },
-    {
-      "name": "seqGreatswordStab",
-      "path": "sequences/seqGreatswordStab/seqGreatswordStab.yy"
-    },
-    {
-      "name": "rmFree",
-      "path": "rooms/rmFree/rmFree.yy"
-    },
-    {
-      "name": "rmTest",
-      "path": "rooms/rmTest/rmTest.yy"
+      "name": "parEntity",
+      "path": "objects/parEntity/parEntity.yy"
     },
     {
       "name": "PlayerGUI",
       "path": "scripts/PlayerGUI/PlayerGUI.yy"
     },
     {
-      "name": "__scribble_config_macros",
-      "path": "scripts/__scribble_config_macros/__scribble_config_macros.yy"
+      "name": "EntityStates",
+      "path": "scripts/EntityStates/EntityStates.yy"
     },
     {
-      "name": "__scribble_config_default_template",
-      "path": "scripts/__scribble_config_default_template/__scribble_config_default_template.yy"
+      "name": "objPlayer",
+      "path": "objects/objPlayer/objPlayer.yy"
     },
     {
-      "name": "__scribble_config_colours",
-      "path": "scripts/__scribble_config_colours/__scribble_config_colours.yy"
+      "name": "objLaternarius",
+      "path": "objects/objLaternarius/objLaternarius.yy"
+    },
+    {
+      "name": "rmTest",
+      "path": "rooms/rmTest/rmTest.yy"
+    },
+    {
+      "name": "sprLaternariusJumpFall",
+      "path": "sprites/sprLaternariusJumpFall/sprLaternariusJumpFall.yy"
+    },
+    {
+      "name": "sprLaternariusJumpRise",
+      "path": "sprites/sprLaternariusJumpRise/sprLaternariusJumpRise.yy"
+    },
+    {
+      "name": "sprLaternariusRun",
+      "path": "sprites/sprLaternariusRun/sprLaternariusRun.yy"
     }
   ],
   "Filters": [],

@@ -67,6 +67,7 @@
     {"id":{"name":"ChatterboxAddFunction","path":"scripts/ChatterboxAddFunction/ChatterboxAddFunction.yy",},"order":1,},
     {"id":{"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"order":0,},
     {"id":{"name":"__ChatterboxClassSource","path":"scripts/__ChatterboxClassSource/__ChatterboxClassSource.yy",},"order":2,},
+    {"id":{"name":"parNPC","path":"objects/parNPC/parNPC.yy",},"order":1,},
     {"id":{"name":"SnowState","path":"scripts/SnowState/SnowState.yy",},"order":1,},
     {"id":{"name":"__scribble_class_typist","path":"scripts/__scribble_class_typist/__scribble_class_typist.yy",},"order":7,},
     {"id":{"name":"objPlayer","path":"objects/objPlayer/objPlayer.yy",},"order":1,},

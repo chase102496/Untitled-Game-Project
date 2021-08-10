@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "sprTerrain",
-    "path": "sprites/sprTerrain/sprTerrain.yy",
+    "name": "sprTileStone",
+    "path": "sprites/sprTileStone/sprTileStone.yy",
   },
   "solid": false,
   "visible": true,

@@ -102,12 +102,15 @@ function scrDebugVars()
 		if global.keyPress6
 		{
 			var _sprRand = choose(sprGreatswordIdle,sprArrow,sprLaternariusIdle,sprOrbIdle,sprPlayerIdle,sprTerrain);
+			var _sprRand2 = choose(sprIconKey,sprIconPouch,sprIconSword,sprIconShards);
 			
-			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test1",["Equip","Use","Drop","Destroy"]));
-			inv.add(new conInventoryItem(_sprRand,"Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,"Test2",["Destroy","Use","Drop"]));
-			inv.add(new conInventoryItem(_sprRand,"Test3 Object","Description for Test3",1,"Test3",[]));
+			inv.add(new conInventoryItem("Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,_sprRand,"Equipment",["Equip","Use","Drop","Destroy"],_sprRand2));
+			inv.add(new conInventoryItem("Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,_sprRand,"Consumables",["Destroy","Use","Drop"],_sprRand2));
+			inv.add(new conInventoryItem("Test3 Object","Description for Test3",1,_sprRand,"Keys",[],sprIconKey));
+			inv.add(new conInventoryItem("Test4 Object","Description for Test4",1,_sprRand,"Shards",[],_sprRand2));
+			inv.add(new conInventoryItem("Test4 Object","Description for Test4",2));
 			
-			global.debugVar[| 9] = inv.getCategoryAll();
+			global.debugVar[| 9] = inv.getCategoryStringsAll();
 		}
 
 	}

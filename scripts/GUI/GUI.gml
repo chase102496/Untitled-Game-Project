@@ -302,7 +302,7 @@ function conGUIInit() constructor
 			//Init
 			var _invItems = [];
 			var _pocketList = _invOwner.inv.getCategoryItems(_categoryString);
-			cursorObject = new conInventoryItem(sprEmpty,"","",1,"",[]);
+			cursorObject = new conInventoryItem("","",1);
 		
 			//Clamps
 			cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
@@ -315,7 +315,7 @@ function conGUIInit() constructor
 			
 				if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
 				{
-					_invItems[i][0] = _pocketList[_iScroll].sprite;
+					_invItems[i][0] = _pocketList[_iScroll].invSprite;
 					_invItems[i][1] = _pocketList[_iScroll].name;
 					
 					if cursorGrid[2] == _iScroll //If selected by cursor currently

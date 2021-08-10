@@ -7,15 +7,15 @@
   "edgeFiltering": false,
   "collisionTolerance": 0,
   "swfPrecision": 2.525,
-  "bbox_left": 0,
-  "bbox_right": 7,
-  "bbox_top": 0,
-  "bbox_bottom": 6,
+  "bbox_left": 3,
+  "bbox_right": 12,
+  "bbox_top": 3,
+  "bbox_bottom": 11,
   "HTile": false,
   "VTile": false,
   "For3D": false,
-  "width": 8,
-  "height": 7,
+  "width": 16,
+  "height": 16,
   "textureGroupId": {
     "name": "Default",
     "path": "texturegroups/Default",
@@ -24,9 +24,9 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"e5966e4e-9b14-429a-9146-160674dd17ea","path":"sprites/sprIconKey/sprIconKey.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"e5966e4e-9b14-429a-9146-160674dd17ea","path":"sprites/sprIconKey/sprIconKey.yy",},"LayerId":{"name":"5e8fcd96-6a2a-4fb4-9d6c-e31c87b273d1","path":"sprites/sprIconKey/sprIconKey.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"sprIconKey","path":"sprites/sprIconKey/sprIconKey.yy",},"resourceVersion":"1.0","name":"e5966e4e-9b14-429a-9146-160674dd17ea","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"8b98723a-4df6-4cfe-946f-6fa35efc98b3","path":"sprites/sprIconKey/sprIconKey.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"8b98723a-4df6-4cfe-946f-6fa35efc98b3","path":"sprites/sprIconKey/sprIconKey.yy",},"LayerId":{"name":"3523b557-21bb-4651-922b-74b62ff8c4c4","path":"sprites/sprIconKey/sprIconKey.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"sprIconKey","path":"sprites/sprIconKey/sprIconKey.yy",},"resourceVersion":"1.0","name":"8b98723a-4df6-4cfe-946f-6fa35efc98b3","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
     "spriteId": {"name":"sprIconKey","path":"sprites/sprIconKey/sprIconKey.yy",},
@@ -41,7 +41,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"1fd06ed5-885d-44ec-80e0-de9cc2b1c5b0","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"e5966e4e-9b14-429a-9146-160674dd17ea","path":"sprites/sprIconKey/sprIconKey.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"01eda801-7e29-48bb-b8a0-2f90c638613b","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"8b98723a-4df6-4cfe-946f-6fa35efc98b3","path":"sprites/sprIconKey/sprIconKey.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack",},
     ],
     "visibleRange": null,
@@ -65,12 +65,12 @@
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"5e8fcd96-6a2a-4fb4-9d6c-e31c87b273d1","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"3523b557-21bb-4651-922b-74b62ff8c4c4","tags":[],"resourceType":"GMImageLayer",},
   ],
   "nineSlice": null,
   "parent": {
-    "name": "GUI",
-    "path": "folders/Sprites/GUI.yy",
+    "name": "Icons",
+    "path": "folders/Sprites/GUI/Icons.yy",
   },
   "resourceVersion": "1.0",
   "name": "sprIconKey",

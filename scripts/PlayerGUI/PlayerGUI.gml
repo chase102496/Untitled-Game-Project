@@ -10,12 +10,6 @@ function scrGUIInit()
 
 	//Creation of main window object
 	gui.mainWindow = new gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _mainWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _mainWindowY,_guiGrid);
-
-	gui.mainWindow.inventoryTabIcons = [sprIconSword,sprIconPotion,sprIconKey];
-	gui.mainWindow.inventoryTabCategories = ["Test1","Test2","Equipped"];
-	
-	gui.mainWindow.pageTabIcons = [sprIconBag,sprIconBookOpen,sprIconBookClosed,sprIconBookClosed];
-	gui.mainWindow.pageTabCategories = ["Inventory","Stats","Journal","Runicon"];
 }
 
 //Runs in draw event
@@ -29,6 +23,7 @@ function scrGUI(_guiOwner)
 	{
 		menuStack = [0,0];
 		var _input = _guiOwner.input.menu;
+		var _menuPages = [[sprIconPouch,"Items"],[sprIconRunicon,"Runicon"]]
 
 		drawWindow(); //Draws main window element, referenced in other subwindows
 		
@@ -36,26 +31,34 @@ function scrGUI(_guiOwner)
 		if _input.pageDown cursorChange("Page Down Reset");
 		
 		//Clamps
-		cursorGrid[0] = clamp(cursorGrid[0],0,array_length(pageTabIcons)-1);
+		cursorGrid[0] = clamp(cursorGrid[0],0,array_length(_menuPages)-1);
 		
 		//All Page Tabs
-		drawDetails(menuStack,pageTabIcons,[0,-24],1.2,sprEmpty,[cursorGrid[0],sprBorderSimpleNoOverlay],["Down","Right","Down"],[2,8,8,4]);
-
+		drawDetails(menuStack,_menuPages,[0,-28],1.2,sprEmpty,[cursorGrid[0],sprBorderSimpleNoOverlay],["Right","Right","Down"],[2,8,8,4]);
+		
 		switch cursorGrid[0]
 		{
 			//Inventory page
 			case 0:
 			{
+				var _invCategoryStringsRaw = _guiOwner.inv.getCategoryStringsAll();
+				var _invCategorySpriteRaw = _guiOwner.inv.getCategorySpritesAll();
+				var _invCategories = [];
+				for (var i = 0; i < array_length(_invCategoryStringsRaw);i ++)
+				{
+					_invCategories[i][0] = _invCategoryStringsRaw[i];
+					_invCategories[i][1] = _invCategorySpriteRaw[i];
+				}
+				
 				//Clamps
-				cursorGrid[1] = clamp(cursorGrid[1],0,array_length(inventoryTabIcons)-1);
+				cursorGrid[1] = clamp(cursorGrid[1],0,array_length(_invCategories)-1);
 				
 				//All Inventory Tabs
 				//Automatically make a tab for each category in our total inventory
-				var _invCategories = _guiOwner.inv.getCategoryAll();
-				drawDetails(menuStack,_invCategories,[6,0],1,sprEmpty,[cursorGrid[1],sprBorderSimpleNoOverlay],["Down","Right","Down"],[2,8,8,8]);
+				drawDetails(menuStack,_invCategories,[6,0],1,sprEmpty,[cursorGrid[1],sprBorderSimpleNoOverlay],["Right","Right","Down"],[2,8,8,8]);
 				
 				//One Inventory Items Tab
-				drawInventoryList(_invCategories[cursorGrid[1]],_guiOwner,8,menuStack,[0,-6]);
+				drawInventoryList(_invCategoryStringsRaw[cursorGrid[1]],_guiOwner,9,menuStack,[0,0]);
 				
 				//Selection tree
 				if cursorGrid[3] == -2

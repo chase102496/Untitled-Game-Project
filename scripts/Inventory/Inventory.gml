@@ -1,39 +1,39 @@
+global.itemCategories =
+{
+	Equipment : sprIconSword, //Anything that can be equipped
+	Consumables : sprIconPotion, //Anything that can be consumed for some reason
+	Shards : sprIconShards, //Anything related to changing the way equipment works
+	Keys : sprIconKey, //Quest-related and other stuff that is pertinent to game progression
+	Miscellaneous : sprIconPouch //Misc
+}
+
 // Inventory constructor. Should be named 'inv' as an object
 function conInventoryInit() constructor
 {
 	//Creates an id for our inventory
 	id = ds_list_create();
 	
-	getCategoryAll = function()
+	getCategoryStringsAll = function()
 	{
-		var _categories = [];
-
-		for (var i = 0;i < ds_list_size(id);i ++)
+		return variable_struct_get_names(global.itemCategories);
+	}
+	
+	getCategorySpritesAll = function()
+	{
+		var _sprites = [];
+		var _stringList = getCategoryStringsAll();
+		
+		for (var i = 0;i < array_length(_stringList);i ++)
 		{
-			var _add = true;
-			
-			for (var j = 0;j < array_length(_categories);j ++)
-			{
-				if _categories[j] == id[| i].category _add = false;
-			}
-			
-			if _add array_push(_categories,id[| i].category);
+			_sprites[i] = variable_struct_get(global.itemCategories,_stringList[i]);
 		}
 		
-		return _categories;
-		
+		return _sprites;
 	}
 
 	getCategorySprite = function(_strCategory)
 	{
-		switch (_strCategory)
-		{
-			case "Test1":
-				return sprIconBookOpen;
-			
-			default:
-				return sprIconBag;
-		}
+		return variable_struct_get(global.itemCategories,_strCategory);
 	}
 
 	// Get all of the items with a specific category string
@@ -64,31 +64,28 @@ function conInventoryInit() constructor
 }
 
 // Base item template
-function conInventoryItem(_sprite,_name,_description,_amount,_category,_interactList) constructor
+function conInventoryItem(_name,_description,_amount,_sprite = sprEmpty,_category = "Miscellaneous",_interactList = [],_invSprite = sprIconPouch) constructor
 {
+	invSprite = _invSprite;
 	sprite = _sprite;
 	name = _name;
 	description = _description;
 	amount = _amount;
-	category = _category; //This will be like Pokemon's inventory system (Key Items, Equipment, Consumables, Tools
+	category = _category; //This will be like Pokemon's inventory system (Keys, Equipment, Items)
 	interactList = _interactList; //This is what we can do when we select the item in our inventory
+	//type = _type; //This is the type of item. For example, there will be weapons, consumables, tools, shards, etc.
 	
 	interact = function(_option) //This will be used when interacted with in inventory and take a list of string-represented functions in a list from the function (use, destroy, etc)
 	{
 		switch(_option)
 		{
 			case "Equip":
-				for (var i = 0;i < array_length(interactList);i ++)
-				{
-					if interactList[i] == "Equip" interactList[i] = "Unequip";
-				}
+				interactList[i] = "Unequip";
 				break;
 			
 			case "Unequip":
-				for (var i = 0;i < array_length(interactList);i ++)
-				{
-					if interactList[i] == "Unequip" interactList[i] = "Equip";
-				}
+				interactList[i] = "Equip";
+				break;
 				break;
 			
 			case "Destroy":

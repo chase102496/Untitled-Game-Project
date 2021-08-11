@@ -23,6 +23,10 @@
   ],
   "RecentItems": [
     {
+      "name": "fntOhrenstead",
+      "path": "fonts/fntOhrenstead/fntOhrenstead.yy"
+    },
+    {
       "name": "string_split",
       "path": "scripts/string_split/string_split.yy"
     },
@@ -57,10 +61,6 @@
     {
       "name": "sh_outline",
       "path": "shaders/sh_outline/sh_outline.yy"
-    },
-    {
-      "name": "fntSilver",
-      "path": "fonts/fntSilver/fntSilver.yy"
     }
   ],
   "Filters": [],
@@ -80,22 +80,6 @@
     "#FFFF0000",
     "#FFFF00FF",
     "#FF4040FF",
-    "#FFFF80FF",
-    "#FFFF8080",
-    "#FFFF8000",
-    "#FFFFFF80",
-    "#FF80FF00",
-    "#FF80C0FF",
-    "#FF0000FF",
-    "#FF00FFFF",
-    "#FF00FF00",
-    "#FFFFFF00",
-    "#FFFF0000",
-    "#FFFF00FF",
-    "#FF4040FF",
-    "#FFFF80FF",
-    "#FFFF8080",
-    "#FFFF8000",
-    "#FFFFFF80"
+    "#FFFF80FF"
   ]
 }

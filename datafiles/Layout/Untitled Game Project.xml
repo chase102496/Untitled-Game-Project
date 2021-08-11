@@ -1,24 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ActiveConfig="Default" Platform="Windows" Runtime="VM" Device="Default">
-	<Desktop x="-8" y="32" width="2293" height="897" id="19" title="Untitled Game Project - GameMaker Studio 2" windowState="Maximized">
+	<Desktop x="-8" y="32" width="3440" height="1377" id="19" title="Untitled Game Project - GameMaker Studio 2" windowState="Maximized">
 		<Workspaces>
-			<Workspace active="True" chain="False" title="Game" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
+			<Workspace active="False" chain="False" title="Game" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="2" isActive="True">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="5" isActive="False">
 						<Script column="0" file="${project_dir}\objects\objGame\Create_0.gml" resource="objGame" subResource="0_0" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\objects\objGame\Draw_0.gml" resource="objGame" subResource="8_0" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\scripts\Dialogue\Dialogue.gml" resource="Dialogue" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Debug\Debug.gml" resource="Debug" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\scripts\Dialogue\Dialogue.gml" resource="Dialogue" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\scripts\Inputs\Inputs.gml" resource="Inputs" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\scripts\GUI\GUI.gml" resource="GUI" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Display\Display.gml" resource="Display" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\States\States.gml" resource="States" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\scripts\GUI\GUI.gml" resource="GUI" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Inventory\Inventory.gml" resource="Inventory" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Stats\Stats.gml" resource="Stats" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Buffs\Buffs.gml" resource="Buffs" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Tools\Tools.gml" resource="Tools" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Physics\Physics.gml" resource="Physics" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\Animations\Animations.gml" resource="Animations" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\scripts\Inputs\Inputs.gml" resource="Inputs" overridden_title="False" view_readonly="False" />
+					</DocumentWindow>
+				</Module>
+			</Workspace>
+			<Workspace active="True" chain="False" title="Player" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
+				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="5" isActive="True">
+						<Script column="0" file="${project_dir}\objects\objPlayer\Create_0.gml" resource="objPlayer" subResource="0_0" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\objects\objPlayer\Step_0.gml" resource="objPlayer" subResource="3_0" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\objects\objPlayer\Draw_0.gml" resource="objPlayer" subResource="8_0" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\objects\objPlayer\Other_68.gml" resource="objPlayer" subResource="7_68" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\objects\objPlayer\CleanUp_0.gml" resource="objPlayer" subResource="12_0" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\scripts\PlayerGUI\PlayerGUI.gml" resource="PlayerGUI" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\scripts\PlayerStates\PlayerStates.gml" resource="PlayerStates" overridden_title="False" view_readonly="False" />
 					</DocumentWindow>
 				</Module>
 			</Workspace>
@@ -44,32 +57,20 @@
 					</DocumentWindow>
 				</Module>
 			</Workspace>
-			<Workspace active="False" chain="False" title="Player" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
-				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="6" isActive="False">
-						<Script column="0" file="${project_dir}\objects\objPlayer\Create_0.gml" resource="objPlayer" subResource="0_0" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\objects\objPlayer\Step_0.gml" resource="objPlayer" subResource="3_0" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\objects\objPlayer\Draw_0.gml" resource="objPlayer" subResource="8_0" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\objects\objPlayer\Other_68.gml" resource="objPlayer" subResource="7_68" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\objects\objPlayer\CleanUp_0.gml" resource="objPlayer" subResource="12_0" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\scripts\PlayerGUI\PlayerGUI.gml" resource="PlayerGUI" overridden_title="False" view_readonly="False" />
-						<Script column="0" file="${project_dir}\scripts\PlayerStates\PlayerStates.gml" resource="PlayerStates" overridden_title="False" view_readonly="False" />
-					</DocumentWindow>
-				</Module>
-			</Workspace>
 			<Workspace active="False" chain="False" title="Scribble" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="2" isActive="False">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="0" isActive="False">
 						<Script column="0" file="${project_dir}\scripts\__scribble_config_colours\__scribble_config_colours.gml" resource="__scribble_config_colours" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\__scribble_config_default_template\__scribble_config_default_template.gml" resource="__scribble_config_default_template" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\__scribble_config_macros\__scribble_config_macros.gml" resource="__scribble_config_macros" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\__scribble_init\__scribble_init.gml" resource="__scribble_init" overridden_title="False" view_readonly="False" />
+						<Script column="0" file="${project_dir}\notes\Text_Formatting\Text_Formatting.txt" resource="Text_Formatting" overridden_title="False" view_readonly="False" />
 					</DocumentWindow>
 				</Module>
 			</Workspace>
 			<Workspace active="False" chain="False" title="Chatterbox" localise_title="" user_edited_title="True" workspace_offset="[0, 0]" workspace_scale="1">
 				<Module Command="DocumentWindow_RestoreLayout" WorkspaceOwner="true">
-					<DocumentWindow columns="1" fullscreen="True" activeTab="1" isActive="False">
+					<DocumentWindow columns="1" fullscreen="True" activeTab="4" isActive="False">
 						<Script column="0" file="${project_dir}\scripts\__ChatterboxConfig\__ChatterboxConfig.gml" resource="__ChatterboxConfig" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\ChatterboxCreate\ChatterboxCreate.gml" resource="ChatterboxCreate" overridden_title="False" view_readonly="False" />
 						<Script column="0" file="${project_dir}\scripts\IsChatterbox\IsChatterbox.gml" resource="IsChatterbox" overridden_title="False" view_readonly="False" />
@@ -98,7 +99,7 @@
 				</Module>
 			</DockTab>
 		</Dock>
-		<Dock state="Expanded" type="eBottom" restore_size="193.3144dpi_px" active_tab="0">
+		<Dock state="Expanded" type="eBottom" restore_size="593.55dpi_px" active_tab="0">
 			<DockTab localise_title="OutputPanel_Output" cell_sizes="[1000]" layout_id="dock_tab_1" layout_guid="7282b19a-ead5-4544-b85a-589571c91514">
 				<Module Command="open_output_panel">
 					<Window left="0px" right="" top="0px" bottom="" width="900px" height="240px" flags="Default" title="Output" localise_title="OutputPanel_Title" />
@@ -143,21 +144,20 @@
 	<FoldRegions>
 		<FoldState docFile="scripts/Physics/Physics.gml" foldedRegions="0,1" />
 		<FoldState docFile="scripts/EquipStates/EquipStates.gml" foldedRegions="0,1,2,7,9,10,19,20,23,29,32,34,37,40" />
-		<FoldState docFile="scripts/PlayerStates/PlayerStates.gml" foldedRegions="1,2,25,30,37,43,50,54,59" />
+		<FoldState docFile="scripts/PlayerStates/PlayerStates.gml" foldedRegions="1,2,25,35,48,52,57" />
 		<FoldState docFile="scripts/Networking/Networking.gml" foldedRegions="0,1,7,8,9,12,17,19,23,24" />
 		<FoldState docFile="scripts/ProjectileGeneral/ProjectileGeneral.gml" foldedRegions="1,10" />
 		<FoldState docFile="scripts/EquipAnimations/EquipAnimations.gml" foldedRegions="0,2,3,6" />
 		<FoldState docFile="scripts/Stats/Stats.gml" foldedRegions="2,8" />
 		<FoldState docFile="scripts/Buffs/Buffs.gml" foldedRegions="3,11" />
-		<FoldState docFile="scripts/GUI/GUI.gml" foldedRegions="2,3,4,5,6,7,9,10,11,13,14,15,16,17" />
-		<FoldState docFile="scripts/Inputs/Inputs.gml" foldedRegions="1,2,4,6,8" />
+		<FoldState docFile="scripts/GUI/GUI.gml" foldedRegions="2,3,4,5,6,7,8,13,14,15,16,25" />
+		<FoldState docFile="scripts/Inputs/Inputs.gml" foldedRegions="1,5,7,9,11,13" />
 		<FoldState docFile="scripts/SnowState/SnowState.gml" foldedRegions="70,71,72,76,81,83,85,87,88,89,104,109" />
 		<FoldState docFile="scripts/SendStuff/SendStuff.gml" foldedRegions="0,1,2,3,4,5,6,7,11,13" />
 		<FoldState docFile="scripts/Debug/Debug.gml" foldedRegions="0,1,4" />
 		<FoldState docFile="scripts/HandlePacket/HandlePacket.gml" foldedRegions="7" />
 		<FoldState docFile="scripts/Tools/Tools.gml" foldedRegions="1" />
-		<FoldState docFile="scripts/PlayerGUI/PlayerGUI.gml" foldedRegions="0,1" />
-		<FoldState docFile="scripts/Animations/Animations.gml" foldedRegions="0,1,5,8" />
-		<FoldState docFile="scripts/NPCStates/NPCStates.gml" foldedRegions="1,2,3,4" />
+		<FoldState docFile="scripts/Animations/Animations.gml" foldedRegions="1,5" />
+		<FoldState docFile="scripts/NPCStates/NPCStates.gml" foldedRegions="1,2,4,5" />
 	</FoldRegions>
 </Project>

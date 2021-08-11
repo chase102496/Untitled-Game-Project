@@ -1267,9 +1267,9 @@
     {"CopyToMask":-1,"filePath":"datafiles/Scribble","resourceVersion":"1.0","name":"fntSilver.yy","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Scribble","resourceVersion":"1.0","name":"font_console.yy","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Scribble","resourceVersion":"1.0","name":"fntOhrenstead.yy","resourceType":"GMIncludedFile",},
-    {"CopyToMask":-1,"filePath":"datafiles/Layout","resourceVersion":"1.0","name":"Default.xml","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Chatterbox","resourceVersion":"1.0","name":"TestYarn.yarn","resourceType":"GMIncludedFile",},
     {"CopyToMask":-1,"filePath":"datafiles/Chatterbox","resourceVersion":"1.0","name":"npcDefault.yarn","resourceType":"GMIncludedFile",},
+    {"CopyToMask":-1,"filePath":"datafiles/Layout","resourceVersion":"1.0","name":"Default.xml","resourceType":"GMIncludedFile",},
   ],
   "MetaData": {
     "IDEVersion": "2.3.3.570",

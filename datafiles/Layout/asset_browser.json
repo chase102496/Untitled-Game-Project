@@ -23,44 +23,44 @@
   ],
   "RecentItems": [
     {
-      "name": "parNPC",
-      "path": "objects/parNPC/parNPC.yy"
+      "name": "string_split",
+      "path": "scripts/string_split/string_split.yy"
     },
     {
-      "name": "parEntity",
-      "path": "objects/parEntity/parEntity.yy"
+      "name": "IsChatterbox",
+      "path": "scripts/IsChatterbox/IsChatterbox.yy"
     },
     {
-      "name": "PlayerGUI",
-      "path": "scripts/PlayerGUI/PlayerGUI.yy"
+      "name": "ChatterboxCreate",
+      "path": "scripts/ChatterboxCreate/ChatterboxCreate.yy"
     },
     {
-      "name": "EntityStates",
-      "path": "scripts/EntityStates/EntityStates.yy"
+      "name": "__ChatterboxConfig",
+      "path": "scripts/__ChatterboxConfig/__ChatterboxConfig.yy"
     },
     {
-      "name": "objPlayer",
-      "path": "objects/objPlayer/objPlayer.yy"
+      "name": "__scribble_config_macros",
+      "path": "scripts/__scribble_config_macros/__scribble_config_macros.yy"
     },
     {
-      "name": "objLaternarius",
-      "path": "objects/objLaternarius/objLaternarius.yy"
+      "name": "Dialogue",
+      "path": "scripts/Dialogue/Dialogue.yy"
     },
     {
-      "name": "rmTest",
-      "path": "rooms/rmTest/rmTest.yy"
+      "name": "NPCStates",
+      "path": "scripts/NPCStates/NPCStates.yy"
     },
     {
-      "name": "sprLaternariusJumpFall",
-      "path": "sprites/sprLaternariusJumpFall/sprLaternariusJumpFall.yy"
+      "name": "Documentation",
+      "path": "scripts/Documentation/Documentation.yy"
     },
     {
-      "name": "sprLaternariusJumpRise",
-      "path": "sprites/sprLaternariusJumpRise/sprLaternariusJumpRise.yy"
+      "name": "sh_outline",
+      "path": "shaders/sh_outline/sh_outline.yy"
     },
     {
-      "name": "sprLaternariusRun",
-      "path": "sprites/sprLaternariusRun/sprLaternariusRun.yy"
+      "name": "fntSilver",
+      "path": "fonts/fntSilver/fntSilver.yy"
     }
   ],
   "Filters": [],
@@ -80,6 +80,22 @@
     "#FFFF0000",
     "#FFFF00FF",
     "#FF4040FF",
-    "#FFFF80FF"
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80",
+    "#FF80FF00",
+    "#FF80C0FF",
+    "#FF0000FF",
+    "#FF00FFFF",
+    "#FF00FF00",
+    "#FFFFFF00",
+    "#FFFF0000",
+    "#FFFF00FF",
+    "#FF4040FF",
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80"
   ]
 }

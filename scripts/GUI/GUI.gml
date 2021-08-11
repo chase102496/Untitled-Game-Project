@@ -7,10 +7,29 @@ function conGUIInit() constructor
 	cursorGrid = [0,0,0,-2];	//Internal coordinates of the cursor
 	cursorObject = noone;		//Object selected by the cursor
 	cursorLocation = [0,0];		//Screen location of cursor
+	
+	/// @desc
+	/// @func background(_spriteList)
+	background = function(_spriteList) constructor
+	{
+		spriteList = _spriteList;
+		
+		drawBackground = function()
+		{
+			winStart = scrGuiRelativeToAbsolute(0,0);
+			winEnd = scrGuiRelativeToAbsolute(room_width,camera_get_view_height(view_camera[0]));
 
+			for (var i = 0;i < array_length(spriteList);i ++)
+			{
+				winScale = [(winEnd[0] - winStart[0])/sprite_get_width(spriteList[i]),(winEnd[1] - winStart[1])/sprite_get_height(spriteList[i])];
+				draw_sprite_ext(spriteList[i],0,winStart[0],winStart[1],winScale[0],winScale[1],0,-1,1);
+			}
+		}
+	}
+	
 	/// @desc Creates the window with parameters
-	/// @func window(_sprite, _x1, _y1, _x2, _y2, _grid)
-	window = function(_sprite,_x1,_y1,_x2,_y2,_grid) constructor
+	/// @func window(_sprite,_x1,_y1,_x2,_y2,_grid = grid)
+	window = function(_sprite,_x1,_y1,_x2,_y2,_grid = grid) constructor
 	{
 		sprite = _sprite;
 		x1 = _x1;

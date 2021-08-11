@@ -1,10 +1,41 @@
 global.itemCategories =
 {
-	Equipment : sprIconSword, //Anything that can be equipped
-	Consumables : sprIconPotion, //Anything that can be consumed for some reason
-	Shards : sprIconShards, //Anything related to changing the way equipment works
-	Keys : sprIconKey, //Quest-related and other stuff that is pertinent to game progression
-	Miscellaneous : sprIconPouch //Misc
+	getCategoryVarAll : function(_varString)
+	{
+		var _list = [];
+		
+		for (var i = 0;i < array_length(categories);i ++)
+		{
+			
+			_list[i] = variable_struct_get(categories[i],_varString)
+		}
+		
+		return _list;
+	},
+	
+	categories : 
+	[
+		{
+			sprite : sprIconSword,
+			text : "Equipment",
+		},
+		{
+			sprite : sprIconShards,
+			text : "Shards",
+		},
+		{
+			sprite : sprIconPotion,
+			text : "Consumables",
+		},
+		{
+			sprite : sprIconKey,
+			text : "Keys",
+		},
+		{
+			sprite : sprIconPouch,
+			text : "Miscellaneous",
+		},
+	],
 }
 
 // Inventory constructor. Should be named 'inv' as an object
@@ -13,29 +44,6 @@ function conInventoryInit() constructor
 	//Creates an id for our inventory
 	id = ds_list_create();
 	
-	getCategoryStringsAll = function()
-	{
-		return variable_struct_get_names(global.itemCategories);
-	}
-	
-	getCategorySpritesAll = function()
-	{
-		var _sprites = [];
-		var _stringList = getCategoryStringsAll();
-		
-		for (var i = 0;i < array_length(_stringList);i ++)
-		{
-			_sprites[i] = variable_struct_get(global.itemCategories,_stringList[i]);
-		}
-		
-		return _sprites;
-	}
-
-	getCategorySprite = function(_strCategory)
-	{
-		return variable_struct_get(global.itemCategories,_strCategory);
-	}
-
 	// Get all of the items with a specific category string
 	getCategoryItems = function(_strCategory)
 	{
@@ -94,3 +102,12 @@ function conInventoryItem(_name,_description,_amount,_sprite = sprEmpty,_categor
 		}
 	}
 }
+
+
+
+
+
+
+
+
+

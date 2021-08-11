@@ -1,10 +1,10 @@
 {
   "spriteId": {
-    "name": "sprTileStone",
-    "path": "sprites/sprTileStone/sprTileStone.yy",
+    "name": "Sprite41",
+    "path": "sprites/Sprite41/Sprite41.yy",
   },
   "solid": false,
-  "visible": true,
+  "visible": false,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": null,

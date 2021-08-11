@@ -16,6 +16,9 @@ function scrGUIInit()
 	_dialogueTypist.in(_dialogueSpeed,0);
 	global.currentDialogue = "TestYarn.yarn";
 
+	//Creation of background object
+	gui.mainBackground = new gui.background([bgrDarkGrass0]);
+
 	//Creation of main window object
 	gui.mainWindow = new gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _mainWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _mainWindowY,_guiGrid);
 	
@@ -82,9 +85,9 @@ function scrDialogueGUI(_guiOwner)
 function scrGUI(_guiOwner)
 {
 	draw_set_font(fntOhrenstead);
-	//draw_set_halign(fa_left);
-	//draw_set_valign(fa_top);
-
+	
+	gui.mainBackground.drawBackground();
+	
 	with gui.mainWindow
 	{
 		menuStack = [0,0];
@@ -107,8 +110,8 @@ function scrGUI(_guiOwner)
 			//Inventory page
 			case 0:
 			{
-				var _invCategoryStringsRaw = _guiOwner.inv.getCategoryStringsAll();
-				var _invCategorySpriteRaw = _guiOwner.inv.getCategorySpritesAll();
+				var _invCategoryStringsRaw = global.itemCategories.getCategoryVarAll("text");
+				var _invCategorySpriteRaw = global.itemCategories.getCategoryVarAll("sprite");
 				var _invCategories = [];
 				for (var i = 0; i < array_length(_invCategoryStringsRaw);i ++)
 				{

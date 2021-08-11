@@ -60,8 +60,10 @@ function scrNPCStateInit()
 	snowState.add_child("Free","Interacting",{
 		enter: function()
 		{
-			//Disabling player movement stuff by removing the child states
-			interactObject.snowState.change("Free");
+			//Disabling player
+			interactObject.snowStateInput.change("Dialogue");
+			global.currentDialogue = myDialogue;
+			global.dialogue = true;
 		},
 		step: function()
 		{
@@ -70,6 +72,8 @@ function scrNPCStateInit()
 		animation: function()
 		{
 			snowState.inherit();
+			
+			if !global.dialogue snowState.change("Idle");
 			
 			//Drawing outline
 			outline_start(1,c_grey,sprite_index,4);

@@ -22,6 +22,9 @@ function conGUIInit() constructor
 		cursorObject = noone;
 		cursorLocation = [0,0];
 		scroll = 0;
+		dialogueFile = "";
+		dialogueCursor = 0;
+		detailsWindow = [0,0,0,0,0];
 		
 		/// @desc Used to change the current state of the cursor. Interprets strings into calculations
 		/// @func cursorChange(_dir)
@@ -115,6 +118,18 @@ function conGUIInit() constructor
 			_sText.draw(_drawStart[0]+_offsetX,_drawStart[1]+_offsetY);
 		}
 		
+		/// @func drawTypistText(_text,_typistObject,_speed,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true, _wrap = [-1,-1])
+		drawTypistText = function(_text,_typistObject,_speed,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true, _wrap = [-1,-1])
+		{
+			var _drawStart = _relative ? winStart : [0,0];
+			
+			var _sText = scribble(_text);
+			
+			_sText.transform(_scale,_scale,0);
+			_sText.wrap(_wrap[0]-_offsetX,_wrap[1]-_offsetY,false);
+			_sText.draw(_drawStart[0]+_offsetX,_drawStart[1]+_offsetY,_typistObject);
+		}
+		
 		/// @desc Draws a sprite relative to the window
 		/// @func drawSprite(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true)
 		drawSprite = function(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1,_relative = true)
@@ -123,15 +138,48 @@ function conGUIInit() constructor
 			
 			draw_sprite_ext(_sprite,0,_drawStart[0]+_offsetX,_drawStart[1]+_offsetY,_scale,_scale,0,-1,255);
 		}
+		
+		/// @desc Draws textbox from a file
+		/// @func drawDialogue
+		drawDialogue = function(_file)
+		{
+			if dialogueFile != _file
+			{
+				ChatterboxLoadFromFile(_file);
+				dialogueObject = ChatterboxCreate(_file,true,other);
+				
+				ChatterboxJump(dialogueObject,"Start");
+				
+				dialogueTypist = scribble_typist();
+				dialogueTypist.in(0.5,0);
+				
+				dialogueFile = _file;
+			}
+			
+			//Grabbing the current line
+			dialogueLine = ChatterboxGetContent(dialogueObject,0);
+			
+			//Splitting the text into name and body
+			var _text = string_split(": ",dialogueLine,true);
+			if array_length(_text) == 1
+			{
+				_text[1] = _text[0];
+				_text[0] = "";
+			}
+
+			drawDetails([0,0],[_text[0]],[0,-24],1,sprBorderSimpleNoOverlay,[-1,sprEmpty],["Down","Right","Right"],[2,2,6,0]);
+			drawTypistText(_text[1],dialogueTypist,0.5,8,6,1,true,[winEnd[0]-winStart[0],winEnd[1]-winStart[1]]);
+		}
 	
 		/// @desc Draws a stackable window and some details about the selected object for each item in the stack
 		/// _stackVar is the persistent variable to stack multiple functions
 		/// _stackDirection is the direction to stack in, Left, Right, Up, or Down
 		/// offsetX and Y are carried over by _stackVar
-		/// @func drawDetails(_stackVar, _list, [_offsetX|_offsetY], _scale, _windowSprite [_cursorVar|_cursorSprite], [_subStackDirection|_listDirection|_stackDirection], [_subListBuffer|_listBuffer|_windowPadding|_highlightPadding])
+		/// @func drawDetails(_stackVar, _list, [_offsetX|_offsetY], _scale, _windowSprite, [_cursorVar|_cursorSprite], [_subStackDirection|_listDirection|_stackDirection], [_subListBuffer|_listBuffer|_windowPadding|_highlightPadding])
 		drawDetails = function(_stackVar,_list,_offset = [0,0],_scale = 1,_windowSprite = sprEmpty,_cursorConfig = [-1,sprEmpty],_dir = ["Right","Down","Down"],_bufferConfig = [2,2,8,8])
 		{
 			static _subImage = 0;
+			
 			var _itemVar = [0,0];
 			var _listVarAdd = [0,0];
 			var _maxListWidth = 0;
@@ -176,7 +224,9 @@ function conGUIInit() constructor
 					_stackVarAdd = [1,0];
 					break;
 			}
-
+			
+			drawWindowSprite(detailsWindow[0],detailsWindow[1],detailsWindow[2],detailsWindow[3],detailsWindow[4]);
+			
 			//Add offset to stack
 			_stackVar[@ 0] += _offset[0];
 			_stackVar[@ 1] += _offset[1];
@@ -188,6 +238,8 @@ function conGUIInit() constructor
 			//Add buffer to stack for items
 			_itemVar[0] += _bufferConfig[2];
 			_itemVar[1] += _bufferConfig[2];
+			
+			
 			
 			//Iterate through item list
 			for (var i = 0;i < array_length(_list);i ++)
@@ -289,8 +341,8 @@ function conGUIInit() constructor
 			//Adding end result and next stack location
 			_stackVar[@ 0] += (_itemVar[0] + _maxListWidth + (_bufferConfig[2])) * _stackVarAdd[0];
 			_stackVar[@ 1] += (_itemVar[1] + _maxListHeight + (_bufferConfig[2])) * _stackVarAdd[1];
-
-			drawWindowSprite(_windowSprite,_windowSpriteX1,_windowSpriteY1,_windowSpriteX2,_windowSpriteY2);
+			
+			detailsWindow = [_windowSprite,_windowSpriteX1,_windowSpriteY1,_windowSpriteX2,_windowSpriteY2];
 			
 			_subImage =+ 1;
 		}
@@ -335,6 +387,7 @@ function conGUIInit() constructor
 			drawDetails(_stackVar,_invItems,[0,0],_scale,sprEmpty,[cursorGrid[2]-scroll,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,8,4]);
 			drawDetails(_stackVar,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],[0,0],[_scale,_scale*2,_scale],sprBorderSimpleNoOverlay);
 		}
+		
 		
 	}
 

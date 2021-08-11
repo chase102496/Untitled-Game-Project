@@ -1,5 +1,3 @@
 scrDebugDraw();
 if global.menu with global.inputObject scrGUI(self);
-
-//Dialogue test
-scrDialogue();
+if global.dialogue with global.inputObject scrDialogueGUI(self);

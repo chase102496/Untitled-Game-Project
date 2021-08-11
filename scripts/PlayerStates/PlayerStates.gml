@@ -182,7 +182,7 @@ function scrPlayerStateInit()
 	#endregion
 	
 	#region Player States
-
+	
 	//Parent free state, combat inputs enabled by default
 	snowState.add("Free",{
 			step: function()
@@ -204,20 +204,7 @@ function scrPlayerStateInit()
 			},
 			input: function()
 			{
-				if input.general.menuPress
-				{
-					global.menu = true;
-					input.reset(input.general);
-					input.reset(input.combat);
-					snowStateInput.change("Menu");
-				}
-				if input.menu.menuPress
-				{
-					global.menu = false;
-					gui.mainWindow.cursorChange("Reset");
-					var _prev = snowStateInput.get_history();
-					snowStateInput.change(_prev[1],input.reset(input.menu));
-				}
+
 			}
 	});
 	

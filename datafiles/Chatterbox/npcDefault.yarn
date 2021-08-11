@@ -1,0 +1,30 @@
+#__PrivCrochet_version:1
+__PrivCrochet_colorID: 0
+__PrivCrochet_position: 0,0
+__PrivCrochet_tags: 
+title: Start
+---
+Laternarius: Welcome[delay,400]... To the default dialogue file for NPCs.
+
+<<if visited("Replay")>>
+Laternarius: Wait a sec,[delay,400] you've been here before, haven't you? I already told you the whole spiel.
+Laternarius: Well, if you're gonna stick around, do you wanna try communicating with me this time?
+-> Sure
+    Laternarius: Finally, the man speaks!
+-> *stare blankly*
+    Laternarius: [slant]Laternarius rolls his eyes and scoffs[/slant]
+    Laternarius: Humor me next time, you strong silent buffoon!
+<<jump Replay>>
+
+<<else>>
+Laternarius: Yeah, not too interesting,[delay,400] is it?[delay,300] [slant]sigh[/slant]
+<<jump Replay>>
+<<endif>>
+===
+__PrivCrochet_colorID: 0
+__PrivCrochet_position: 432,-172
+__PrivCrochet_tags: 
+title: Replay
+---
+Laternarius: Whacha need? I'm just chilling here, not really contributing to the plot at all, haha.
+===

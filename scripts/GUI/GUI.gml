@@ -24,7 +24,9 @@ function conGUIInit() constructor
 		scroll = 0;
 		dialogueFile = "";
 		dialogueCursor = 0;
-		detailsWindow = [0,0,0,0,0];
+		dialogueStack = [0,0];
+		detailsWindowMain = [0,0,0,0,0];
+		detailsWindowCursor = [0,0,0,0,0];
 		
 		/// @desc Used to change the current state of the cursor. Interprets strings into calculations
 		/// @func cursorChange(_dir)
@@ -166,8 +168,10 @@ function conGUIInit() constructor
 				_text[1] = _text[0];
 				_text[0] = "";
 			}
-
-			drawDetails([0,0],[_text[0]],[0,-24],1,sprBorderSimple,[-1,sprEmpty],["Down","Right","Right"],[2,2,6,0]);
+			var _dialogueStartStack = [0,0];
+			drawDetails(_dialogueStartStack,[_text[0]],[0,-24],1,sprBorderSimple,[-1,sprEmpty],["Down","Right","Right"],[2,2,6,0]);
+			dialogueStack = _dialogueStartStack;
+			
 			drawTypistText(_text[1],dialogueTypist,0.5,8,6,1,true,[winEnd[0]-winStart[0],winEnd[1]-winStart[1]]);
 		}
 	
@@ -225,7 +229,9 @@ function conGUIInit() constructor
 					break;
 			}
 			
-			drawWindowSprite(detailsWindow[0],detailsWindow[1],detailsWindow[2],detailsWindow[3],detailsWindow[4]);
+			//Drawing stuff in a separate spot, rather than inside the calculation code
+			drawWindowSprite(detailsWindowMain[0],detailsWindowMain[1],detailsWindowMain[2],detailsWindowMain[3],detailsWindowMain[4]);
+			drawWindowSprite(detailsWindowCursor[0],detailsWindowCursor[1],detailsWindowCursor[2],detailsWindowCursor[3],detailsWindowCursor[4]);
 			
 			//Add offset to stack
 			_stackVar[@ 0] += _offset[0];
@@ -238,8 +244,6 @@ function conGUIInit() constructor
 			//Add buffer to stack for items
 			_itemVar[0] += _bufferConfig[2];
 			_itemVar[1] += _bufferConfig[2];
-			
-			
 			
 			//Iterate through item list
 			for (var i = 0;i < array_length(_list);i ++)
@@ -319,11 +323,11 @@ function conGUIInit() constructor
 				{
 					cursorLocation = [_stackVar[0]+_itemVar[0],_stackVar[1]+_itemVar[1]];
 					
-					drawWindowSprite(_cursorConfig[1],
+					detailsWindowCursor = [_cursorConfig[1],
 					_stackStartX-_bufferConfig[3],
 					_stackStartY-_bufferConfig[3],
 					_stackStartX+_itemWidth+_bufferConfig[3],
-					_stackStartY+_itemHeight+_bufferConfig[3]);
+					_stackStartY+_itemHeight+_bufferConfig[3]];
 				}
 				
 				//Sets the max single value, if it's not in our direction
@@ -342,7 +346,7 @@ function conGUIInit() constructor
 			_stackVar[@ 0] += (_itemVar[0] + _maxListWidth + (_bufferConfig[2])) * _stackVarAdd[0];
 			_stackVar[@ 1] += (_itemVar[1] + _maxListHeight + (_bufferConfig[2])) * _stackVarAdd[1];
 			
-			detailsWindow = [_windowSprite,_windowSpriteX1,_windowSpriteY1,_windowSpriteX2,_windowSpriteY2];
+			detailsWindowMain = [_windowSprite,_windowSpriteX1,_windowSpriteY1,_windowSpriteX2,_windowSpriteY2];
 			
 			_subImage =+ 1;
 		}

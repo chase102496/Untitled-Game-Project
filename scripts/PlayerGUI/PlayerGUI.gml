@@ -43,15 +43,17 @@ function scrDialogueGUI(_guiOwner)
 				_options[i] = ChatterboxGetOption(dialogueObject,i)
 			}
 			
+			//Drawing options
 			if dialogueTypist.get_state() == 1
 			{
 				//Controls
 				if _input.upPress dialogueCursor --;
 				if _input.downPress dialogueCursor ++;
 				dialogueCursor = clamp(dialogueCursor,0,_optionCount-1);
-				drawDetails([0,0],_options,[64,-64],1,sprBorderSimple,[dialogueCursor,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,6,4]);
+				drawDetails(dialogueStack,_options,[0,0],1,sprBorderSimple,[dialogueCursor,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,6,4]);
 				if _input.spacePress ChatterboxSelect(dialogueObject, dialogueCursor);
 			}
+			//Skip function
 			else
 			{
 				if _input.spacePress dialogueTypist.skip();
@@ -150,8 +152,8 @@ function scrGUI(_guiOwner)
 					if _input.backPress cursorChange("Back");
 					
 					cursorGrid[3] = clamp(cursorGrid[3],0,array_length(cursorObject.interactList)-1);
-
-					drawDetails([0,0],cursorObject.interactList,[cursorLocation[0],cursorLocation[1]],0.5,sprBorderSimple,[cursorGrid[3],sprBorderSimpleNoOverlay],["Right","Down","Down"]);
+					
+					drawDetails([0,0],cursorObject.interactList,[cursorLocation[0],cursorLocation[1]],0.5,sprBorderSimple,[cursorGrid[3],sprBorderSimple],["Right","Down","Down"]);
 				}
 				break;
 			}

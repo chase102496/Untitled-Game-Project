@@ -1,5 +1,18 @@
 #region General tools
 
+function scrCombineLists(_lists)
+{
+	var _newList = [];
+	for (var i = 0;i < array_length(_lists);i ++)
+	{
+		for (var j = 0;j < array_length(_lists[i]);j ++)
+		{
+			_newList[j][i] = _lists[i][j];
+		}
+	}
+	return _newList;
+}
+
 /// @desc Runs a function for each on the list. To refer to the iteration, use argument0
 /// @func forEach(_list,_function)
 function forEach(_list,_function) //NEEDS REVISION

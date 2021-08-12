@@ -12,6 +12,8 @@ global.host = false;
 //Debug
 scrDebugInit();
 
+show_debug_message(scrCombineLists([[1,2,3],["a","b","c"]]));
+
 //Creation objects
 global.playerObject = instance_create_layer(x,y,"layPlayer",objPlayer);
 global.inputObject = global.playerObject;

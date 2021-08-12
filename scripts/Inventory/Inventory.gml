@@ -44,7 +44,23 @@ function conInventoryInit() constructor
 	//Creates an id for our inventory
 	id = ds_list_create();
 	
+	// Get a specific variable from a category of items
+	/// @func getCategoryItemsVar(_strCategory,_varStr)
+	getCategoryItemsVar = function(_strCategory,_varStr)
+	{
+		var _objects = getCategoryItems(_strCategory);
+		var _categoryVars = [""];
+		
+		for (var i = 0;i < array_length(_objects);i ++)
+		{
+			_categoryVars[i] = variable_struct_get(_objects[i],_varStr)
+		}
+		
+		return _categoryVars;
+	}
+	
 	// Get all of the items with a specific category string
+	/// @func getCategoryItems(_strCategory)
 	getCategoryItems = function(_strCategory)
 	{
 		var _categoryList = [];

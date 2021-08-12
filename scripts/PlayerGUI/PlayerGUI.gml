@@ -47,8 +47,8 @@ function scrDialogueGUI(_guiOwner)
 			if dialogueTypist.get_state() == 1
 			{
 				//Controls
-				if _input.upPress dialogueCursor --;
-				if _input.downPress dialogueCursor ++;
+				if _input.rightPress dialogueCursor ++;
+				if _input.leftPress dialogueCursor --;
 				dialogueCursor = clamp(dialogueCursor,0,_optionCount-1);
 				drawDetails(dialogueStack,_options,[0,0],1,sprBorderSimple,[dialogueCursor,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,6,4]);
 				if _input.spacePress ChatterboxSelect(dialogueObject, dialogueCursor);
@@ -96,10 +96,8 @@ function scrGUI(_guiOwner)
 		if _input.pageUp cursorChange("Page Up Reset");
 		if _input.pageDown cursorChange("Page Down Reset");
 		
-		//Clamps
-		cursorGrid[0] = clamp(cursorGrid[0],0,array_length(_menuPages)-1);
-		
 		//All Page Tabs
+		cursorGrid[0] = clamp(cursorGrid[0],0,array_length(_menuPages)-1);
 		drawDetails(menuStack,_menuPages,[0,-28],1.2,sprEmpty,[cursorGrid[0],sprBorderSimpleNoOverlay],["Right","Right","Down"],[2,8,8,4]);
 		
 		switch cursorGrid[0]
@@ -107,24 +105,33 @@ function scrGUI(_guiOwner)
 			//Inventory page
 			case 0:
 			{
-				var _invCategoryStringsRaw = global.itemCategories.getCategoryVarAll("text");
-				var _invCategorySpriteRaw = global.itemCategories.getCategoryVarAll("sprite");
-				var _invCategories = [];
-				for (var i = 0; i < array_length(_invCategoryStringsRaw);i ++)
-				{
-					_invCategories[i][0] = _invCategoryStringsRaw[i];
-					_invCategories[i][1] = _invCategorySpriteRaw[i];
-				}
-				
-				//Clamps
-				cursorGrid[1] = clamp(cursorGrid[1],0,array_length(_invCategories)-1);
-				
 				//All Inventory Tabs
 				//Automatically make a tab for each category in our total inventory
+				var _invCategoryStringsRaw = global.itemCategories.getCategoryVarAll("text");
+				var _invCategorySpritesRaw = global.itemCategories.getCategoryVarAll("sprite");
+				var _invCategories = scrCombineLists([_invCategoryStringsRaw,_invCategorySpritesRaw])
+				//
+				cursorGrid[1] = clamp(cursorGrid[1],0,array_length(_invCategories)-1);
 				drawDetails(menuStack,_invCategories,[6,0],1,sprEmpty,[cursorGrid[1],sprBorderSimpleNoOverlay],["Right","Right","Down"],[2,8,8,8]);
 				
-				//One Inventory Items Tab
-				drawInventoryList(_invCategoryStringsRaw[cursorGrid[1]],_guiOwner,9,menuStack,[0,0]);
+				//Inventory items for tab
+				//Grabbing info for the current category and combining it for drawDetails
+				var _names = _guiOwner.inv.getCategoryItemsVar(_invCategoryStringsRaw[cursorGrid[1]],"name");
+				var _invSprites = _guiOwner.inv.getCategoryItemsVar(_invCategoryStringsRaw[cursorGrid[1]],"invSprite");
+				
+				var _sprites = _guiOwner.inv.getCategoryItemsVar(_invCategoryStringsRaw[cursorGrid[1]],"sprite");
+				var _descs = _guiOwner.inv.getCategoryItemsVar(_invCategoryStringsRaw[cursorGrid[1]],"description");
+				var _spritesAndNames = scrCombineLists([_invSprites,_names]);
+				//
+				cursorGrid[2] = clamp(cursorGrid[2],0,array_length(_spritesAndNames)-1);
+				//
+				drawDetailsScrolling(menuStack,_spritesAndNames,
+					[0,0],1,sprEmpty,[cursorGrid[2],sprBorderSimpleNoOverlay],
+					["Right","Down","Right"],[2,2,8,4],9);
+				//
+				drawDetails(menuStack,[_names[cursorGrid[2]],_sprites[cursorGrid[2]],_descs[cursorGrid[2]]],
+					[0,0],[1,2,1],sprBorderSimpleNoOverlay,[-1,sprEmpty],
+					["Right","Down","Down"],[2,2,8,4]);
 				
 				//Selection tree
 				if cursorGrid[3] == -2

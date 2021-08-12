@@ -23,6 +23,18 @@
   ],
   "RecentItems": [
     {
+      "name": "Tools",
+      "path": "scripts/Tools/Tools.yy"
+    },
+    {
+      "name": "Macros",
+      "path": "scripts/Macros/Macros.yy"
+    },
+    {
+      "name": "Animations",
+      "path": "scripts/Animations/Animations.yy"
+    },
+    {
       "name": "Backgrounds",
       "path": "scripts/Backgrounds/Backgrounds.yy"
     },
@@ -49,14 +61,6 @@
     {
       "name": "bgrDarkForest3",
       "path": "sprites/bgrDarkForest3/bgrDarkForest3.yy"
-    },
-    {
-      "name": "bgrDarkForest4",
-      "path": "sprites/bgrDarkForest4/bgrDarkForest4.yy"
-    },
-    {
-      "name": "bgrDarkForest0",
-      "path": "sprites/bgrDarkForest0/bgrDarkForest0.yy"
     }
   ],
   "Filters": [],
@@ -76,6 +80,22 @@
     "#FFFF0000",
     "#FFFF00FF",
     "#FF4040FF",
-    "#FFFF80FF"
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80",
+    "#FF80FF00",
+    "#FF80C0FF",
+    "#FF0000FF",
+    "#FF00FFFF",
+    "#FF00FF00",
+    "#FFFFFF00",
+    "#FFFF0000",
+    "#FFFF00FF",
+    "#FF4040FF",
+    "#FFFF80FF",
+    "#FFFF8080",
+    "#FFFF8000",
+    "#FFFFFF80"
   ]
 }

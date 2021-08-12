@@ -351,6 +351,7 @@ function conGUIInit() constructor
 			_subImage =+ 1;
 		}
 		
+		/// @desc 
 		/// @func drawDetailsScrolling(_stackVar,_list,_offset = [0 0],_scale = 1,_windowSprite = sprEmpty,_cursorConfig = [-1 sprEmpty],_dir = ["Right" "Down" "Down"],_bufferConfig = [2 2 8 8],_viewSize = 8)
 		drawDetailsScrolling = function(_stackVar,_list,_offset = [0,0],_scale = 1,_windowSprite = sprEmpty,_cursorConfig = [-1,sprEmpty],_dir = ["Right","Down","Down"],_bufferConfig = [2,2,8,8],_viewSize = 8)
 		{
@@ -379,49 +380,6 @@ function conGUIInit() constructor
 			drawDetails(menuStack,_viewList,_offset,_scale,_windowSprite,[_cursorConfig[0]-scroll,_cursorConfig[1]],_dir,_bufferConfig);
 			//drawDetails(_stackVar,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],[0,0],[_scale,_scale*2,_scale],sprBorderSimpleNoOverlay);
 		}
-		
-		/// @desc DEPRECATED
-		/// @func drawInventoryList(_categoryString,_invOwner,_itemsPerWindow = 14,_stackVar = [0|0],_offset = [0|0])
-		drawInventoryList = function(_categoryString,_invOwner,_itemsPerWindow = 13,_stackVar = [0,0],_offset = [0,0],_scale = 1)
-		{
-			//Init
-			var _invItems = [];
-			var _pocketList = _invOwner.inv.getCategoryItems(_categoryString);
-			cursorObject = new conInventoryItem("","",1);
-		
-			//Clamps
-			cursorGrid[2] = clamp(cursorGrid[2],0,max(array_length(_pocketList)-1,0));
-			scroll = clamp(scroll,0,max(array_length(_pocketList) - _itemsPerWindow,0));
-		
-			//Itemswindow calc
-			for (var i = 0;i < _itemsPerWindow;i ++)
-			{
-				var _iScroll = i + scroll; //Adjusted index according to how far we scrolled down
-			
-				if _iScroll < array_length(_pocketList) //If within the area being viewed on the screen, from our total inventory in this category
-				{
-					_invItems[i][0] = _pocketList[_iScroll].invSprite;
-					_invItems[i][1] = _pocketList[_iScroll].name;
-					
-					if cursorGrid[2] == _iScroll //If selected by cursor currently
-					{
-						cursorObject = _pocketList[_iScroll];
-					}
-				}
-			}
-			//Scroll auto-adjusts for out of bounds values
-			if cursorGrid[2] > _iScroll scroll ++;
-			else if cursorGrid[2] < scroll scroll --;
-			
-			//Itemswindow drawing "Down","Right",0.6,0,sprEmpty,8,8,,4,4,);
-			_stackVar[@ 0] += _offset[0];
-			_stackVar[@ 1] += _offset[1];
-			
-			drawDetails(_stackVar,_invItems,[0,0],_scale,sprEmpty,[cursorGrid[2]-scroll,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,8,4]);
-			drawDetails(_stackVar,["Name"+cursorObject.name,cursorObject.sprite,"Description"+cursorObject.description],[0,0],[_scale,_scale*2,_scale],sprBorderSimpleNoOverlay);
-		}
-		
-		
 	}
 }
 

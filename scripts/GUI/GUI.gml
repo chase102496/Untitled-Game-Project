@@ -8,25 +8,6 @@ function conGUIInit() constructor
 	cursorObject = noone;		//Object selected by the cursor
 	cursorLocation = [0,0];		//Screen location of cursor
 	
-	/// @desc
-	/// @func background(_spriteList)
-	background = function(_spriteList) constructor
-	{
-		spriteList = _spriteList;
-		
-		drawBackground = function()
-		{
-			winStart = scrGuiRelativeToAbsolute(0,0);
-			winEnd = scrGuiRelativeToAbsolute(room_width,camera_get_view_height(view_camera[0]));
-
-			for (var i = 0;i < array_length(spriteList);i ++)
-			{
-				winScale = [(winEnd[0] - winStart[0])/sprite_get_width(spriteList[i]),(winEnd[1] - winStart[1])/sprite_get_height(spriteList[i])];
-				draw_sprite_ext(spriteList[i],0,winStart[0],winStart[1],winScale[0],winScale[1],0,-1,1);
-			}
-		}
-	}
-	
 	/// @desc Creates the window with parameters
 	/// @func window(_sprite,_x1,_y1,_x2,_y2,_grid = grid)
 	window = function(_sprite,_x1,_y1,_x2,_y2,_grid = grid) constructor
@@ -186,7 +167,7 @@ function conGUIInit() constructor
 				_text[0] = "";
 			}
 
-			drawDetails([0,0],[_text[0]],[0,-24],1,sprBorderSimpleNoOverlay,[-1,sprEmpty],["Down","Right","Right"],[2,2,6,0]);
+			drawDetails([0,0],[_text[0]],[0,-24],1,sprBorderSimple,[-1,sprEmpty],["Down","Right","Right"],[2,2,6,0]);
 			drawTypistText(_text[1],dialogueTypist,0.5,8,6,1,true,[winEnd[0]-winStart[0],winEnd[1]-winStart[1]]);
 		}
 	
@@ -409,9 +390,7 @@ function conGUIInit() constructor
 		
 		
 	}
-
 }
-
 
 function scrGuiGetItemDimensions(_item,_scale)
 {
@@ -433,7 +412,7 @@ function scrGuiAbsoluteToRelative(_x,_y)
 	
 	var _xResult = _x - _xCam;
 	var _yResult = _y - _yCam;
-			
+	
 	return [_xResult,_yResult];
 }
 //

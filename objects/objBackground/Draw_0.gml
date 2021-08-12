@@ -1,0 +1,1 @@
+global.backgroundStruct.mainBackground.drawBackground();

@@ -16,9 +16,6 @@ function scrGUIInit()
 	_dialogueTypist.in(_dialogueSpeed,0);
 	global.currentDialogue = "TestYarn.yarn";
 
-	//Creation of background object
-	gui.mainBackground = new gui.background([bgrDarkGrass0]);
-
 	//Creation of main window object
 	gui.mainWindow = new gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _mainWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _mainWindowY,_guiGrid);
 	
@@ -85,8 +82,6 @@ function scrDialogueGUI(_guiOwner)
 function scrGUI(_guiOwner)
 {
 	draw_set_font(fntOhrenstead);
-	
-	gui.mainBackground.drawBackground();
 	
 	with gui.mainWindow
 	{

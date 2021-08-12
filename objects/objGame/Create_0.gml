@@ -22,5 +22,8 @@ global.debugConsole = instance_create_layer(x,y,"layGame",objConsole);
 //
 global.insCamera = instance_create_layer(0,0,"layGame",objCamera);
 
+//Background stuff
+scrBackgroundInit();
+
 //Display debug
 scrDisplayInit();

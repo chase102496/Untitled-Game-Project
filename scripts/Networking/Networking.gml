@@ -1,3 +1,12 @@
+function scrNetworkInit()
+{
+	global.clientDataSelf = new netClientData();
+	global.clientDataOther = new netClients();
+	global.localInstances = [];
+	global.connected = false;
+	global.host = false;
+}
+
 // For local instances to be synced to our server, they need a separate, unique instance ID
 // Usually, on connect a player is allocated 999 instance IDs for use later
 function netInstanceCreateID(_target = id)

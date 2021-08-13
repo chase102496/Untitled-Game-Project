@@ -1,9 +1,9 @@
 function scrBackgroundInit()
 {
+	//Background systems handler
 	global.backgroundStruct = new conBackgroundInit();
 	
-	//Background default
-	//
+	//Background object
 	global.backgroundStruct.mainBackground = new global.backgroundStruct.background([
 	{
 		sprite: bgrDarkForest5,
@@ -37,7 +37,12 @@ function scrBackgroundInit()
 	}
 	]);
 	
-	global.backgroundObject = instance_create_layer(0,0,"layBackground",objBackground);
+	//Object used to draw the background
+	global.backgroundObject = instance_create_layer(0,0,"layBackground",sysDraw);
+	global.backgroundObject.drawScript = function()
+	{
+		global.backgroundStruct.mainBackground.drawBackground();
+	};
 }
 
 function conBackgroundInit() constructor

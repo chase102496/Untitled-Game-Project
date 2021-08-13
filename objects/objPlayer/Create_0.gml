@@ -7,9 +7,6 @@ netState = new SnowState("Offline");
 //Inventory
 inv = new conInventoryInit();
 
-//GUI
-scrGUIInit();
-
 //Equipment
 entityEquip = instance_create_layer(x,y,"layEquip",objEquip);
 entityEquip.owner = id;

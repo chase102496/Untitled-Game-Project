@@ -137,11 +137,11 @@ function scrPlayerStateInit()
 									break;
 								
 								case objEquip:
-									if owner == global.playerObject netSyncVariablesTo(["x","y","layer","stats","netObject","sprite_index","image_index_actual","image_xscale","image_yscale","image_angle","image_alpha","spriteFrame"]);
+									if owner == global.inputObject netSyncVariablesTo(["x","y","layer","stats","netObject","sprite_index","image_index_actual","image_xscale","image_yscale","image_angle","image_alpha","spriteFrame"]);
 									break;
 								
 								case objProjectile:
-									if owner == global.playerObject netSyncVariablesTo(["x","y","sprite_index","image_speed","image_index","image_angle","image_alpha","layer","stats","netObject"]);
+									if owner == global.inputObject netSyncVariablesTo(["x","y","sprite_index","image_speed","image_index","image_angle","image_alpha","layer","stats","netObject"]);
 									break;
 									
 								default:

@@ -1,3 +1,42 @@
+//GUI Init
+function scrGUIInit()
+{
+	//Init vars
+	global.menu = false;
+	global.dialogue = false;
+	
+	//GUI Struct
+	global.gui = new conGUIInit();
+	
+	//GUI Instance
+	global.guiObject = instance_create_layer(0,0,"layGUI",sysDraw);
+	global.guiObject.drawScript = function()
+	{
+		if global.menu scrGUI(global.inputObject);
+		if global.dialogue scrDialogueGUI(global.inputObject);
+	}
+	
+	//GUI
+	var _mainWindowX = 2;
+	var _mainWindowY = 3;
+	var _guiGrid = 8;
+
+	//Dialogue
+	var _dialogueWindowX = 2;
+	var _dialogueWindowY = 22;
+	var _dialogueTypist = scribble_typist();
+	var _dialogueSpeed = 0.5;
+	_dialogueTypist.in(_dialogueSpeed,0);
+	global.currentDialogue = "TestYarn.yarn";
+
+	//Creation of inventory window
+	global.gui.mainWindow = new global.gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _mainWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _mainWindowY,_guiGrid);
+	
+	//Creation of dialogue window
+	global.gui.dialogueWindow = new global.gui.window(sprBorderSimple,_dialogueWindowX,_dialogueWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _dialogueWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _dialogueWindowX,_guiGrid);
+}
+
+//GUI System Object
 function conGUIInit() constructor
 {
 	//GUI config
@@ -446,3 +485,4 @@ function scrGuiRelativeToAbsolute(_x,_y)
 			
 	return [_xResult,_yResult];
 }
+//

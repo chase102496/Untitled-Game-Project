@@ -1,33 +1,9 @@
-//Runs in game create event
-function scrGUIInit()
-{
-	gui = new conGUIInit();
-	
-	//Position of main window, relative to game window
-	var _mainWindowX = 2;
-	var _mainWindowY = 3;
-	var _guiGrid = 8;
-	
-	var _dialogueWindowX = 2;
-	var _dialogueWindowY = 22;
-	
-	var _dialogueTypist = scribble_typist();
-	var _dialogueSpeed = 0.5;
-	_dialogueTypist.in(_dialogueSpeed,0);
-	global.currentDialogue = "TestYarn.yarn";
-
-	//Creation of main window object
-	gui.mainWindow = new gui.window(sprBorderSimple,_mainWindowX,_mainWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _mainWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _mainWindowY,_guiGrid);
-	
-	gui.dialogueWindow = new gui.window(sprBorderSimple,_dialogueWindowX,_dialogueWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _dialogueWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _dialogueWindowX,_guiGrid);
-}
-
 //Runs in game draw event, as player
 function scrDialogueGUI(_guiOwner)
 {
 	draw_set_font(fntOhrenstead);
 	
-	with gui.dialogueWindow
+	with global.gui.dialogueWindow
 	{
 		drawWindow();
 		var _input = _guiOwner.input.dialogue;
@@ -89,7 +65,7 @@ function scrGUI(_guiOwner)
 {
 	draw_set_font(fntOhrenstead);
 	
-	with gui.mainWindow
+	with global.gui.mainWindow
 	{
 		menuStack = [0,0];
 		var _input = _guiOwner.input.menu;

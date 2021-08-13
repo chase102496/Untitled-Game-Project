@@ -13,18 +13,14 @@ function scrCombineLists(_lists)
 	return _newList;
 }
 
-/// @desc Runs a function for each on the list. To refer to the iteration, use argument0
-/// @func forEach(_list,_function)
-function forEach(_list,_function) //NEEDS REVISION
+/// @desc
+/// @func scrForEach(_list,_function)
+function scrForEach(_list,_function) //NEEDS REVISION
 {
 	for (var i = 0;i < array_length(_list);i ++)
 	{
-		__item = _list[i]
-		__num = i;
-		var _scr = method_get_index(_function);
-		script_execute(_scr);
+		_function(i,_list[i]);
 	}
-	delete __i;
 }
 
 /// @desc Runs each sub-list, the first item is the script index, the rest are args: [[ScriptName1,arg0],[ScriptName2,arg0,arg1]]

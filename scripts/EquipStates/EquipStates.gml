@@ -323,6 +323,15 @@ function scrEquipStateInit() //All equip states
 		}
 	});
 	
+	
+	
+	snowState.add("Orb Change Direction",{
+		enter: function()
+		{
+			show_debug_message("Worked");
+		}
+	});
+	
 	#endregion
 }
 

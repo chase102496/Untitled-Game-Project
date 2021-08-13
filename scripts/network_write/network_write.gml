@@ -1,7 +1,7 @@
 ///@function network_write(data, *socket)
 ///@arg data
 ///@arg *socket
-function network_write(data, sock = global.playerObject.socket) 
+function network_write(data, sock = global.inputObject.socket) 
 {	
 	//trace("Encoding data: %", data)
 	
@@ -27,7 +27,7 @@ function network_write(data, sock = global.playerObject.socket)
 ///@function send(data, *socket)
 ///@arg data
 ///@arg *socket
-function send(data, sock = global.playerObject.socket) 
+function send(data, sock = global.inputObject.socket) 
 {
 	return network_write(data, sock)
 }

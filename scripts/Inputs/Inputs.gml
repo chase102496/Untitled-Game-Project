@@ -194,7 +194,7 @@ function scrInputsInit()
 		leave: function()
 		{
 			global.menu = false;
-			gui.mainWindow.cursorChange("Reset");
+			global.gui.mainWindow.cursorChange("Reset");
 			input.resetAll();
 		}
 	});
@@ -218,7 +218,7 @@ function scrInputsInit()
 		leave: function()
 		{
 			global.menu = false;
-			gui.mainWindow.cursorChange("Reset");
+			global.gui.mainWindow.cursorChange("Reset");
 			input.resetAll();
 		}
 	});

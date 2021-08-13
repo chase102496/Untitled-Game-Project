@@ -28,8 +28,8 @@
 #macro SCRIBBLE_FIT_TO_BOX_ITERATIONS     3         //Number of iterations to fit text when using the .fit_to_box() method. Higher values are slower but more accurate
 #macro SCRIBBLE_SAFELY_WRAP_TIME          true      //Whether to wrap the internal time value. If you look at an animation for roughly 4.5 minutes then 
 
-#macro SCRIBBLE_COMMAND_TAG_OPEN          ord("[") //Character used to open a command tag. First 127 ASCII chars only
-#macro SCRIBBLE_COMMAND_TAG_CLOSE         ord("]") //Character used to close a command tag. First 127 ASCII chars only
+#macro SCRIBBLE_COMMAND_TAG_OPEN          ord("<") //Character used to open a command tag. First 127 ASCII chars only
+#macro SCRIBBLE_COMMAND_TAG_CLOSE         ord(">") //Character used to close a command tag. First 127 ASCII chars only
 #macro SCRIBBLE_COMMAND_TAG_ARGUMENT      ord(",") //Character used to delimit a command parameter inside a command tag. First 127 ASCII chars only
 
 #macro SCRIBBLE_CREATE_GLYPH_LTRB_ARRAY   false    //*DEPRECATED*   Outputs an array of glyph LTRB bounding boxes

@@ -126,20 +126,18 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 		entityCollidingContinuous = entityColliding;
 		entityColliding = noone;
 	}
-	
-	switch(_afterHit)
+	else if entityCollidingContinuous != noone
 	{
-		case "Sticking":
-			stats.hVel = entityCollidingContinuous.stats.hVel;
-			stats.vVel = entityCollidingContinuous.stats.vVel;
-			scrProjectilePhysics(false,false,false);
-			
-			break;
-	}
-	
-	//Continuous run script for entity, as long as projectile is alive
-	if entityCollidingContinuous != noone
-	{
+		switch(_afterHit)
+		{
+			case "Sticking":
+				stats.hVel = entityCollidingContinuous.stats.hVel;
+				stats.vVel = entityCollidingContinuous.stats.vVel;
+				scrProjectilePhysics(false,false,false);
+				break;
+		}
+		
+		
 	}
 	
 	scrProjectileAnimationHandler(_animScript);

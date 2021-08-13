@@ -5,6 +5,9 @@ function scrDebugInit()
 	global.debugVar = ds_list_create();
 	global.debugVar[| 0] = []; //Velocities
 	global.debugVar[| 1] = []; //Buffs
+	
+	global.debugGUI = new conGUIInit();
+	global.debugGUI.mainWindow = new global.debugGUI.window(sprBorderSimpleNoOverlay,0,0,0,0,8);
 }
 //
 function scrDebugInputs()
@@ -130,31 +133,28 @@ function scrDebugVars()
 //
 function scrDebugDraw()
 {
+	draw_set_font(fntOhrenstead);
+	
 	if global.drawDebug
 	{
+		//Mouse
 		var _mousePosRelative = scrGuiAbsoluteToRelative(mouse_x,mouse_y);
+		draw_text(mouse_x,mouse_y,[["Absolute: ",mouse_x," ",mouse_y,"\n"],["Relative: ",_mousePosRelative[0]," ",_mousePosRelative[1]]]);
 		
-		//Debug mouse position in window
-		draw_text_transformed(mouse_x,mouse_y,["Absolute",mouse_x,mouse_y,"\nRelative",_mousePosRelative[0],_mousePosRelative[1]],0.5,0.5,0);
-		
-		//Debug values shown for inputObject
-		for (var i = 0; i < ds_list_size(global.debugVar); i += 1)
+		//Debug list
+		with global.debugGUI.mainWindow
 		{
-			draw_text_transformed(global.inputObject.x,global.inputObject.y-30-(8*i),global.debugVar[| i],0.5,0.5,0);
+			drawWindow();
+			
+			var _debugList = [];
+			for (var i = 0; i < ds_list_size(global.debugVar); i += 1) _debugList[i] = global.debugVar[| i]
+			drawDetails([0,0],_debugList);
 		}
 		
-		//Player and equip bbox
-		//draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
-		//draw_rectangle(entityEquip.bbox_left,entityEquip.bbox_top,entityEquip.bbox_right,entityEquip.bbox_bottom,true);
-		//Anchor and Projectile bbox
-		
-		if instance_exists(objProjectile)
-		{
-			for (var i = 0;i < instance_number(objProjectile);i ++)
-			{
-				var _projInst = instance_find(objProjectile,i);
-				draw_rectangle_color(_projInst.bbox_left,_projInst.bbox_top,_projInst.bbox_right,_projInst.bbox_bottom,255,255,255,50,true);
-			}
-		}
+		//Bboxes
+		with objProjectile draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true)
+		with objAnchor draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
+		with global.inputObject draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
+		with global.inputObject.entityEquip draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,true);
 	}
 }

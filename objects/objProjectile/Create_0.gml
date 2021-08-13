@@ -10,6 +10,7 @@ state = new conProjectileStateInit();
 sprite_index = sprEmpty;
 aliveTimer = 0;
 entityColliding = noone;
+entityCollidingContinuous = noone;
 projectilePower = 0;
 
 //Default config

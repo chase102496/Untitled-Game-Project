@@ -26,14 +26,14 @@ function scrFindLocalInstance(_instanceID)
 //
 function scrDeleteLocalInstance(_instanceID = other.instanceID)
 {
-	global.clientDataSelf.deleteInstance(_instanceID);
-	
 	var _newList = []
 	
 	for (var i = 0;i < array_length(global.localInstances);i ++)
 	{
 		if global.localInstances[i].instanceID != _instanceID array_push(_newList,global.localInstances[i])
 	}
+	
+	global.clientDataSelf.deleteInstance(_instanceID);
 	
 	global.localInstances = _newList;
 }

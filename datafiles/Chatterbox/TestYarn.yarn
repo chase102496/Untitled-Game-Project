@@ -8,11 +8,11 @@ Chase: Hello World!
 Stephanie: Hello World!
 Chase: Hey, that was my line...
 Testing narrator talking lines...
-[jitter]Testing jittery lines...[/jitter]
-[shake]Testing shakey lines...[/shake]
-[wave]Testing wavy lines...[/wave]
-[rainbow]Testing rainbow lines...[/rainbow]
-Billy: Here's an example of [rainbow]reaaaaaaaaaaaaaaaaaallly[/rainbow] [wave]loooooooooooooooooooooooooong[/wave] [jitter]teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeext.[/jitter] Let's see how the text parser handles this guy! Huh? It keeps going! Oh shit! [wave]WEEEEEEEEEEEEEEEEEEEEEE[/wave] [speed,0.5] O O O O O [speed,1]HA. Looks like we have to keep going until we reach the veeeeeeeeeeery end of the page. [rainbow]weeeeeow[/rainbow] [wave]yeeeeeeet[/wave].Gnarly duuuuuuuuuuude. Keep going until you're [delay,1000]COMPLETELY [delay,1000]OUT [delay,500]of [delay,1000]of SPACE!
+<jitter>Testing jittery lines...</jitter>
+<shake>Testing shakey lines...</shake>
+<wave>Testing wavy lines...</wave>
+<rainbow>Testing rainbow lines...</rainbow>
+Billy: Here's an example of <rainbow>reaaaaaaaaaaaaaaaaaallly</rainbow> <wave>loooooooooooooooooooooooooong</wave> <jitter>teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeext.</jitter> Let's see how the text parser handles this guy! Huh? It keeps going! Oh shit! <wave>WEEEEEEEEEEEEEEEEEEEEEE</wave> <speed,0.5> O O O O O <speed,1>HA. Looks like we have to keep going until we reach the veeeeeeeeeeery end of the page. <rainbow>weeeeeow</rainbow> <wave>yeeeeeeet</wave>.Gnarly duuuuuuuuuuude. Keep going until you're <delay,1000>COMPLETELY <delay,1000>OUT <delay,500>of <delay,1000>of SPACE!
 Hmm... Seems to be... Doing "Something"<<jump Fascination>>
 ===
 __PrivCrochet_colorID: 0
@@ -20,5 +20,5 @@ __PrivCrochet_position: 834,367
 __PrivCrochet_tags: 
 title: Fascination
 ---
-Narrator: As Chase started to realize the potential with [c_red]Scribble[/] and [c_aqua]Chatterbox[/], his mind [rainbow][wave]exploded[/rainbow][/wave] with fantastical ideas.
+Narrator: As Chase started to realize the potential with <c_red>Scribble</> and <c_aqua>Chatterbox</>, his mind <rainbow><wave>exploded</rainbow></wave> with fantastical ideas.
 ===

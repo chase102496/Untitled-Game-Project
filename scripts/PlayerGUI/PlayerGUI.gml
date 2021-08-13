@@ -1,4 +1,4 @@
-//Runs in create event
+//Runs in game create event
 function scrGUIInit()
 {
 	gui = new conGUIInit();
@@ -22,6 +22,7 @@ function scrGUIInit()
 	gui.dialogueWindow = new gui.window(sprBorderSimple,_dialogueWindowX,_dialogueWindowY,camera_get_view_width(view_camera[0])/_guiGrid - _dialogueWindowX,camera_get_view_height(view_camera[0])/_guiGrid - _dialogueWindowX,_guiGrid);
 }
 
+//Runs in game draw event, as player
 function scrDialogueGUI(_guiOwner)
 {
 	draw_set_font(fntOhrenstead);
@@ -30,42 +31,45 @@ function scrDialogueGUI(_guiOwner)
 	{
 		drawWindow();
 		var _input = _guiOwner.input.dialogue;
-		drawDialogue(global.currentDialogue);
+		drawDialogue(global.currentDialogue,true,!selectingDialogue,selectingDialogue);
+		//Drawing cursor after text
+		if dialogueTypistState == 1 drawSpriteAnimated(sprCursor,winEnd[0]-18,winEnd[1]-18,1.5,0.025,false);
 		
 		//If this line has an option
 		if ChatterboxGetOptionCount(dialogueObject) > 0
 		{
-			//Assembling our options into a list
-			var _options = []
-			var _optionCount = ChatterboxGetOptionCount(dialogueObject);
-			for (var i = 0;i < _optionCount;i ++)
+			//Done drawing text
+			if dialogueTypistState == 1
 			{
-				_options[i] = ChatterboxGetOption(dialogueObject,i)
+				if selectingDialogue
+				{
+					if _input.upPress dialogueCursor --;
+					if _input.downPress dialogueCursor ++;
+					
+					if _input.spacePress
+					{
+						ChatterboxSelect(dialogueObject,dialogueCursor);
+						selectingDialogue = false;
+					}
+				}
+				else if _input.spacePress selectingDialogue = true;
 			}
-			
-			//Drawing options
-			if dialogueTypist.get_state() == 1
-			{
-				//Controls
-				if _input.rightPress dialogueCursor ++;
-				if _input.leftPress dialogueCursor --;
-				dialogueCursor = clamp(dialogueCursor,0,_optionCount-1);
-				drawDetails(dialogueStack,_options,[0,0],1,sprBorderSimple,[dialogueCursor,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,6,4]);
-				if _input.spacePress ChatterboxSelect(dialogueObject, dialogueCursor);
-			}
-			//Skip function
+			//Drawing text still
 			else
 			{
 				if _input.spacePress dialogueTypist.skip();
 			}
 
 		}
+		//If normal text
 		else
 		{
-			if dialogueTypist.get_state() == 1
+			//Done drawing text
+			if dialogueTypistState == 1
 			{
 				if _input.spacePress ChatterboxContinue(dialogueObject);
 			}
+			//Drawing text still
 			else
 			{
 				if _input.spacePress dialogueTypist.skip();
@@ -80,7 +84,7 @@ function scrDialogueGUI(_guiOwner)
 	}
 }
 
-//Runs in draw event
+//Runs in game draw event, as player
 function scrGUI(_guiOwner)
 {
 	draw_set_font(fntOhrenstead);

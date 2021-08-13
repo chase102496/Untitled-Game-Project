@@ -1196,13 +1196,13 @@ function __scribble_generate_model(_element)
                     _sprite_number = 64;
                 }
                 
-                if (_image_speed >= 4)
+                if (_image_speed > 4)
                 {
                     __scribble_trace("Image speed cannot be more than 4.0 (" + string(_image_speed) + ")");
                     _image_speed = 4;
                 }
                 
-                if (_image_speed < 4)
+                if (_image_speed < 0)
                 {
                     __scribble_trace("Image speed cannot be less than 0.0 (" + string(_image_speed) + ")");
                     _image_speed = 0;

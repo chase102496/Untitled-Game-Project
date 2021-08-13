@@ -24,9 +24,10 @@ function conGUIInit() constructor
 		scroll = 0;
 		dialogueFile = "";
 		dialogueCursor = 0;
-		dialogueStack = [0,0];
 		detailsWindowMain = [0,0,0,0,0];
 		detailsWindowCursor = [0,0,0,0,0];
+		selectingDialogue = false;
+		dialogueTypistState = 0;
 		
 		/// @desc Used to change the current state of the cursor. Interprets strings into calculations
 		/// @func cursorChange(_dir)
@@ -141,9 +142,20 @@ function conGUIInit() constructor
 			draw_sprite_ext(_sprite,0,_drawStart[0]+_offsetX,_drawStart[1]+_offsetY,_scale,_scale,0,-1,255);
 		}
 		
+		/// @desc Draws an animated sprite relative to the window
+		/// @func drawSpriteAnimated(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1,_speed = 1,_relative = true)
+		drawSpriteAnimated = function(_sprite,_offsetX = 0,_offsetY = 0,_scale = 1,_speed = 1,_relative = true)
+		{
+			static _imageIndexCount = 0;
+			
+			var _drawStart = _relative ? winStart : [0,0];
+			draw_sprite_ext(_sprite,_imageIndexCount,_drawStart[0]+_offsetX,_drawStart[1]+_offsetY,_scale,_scale,0,-1,255);
+			_imageIndexCount += _speed;
+		}
+		
 		/// @desc Draws textbox from a file
 		/// @func drawDialogue
-		drawDialogue = function(_file)
+		drawDialogue = function(_file,_drawName = true,_drawDialogue = true,_drawOptions = true)
 		{
 			if dialogueFile != _file
 			{
@@ -168,11 +180,24 @@ function conGUIInit() constructor
 				_text[1] = _text[0];
 				_text[0] = "";
 			}
-			var _dialogueStartStack = [0,0];
-			drawDetails(_dialogueStartStack,[_text[0]],[0,-24],1,sprBorderSimple,[-1,sprEmpty],["Down","Right","Right"],[2,2,6,0]);
-			dialogueStack = _dialogueStartStack;
 			
-			drawTypistText(_text[1],dialogueTypist,0.5,8,6,1,true,[winEnd[0]-winStart[0],winEnd[1]-winStart[1]]);
+			//Assembling our options into a list
+			var _options = []
+			var _optionCount = ChatterboxGetOptionCount(dialogueObject);
+			dialogueCursor = clamp(dialogueCursor,0,_optionCount-1);
+			for (var i = 0;i < _optionCount;i ++) _options[i] = ChatterboxGetOption(dialogueObject,i)
+			
+			var _dialogueStack = [0,0];
+			//Name
+			if _drawName and _text[0] != "" drawDetails(_dialogueStack,[_text[0]],[0,-26],1,sprBorderSimple,[-1,sprEmpty],["Down","Right","Down"],[2,2,6,0]);
+			//Dialogue
+			if _drawDialogue
+			{
+				drawTypistText(_text[1],dialogueTypist,0.5,8,6,1,true,[winEnd[0]-winStart[0],winEnd[1]-winStart[1]]);
+				dialogueTypistState = dialogueTypist.get_state();
+			}
+			//Options
+			if _drawOptions drawDetails(_dialogueStack,_options,[4,4],1,sprEmpty,[dialogueCursor,sprBorderSimpleNoOverlay],["Right","Down","Right"],[2,2,8,6]);
 		}
 	
 		/// @desc Draws a stackable window and some details about the selected object for each item in the stack
@@ -231,7 +256,6 @@ function conGUIInit() constructor
 			
 			//Drawing stuff in a separate spot, rather than inside the calculation code
 			drawWindowSprite(detailsWindowMain[0],detailsWindowMain[1],detailsWindowMain[2],detailsWindowMain[3],detailsWindowMain[4]);
-			drawWindowSprite(detailsWindowCursor[0],detailsWindowCursor[1],detailsWindowCursor[2],detailsWindowCursor[3],detailsWindowCursor[4]);
 			
 			//Add offset to stack
 			_stackVar[@ 0] += _offset[0];
@@ -323,11 +347,16 @@ function conGUIInit() constructor
 				{
 					cursorLocation = [_stackVar[0]+_itemVar[0],_stackVar[1]+_itemVar[1]];
 					
-					detailsWindowCursor = [_cursorConfig[1],
+					drawWindowSprite(_cursorConfig[1],
 					_stackStartX-_bufferConfig[3],
 					_stackStartY-_bufferConfig[3],
 					_stackStartX+_itemWidth+_bufferConfig[3],
-					_stackStartY+_itemHeight+_bufferConfig[3]];
+					_stackStartY+_itemHeight+_bufferConfig[3]);
+					//detailsWindowCursor = [_cursorConfig[1],
+					//_stackStartX-_bufferConfig[3],
+					//_stackStartY-_bufferConfig[3],
+					//_stackStartX+_itemWidth+_bufferConfig[3],
+					//_stackStartY+_itemHeight+_bufferConfig[3]];
 				}
 				
 				//Sets the max single value, if it's not in our direction

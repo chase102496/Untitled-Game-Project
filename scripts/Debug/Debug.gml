@@ -101,7 +101,41 @@ function scrDebugVars()
 		
 		//Equipment
 		if global.keyPress1 entityEquip.snowState.change("Empty");
-		if global.keyPress2 entityEquip.snowState.change("Greatsword Idle");
+		
+		if global.keyPress2
+		{
+			with entityEquip
+			{
+				stateConfig =
+				{
+					equipSprite : sprGreatswordIdle,
+					input : "Primary",
+				
+					charge: {
+						sequence : seqGreatswordSwingCharge,
+						playerSprite : owner.phSpriteCrouch,
+					},
+				
+					hold : {
+						sequence : seqGreatswordSwingHold,
+						playerSprite : owner.phSpriteCrouch,
+					},
+				
+					attack : {
+						sequence : seqGreatswordSwingAttack,
+						playerSprite : owner.phSpriteAttackDownward,
+					},
+				
+					perfect : {
+						sequence : seqGreatswordSwingAttack,
+						playerSprite : owner.phSpriteAttackDownward,
+					},
+				}
+			}
+			
+			entityEquip.snowState.change("Idle");
+		}
+		
 		if global.keyPress3 entityEquip.snowState.change("Bow Idle");
 		if global.keyPress4 entityEquip.snowState.change("Orb Idle");
 		

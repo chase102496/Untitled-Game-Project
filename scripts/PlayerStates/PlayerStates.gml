@@ -363,6 +363,14 @@ function scrPlayerStateInit()
 		{
 			//Inherits free state
 			snowState.inherit();
+			
+			if stats.hVel != 0
+			{
+				if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
+				else stats.hVel = 0;
+			}
+			
+			image_index = scrSequenceRatio(image_number,entityEquip.currentSequenceElement)
 		}
 	});
 

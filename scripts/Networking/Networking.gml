@@ -2,9 +2,11 @@ function scrNetworkInit()
 {
 	global.clientDataSelf = new netClientData();
 	global.clientDataOther = new netClients();
+	global.clientDataSimulated = new netSimulated();
 	global.localInstances = [];
 	global.connected = false;
 	global.host = false;
+	
 }
 
 // For local instances to be synced to our server, they need a separate, unique instance ID

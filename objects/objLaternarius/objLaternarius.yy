@@ -32,8 +32,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Entities",
-    "path": "folders/Objects/Entities.yy",
+    "name": "NPC",
+    "path": "folders/Objects/Entities/NPC.yy",
   },
   "resourceVersion": "1.0",
   "name": "objLaternarius",

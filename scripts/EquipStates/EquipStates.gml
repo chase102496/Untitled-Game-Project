@@ -4,7 +4,9 @@ function scrEquipBroadcastListener() //Used to run one-time events from sequence
 {
 	if event_data[? "event_type"] == "sequence event"
 	{
-		switch (event_data[? "message"])
+		var _event = event_data[? "message"]
+		
+		switch (_event)
 	    {
 		    case "seqGreatswordStab-2f":
 			{
@@ -12,17 +14,49 @@ function scrEquipBroadcastListener() //Used to run one-time events from sequence
 		        break;
 			}
 		}
+		
+		if string_pos("Perfect",_event) != 0
+		{
+			perfectFrame = string_split(" ",_event,true)[1];
+		}
 	}
+}
+
+function scrPerfectFrame(_sequenceElement,_frameNumber)
+{
+	if layer_sequence_get_headpos(_sequenceElement) >= _frameNumber return true
+	else return false;
 }
 
 #endregion
 
-#region States
-
 function scrEquipStateInit() //All equip states
 {
 	///NOTE: ASYNC BROADCAST EVENT WORKS FOR ALL ENTITIES LISTENING NO MATTER WHAT STATE (E.G. OUR SWORD VELOCITY)
-
+	
+	//Format for equipment
+	// You have a weapon, that holds some states
+	// The states are determined by shards
+	
+	// e.g. Weapon is just a container for states
+	// Shards contain the states
+	// Weapons can only accept certain shards
+	// You will be able to insert a shard for every ability slot on your equipment
+	
+	//e.g. a greatsword that stabs a little farther
+	//e.g. a bow that takes longer to charge but hits harder
+	//e.g. an orb that doesn't charge at all, and instead shoots small magic darts continuously
+	
+	//Thematic matching shards (so a set, if you get them all)
+	
+	//	Shards - Attack type, Attack script
+	
+	//	States - Idle, Change Direction, Charging, Attack
+	//		Charging will pass on the type and perfect bool
+	//		Idle -> Charging(type) -> (Normal Attack(type) or Perfect Attack(type))
+	
+	//	Abilities - Passive, Primary, Secondary, Tertiary
+	
 	snowState.add("Empty",{
 		enter: function()
 		{
@@ -30,64 +64,220 @@ function scrEquipStateInit() //All equip states
 			sprite_index = sprStick;
 		}
 	});
+
+	snowState.add("Idle",{
+		enter: function()
+		{
+			sprite_index = stateConfig.equipSprite;
+		},
+		step: function()
+		{	
+			//Sequence init
+			scrSequenceCreator(seqDefaultIdle);
+			
+			//Modules
+			scrEquipAnimations();
+	
+			//State switches
+			if changedDirection != 0 snowState.change("Change Direction");
+			if stateConfig.input() snowState.change(stateConfig.charge.name)
+		}
+	});
+		
+	snowState.add("Change Direction",{
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqDefaultChangeDirection);
+			
+			//Modules
+			scrEquipAnimations();
+	
+			//State switches
+			if !in_sequence snowState.change("Idle");
+		}
+	});
+	
+	snowState.add("Charge",{
+		enter: function()
+		{
+			owner.snowState.change("Attack");
+			owner.image_speed = 1;
+			stateConfig.playerSprite = stateConfig.charge.playerSprite;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(stateConfig.charge.sequence);
+
+			//Modules
+			scrEquipAnimations();
+			
+			//State switches
+			if !stateConfig.input() snowState.change("Attack");
+			if !in_sequence snowState.change("Hold");
+			if !stateConfig.input() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Perfect");
+		}
+	});
+		
+	snowState.add("Hold",{
+		step: function()
+		{
+			//Sequence Init
+			scrSequenceCreator(stateConfig.hold.sequence);
+
+			//Modules
+			scrEquipAnimations();
+			
+			//State switches
+			if !stateConfig.input() snowState.change("Attack");
+		}
+	})
+		
+	snowState.add("Attack",{
+		enter: function()
+		{
+			owner.sprite_index = stateConfig.playerSprite;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(stateConfig.attack.sequence);
+
+			//Modules
+			scrEquipAnimations();
+	
+			//State switches
+			if !in_sequence
+			{
+				owner.snowState.change(owner.snowState.get_history()[1]);
+				snowState.change("Idle");
+			}
+		}
+	});
+		
 	
 	#region Greatsword
 	
 	snowState.add("Greatsword Idle",{
 		enter: function()
 		{
-			sprite_index = sprGreatswordIdle;
+			stateConfig = 
+			{
+				equipSprite : sprGreatswordIdle,
+				
+				input : owner.input.combat.primaryHold,
+				
+				charge: {
+					name : "Greatsword Swing Charge",
+					sequence : seqGreatswordSwingCharge,
+				},
+				
+				hold : {
+					name : "Greatsword Swing Hold",
+					sequence : seqGreatswordSwingHold,
+				},
+				
+				attack : {
+					name : "Greatsword Swing Attack",
+					sequence : seqGreatswordSwingAttack,
+					playerSprite : owner.phSpriteAttackDownward,
+				},
+				
+				perfect : {
+					name : "Greatsword Swing Attack Perfect",
+					sequence : seqGreatswordSwingAttack,
+					playerSprite : owner.phSpriteAttackDownward,
+				},
+			}
+			
+			sprite_index = stateConfig.equipSprite;
 		},
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqGreatswordIdle);
+			scrSequenceCreator(seqDefaultIdle);
 			
 			//Modules
 			scrEquipAnimations();
 	
 			//State switches
 			if changedDirection != 0 snowState.change("Greatsword Change Direction");
-			if owner.input.combat.primaryPress snowState.change("Greatsword Stab");
+			if owner.input.combat.primaryPress snowState.change("Greatsword Swing Charge");
 		}
 	});
 	snowState.add("Greatsword Change Direction",{
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqGreatswordChangeDirection);
+			scrSequenceCreator(seqDefaultChangeDirection);
 			
 			//Modules
 			scrEquipAnimations();
 	
 			//State switches
 			if !in_sequence snowState.change("Greatsword Idle");
-			if owner.input.combat.primaryPress snowState.change("Greatsword Change Direction");
 		}
 	});
-	snowState.add("Greatsword Stab",{
+	
+	//Mundane shard
+	// Primary
+	snowState.add_child("Charge","Greatsword Swing Charge",{
 		enter: function()
 		{
-			owner.snowState.change("Attack");
-			owner.image_speed = 1;
-			owner.sprite_index = owner.phSpriteAttackForward;
+			stateConfig = 
+			{
+				playerSprite : owner.phSpriteCrouch,
+				
+				input : owner.input.combat.primaryHold,
+				sequence : seqGreatswordSwingCharge,
+				
+				attackState : "Greatsword Swing Attack",
+				holdState : "Greatsword Swing Hold",
+				perfectState : "Greatsword Swing Attack Perfect"
+			}
+			snowState.inherit();
+		}
+	});
+	snowState.add_child("Hold","Greatsword Swing Hold",{
+		enter: function()
+		{
+			stateConfig = 
+			{
+				input : owner.input.combat.primaryHold,
+				sequence : seqGreatswordSwingHold,
+				
+				attackState : "Greatsword Swing Attack"
+			}
+			snowState.inherit();
+		}
+	});
+	snowState.add("Greatsword Swing Attack",{
+		enter: function()
+		{
+			stateConfig = 
+			{
+				playerSprite : owner.phSpriteAttackDownward,
+				
+				input : owner.input.combat.secondaryHold,
+				sequence : seqGreatswordSwingHold,
+				
+				idleState : "Greatsword Idle"
+			}
+		}
+	});
+	snowState.add("Greatsword Swing Attack Perfect",{
+		enter: function()
+		{
+			owner.sprite_index = owner.phSpriteAttackDownward;
 		},
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqGreatswordStab);	
+			scrSequenceCreator(seqGreatswordSwingAttack);
 			
-			//Player code
-			with owner
-			{
-				image_index = scrSequenceRatio(image_number,other.currentSequenceElement)
-				if stats.hVel != 0
-				{
-					if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
-					else stats.hVel = 0;
-				}
-			}
-
+			show_debug_message("Perfect")
+			
 			//Modules
 			scrEquipAnimations();
 	
@@ -114,7 +304,7 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqBowIdle);
+			scrSequenceCreator(seqDefaultIdle);
 		
 			//Modules
 			scrEquipAnimations();
@@ -128,7 +318,7 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqBowChangeDirection);
+			scrSequenceCreator(seqDefaultChangeDirection);
 	
 			//Modules
 			scrEquipAnimations();
@@ -138,6 +328,7 @@ function scrEquipStateInit() //All equip states
 			if owner.input.combat.primaryPress snowState.change("Bow Draw")
 		}
 	});
+	
 	snowState.add("Bow Draw",{
 		enter: function()
 		{
@@ -241,7 +432,7 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqOrbIdle);
+			scrSequenceCreator(seqDefaultIdle);
 		
 			//Modules
 			scrEquipAnimations();
@@ -255,7 +446,7 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqOrbChangeDirection);
+			scrSequenceCreator(seqDefaultChangeDirection);
 	
 			//Modules
 			scrEquipAnimations();
@@ -265,6 +456,7 @@ function scrEquipStateInit() //All equip states
 			if owner.input.combat.primaryPress snowState.change("Orb Charge");
 		}
 	});
+	
 	snowState.add("Orb Charge",{
 		step: function()
 		{
@@ -323,16 +515,11 @@ function scrEquipStateInit() //All equip states
 		}
 	});
 	
-	
-	
-	snowState.add("Orb Change Direction",{
-		enter: function()
-		{
-			show_debug_message("Worked");
-		}
-	});
-	
 	#endregion
 }
 
-#endregion
+//One equipment
+function conEquipInit() constructor
+{
+	
+}

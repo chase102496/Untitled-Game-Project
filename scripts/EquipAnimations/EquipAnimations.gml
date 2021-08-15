@@ -92,6 +92,7 @@ function scrEquipMelee(_entityScriptList)
 		entityColliding = noone;
 	}
 }
+
 //Returns a ratio of two values, depending on direction, power, and angle
 //e.g. 100 power, 180 angle (up) will always equal [0,1]
 function scrEquipAngleToVelocity(_angle,_power)

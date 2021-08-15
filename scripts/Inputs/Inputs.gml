@@ -189,7 +189,7 @@ function scrInputsInit()
 			//Polling dialogue inputs
 			input.dialogue.active();
 			
-			if !global.dialogue snowStateInput.change(snowStateInput.get_history()[1]);
+			if !global.dialogue snowStateInput.change(snowStateInput.get_previous_state());
 		},
 		leave: function()
 		{
@@ -212,7 +212,7 @@ function scrInputsInit()
 			input.menu.active();
 			
 			//State switches
-			if input.menu.menuPress snowStateInput.change(snowStateInput.get_history()[1]);
+			if input.menu.menuPress snowStateInput.change(snowStateInput.get_previous_state());
 			if global.dialogue snowStateInput.change("Dialogue");
 		},
 		leave: function()

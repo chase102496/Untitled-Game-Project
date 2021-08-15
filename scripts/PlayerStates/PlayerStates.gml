@@ -183,38 +183,13 @@ function scrPlayerStateInit()
 	
 	#region Player States
 	
-	//Parent free state, combat inputs enabled by default
-	snowState.add("Free",{
-			step: function()
-			{
-				scrPhysicsVars();
-				scrGravity();
-				scrCollision();
-				scrBuffs();
-			},
-			draw: function()
-			{
-				draw_sprite_ext(sprite_index,image_index,scrRoundPrecise(x,1/global.pixelDuplication),scrRoundPrecise(y,1/global.pixelDuplication),stats.xScale,stats.yScale,image_angle,make_color_hsv(stats.spriteColor[0],stats.spriteColor[1],stats.spriteColor[2]),image_alpha);
-			},
-			animation: function()
-			{
-				scrColorChange();
-				scrSquishVelocity();
-				scrSquish();
-			},
-			input: function()
-			{
-
-			}
-	});
-	
 	//Ground state
 	snowState.add_child("Free","Ground",{
 		step: function()
 		{
 			//Inherits free state
 			snowState.inherit();
-		
+			
 			if (input.general.moveDirection == 0 and stats.hVel != 0) //Decelerating
 			{
 				if (abs(stats.hVel) >= stats.hDecel) stats.hVel -= sign(stats.hVel) * stats.hDecel;
@@ -369,6 +344,8 @@ function scrPlayerStateInit()
 				if (abs(stats.hVel) >= stats.hSlideDecel) stats.hVel -= sign(stats.hVel) * stats.hSlideDecel;
 				else stats.hVel = 0;
 			}
+			stats.xScale = sign(layer_sequence_get_xscale(entityEquip.currentSequenceElement))*stats.size;
+			stats.yScale = sign(layer_sequence_get_yscale(entityEquip.currentSequenceElement))*stats.size;
 			
 			image_index = scrSequenceRatio(image_number,entityEquip.currentSequenceElement)
 		}

@@ -16,7 +16,7 @@ function scrPlayerChangedDirection()
 	changedDirection = sign(sign(owner.stats.xScale) - previousDirection); //Shows difference and direction, 1 for L to R, -1 for R to L
 	previousDirection = sign(owner.stats.xScale); //Reset
 }
-function scrBowAiming(_dir) //Points bow toward mouse cursor
+function scrEquipAiming(_dir,_range = [15,15],_mousePos = [mouse_x,mouse_y]) //Points bow toward mouse cursor
 {
 	var _aim;
 	var _layXScale = layer_sequence_get_xscale(currentSequenceElement);
@@ -26,18 +26,18 @@ function scrBowAiming(_dir) //Points bow toward mouse cursor
 	
 	if _dir == 1
 	{
-		_aim = point_direction(_aimX,_aimY,mouse_x,mouse_y);
+		_aim = point_direction(_aimX,_aimY,_mousePos[0],_mousePos[1]);
 		layer_sequence_xscale(currentSequenceElement,1*abs(_layXScale))
 	}
 	else
 	{
-		_aim = point_direction(mouse_x,mouse_y,_aimX,_aimY);
+		_aim = point_direction(_mousePos[0],_mousePos[1],_aimX,_aimY);
 		layer_sequence_xscale(currentSequenceElement,-1*abs(_layXScale))
 	}
 	
 	var _diff = angle_difference(_layAngle,_aim);
 	
-	var _final = clamp(_layAngle - _diff,-aimRange[0],aimRange[1]);
+	var _final = clamp(_layAngle - _diff,-_range[0],_range[1]);
 	
 	projectileDirection = layer_sequence_angle(currentSequenceElement,_final);
 }
@@ -73,4 +73,31 @@ function scrSequenceCreator(_sequence)
 		currentSequenceInstance = layer_sequence_get_instance(currentSequenceElement);
 		sequence_instance_override_object(currentSequenceInstance,object_index,id)
 	}
+}
+function scrEquipMelee(_entityScriptList)
+{
+	if place_meeting(x,y,parEntity) entityColliding = instance_place(x,y,parEntity);
+	else if place_meeting(x,y,parNetEntity) entityColliding = instance_place(x,y,parNetEntity);
+
+	if instance_exists(entityColliding) and entityColliding != owner
+	{
+		if object_is_ancestor(entityColliding.object_index,parEntity)
+		{
+			with entityColliding scrExecuteScriptList(_entityScriptList);
+		}
+		else if object_is_ancestor(entityColliding.object_index,parNetEntity) or entityColliding.object_index == parNetEntity
+		{
+			netSendInstanceScript(_entityScriptList,entityColliding.instanceID,entityColliding.clientID);
+		}
+		entityColliding = noone;
+	}
+}
+//Returns a ratio of two values, depending on direction, power, and angle
+//e.g. 100 power, 180 angle (up) will always equal [0,1]
+function scrEquipAngleToVelocity(_angle,_power)
+{
+	var _vVelRatio = lengthdir_x(_power,_angle)
+	var _hVelRatio = lengthdir_y(_power,_angle)
+	
+	return [_vVelRatio,_hVelRatio];
 }

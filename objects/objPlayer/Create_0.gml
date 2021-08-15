@@ -17,8 +17,6 @@ snowStateInput.history_enable();
 scrInputsInit();
 
 //States
-snowState = new SnowState("Ground");
-snowState.history_enable();
 scrPlayerStateInit();
 
 // Placeholders for sprite animations;

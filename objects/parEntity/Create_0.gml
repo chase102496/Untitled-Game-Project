@@ -7,7 +7,9 @@ stats = new conStatsInit();
 
 //States
 snowState = new SnowState("Free");
+snowState.history_enable();
 scrEntityStateInit();
+snowState.change("Ground");
 
 //Buffs
 scrBuffsInit();

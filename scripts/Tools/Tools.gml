@@ -1,5 +1,25 @@
 #region General tools
 
+function scrAngleToVelocity()
+{
+	if sign(equip.image_xscale) >= 1
+	{
+		image_angle = layer_sequence_get_angle(equip.currentSequenceElement)+angleVelocityOffset;
+		_degVel = (angle_difference(angleVelocityOffset,image_angle));
+	}
+	else
+	{
+		image_angle = layer_sequence_get_angle(equip.currentSequenceElement)+(angleVelocityOffset-180);
+		_degVel = (angle_difference(image_angle,angleVelocityOffset-180));
+	}
+	
+	_vVelRatio = (_degVel/90);
+	_hVelRatio = (1 - abs(_degVel/90))*sign(equip.image_xscale);
+	
+	stats.vVel = projectilePower*_vVelRatio;
+	stats.hVel = projectilePower*_hVelRatio;
+}
+
 function scrCombineLists(_lists)
 {
 	var _newList = [];

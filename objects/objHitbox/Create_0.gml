@@ -1,1 +1,0 @@
-//global.showHitbox = false;

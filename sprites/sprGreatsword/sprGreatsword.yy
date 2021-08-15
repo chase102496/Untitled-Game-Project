@@ -24,12 +24,12 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"LayerId":{"name":"c41b86b0-3d3f-4910-8e4d-d3ed4eac3eeb","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatsword/sprGreatsword.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatsword/sprGreatsword.yy",},"LayerId":{"name":"c41b86b0-3d3f-4910-8e4d-d3ed4eac3eeb","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
-    "spriteId": {"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},
+    "spriteId": {"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},
     "timeUnits": 1,
     "playback": 1,
     "playbackSpeed": 14.0,
@@ -41,7 +41,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"63637457-7197-4efb-b8f0-c6cd1c0381e6","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"63637457-7197-4efb-b8f0-c6cd1c0381e6","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"349e70c0-0cb8-4a4a-b924-08399a39cbc0","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack",},
     ],
     "visibleRange": null,
@@ -58,22 +58,46 @@
     "yorigin": 24,
     "eventToFunction": {},
     "eventStubScript": null,
-    "parent": {"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},
+    "parent": {"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},
     "resourceVersion": "1.3",
-    "name": "sprGreatswordIdle",
+    "name": "sprGreatsword",
     "tags": [],
     "resourceType": "GMSequence",
   },
   "layers": [
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"c41b86b0-3d3f-4910-8e4d-d3ed4eac3eeb","tags":[],"resourceType":"GMImageLayer",},
   ],
-  "nineSlice": null,
+  "nineSlice": {
+    "left": 0,
+    "top": 0,
+    "right": 0,
+    "bottom": 0,
+    "guideColour": [
+      4294902015,
+      4294902015,
+      4294902015,
+      4294902015,
+    ],
+    "highlightColour": 1728023040,
+    "highlightStyle": 0,
+    "enabled": false,
+    "tileMode": [
+      0,
+      0,
+      0,
+      0,
+      0,
+    ],
+    "resourceVersion": "1.0",
+    "loadedVersion": null,
+    "resourceType": "GMNineSliceData",
+  },
   "parent": {
     "name": "Equipment",
     "path": "folders/Sprites/Equipment.yy",
   },
   "resourceVersion": "1.0",
-  "name": "sprGreatswordIdle",
+  "name": "sprGreatsword",
   "tags": [],
   "resourceType": "GMSprite",
 }

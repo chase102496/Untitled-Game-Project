@@ -51,17 +51,91 @@ function scrEquipStateInit() //All equip states
 	
 	//	Shards - Attack type, Attack script
 	
-	//	States - Idle, Change Direction, Charging, Attack
-	//		Charging will pass on the type and perfect bool
+	//	States - Idle, Change Direction, Charge, Hold, Attack, Perfect
 	//		Idle -> Charging(type) -> (Normal Attack(type) or Perfect Attack(type))
 	
 	//	Abilities - Passive, Primary, Secondary, Tertiary
 	
+	stateConfig =
+	{
+		equipSprite : sprStick,
+		
+		input : function() {
+			return 0
+		},
+		
+		aimRange : [15,15],
+				
+		idle: {
+			name : "Idle",
+			sequence : seqDefaultIdle,
+		},
+		
+		changeDirection: {
+			name : "Change Direction",
+			sequence : seqDefaultChangeDirection,
+		},
+		
+		charge: {
+			name : "Charge",
+			sequence : seqGreatswordSwingCharge,
+			playerSprite : sprPlayerIdle,
+		},
+				
+		hold : {
+			name : "Hold",
+			sequence : seqGreatswordSwingHold,
+			playerSprite : sprPlayerIdle,
+		},
+				
+		attack : {
+			name : "Attack",
+			sequence : seqGreatswordSwingAttack,
+			playerSprite : sprPlayerIdle,
+		},
+				
+		perfect : {
+			name : "Perfect",
+			sequence : seqGreatswordSwingAttack,
+			playerSprite : sprPlayerIdle,
+		},
+	}
+	
+	changeStateTemplate = function(_templateName,_owner = owner)
+	{	
+		switch(_templateName)
+		{			
+			case "Greatsword":
+				with stateConfig
+				{
+					equipSprite = sprGreatsword
+					
+					input = function() {
+						return global.inputObject.input.combat.primaryHold;
+					}
+					
+					charge.sequence = seqGreatswordSwingCharge
+					charge.playerSprite = global.inputObject.phSpriteCrouch
+					
+					hold.sequence = seqGreatswordSwingHold
+					hold.playerSprite = global.inputObject.phSpriteCrouch
+					
+					attack.sequence = seqGreatswordSwingAttack
+					attack.playerSprite = global.inputObject.phSpriteAttackDownward
+					
+					perfect.sequence = seqGreatswordSwingAttack
+					perfect.playerSprite = global.inputObject.phSpriteAttackUpward
+				}
+				
+				snowState.change(stateConfig.idle.name);
+				break;
+		}
+	}
 	snowState.add("Empty",{
 		enter: function()
 		{
-			image_index = 1;
-			sprite_index = sprStick;
+			image_index = 0;
+			sprite_index = sprEmpty;
 		}
 	});
 
@@ -79,7 +153,7 @@ function scrEquipStateInit() //All equip states
 			scrEquipAnimations();
 	
 			//State switches
-			if changedDirection != 0 snowState.change("Change Direction");
+			if changedDirection != 0 snowState.change(stateConfig.changeDirection.name);
 			if stateConfig.input() snowState.change(stateConfig.charge.name)
 		}
 	});
@@ -94,7 +168,7 @@ function scrEquipStateInit() //All equip states
 			scrEquipAnimations();
 	
 			//State switches
-			if !in_sequence snowState.change("Idle");
+			if !in_sequence snowState.change(stateConfig.idle.name);
 		}
 	});
 	
@@ -103,7 +177,7 @@ function scrEquipStateInit() //All equip states
 		{
 			owner.snowState.change("Attack");
 			owner.image_speed = 1;
-			stateConfig.playerSprite = stateConfig.charge.playerSprite;
+			owner.sprite_index = stateConfig.charge.playerSprite;
 		},
 		step: function()
 		{
@@ -112,15 +186,22 @@ function scrEquipStateInit() //All equip states
 
 			//Modules
 			scrEquipAnimations();
+			aimDirection = sign(mouse_x - owner.x);
+			aimPosition = [mouse_x,mouse_y];
+			scrEquipAiming(aimDirection,stateConfig.aimRange,aimPosition);
 			
 			//State switches
-			if !stateConfig.input() snowState.change("Attack");
-			if !in_sequence snowState.change("Hold");
-			if !stateConfig.input() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Perfect");
+			if !stateConfig.input() snowState.change(stateConfig.attack.name);
+			if !in_sequence snowState.change(stateConfig.hold.name);
+			if !stateConfig.input() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change(stateConfig.perfect.name);
 		}
 	});
-		
+	
 	snowState.add("Hold",{
+		enter: function()
+		{
+			owner.sprite_index = stateConfig.hold.playerSprite;
+		},
 		step: function()
 		{
 			//Sequence Init
@@ -128,16 +209,18 @@ function scrEquipStateInit() //All equip states
 
 			//Modules
 			scrEquipAnimations();
+			aimPosition = [mouse_x,mouse_y];
+			scrEquipAiming(aimDirection,stateConfig.aimRange,aimPosition);
 			
 			//State switches
-			if !stateConfig.input() snowState.change("Attack");
+			if !stateConfig.input() snowState.change(stateConfig.attack.name);
 		}
 	})
-		
+	
 	snowState.add("Attack",{
 		enter: function()
 		{
-			owner.sprite_index = stateConfig.playerSprite;
+			owner.sprite_index = stateConfig.attack.playerSprite;
 		},
 		step: function()
 		{
@@ -146,64 +229,55 @@ function scrEquipStateInit() //All equip states
 
 			//Modules
 			scrEquipAnimations();
+			scrEquipAiming(aimDirection,stateConfig.aimRange,aimPosition);
+			scrEquipMelee([
+					[scrStatsDamage,50,"Magical",true],
+					[scrBuffsAdd,[scrBuffsStats,global.buffsID.slowness,"vMaxVel",7,0.5]]
+			]);
 	
 			//State switches
 			if !in_sequence
 			{
-				owner.snowState.change(owner.snowState.get_history()[1]);
-				snowState.change("Idle");
+				owner.snowState.change(owner.snowState.get_previous_state());
+				snowState.change(stateConfig.idle.name);
 			}
 		}
 	});
-		
 	
-	#region Greatsword
-	
-	snowState.add("Greatsword Idle",{
+	snowState.add("Perfect",{
 		enter: function()
 		{
-			stateConfig = 
-			{
-				equipSprite : sprGreatswordIdle,
-				
-				input : owner.input.combat.primaryHold,
-				
-				charge: {
-					name : "Greatsword Swing Charge",
-					sequence : seqGreatswordSwingCharge,
-				},
-				
-				hold : {
-					name : "Greatsword Swing Hold",
-					sequence : seqGreatswordSwingHold,
-				},
-				
-				attack : {
-					name : "Greatsword Swing Attack",
-					sequence : seqGreatswordSwingAttack,
-					playerSprite : owner.phSpriteAttackDownward,
-				},
-				
-				perfect : {
-					name : "Greatsword Swing Attack Perfect",
-					sequence : seqGreatswordSwingAttack,
-					playerSprite : owner.phSpriteAttackDownward,
-				},
-			}
-			
-			sprite_index = stateConfig.equipSprite;
+			owner.sprite_index = stateConfig.perfect.playerSprite;
 		},
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqDefaultIdle);
-			
+			scrSequenceCreator(stateConfig.attack.sequence);
+
 			//Modules
 			scrEquipAnimations();
+			scrEquipAiming(aimDirection,stateConfig.aimRange,aimPosition);
 	
 			//State switches
-			if changedDirection != 0 snowState.change("Greatsword Change Direction");
-			if owner.input.combat.primaryPress snowState.change("Greatsword Swing Charge");
+			if !in_sequence
+			{
+				owner.snowState.change(owner.snowState.get_previous_state());
+				snowState.change(stateConfig.idle.name);
+			}
+		}
+	});
+		
+	#region Greatsword
+	
+	snowState.add_child("Idle","Greatsword Idle",{
+		enter: function()
+		{	
+			
+		},
+		step: function()
+		{
+			
+			snowState.inherit();
 		}
 	});
 	snowState.add("Greatsword Change Direction",{
@@ -344,8 +418,8 @@ function scrEquipStateInit() //All equip states
 			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5); //Limiting player movement during draw
 	
 			//Bow direction aim
-			bowDirection = sign(mouse_x - owner.x);
-			scrBowAiming(bowDirection);
+			aimDirection = sign(mouse_x - owner.x);
+			scrEquipAiming(aimDirection);
 
 			//Projectile init
 			if !instance_exists(equipProjectile)
@@ -386,7 +460,7 @@ function scrEquipStateInit() //All equip states
 			scrSequenceCreator(seqBowHold);
 			
 			//Bow direction aiming
-			scrBowAiming(bowDirection);
+			scrEquipAiming(aimDirection);
 			
 			//Extra
 			image_index = image_number-1; //set to last frame of scrEquipStateBowDraw
@@ -406,7 +480,9 @@ function scrEquipStateInit() //All equip states
 			//Sequence init
 			scrSequenceCreator(seqBowFire);
 			image_index = scrSequenceRatio(image_number,currentSequenceElement)/2;
-
+			
+			scrEquipAiming(aimDirection);
+			
 			if instance_exists(equipProjectile)
 			{
 				equipProjectile.state.current = equipProjectile.state.free;
@@ -464,8 +540,8 @@ function scrEquipStateInit() //All equip states
 			scrSequenceCreator(seqOrbCharge);
 			
 			//Orb direction aim
-			bowDirection = sign(mouse_x - owner.x);
-			scrBowAiming(bowDirection);
+			aimDirection = sign(mouse_x - owner.x);
+			scrEquipAiming(aimDirection);
 			var _castRange = scrCastRange(owner.x,owner.y,mouse_x,mouse_y,128); //Sets cast range to 128 pixels
 			
 			//Projectile init
@@ -501,7 +577,7 @@ function scrEquipStateInit() //All equip states
 			scrSequenceCreator(seqOrbCast);
 			
 			//Aiming
-			scrBowAiming(bowDirection);
+			scrEquipAiming(aimDirection);
 			
 			//THIS THIS THIS (?)
 			if instance_exists(equipProjectile)
@@ -516,10 +592,4 @@ function scrEquipStateInit() //All equip states
 	});
 	
 	#endregion
-}
-
-//One equipment
-function conEquipInit() constructor
-{
-	
 }

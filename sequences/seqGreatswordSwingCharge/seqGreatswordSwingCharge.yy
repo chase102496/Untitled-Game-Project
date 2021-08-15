@@ -36,13 +36,13 @@
         {"keyframes":{"Keyframes":[
               {"id":"05c6beeb-b43d-4dfb-9db7-cde3272ddf16","Key":0.0,"Length":8.0,"Stretch":true,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"objEquip","path":"objects/objEquip/objEquip.yy",},"resourceVersion":"1.0","resourceType":"AssetInstanceKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<AssetInstanceKeyframe>",},
             ],"resourceVersion":"1.0","resourceType":"KeyframeStore<AssetInstanceKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[
-            {"trackColour":4282932466,"name":"blend_multiply","builtinName":10,"keyframes":{"Keyframes":[
+            {"keyframes":{"Keyframes":[
                   {"id":"e663f011-a507-49c5-85e8-6c5ef8a5373b","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"EmbeddedAnimCurve":null,"Colour":4294967295,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"ColourKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<ColourKeyframe>",},
                   {"id":"706aa9a8-744b-4d9e-99f1-2939fde703a2","Key":5.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"EmbeddedAnimCurve":null,"Colour":4278254335,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"ColourKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<ColourKeyframe>",},
                   {"id":"6088e5ad-cd57-44e6-b1b5-3f099e79d138","Key":7.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"EmbeddedAnimCurve":null,"Colour":4294967295,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"ColourKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<ColourKeyframe>",},
-                ],"resourceVersion":"1.0","resourceType":"KeyframeStore<ColourKeyframe>",},"inheritsTrackColour":true,"traits":0,"interpolation":0,"tracks":[],"events":[],"modifiers":[
+                ],"resourceVersion":"1.0","resourceType":"KeyframeStore<ColourKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":10,"traits":0,"interpolation":0,"tracks":[],"events":[],"modifiers":[
                 {"resourceVersion":"1.0","resourceType":"InvisibleModifier",},
-              ],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMColourTrack",},
+              ],"isCreationTrack":false,"resourceVersion":"1.0","name":"blend_multiply","tags":[],"resourceType":"GMColourTrack",},
             {"keyframes":{"Keyframes":[
                   {"id":"86b13e99-06b6-4954-b856-62bb8a518851","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":true,"Channels":{"0":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
                 ],"resourceVersion":"1.0","resourceType":"KeyframeStore<RealKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":16,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[
@@ -105,12 +105,12 @@
                                 {"th0":0.0,"th1":0.0,"tv0":-0.819515049,"tv1":0.484710932,"x":0.501435637,"y":1.239782,},
                                 {"th0":-0.419683576,"th1":0.25,"tv0":-0.01634878,"tv1":0.0,"x":1.0,"y":1.0,},
                               ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                          ],"parent":{"name":"scale","path":"sequences/seqGreatswordSwingCharge/seqGreatswordSwingCharge.yy",},"resourceVersion":"1.2","name":"Scale","tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
+                          ],"parent":{"name":"scale","path":"sequences/seqGreatswordSwingCharge/seqGreatswordSwingCharge.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
                 ],"resourceVersion":"1.0","resourceType":"KeyframeStore<RealKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":15,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[
                 {"resourceVersion":"1.0","resourceType":"InvisibleModifier",},
               ],"isCreationTrack":false,"resourceVersion":"1.0","name":"scale","tags":[],"resourceType":"GMRealTrack",},
             {"keyframes":{"Keyframes":[
-                  {"id":"3e281b8d-3562-4b17-83c3-2abac96caaac","Key":0.0,"Length":8.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","resourceType":"AssetSpriteKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<AssetSpriteKeyframe>",},
+                  {"id":"3e281b8d-3562-4b17-83c3-2abac96caaac","Key":0.0,"Length":8.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","resourceType":"AssetSpriteKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<AssetSpriteKeyframe>",},
                 ],"resourceVersion":"1.0","resourceType":"KeyframeStore<AssetSpriteKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[
                 {"keyframes":{"Keyframes":[
                       {"id":"a9725b0b-c7a9-4085-8747-505b33f5ac8f","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":true,"Channels":{"0":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},

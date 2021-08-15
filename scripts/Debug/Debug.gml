@@ -106,34 +106,8 @@ function scrDebugVars()
 		{
 			with entityEquip
 			{
-				stateConfig =
-				{
-					equipSprite : sprGreatswordIdle,
-					input : "Primary",
-				
-					charge: {
-						sequence : seqGreatswordSwingCharge,
-						playerSprite : owner.phSpriteCrouch,
-					},
-				
-					hold : {
-						sequence : seqGreatswordSwingHold,
-						playerSprite : owner.phSpriteCrouch,
-					},
-				
-					attack : {
-						sequence : seqGreatswordSwingAttack,
-						playerSprite : owner.phSpriteAttackDownward,
-					},
-				
-					perfect : {
-						sequence : seqGreatswordSwingAttack,
-						playerSprite : owner.phSpriteAttackDownward,
-					},
-				}
+				changeStateTemplate("Greatsword");
 			}
-			
-			entityEquip.snowState.change("Idle");
 		}
 		
 		if global.keyPress3 entityEquip.snowState.change("Bow Idle");
@@ -142,7 +116,7 @@ function scrDebugVars()
 		//Adding random items
 		if global.keyPress6
 		{
-			var _sprRand = choose(sprGreatswordIdle,sprArrow,sprLaternariusIdle,sprOrbIdle,sprPlayerIdle,sprTerrain);
+			var _sprRand = choose(sprGreatsword,sprArrow,sprLaternariusIdle,sprOrbIdle,sprPlayerIdle,sprTerrain);
 			var _sprRand2 = choose(sprIconKey,sprIconPouch,sprIconSword,sprIconShards);
 			
 			inv.add(new conInventoryItem("Name"+string(random_range(1,100)),"Descr"+string(random_range(1,100)),1,_sprRand,"Equipment",["Equip","Use","Drop","Destroy"],_sprRand2));

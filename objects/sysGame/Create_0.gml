@@ -24,3 +24,8 @@ global.inputObject = instance_find(objPlayer,0);
 global.cameraObject = instance_create_layer(0,0,"layGame",sysCamera);
 //Console
 global.debugConsole = instance_create_layer(x,y,"layGame",objConsole);
+
+var _power = -100
+var _angle = 180
+
+show_debug_message(scrEquipAngleToVelocity(_angle,_power))

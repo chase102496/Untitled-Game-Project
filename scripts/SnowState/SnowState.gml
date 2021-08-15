@@ -419,7 +419,9 @@ function SnowState(_initState) constructor {
 	
 	get_previous_state = function() {
 		with (__this) {
-			return ((array_length(history) > 1) ? history[@ 1] : undefined);
+			if array_length(history) > 1 return  history[@ 1];
+			else if array_length(history) == 1 return history[@ 0];
+			else return undefined;
 		}
 	};
 	
@@ -453,7 +455,6 @@ function SnowState(_initState) constructor {
 			if (SNOWSTATE_DEBUG_WARNING && variable_struct_exists(parent, _name)) {
 				if (parent[$ _name] == _parent) {
 					snowstate_trace("State \"", _name, "\" is already a child of \"", _parent, "\".");
-					break;
 				}
 			}
 			

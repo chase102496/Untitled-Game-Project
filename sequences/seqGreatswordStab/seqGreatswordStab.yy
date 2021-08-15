@@ -114,7 +114,7 @@
                 {"resourceVersion":"1.0","resourceType":"InvisibleModifier",},
               ],"isCreationTrack":true,"resourceVersion":"1.0","name":"scale","tags":[],"resourceType":"GMRealTrack",},
             {"keyframes":{"Keyframes":[
-                  {"id":"3e281b8d-3562-4b17-83c3-2abac96caaac","Key":0.0,"Length":8.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"sprGreatswordIdle","path":"sprites/sprGreatswordIdle/sprGreatswordIdle.yy",},"resourceVersion":"1.0","resourceType":"AssetSpriteKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<AssetSpriteKeyframe>",},
+                  {"id":"3e281b8d-3562-4b17-83c3-2abac96caaac","Key":0.0,"Length":8.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"sprGreatsword","path":"sprites/sprGreatsword/sprGreatsword.yy",},"resourceVersion":"1.0","resourceType":"AssetSpriteKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<AssetSpriteKeyframe>",},
                 ],"resourceVersion":"1.0","resourceType":"KeyframeStore<AssetSpriteKeyframe>",},"trackColour":4282932466,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[
                 {"keyframes":{"Keyframes":[
                       {"id":"a9725b0b-c7a9-4085-8747-505b33f5ac8f","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":true,"Channels":{"0":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":null,"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},

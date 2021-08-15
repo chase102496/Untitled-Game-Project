@@ -52,6 +52,9 @@ function conStatsInit() constructor
 	apMax = 20;			//Aura points
 	apRegen = 0;
 	
+	hurtTime = 0;		//Current hurt counter. If 0, I am vulnerable to attacks again
+	hurtTimeMax = 0.3;	//Seconds you remain invulnerable after getting hurt
+	
 	ccResist = 0;
 	cooldownReduction = 0;
 	castSpeed = 0;
@@ -96,9 +99,9 @@ function conStatsInit() constructor
 }
 
 //Damages whoever runs it, checking all the necessary stats variables to modify damage taken
-function scrStatsDamage(_amount,_type,_flinch)
+function scrStatsDamage(_amount,_type,_flinch,_knockback = [0,0],_target = id)
 {
-	with stats
+	with _target.stats
 	{
 		switch (_type)
 		{
@@ -106,15 +109,18 @@ function scrStatsDamage(_amount,_type,_flinch)
 			{
 				var _damage = _amount*(100/(100+armorPhysical));
 				var _scale = min((0.2+(_damage/hpMax)),0.5);
-			
-				hp -= _damage
-			
-				if _flinch
+				
+				if _flinch and (hurtTime == 0)
 				{
 					xScale = (size + _scale)*sign(xScale);
 					yScale = (size + _scale)*sign(yScale);
-					spriteColor = [0,_scale*255,255]
+					spriteColor = [0,_scale*255,255];
+
+					hp -= _damage;
+					hVel += _knockback[0]
+					_target.snowState.change("Hurt");
 				}
+				else hp -= _damage;
 				
 				break;
 			}
@@ -123,15 +129,17 @@ function scrStatsDamage(_amount,_type,_flinch)
 			{
 				var _damage = _amount*(100/(100+armorMagical));
 				var _scale = min((0.2+(_damage/hpMax)),0.5);
-			
-				hp -= _damage
-			
-				if _flinch
+
+				if _flinch and (hurtTime == 0)
 				{
 					xScale = (size + _scale)*sign(xScale);
 					yScale = (size + _scale)*sign(yScale);
-					spriteColor = [180,_scale*255,255]
+					spriteColor = [180,_scale*255,255];
+
+					hp -= _damage;
+					_target.snowState.change("Hurt");
 				}
+				else hp -= _damage;
 				
 				break;
 			}

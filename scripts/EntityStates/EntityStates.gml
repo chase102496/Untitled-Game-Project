@@ -22,6 +22,34 @@ function scrEntityStateInit()
 				scrSquish();
 			}
 	});
+		
+	//Ground state
+	snowState.add_child("Free","Ground",{});
+	//Hurt state
+	snowState.add_child("Free","Hurt",{
+		enter: function()
+		{
+			//Inherits free state
+			snowState.inherit();
+			
+			prevColorSpeed = stats.spriteColorSpeed;
+			stats.hurtTime = (stats.hurtTimeMax*room_speed);
+			stats.spriteColorSpeed = stats.hurtTimeMax/room_speed;
+		},
+		step: function()
+		{
+			//Inherits free state
+			snowState.inherit();
+			
+			stats.hurtTime --;
+			if stats.hurtTime == 0 snowState.change("Ground");
+		},
+		leave: function()
+		{
+			show_debug_message("done")
+			stats.spriteColorSpeed = prevColorSpeed;
+		}
+	})
 
 	#endregion
 

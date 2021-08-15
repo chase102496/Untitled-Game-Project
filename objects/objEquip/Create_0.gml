@@ -12,9 +12,10 @@ scrEquipStateInit();
 
 //Init
 currentLayer = "layEquip";
-currentSequence = noone; //ERROR
-currentSequenceElement = noone; //ERROR
-currentSequenceInstance = noone; //ERROR
+currentSequence = noone;
+currentSequenceElement = noone;
+currentSequenceInstance = noone;
+entityColliding = noone;
 //
 previousDirection = 1;
 changedDirection = 1;

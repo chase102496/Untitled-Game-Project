@@ -105,7 +105,11 @@ function scrDebugVars()
 		if global.keyPress2
 		{
 			entityEquip.sprite_index = sprGreatsword;
+			
+			
+			
 			entityEquip.equipPrimaryName = "Swing";
+			entityEquip.equipSecondaryName = "Draw";
 			entityEquip.snowState.change("Idle");
 		}
 		

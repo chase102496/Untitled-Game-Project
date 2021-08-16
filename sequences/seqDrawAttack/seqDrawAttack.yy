@@ -43,7 +43,7 @@
                             {"th0":-0.177504987,"th1":0.288240939,"tv0":0.001478672,"tv1":-0.00240898132,"x":0.333333343,"y":-5.003204,},
                             {"th0":-0.006622553,"th1":0.0,"tv0":-0.007370949,"tv1":0.0,"x":1.0,"y":-5.0,},
                           ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                      ],"parent":{"name":"position","path":"sequences/seqBowFire/seqBowFire.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
+                      ],"parent":{"name":"position","path":"sequences/seqDrawAttack/seqDrawAttack.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
                         {"colour":4290799884,"visible":true,"points":[
                             {"th0":-0.125,"th1":0.008009171,"tv0":0.0,"tv1":0.0,"x":0.0,"y":-10.0,},
                             {"th0":-0.01583984,"th1":0.000754417852,"tv0":0.0590629578,"tv1":0.008584976,"x":0.01583984,"y":-14.5187168,},
@@ -54,7 +54,7 @@
                             {"th0":-0.177504987,"th1":0.288240939,"tv0":0.001478672,"tv1":-0.00240898132,"x":0.333333343,"y":-5.003204,},
                             {"th0":-0.006622553,"th1":0.0,"tv0":-0.007370949,"tv1":0.0,"x":1.0,"y":-5.0,},
                           ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                      ],"parent":{"name":"position","path":"sequences/seqBowFire/seqBowFire.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
+                      ],"parent":{"name":"position","path":"sequences/seqDrawAttack/seqDrawAttack.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":0.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
             ],"resourceVersion":"1.0","resourceType":"KeyframeStore<RealKeyframe>",},"trackColour":4282956786,"inheritsTrackColour":true,"builtinName":14,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[
             {"resourceVersion":"1.0","resourceType":"InvisibleModifier",},
           ],"isCreationTrack":false,"resourceVersion":"1.0","name":"position","tags":[],"resourceType":"GMRealTrack",},
@@ -163,7 +163,7 @@
     "path": "folders/Sequences/Equipment/Bow.yy",
   },
   "resourceVersion": "1.3",
-  "name": "seqBowFire",
+  "name": "seqDrawAttack",
   "tags": [],
   "resourceType": "GMSequence",
 }

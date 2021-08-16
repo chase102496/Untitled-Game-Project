@@ -6,15 +6,6 @@ function scrEquipBroadcastListener() //Used to run one-time events from sequence
 	{
 		var _event = event_data[? "message"]
 		
-		switch (_event)
-	    {
-		    case "seqGreatswordStab-2f":
-			{
-		        owner.stats.hVel += sign(owner.stats.xScale)*1;
-		        break;
-			}
-		}
-		
 		if string_pos("Perfect",_event) != 0
 		{
 			perfectFrame = string_split(" ",_event,true)[1];
@@ -138,97 +129,95 @@ function scrEquipStateInit() //All equip states
 	
 	//Swing
 	{
-	snowState.add("Swing",{
-		enter: function()
-		{
-			snowState.change("Swing Charge");
-		}
-	});
-	
-	snowState.add("Swing Charge",{
-		enter: function()
-		{
-			owner.snowState.change("Attack");
-		},
-		step: function()
-		{
-			//Sequence Init
-			scrSequenceCreator(seqGreatswordSwingCharge);
-			
-			//Modules
-			scrEquipAnimations();
-			aimDirection = sign(mouse_x - owner.x);
-			aimPosition = [mouse_x,mouse_y];
-			scrEquipAiming(aimDirection,aimRange,aimPosition);
-			
-			//State switches
-			if !equipInput() snowState.change("Swing Attack");
-			if !in_sequence snowState.change("Swing Hold");
-			if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Swing Perfect");
-		}
-	});
-	
-	snowState.add("Swing Hold",{
-		step: function()
-		{
-			//Sequence Init
-			scrSequenceCreator(seqGreatswordSwingHold);
-
-			//Modules
-			scrEquipAnimations();
-			aimPosition = [mouse_x,mouse_y];
-			scrEquipAiming(aimDirection,aimRange,aimPosition);
-			
-			//State switches
-			if !equipInput() snowState.change("Swing Attack")
-		}
-	})
-	
-	snowState.add("Swing Attack",{
-		step: function()
-		{
-			//Sequence init
-			scrSequenceCreator(seqGreatswordSwingAttack);
-
-			//Modules
-			scrEquipAnimations();
-			scrEquipAiming(aimDirection,aimRange,aimPosition);
-			scrEquipMelee([
-				[scrStatsDamage,25,"Physical",true],
-				[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
-			]);
-	
-			//State switches
-			if !in_sequence
+		snowState.add("Swing",{
+			enter: function()
 			{
-				owner.snowState.change(owner.snowState.get_previous_state());
-				snowState.change("Idle");
+				snowState.change("Swing Charge");
 			}
-		}
-	});
+		});
 	
-	snowState.add("Swing Perfect",{
-		step: function()
-		{
-			//Sequence init
-			scrSequenceCreator(seqGreatswordSwingAttack);
-
-			//Modules
-			scrEquipAnimations();
-			scrEquipAiming(aimDirection,aimRange,aimPosition);
-			scrEquipMelee([
-				[scrStatsDamage,50,"Magical",true],
-				[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
-			]);
-	
-			//State switches
-			if !scrInSequence(currentSequenceElement)
+		snowState.add("Swing Charge",{
+			enter: function()
 			{
-				owner.snowState.change(owner.snowState.get_previous_state());
-				snowState.change("Idle");
+				owner.snowState.change("Attack");
+			},
+			step: function()
+			{
+				//Sequence Init
+				scrSequenceCreator(seqSwingCharge);
+			
+				//Modules
+				scrEquipAnimations();
+				scrEquipAiming([30,30],false,false);
+			
+				//State switches
+				if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Swing Perfect");
+				else if !equipInput() snowState.change("Swing Attack");
+				
+				if !in_sequence snowState.change("Swing Hold");
 			}
-		}
-	});
+		});
+	
+		snowState.add("Swing Hold",{
+			step: function()
+			{
+				//Sequence Init
+				scrSequenceCreator(seqSwingHold);
+
+				//Modules
+				scrEquipAnimations();
+				scrEquipAiming([30,30],false);
+			
+				//State switches
+				if !equipInput() snowState.change("Swing Attack")
+			}
+		})
+	
+		snowState.add("Swing Attack",{
+			step: function()
+			{
+				//Sequence init
+				scrSequenceCreator(seqSwingAttack);
+
+				//Modules
+				scrEquipAnimations();
+				scrEquipAiming([30,30]);
+				scrEquipMelee([
+					[scrStatsDamage,25,"Physical",true],
+					[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
+				]);
+	
+				//State switches
+				if !in_sequence
+				{
+					owner.snowState.change(owner.snowState.get_previous_state());
+					snowState.change("Idle");
+				}
+			}
+		});
+	
+		snowState.add("Swing Perfect",{
+			step: function()
+			{
+				//Sequence init
+				scrSequenceCreator(seqSwingAttack);
+
+				//Modules
+				scrEquipAnimations();
+				scrEquipAiming([30,30]);
+				scrEquipMelee([
+					[scrStatsDamage,50,"Magical",true],
+					[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
+				]);
+	
+				//State switches
+				if !scrInSequence(currentSequenceElement)
+				{
+					owner.snowState.change(owner.snowState.get_previous_state());
+					snowState.change("Idle");
+				}
+			}
+		});
 	}
 	
 	
@@ -236,7 +225,99 @@ function scrEquipStateInit() //All equip states
 	
 	#region Ranged abilities
 	
+	//Draw
+	{
+		snowState.add("Draw",{
+			enter: function()
+			{
+				snowState.change("Draw Charge");
+			}
+		});
 	
+		snowState.add("Draw Charge",{
+			step: function()
+			{
+				//Sequence init
+				scrSequenceCreator(seqDrawCharge);
+
+				//Modules
+				scrEquipAnimations();
+				scrEquipAiming([45,45],false,false);
+				image_index = scrSequenceRatio(image_number,currentSequenceElement);
+				owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
+				
+				//Projectile init
+				if !instance_exists(equipProjectile)
+				{
+					equipProjectile = conProjectileCreate(
+						x,y,"layProjectile",objProjectile,owner,
+						[
+							[scrStatsDamage,100,"Physical",true],
+							[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
+						],
+						[scrProjectileTemplateArrow,sprArrow]
+						);
+				}
+				else equipProjectile.projectilePower = scrSequenceRatioRaw(currentSequenceElement) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
+	
+				//State switches
+				if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Draw Perfect");
+				else if !equipInput() snowState.change("Draw Attack");
+				
+				if !in_sequence snowState.change("Draw Hold");
+			}
+		});
+		
+		snowState.add("Draw Hold",{
+			step: function()
+			{
+				//Sequence init
+				scrSequenceCreator(seqDrawHold);
+			
+				//Modules
+				scrEquipAnimations();
+				scrEquipAiming([45,45],false);
+				image_index = image_number-1;
+				owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
+	
+				//State switches
+				if !equipInput() snowState.change("Draw Attack");
+			}
+		});
+		
+		snowState.add("Draw Attack",{
+			enter: function()
+			{
+				if instance_exists(equipProjectile)
+				{
+					equipProjectile.snowState.change("Free");
+					equipProjectile = noone;
+				}
+			},
+			step: function()
+			{
+				//Sequence init
+				scrSequenceCreator(seqDrawAttack);
+				image_index = scrSequenceRatio(image_number,currentSequenceElement);
+				
+				//Modules
+				scrEquipAnimations();
+				scrEquipAiming([45,45]);
+
+				//State switches
+				if !in_sequence snowState.change("Idle");
+			}
+		});
+		
+		snowState.add_child("Draw Attack","Draw Perfect",{
+			enter: function()
+			{
+				if instance_exists(equipProjectile) equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5
+				
+				snowState.inherit();
+			}
+		});
+	}
 	
 	#endregion
 	
@@ -285,7 +366,7 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqBowDraw);
+			scrSequenceCreator(seqDrawCharge);
 			image_index = scrSequenceRatio(image_number,currentSequenceElement);
 
 			//Extra
@@ -316,7 +397,7 @@ function scrEquipStateInit() //All equip states
 			}
 			else if !owner.input.combat.primaryHold
 			{
-				equipProjectile.state.current = equipProjectile.state.free;
+				equipProjectile.snowState.change("Free");
 				equipProjectile = noone;
 				snowState.change("Bow Idle");
 			}
@@ -331,7 +412,7 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqBowHold);
+			scrSequenceCreator(seqDrawHold);
 			
 			//Bow direction aiming
 			scrEquipAiming(aimDirection);
@@ -352,14 +433,14 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqBowFire);
+			scrSequenceCreator(seqDrawAttack);
 			image_index = scrSequenceRatio(image_number,currentSequenceElement)/2;
 			
 			scrEquipAiming(aimDirection);
 			
 			if instance_exists(equipProjectile)
 			{
-				equipProjectile.state.current = equipProjectile.state.free;
+				equipProjectile.snowState.change("Free");
 				equipProjectile = noone;
 			}
 
@@ -456,7 +537,7 @@ function scrEquipStateInit() //All equip states
 			//THIS THIS THIS (?)
 			if instance_exists(equipProjectile)
 			{
-				equipProjectile.state.current = equipProjectile.state.free;
+				equipProjectile.snowState.change("Free");
 				equipProjectile = noone;
 			}
 

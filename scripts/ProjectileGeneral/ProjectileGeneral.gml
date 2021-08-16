@@ -6,7 +6,7 @@
 
 #region Initialization
 
-function conProjectileStateInit() constructor
+function scrProjectileStateInit()
 {
 	hold = -1;
 	free = -1;
@@ -15,34 +15,81 @@ function conProjectileStateInit() constructor
 	destroy = -1;
 	current = -1;
 	
-	/// @func templateArrow(_sprite)
-	templateArrow = function(_sprite)
-	{
-		hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,_sprite]]];
-		free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,_sprite],true,true,true,true,5]];
-		collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,_sprite],"Sticking",10]];
-		collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,_sprite],10]];
-		destroy = scrProjectileStateDestroy;
-		current = hold;
-	};
+	snowState.add("Idle",{
+	});
 	
-	/// @func templateSpellStatic(_spriteHold,_spriteFree,_spriteCollide)
-	templateSpellStatic = function(_spriteHold,_spriteFree,_spriteCollide)
-	{
-		hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsSync,_spriteHold]]]
-		free = [[scrProjectileStateFree,[scrProjectileAnimationsSync,_spriteFree],false,false,true,false,-2]]; //Static projectile, lasts until animation end
-		collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsSync,_spriteCollide],"",-2]]; //Normal collision with entities, but last until animation end
-		destroy = scrProjectileStateDestroy;
-		current = hold;
-	}
+	snowState.add("Hold",{
+		step: function()
+		{
+			scrStateExecute(hold);
+		}
+	});
+	
+	snowState.add("Free",{
+		enter: function()
+		{
+			stats.vVel = projectilePower*vVelRatio;
+			stats.hVel = projectilePower*hVelRatio;
+		},
+		step: function()
+		{
+			scrStateExecute(free);
+		}
+	});
+	
+	snowState.add("Collide Entity",{
+		step: function()
+		{
+			scrStateExecute(collideEntity);
+		}
+	});
+	
+	snowState.add("Collide Terrain",{
+		step: function()
+		{
+			scrStateExecute(collideTerrain);
+		}
+	});
+	
+	snowState.add("Destroy",{
+		step: function()
+		{
+			scrStateExecute(destroy);
+		}
+	});
 }
 
-function conProjectileCreate(_x,_y,_layer,_object,_owner) constructor
+function scrProjectileTemplateArrow(_sprite)
+{
+	hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,_sprite]]];
+	free = [[scrProjectileStateFree,[scrProjectileAnimationsStatic,_sprite],true,true,true,true,5]];
+	collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsStatic,_sprite],"Sticking",10]];
+	collideTerrain = [[scrProjectileStateCollideTerrain,[scrProjectileAnimationsStatic,_sprite],10]];
+	destroy = scrProjectileStateDestroy;
+	snowState.change("Hold");
+}
+
+function scrProjectileTemplateSpellStatic(_spriteHold,_spriteFree,_spriteCollide)
+{
+	hold = [[scrProjectileStateHoldCast,[scrProjectileAnimationsSync,_spriteHold]]];
+	free = [[scrProjectileStateFree,[scrProjectileAnimationsSync,_spriteFree],false,false,true,false,-2]];
+	collideEntity = [[scrProjectileStateCollideEntity,[scrProjectileAnimationsSync,_spriteCollide],"",-2]];
+	destroy = scrProjectileStateDestroy;
+	snowState.change("Hold");
+}
+
+function conProjectileCreate(_x,_y,_layer,_object,_owner,_entityScriptList,_templateScript) constructor
 {
 	var _proj = instance_create_layer(_x,_y,_layer,_object);
-	
-	_proj.owner = _owner.id;
-	_proj.equip = _owner.entityEquip.id;
+
+	with _proj
+	{
+		owner = _owner.id;
+		equip = _owner.entityEquip.id;
+		entityScriptList = _entityScriptList;
+		
+		script_execute_ext(_templateScript[0],_templateScript,1);
+	}
 	
 	return _proj;
 }
@@ -56,8 +103,6 @@ function conProjectileCreate(_x,_y,_layer,_object,_owner) constructor
 function scrProjectileStateHoldArrow(_animScript)
 {
 	var _degVel;
-	var _vVelRatio;
-	var _hVelRatio;
 	
 	if sign(equip.image_xscale) >= 1
 	{
@@ -70,11 +115,11 @@ function scrProjectileStateHoldArrow(_animScript)
 		_degVel = (angle_difference(image_angle,angleVelocityOffset-180));
 	}
 	
-	_vVelRatio = (_degVel/90);
-	_hVelRatio = (1 - abs(_degVel/90))*sign(equip.image_xscale);
+	vVelRatio = (_degVel/90);
+	hVelRatio = (1 - abs(_degVel/90))*sign(equip.image_xscale);
 	
-	stats.vVel = projectilePower*_vVelRatio;
-	stats.hVel = projectilePower*_hVelRatio;
+	stats.vVel = projectilePower*vVelRatio;
+	stats.hVel = projectilePower*hVelRatio;
 
 	x = anchor.x;
 	y = anchor.y;
@@ -136,8 +181,6 @@ function scrProjectileStateCollideEntity(_animScript,_afterHit,_aliveTimerMax)
 				scrProjectilePhysics(false,false,false);
 				break;
 		}
-		
-		
 	}
 	
 	scrProjectileAnimationHandler(_animScript);
@@ -176,7 +219,7 @@ function scrProjectileAliveTimer(_aliveTimerMax)
 		default: //anything else
 		{
 			aliveTimer += 1;
-			if aliveTimer >= _aliveTimerMax*room_speed state.current = state.destroy;
+			if aliveTimer >= _aliveTimerMax*room_speed snowState.change("Destroy");;
 			break;
 		}
 	
@@ -185,7 +228,7 @@ function scrProjectileAliveTimer(_aliveTimerMax)
 	
 		case -2: //destroy on animation end
 		{
-			if image_index+1 >= image_number state.current = state.destroy;
+			if image_index+1 >= image_number snowState.change("Destroy");;
 			break;
 		}
 	}
@@ -211,13 +254,13 @@ function scrProjectileDetectEntity()
 	if place_meeting(x,y,parEntity) entityColliding = instance_place(x,y,parEntity);
 	else if place_meeting(x,y,parNetEntity) entityColliding = instance_place(x,y,parNetEntity);
 
-	if instance_exists(entityColliding) and entityColliding != owner state.current = state.collideEntity;
+	if instance_exists(entityColliding) and entityColliding != owner snowState.change("Collide Entity")
 }
 
 //Detects terrain and changes state when hit
 function scrProjectileDetectTerrain()
 {
-	if place_meeting(x,y,objTerrain) state.current = state.collideTerrain;
+	if place_meeting(x,y,objTerrain) snowState.change("Collide Terrain");
 }
 
 #endregion

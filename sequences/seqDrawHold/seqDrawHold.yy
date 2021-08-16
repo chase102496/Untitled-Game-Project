@@ -80,7 +80,7 @@
                             {"th0":-0.005669713,"th1":0.00274381344,"tv0":0.395973682,"tv1":-0.191627592,"x":0.967435837,"y":-5.87895632,},
                             {"th0":-5.722046E-05,"th1":0.0,"tv0":-6.29425049E-05,"tv1":0.0,"x":1.0,"y":-5.0,},
                           ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                      ],"parent":{"name":"position","path":"sequences/seqBowHold/seqBowHold.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":10.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
+                      ],"parent":{"name":"position","path":"sequences/seqDrawHold/seqDrawHold.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":10.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
                         {"colour":4290799884,"visible":true,"points":[
                             {"th0":-0.05,"th1":0.4,"tv0":0.0,"tv1":0.0,"x":0.0,"y":-10.0,},
                             {"th0":-0.4,"th1":0.05,"tv0":0.0,"tv1":0.0,"x":1.0,"y":-10.0,},
@@ -128,7 +128,7 @@
                             {"th0":-0.005669713,"th1":0.00274381344,"tv0":0.395973682,"tv1":-0.191627592,"x":0.967435837,"y":-5.87895632,},
                             {"th0":-5.722046E-05,"th1":0.0,"tv0":-6.29425049E-05,"tv1":0.0,"x":1.0,"y":-5.0,},
                           ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                      ],"parent":{"name":"position","path":"sequences/seqBowHold/seqBowHold.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":21.9703331,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
+                      ],"parent":{"name":"position","path":"sequences/seqDrawHold/seqDrawHold.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":21.9703331,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
             ],"resourceVersion":"1.0","resourceType":"KeyframeStore<RealKeyframe>",},"trackColour":4294068457,"inheritsTrackColour":true,"builtinName":14,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[
             {"resourceVersion":"1.0","resourceType":"InvisibleModifier",},
           ],"isCreationTrack":false,"resourceVersion":"1.0","name":"position","tags":[],"resourceType":"GMRealTrack",},
@@ -256,7 +256,7 @@
     "path": "folders/Sequences/Equipment/Bow.yy",
   },
   "resourceVersion": "1.3",
-  "name": "seqBowHold",
+  "name": "seqDrawHold",
   "tags": [],
   "resourceType": "GMSequence",
 }

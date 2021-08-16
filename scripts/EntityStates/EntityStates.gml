@@ -46,7 +46,6 @@ function scrEntityStateInit()
 		},
 		leave: function()
 		{
-			show_debug_message("done")
 			stats.spriteColorSpeed = prevColorSpeed;
 		}
 	})

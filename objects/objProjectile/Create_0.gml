@@ -2,9 +2,12 @@
 netInstanceCreateID();
 netObject = objNetProjectile;
 
-//NEW constructor instantiation
+//Stats
 stats = new conStatsInit();
-state = new conProjectileStateInit();
+
+//States
+snowState = new SnowState("Idle");
+scrProjectileStateInit();
 
 //Init
 sprite_index = sprEmpty;

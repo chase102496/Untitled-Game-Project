@@ -1,4 +1,4 @@
 //Network
 netInstanceUpdateID();
 
-scrStateExecute(state.current);
+snowState.step();

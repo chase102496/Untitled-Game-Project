@@ -56,283 +56,9 @@ function scrEquipStateInit() //All equip states
 	
 	//	Abilities - Passive, Primary, Secondary, Tertiary
 	
-	#region Deprecated? Or not
-	
-	stateConfig =
-	{
-		input : function() {
-			return 0
-		},
-		
-		aimRange : [15,15],
-		
-		idle: {
-			name : "Idle",
-			sequence : seqDefaultIdle,
-			
-			enter : function() {
-				sprite_index = sprStick
-			},
-			modules : function() {},
-		},
-		
-		changeDirection: {
-			name : "Change Direction",
-			sequence : seqDefaultChangeDirection,
-			
-			enter : function() {},
-			modules : function() {},
-		},
-		
-		charge: {
-			name : "Charge",
-			sequence : seqGreatswordSwingCharge,
-			playerSprite : sprPlayerIdle,
-			
-			enter : function() {},
-			modules : function() {},
-		},
-		
-		hold : {
-			name : "Hold",
-			sequence : seqGreatswordSwingHold,
-			playerSprite : sprPlayerIdle,
-			
-			enter : function() {},
-			modules : function() {},
-		},
-		
-		attack : {
-			name : "Attack",
-			sequence : seqGreatswordSwingAttack,
-			playerSprite : sprPlayerIdle,
-			
-			enter : function() {},
-			modules : function() {},
-		},
-		
-		perfect : {
-			name : "Perfect",
-			sequence : seqGreatswordSwingAttack,
-			playerSprite : sprPlayerIdle,
-			
-			enter : function() {},
-			modules : function() {},
-		},
-	}
-	
-	changeStateTemplate = function(_templateName,_owner = owner)
-	{	
-		switch(_templateName)
-		{
-			case "Melee":
-			{
-				with stateConfig
-				{	
-					input = function() {
-						return global.inputObject.input.combat.primaryHold;
-					};
-					
-					//Charge
-					with charge
-					{
-						sequence = seqGreatswordSwingCharge;
-						playerSprite = global.inputObject.phSpriteCrouch;
-						modules = function() {
-							aimDirection = sign(mouse_x - owner.x);
-							aimPosition = [mouse_x,mouse_y];
-							scrEquipAiming(aimDirection,aimRange,aimPosition);
-						}
-					}
-					
-					//Hold
-					with hold
-					{
-						sequence = seqGreatswordSwingHold;
-						playerSprite = global.inputObject.phSpriteCrouch;
-						modules = function() {
-						
-						}
-					}
-					
-					//Attack
-					with attack
-					{
-						sequence = seqGreatswordSwingAttack;
-						playerSprite = global.inputObject.phSpriteAttackDownward;
-						modules = function() {
-							scrEquipAiming(aimDirection,aimRange,aimPosition);
-							scrEquipMelee([
-								[scrStatsDamage,50,"Physical",true],
-								[scrBuffsAdd,[scrBuffsStats,global.buffsID.slowness,"vMaxVel",7,0.5]]
-								]);
-						}
-					}
-					
-					//Perfect
-					with perfect
-					{
-						sequence = seqGreatswordSwingAttack;
-						playerSprite = global.inputObject.phSpriteAttackUpward;
-						modules = function() {
-							scrEquipAiming(aimDirection,aimRange,aimPosition);
-							scrEquipMelee([
-								[scrStatsDamage,50,"Magical",true],
-								[scrBuffsAdd,[scrBuffsStats,global.buffsID.slowness,"vMaxVel",7,0.5]]
-								]);
-						}
-					}
-				}
-				snowState.change(stateConfig.idle.name);
-				break;
-			}
-		}
-	}
-	
-	//Normal states
-	
-	snowState.add("Idle",{
-		enter: function() 
-		{
-			stateConfig.idle.enter()
-		},
-		step: function()
-		{	
-			//Sequence init
-			scrSequenceCreator(stateConfig.idle.sequence);
-			
-			//Modules
-			scrEquipAnimations();
-			stateConfig.idle.modules();
-	
-			//State switches
-			if changedDirection != 0 snowState.change(stateConfig.changeDirection.name);
-			if stateConfig.input() snowState.change(stateConfig.charge.name)
-		}
-	});
-	
-	snowState.add("Change Direction",{
-		enter: function() 
-		{
-			stateConfig.changeDirection.enter()
-		},
-		step: function()
-		{
-			//Sequence init
-			scrSequenceCreator(stateConfig.changeDirection.sequence);
-			
-			//Modules
-			scrEquipAnimations();
-			stateConfig.changeDirection.modules();
-	
-			//State switches
-			if !in_sequence snowState.change(stateConfig.idle.name);
-		}
-	});
-	
-	//Parent states
-	
-	snowState.add("Charge",{
-		enter: function()
-		{
-			owner.snowState.change("Attack");
-			stateConfig.charge.enter();
-		},
-		step: function()
-		{
-			//Sequence init
-			scrSequenceCreator(stateConfig.charge.sequence);
-
-			//Modules
-			scrEquipAnimations();
-			stateConfig.charge.modules();
-			
-			
-			//State switches
-			if !stateConfig.input() snowState.change(stateConfig.attack.name);
-			if !in_sequence snowState.change(stateConfig.hold.name);
-			if !stateConfig.input() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change(stateConfig.perfect.name);
-		}
-	});
-	
-	snowState.add("Hold",{
-		enter: function()
-		{
-			stateConfig.hold.enter();
-		},
-		step: function()
-		{
-			//Sequence Init
-			scrSequenceCreator(stateConfig.hold.sequence);
-
-			//Modules
-			scrEquipAnimations();
-			stateConfig.hold.modules();
-			
-			//State switches
-			if !stateConfig.input() snowState.change(stateConfig.attack.name);
-		}
-	})
-	
-	snowState.add("Attack",{
-		enter: function()
-		{
-			stateConfig.attack.enter();
-		},
-		step: function()
-		{
-			//Sequence init
-			scrSequenceCreator(stateConfig.attack.sequence);
-
-			//Modules
-			scrEquipAnimations();
-			stateConfig.attack.modules();
-	
-			//State switches
-			if !in_sequence
-			{
-				owner.snowState.change(owner.snowState.get_previous_state());
-				snowState.change(stateConfig.idle.name);
-			}
-		}
-	});
-	
-	snowState.add("Perfect",{
-		enter: function()
-		{
-			stateConfig.perfect.enter();
-		},
-		step: function()
-		{
-			//Sequence init
-			scrSequenceCreator(stateConfig.attack.sequence);
-
-			//Modules
-			scrEquipAnimations();
-			stateConfig.perfect.modules();
-	
-			//State switches
-			if !in_sequence
-			{
-				owner.snowState.change(owner.snowState.get_previous_state());
-				snowState.change(stateConfig.idle.name);
-			}
-		}
-	});
-	
-	//Attack types - Primary, Secondary, Tertiary
-	//Class states - Melee, Ranged, Magic
-	//Attack states - Charge, Hold, Attack, Perfect
-	//Type states - Mundane, Earth, Fire
-	//Primary Melee Charge Mundane
-	//Little modules will form a weapon
-	//Little modules will be made of several states. A weapon will point to this set of states based on the state switch (button pressed) to initiate it
-	
-	
-	
-	#endregion
-	
 	#region Defaults
+	
+	//Placeholder
 	
 	snowState.add("Empty",{
 		enter: function()
@@ -341,96 +67,176 @@ function scrEquipStateInit() //All equip states
 			sprite_index = sprEmpty;
 		}
 	});
+	
+	//Normal states
+	
+	equipPrimaryName = "Swing"
+	equipSecondaryName = "Empty"
+	equipTertiaryName = "Empty"
+	
+	//This can change based on the weapon, too
+	//If you want a weapon to have more or less than three abilities
+	inputSwitch = function()
+	{
+		if owner.input.combat.primaryHold
+			{
+				equipInput = function() { return owner.input.combat.primaryHold }
+				snowState.change(equipPrimaryName);
+			}
+			
+			if owner.input.combat.secondaryHold
+			{
+				equipInput = function() { return owner.input.combat.secondaryHold }
+				snowState.change(equipSecondaryName);
+			}
+			
+			if owner.input.combat.tertiaryHold
+			{
+				equipInput = function() { return owner.input.combat.tertiaryHold }
+				snowState.change(equipTertiaryName);
+			}
+	}
+	
+	snowState.add("Idle",{
+		step: function()
+		{	
+			scrSequenceCreator(seqDefaultIdle);
+			scrEquipAnimations();
+			
+			//State switches
+			if changedDirection != 0 snowState.change("Change Direction");
+			inputSwitch();
+		}
+	});
+	
+	snowState.add("Change Direction",{
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqDefaultChangeDirection);
+	
+			//Modules
+			scrEquipAnimations();
+		
+			//State switches
+			if !in_sequence snowState.change("Idle")
+			inputSwitch();
+		}
+	});
+	
+	//Bank of abilities
+	//To access an item's sprite states, we will have placeholders, much like the player's placeholder sprite variables
+	//e.g. for the bow to draw back during its ability, we will call on the phSpriteCharge variable, and the last frame for hold
+	//ONLY Placeholder sprites for player and equipment will be referenced in the bank of abilities
+	
+	//Swing ability
+	
 		
 	#endregion
 	
-	#region Melee
+	#region Melee abilities
 	
-	snowState.add_child("Idle","Greatsword Idle",{
+	//Swing
+	{
+	snowState.add("Swing",{
 		enter: function()
 		{
-			//Inherit
-			snowState.inherit();
-			
-			sprite_index = sprGreatsword;
+			snowState.change("Swing Charge");
+		}
+	});
+	
+	snowState.add("Swing Charge",{
+		enter: function()
+		{
+			owner.snowState.change("Attack");
 		},
 		step: function()
 		{
-			//Inherit
-			snowState.inherit();
+			//Sequence Init
+			scrSequenceCreator(seqGreatswordSwingCharge);
+			
+			//Modules
+			scrEquipAnimations();
+			aimDirection = sign(mouse_x - owner.x);
+			aimPosition = [mouse_x,mouse_y];
+			scrEquipAiming(aimDirection,aimRange,aimPosition);
 			
 			//State switches
-			if changedDirection != 0 snowState.change("Greatsword Change Direction");
-			if owner.input.primaryHold snowState.change("Greatsword Charge Primary");
+			if !equipInput() snowState.change("Swing Attack");
+			if !in_sequence snowState.change("Swing Hold");
+			if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Swing Perfect");
 		}
 	});
 	
-	snowState.add_child("Change Direction","Greatsword Change Direction",{
+	snowState.add("Swing Hold",{
 		step: function()
 		{
-			//Inherit
-			snowState.inherit();
-	
-			//State switches
-			if !in_sequence snowState.change("Greatsword Idle");
-		}
-	});
-	
-	snowState.add_child("Charge","Greatsword Charge Primary",{
-		step: function()
-		{
-			//Inherit
-			snowState.inherit();
+			//Sequence Init
+			scrSequenceCreator(seqGreatswordSwingHold);
+
+			//Modules
+			scrEquipAnimations();
+			aimPosition = [mouse_x,mouse_y];
+			scrEquipAiming(aimDirection,aimRange,aimPosition);
 			
 			//State switches
-			if !stateConfig.input() snowState.change("Greatsword Attack Primary");
-			if !in_sequence snowState.change("Greatsword Hold Primary");
-			if !stateConfig.input() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Greatsword Perfect Primary");
+			if !equipInput() snowState.change("Swing Attack")
 		}
-	});
+	})
 	
-	snowState.add_child("Greatsword Swing Hold",{
-		enter: function()
-		{
-			stateConfig = 
-			{
-				input : owner.input.combat.primaryHold,
-				sequence : seqGreatswordSwingHold,
-				
-				attackState : "Greatsword Swing Attack"
-			}
-			snowState.inherit();
-		}
-	});
-	snowState.add("Greatsword Swing Attack",{
-		enter: function()
-		{
-			
-		}
-	});
-	snowState.add("Greatsword Swing Attack Perfect",{
-		enter: function()
-		{
-			owner.sprite_index = owner.phSpriteAttackDownward;
-		},
+	snowState.add("Swing Attack",{
 		step: function()
 		{
 			//Sequence init
 			scrSequenceCreator(seqGreatswordSwingAttack);
-			
-			show_debug_message("Perfect")
-			
+
 			//Modules
 			scrEquipAnimations();
+			scrEquipAiming(aimDirection,aimRange,aimPosition);
+			scrEquipMelee([
+				[scrStatsDamage,25,"Physical",true],
+				[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
+			]);
 	
 			//State switches
 			if !in_sequence
 			{
-				owner.snowState.change("Ground");
-				snowState.change("Greatsword Idle");
+				owner.snowState.change(owner.snowState.get_previous_state());
+				snowState.change("Idle");
 			}
 		}
 	});
+	
+	snowState.add("Swing Perfect",{
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqGreatswordSwingAttack);
+
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming(aimDirection,aimRange,aimPosition);
+			scrEquipMelee([
+				[scrStatsDamage,50,"Magical",true],
+				[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
+			]);
+	
+			//State switches
+			if !scrInSequence(currentSequenceElement)
+			{
+				owner.snowState.change(owner.snowState.get_previous_state());
+				snowState.change("Idle");
+			}
+		}
+	});
+	}
+	
+	
+	#endregion
+	
+	#region Ranged abilities
+	
+	
 	
 	#endregion
 	

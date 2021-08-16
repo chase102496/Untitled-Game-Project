@@ -104,10 +104,9 @@ function scrDebugVars()
 		
 		if global.keyPress2
 		{
-			with entityEquip
-			{
-				changeStateTemplate("Greatsword");
-			}
+			entityEquip.sprite_index = sprGreatsword;
+			entityEquip.equipPrimaryName = "Swing";
+			entityEquip.snowState.change("Idle");
 		}
 		
 		if global.keyPress3 entityEquip.snowState.change("Bow Idle");

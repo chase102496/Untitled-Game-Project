@@ -163,6 +163,10 @@ function scrInputsInit()
 			secondaryHold : 0,
 			secondaryRelease : 0,
 			
+			tertiaryPress : 0,
+			tertiaryHold : 0,
+			tertiaryRelease : 0,
+			
 			active : function()
 			{
 				//Combat inputs
@@ -173,6 +177,10 @@ function scrInputsInit()
 				secondaryPress = mouse_check_button_pressed(mb_right);
 				secondaryHold = mouse_check_button(mb_right);
 				secondaryRelease = mouse_check_button_released(mb_right);
+				
+				tertiaryPress = keyboard_check_pressed(vk_shift);
+				tertiaryHold = keyboard_check(vk_shift);
+				tertiaryRelease = keyboard_check_released(vk_shift);
 			}
 		},
 	}

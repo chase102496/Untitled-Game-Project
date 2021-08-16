@@ -7,8 +7,10 @@ stats = new conStatsInit();
 inv = new conInventoryInit();
 
 //NEW state machine
-snowState = new SnowState("Empty");
+//	Overall ability system manager
+snowState = new SnowState("Idle");
 scrEquipStateInit();
+
 
 //Init
 currentLayer = "layEquip";

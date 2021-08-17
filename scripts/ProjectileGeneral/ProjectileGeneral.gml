@@ -28,6 +28,7 @@ function scrProjectileStateInit()
 	snowState.add("Free",{
 		enter: function()
 		{
+			equip.equipProjectile = noone;
 			stats.vVel = projectilePower*vVelRatio;
 			stats.hVel = projectilePower*hVelRatio;
 		},

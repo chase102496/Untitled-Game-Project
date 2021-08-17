@@ -61,9 +61,40 @@ function scrEquipStateInit() //All equip states
 	
 	//Normal states
 	
-	equipPrimaryName = "Swing"
+	equipPrimaryName = "Empty"
 	equipSecondaryName = "Empty"
 	equipTertiaryName = "Empty"
+	
+	//Placeholder sprites
+	
+	phTemplate = function(_templateName)
+	{
+		switch(_templateName)
+		{
+			case "Greatsword":
+				phSpriteIdle = sprGreatsword;
+				phSpriteCharge = sprGreatsword;
+				phSpriteHold = sprGreatsword;
+				phSpriteAttack = sprGreatsword;
+				phSpritePerfect = sprGreatsword;
+				break;
+				
+			case "Bow":
+				phSpriteIdle = sprBowIdle;
+				phSpriteCharge = sprBowDraw;
+				phSpriteHold = sprBowDraw;
+				phSpriteAttack = sprBowFire;
+				phSpritePerfect = sprBowFire;
+				break;
+		}
+	}
+	
+	mask_index = sprStick;
+	phSpriteIdle = sprStick;
+	phSpriteCharge = sprStick;
+	phSpriteHold = sprStick;
+	phSpriteAttack = sprStick;
+	phSpritePerfect = sprStick;
 	
 	//This can change based on the weapon, too
 	//If you want a weapon to have more or less than three abilities
@@ -89,6 +120,10 @@ function scrEquipStateInit() //All equip states
 	}
 	
 	snowState.add("Idle",{
+		enter: function()
+		{
+			sprite_index = phSpriteIdle
+		},
 		step: function()
 		{	
 			scrSequenceCreator(seqDefaultIdle);
@@ -119,335 +154,210 @@ function scrEquipStateInit() //All equip states
 	//To access an item's sprite states, we will have placeholders, much like the player's placeholder sprite variables
 	//e.g. for the bow to draw back during its ability, we will call on the phSpriteCharge variable, and the last frame for hold
 	//ONLY Placeholder sprites for player and equipment will be referenced in the bank of abilities
-	
-	//Swing ability
-	
-		
+
 	#endregion
 	
 	#region Melee abilities
 	
-	//Swing
-	{
-		snowState.add("Swing",{
-			enter: function()
-			{
-				snowState.change("Swing Charge");
-			}
-		});
+	#region Swing
 	
-		snowState.add("Swing Charge",{
-			enter: function()
-			{
-				owner.snowState.change("Attack");
-			},
-			step: function()
-			{
-				//Sequence Init
-				scrSequenceCreator(seqSwingCharge);
-			
-				//Modules
-				scrEquipAnimations();
-				scrEquipAiming([30,30],false,false);
-			
-				//State switches
-				if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Swing Perfect");
-				else if !equipInput() snowState.change("Swing Attack");
-				
-				if !in_sequence snowState.change("Swing Hold");
-			}
-		});
-	
-		snowState.add("Swing Hold",{
-			step: function()
-			{
-				//Sequence Init
-				scrSequenceCreator(seqSwingHold);
-
-				//Modules
-				scrEquipAnimations();
-				scrEquipAiming([30,30],false);
-			
-				//State switches
-				if !equipInput() snowState.change("Swing Attack")
-			}
-		})
-	
-		snowState.add("Swing Attack",{
-			step: function()
-			{
-				//Sequence init
-				scrSequenceCreator(seqSwingAttack);
-
-				//Modules
-				scrEquipAnimations();
-				scrEquipAiming([30,30]);
-				scrEquipMelee([
-					[scrStatsDamage,25,"Physical",true],
-					[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
-				]);
-	
-				//State switches
-				if !in_sequence
-				{
-					owner.snowState.change(owner.snowState.get_previous_state());
-					snowState.change("Idle");
-				}
-			}
-		});
-	
-		snowState.add("Swing Perfect",{
-			step: function()
-			{
-				//Sequence init
-				scrSequenceCreator(seqSwingAttack);
-
-				//Modules
-				scrEquipAnimations();
-				scrEquipAiming([30,30]);
-				scrEquipMelee([
-					[scrStatsDamage,50,"Magical",true],
-					[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
-				]);
-	
-				//State switches
-				if !scrInSequence(currentSequenceElement)
-				{
-					owner.snowState.change(owner.snowState.get_previous_state());
-					snowState.change("Idle");
-				}
-			}
-		});
-	}
-	
-	
-	#endregion
-	
-	#region Ranged abilities
-	
-	//Draw
-	{
-		snowState.add("Draw",{
-			enter: function()
-			{
-				snowState.change("Draw Charge");
-			}
-		});
-	
-		snowState.add("Draw Charge",{
-			step: function()
-			{
-				//Sequence init
-				scrSequenceCreator(seqDrawCharge);
-
-				//Modules
-				scrEquipAnimations();
-				scrEquipAiming([45,45],false,false);
-				image_index = scrSequenceRatio(image_number,currentSequenceElement);
-				owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
-				
-				//Projectile init
-				if !instance_exists(equipProjectile)
-				{
-					equipProjectile = conProjectileCreate(
-						x,y,"layProjectile",objProjectile,owner,
-						[
-							[scrStatsDamage,100,"Physical",true],
-							[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
-						],
-						[scrProjectileTemplateArrow,sprArrow]
-						);
-				}
-				else equipProjectile.projectilePower = scrSequenceRatioRaw(currentSequenceElement) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
-	
-				//State switches
-				if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Draw Perfect");
-				else if !equipInput() snowState.change("Draw Attack");
-				
-				if !in_sequence snowState.change("Draw Hold");
-			}
-		});
-		
-		snowState.add("Draw Hold",{
-			step: function()
-			{
-				//Sequence init
-				scrSequenceCreator(seqDrawHold);
-			
-				//Modules
-				scrEquipAnimations();
-				scrEquipAiming([45,45],false);
-				image_index = image_number-1;
-				owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
-	
-				//State switches
-				if !equipInput() snowState.change("Draw Attack");
-			}
-		});
-		
-		snowState.add("Draw Attack",{
-			enter: function()
-			{
-				if instance_exists(equipProjectile)
-				{
-					equipProjectile.snowState.change("Free");
-					equipProjectile = noone;
-				}
-			},
-			step: function()
-			{
-				//Sequence init
-				scrSequenceCreator(seqDrawAttack);
-				image_index = scrSequenceRatio(image_number,currentSequenceElement);
-				
-				//Modules
-				scrEquipAnimations();
-				scrEquipAiming([45,45]);
-
-				//State switches
-				if !in_sequence snowState.change("Idle");
-			}
-		});
-		
-		snowState.add_child("Draw Attack","Draw Perfect",{
-			enter: function()
-			{
-				if instance_exists(equipProjectile) equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5
-				
-				snowState.inherit();
-			}
-		});
-	}
-	
-	#endregion
-	
-	#region Bow
-
-	snowState.add("Bow Idle",{
+	snowState.add("Swing",{
 		enter: function()
 		{
-			sprite_index = sprBowIdle;
-			aimRange[0] = 75;
-			aimRange[1] = 75;
+			snowState.change("Swing Charge");
+		}
+	});
+	
+	snowState.add("Swing Charge",{
+		enter: function()
+		{
+			sprite_index = phSpriteCharge;
+			owner.snowState.change("Attack");
+		},
+		step: function()
+		{
+			//Sequence Init
+			scrSequenceCreator(seqSwingCharge);
+			
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([30,30],false,false);
+			
+			//State switches
+			if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Swing Perfect");
+			else if !equipInput() snowState.change("Swing Attack");
+				
+			if !in_sequence snowState.change("Swing Hold");
+		}
+	});
+	
+	snowState.add("Swing Hold",{
+		enter: function()
+		{
+			sprite_index = phSpriteHold;
+		},
+		step: function()
+		{
+			//Sequence Init
+			scrSequenceCreator(seqSwingHold);
+
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([30,30],false);
+			
+			//State switches
+			if !equipInput() snowState.change("Swing Attack")
+		}
+	})
+	
+	snowState.add("Swing Attack",{
+		enter: function()
+		{
+			sprite_index = phSpriteAttack;
 		},
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqDefaultIdle);
-		
+			scrSequenceCreator(seqSwingAttack);
+
 			//Modules
 			scrEquipAnimations();
+			scrEquipAiming([30,30]);
+			scrEquipMelee([
+				[scrStatsDamage,25,"Physical",true],
+				[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
+			]);
 	
 			//State switches
-			if changedDirection != 0 snowState.change("Bow Change Direction");
-			if owner.input.combat.primaryHold snowState.change("Bow Draw");
-		}
-	});
-	snowState.add("Bow Change Direction",{
-		step: function()
-		{
-			//Sequence init
-			scrSequenceCreator(seqDefaultChangeDirection);
-	
-			//Modules
-			scrEquipAnimations();
-	
-			//State switches
-			if !in_sequence snowState.change("Bow Idle")
-			if owner.input.combat.primaryPress snowState.change("Bow Draw")
+			if !in_sequence
+			{
+				owner.snowState.change(owner.snowState.get_previous_state());
+				snowState.change("Idle");
+			}
 		}
 	});
 	
-	snowState.add("Bow Draw",{
+	snowState.add_child("Swing Attack","Swing Perfect",{
 		enter: function()
 		{
-			sprite_index = sprBowDraw;
+			snowState.inherit();
+			sprite_index = phSpritePerfect;
+			//Change attack damage or whatever here, and reference that in the step of attack
+		}
+	});
+		
+	#endregion
+
+	#endregion
+	
+	#region Ranged abilities
+	
+	#region Draw
+
+	snowState.add("Draw",{
+		enter: function()
+		{
+			snowState.change("Draw Charge");
+		}
+	});
+	
+	snowState.add("Draw Charge",{
+		enter: function()
+		{
+			sprite_index = phSpriteCharge;
 		},
 		step: function()
 		{
 			//Sequence init
 			scrSequenceCreator(seqDrawCharge);
+
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([45,45],false,false);
 			image_index = scrSequenceRatio(image_number,currentSequenceElement);
-
-			//Extra
-			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5); //Limiting player movement during draw
-	
-			//Bow direction aim
-			aimDirection = sign(mouse_x - owner.x);
-			scrEquipAiming(aimDirection);
-
+			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
+				
 			//Projectile init
 			if !instance_exists(equipProjectile)
 			{
-				equipProjectile = conProjectileCreate(x,y,"layProjectile",objProjectile,owner);
-				equipProjectile.state.templateArrow(sprArrow);
-				equipProjectile.entityScriptList = // Insert code to run target-side here
-				[
-					[scrStatsDamage,100,"Physical",true],
-					[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
-					
-				];
+				equipProjectile = conProjectileCreate(
+					x,y,"layProjectile",objProjectile,owner,
+					[
+						[scrStatsDamage,100,"Physical",true],
+						[scrBuffsAdd,[scrBuffsStats,global.buffsID.swiftness,"hMaxVel",7,2.0]]
+					],
+					[scrProjectileTemplateArrow,sprArrow]
+					);
 			}
-			else equipProjectile.projectilePower = image_index/(image_number-1) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
+			else equipProjectile.projectilePower = scrSequenceRatioRaw(currentSequenceElement) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
 	
 			//State switches
-			if !in_sequence
-			{
-				snowState.change("Bow Hold");
-			}
-			else if !owner.input.combat.primaryHold
-			{
-				equipProjectile.snowState.change("Free");
-				equipProjectile = noone;
-				snowState.change("Bow Idle");
-			}
+			if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Draw Perfect");
+			else if !equipInput() snowState.change("Draw Attack");
+				
+			if !in_sequence snowState.change("Draw Hold");
 		}
 	});
-	snowState.add("Bow Hold",{
+		
+	snowState.add("Draw Hold",{
 		enter: function()
 		{
-			sprite_index = sprBowDraw;
-			equipProjectile.projectilePower = equipProjectile.projectilePowerMax;
+			sprite_index = phSpriteHold;
 		},
 		step: function()
 		{
 			//Sequence init
 			scrSequenceCreator(seqDrawHold);
 			
-			//Bow direction aiming
-			scrEquipAiming(aimDirection);
-			
-			//Extra
-			image_index = image_number-1; //set to last frame of scrEquipStateBowDraw
-			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5); //Limiting player movement during hold
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([45,45],false);
+			image_index = image_number-1;
+			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
 	
 			//State switches
-			if !owner.input.combat.primaryHold snowState.change("Bow Fire");
+			if !equipInput() snowState.change("Draw Attack");
 		}
 	});
-	snowState.add("Bow Fire",{
+		
+	snowState.add("Draw Attack",{
 		enter: function()
 		{
-			sprite_index = sprBowFire;
+			sprite_index = phSpriteAttack;
+			 
+			if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
 		},
 		step: function()
 		{
 			//Sequence init
 			scrSequenceCreator(seqDrawAttack);
-			image_index = scrSequenceRatio(image_number,currentSequenceElement)/2;
-			
-			scrEquipAiming(aimDirection);
+			image_index = scrSequenceRatio(image_number,currentSequenceElement);
+				
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([45,45]);
+
+			//State switches
+			if !in_sequence snowState.change("Idle");
+		}
+	});
+		
+	snowState.add_child("Draw Attack","Draw Perfect",{
+		enter: function()
+		{
+			sprite_index = phSpritePerfect;
 			
 			if instance_exists(equipProjectile)
 			{
-				equipProjectile.snowState.change("Free");
-				equipProjectile = noone;
+				equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5;
+				if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
 			}
-
-			//State switches
-			if !in_sequence snowState.change("Bow Idle");
+				
+			snowState.inherit();
 		}
 	});
+	
+	#endregion
 	
 	#endregion
 	

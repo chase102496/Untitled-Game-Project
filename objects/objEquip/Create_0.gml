@@ -11,7 +11,6 @@ inv = new conInventoryInit();
 snowState = new SnowState("Idle");
 scrEquipStateInit();
 
-
 //Init
 currentLayer = "layEquip";
 currentSequence = noone;

@@ -104,16 +104,19 @@ function scrDebugVars()
 		
 		if global.keyPress2
 		{
-			entityEquip.sprite_index = sprGreatsword;
-			
-			
-			
+			entityEquip.phTemplate("Greatsword")
+			entityEquip.equipPrimaryName = "Swing";
+			entityEquip.equipSecondaryName = "Draw";
+			entityEquip.snowState.change("Idle");
+		}
+		if global.keyPress3
+		{
+			entityEquip.phTemplate("Bow")
 			entityEquip.equipPrimaryName = "Swing";
 			entityEquip.equipSecondaryName = "Draw";
 			entityEquip.snowState.change("Idle");
 		}
 		
-		if global.keyPress3 entityEquip.snowState.change("Bow Idle");
 		if global.keyPress4 entityEquip.snowState.change("Orb Idle");
 		
 		//Adding random items

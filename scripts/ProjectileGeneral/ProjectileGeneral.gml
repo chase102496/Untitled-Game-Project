@@ -60,6 +60,8 @@ function scrProjectileStateInit()
 	});
 }
 
+#region Templates
+
 function scrProjectileTemplateArrow(_sprite)
 {
 	hold = [[scrProjectileStateHoldArrow,[scrProjectileAnimationsStatic,_sprite]]];
@@ -78,6 +80,8 @@ function scrProjectileTemplateSpellStatic(_spriteHold,_spriteFree,_spriteCollide
 	destroy = scrProjectileStateDestroy;
 	snowState.change("Hold");
 }
+
+#endregion
 
 function conProjectileCreate(_x,_y,_layer,_object,_owner,_entityScriptList,_templateScript) constructor
 {

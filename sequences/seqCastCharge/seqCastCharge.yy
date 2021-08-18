@@ -64,7 +64,7 @@
                             {"th0":-0.09775895,"th1":0.158873379,"tv0":2.173859,"tv1":-3.532856,"x":0.5793735,"y":-10.7425232,},
                             {"th0":0.0,"th1":0.25,"tv0":0.0,"tv1":0.0,"x":1.0,"y":-12.0,},
                           ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                      ],"parent":{"name":"position","path":"sequences/seqOrbCharge/seqOrbCharge.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":10.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
+                      ],"parent":{"name":"position","path":"sequences/seqCastCharge/seqCastCharge.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":10.0,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},"1":{"EmbeddedAnimCurve":{"function":2,"channels":[
                         {"colour":4290799884,"visible":false,"points":[
                             {"th0":-0.05,"th1":0.00587446848,"tv0":0.0,"tv1":0.0,"x":0.0,"y":-10.0,},
                             {"th0":-0.00563040748,"th1":0.009485118,"tv0":-9.536743E-07,"tv1":0.0,"x":0.0184122473,"y":-9.543645,},
@@ -96,7 +96,7 @@
                             {"th0":-0.09775895,"th1":0.158873379,"tv0":2.173859,"tv1":-3.532856,"x":0.5793735,"y":-10.7425232,},
                             {"th0":0.0,"th1":0.25,"tv0":0.0,"tv1":0.0,"x":1.0,"y":-12.0,},
                           ],"resourceVersion":"1.0","name":"y","tags":[],"resourceType":"GMAnimCurveChannel",},
-                      ],"parent":{"name":"position","path":"sequences/seqOrbCharge/seqOrbCharge.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":21.9703331,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
+                      ],"parent":{"name":"position","path":"sequences/seqCastCharge/seqCastCharge.yy",},"resourceVersion":"1.2","name":null,"tags":[],"resourceType":"GMAnimCurve",},"RealValue":21.9703331,"AnimCurveId":null,"resourceVersion":"1.0","resourceType":"RealKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<RealKeyframe>",},
             ],"resourceVersion":"1.0","resourceType":"KeyframeStore<RealKeyframe>",},"trackColour":4294068457,"inheritsTrackColour":true,"builtinName":14,"traits":0,"interpolation":1,"tracks":[],"events":[],"modifiers":[
             {"resourceVersion":"1.0","resourceType":"InvisibleModifier",},
           ],"isCreationTrack":false,"resourceVersion":"1.0","name":"position","tags":[],"resourceType":"GMRealTrack",},
@@ -193,7 +193,7 @@
     "path": "folders/Sequences/Equipment/Orb.yy",
   },
   "resourceVersion": "1.3",
-  "name": "seqOrbCharge",
+  "name": "seqCastCharge",
   "tags": [],
   "resourceType": "GMSequence",
 }

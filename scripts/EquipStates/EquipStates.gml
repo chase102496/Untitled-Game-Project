@@ -154,7 +154,7 @@ function scrEquipStateInit() //All equip states
 	//To access an item's sprite states, we will have placeholders, much like the player's placeholder sprite variables
 	//e.g. for the bow to draw back during its ability, we will call on the phSpriteCharge variable, and the last frame for hold
 	//ONLY Placeholder sprites for player and equipment will be referenced in the bank of abilities
-
+	
 	#endregion
 	
 	#region Melee abilities
@@ -343,6 +343,113 @@ function scrEquipStateInit() //All equip states
 	});
 		
 	snowState.add_child("Draw Attack","Draw Perfect",{
+		enter: function()
+		{
+			sprite_index = phSpritePerfect;
+			
+			if instance_exists(equipProjectile)
+			{
+				equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5;
+				if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
+			}
+				
+			snowState.inherit();
+		}
+	});
+	
+	#endregion
+	
+	#region Cast
+	
+	snowState.add("Cast",{
+		enter: function()
+		{
+			snowState.change("Cast Charge");
+		}
+	});
+	
+	snowState.add("Cast Charge",{
+		enter: function()
+		{
+			sprite_index = phSpriteCharge;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqCastCharge);
+
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([45,45],false,false);
+			image_index = scrSequenceRatio(image_number,currentSequenceElement);
+			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
+				
+			//Projectile init
+			if !instance_exists(equipProjectile)
+			{
+				equipProjectile = conProjectileCreate(
+					x,y,"layProjectile",objProjectile,owner,
+					[
+						[scrStatsDamage,50,"Magical",true],
+						[scrBuffsAdd,[scrBuffsStats,global.buffsID.slowness,"vMaxVel",7,0.5]]
+					],
+					[scrProjectileTemplateSpellStatic,sprEmpty,sprArcaneBlast,sprArcaneBlast]
+					);
+			}
+			else equipProjectile.projectilePower = scrSequenceRatioRaw(currentSequenceElement) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
+	
+			//State switches
+			if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Cast Perfect");
+			else if !equipInput() snowState.change("Cast Attack");
+				
+			if !in_sequence snowState.change("Cast Hold");
+		}
+	});
+		
+	snowState.add("Cast Hold",{
+		enter: function()
+		{
+			sprite_index = phSpriteHold;
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqCastHold);
+			
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([45,45],false);
+			image_index = image_number-1;
+			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
+	
+			//State switches
+			if !equipInput() snowState.change("Cast Attack");
+		}
+	});
+		
+	snowState.add("Cast Attack",{
+		enter: function()
+		{
+			sprite_index = phSpriteAttack;
+			 
+			if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
+		},
+		step: function()
+		{
+			//Sequence init
+			scrSequenceCreator(seqCastAttack);
+			image_index = scrSequenceRatio(image_number,currentSequenceElement);
+				
+			//Modules
+			scrEquipAnimations();
+			scrEquipAiming([45,45]);
+
+			//State switches
+			if !in_sequence snowState.change("Idle");
+		}
+	});
+		
+	snowState.add_child("Cast Attack","Cast Perfect",{
 		enter: function()
 		{
 			sprite_index = phSpritePerfect;

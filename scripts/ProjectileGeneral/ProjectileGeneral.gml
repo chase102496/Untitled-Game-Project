@@ -22,16 +22,15 @@ function scrProjectileStateInit()
 		step: function()
 		{
 			scrStateExecute(hold);
+		},
+		leave: function()
+		{
+			scrStateExecute(hold);
+			equip.equipProjectile = noone;
 		}
 	});
 	
 	snowState.add("Free",{
-		enter: function()
-		{
-			equip.equipProjectile = noone;
-			stats.vVel = projectilePower*vVelRatio;
-			stats.hVel = projectilePower*hVelRatio;
-		},
 		step: function()
 		{
 			scrStateExecute(free);

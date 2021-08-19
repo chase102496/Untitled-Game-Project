@@ -34,8 +34,10 @@ function scrSequenceRatioRaw(_currentSequenceElement)
 }
 
 //Returns the x and y given the constraints for our cast range in a circle
-function scrCastRange(_originX,_originY,_pointX,_pointY,_range)
+function scrCastRange(_range = 128,_originX = owner.x,_originY = owner.y,_pointX = mouse_x,_pointY = mouse_y)
 {
+	
+	
 	var _dir = point_direction(_originX,_originY,_pointX,_pointY);
 	
 	if point_distance(_originX,_originY,_pointX,_pointY) >= _range
@@ -47,6 +49,12 @@ function scrCastRange(_originX,_originY,_pointX,_pointY,_range)
 	{
 		var _x = _pointX;
 		var _y = _pointY;
+	}
+	
+	if instance_exists(equipProjectile)
+	{
+		equipProjectile.x = _x;
+		equipProjectile.y = _y;
 	}
 	
 	return [_x,_y];

@@ -86,6 +86,13 @@ function scrEquipStateInit() //All equip states
 				phSpriteAttack = sprBowFire;
 				phSpritePerfect = sprBowFire;
 				break;
+				
+			case "Orb":
+				phSpriteIdle = sprOrbIdle;
+				phSpriteCharge = sprOrbIdle;
+				phSpriteHold = sprOrbIdle;
+				phSpriteAttack = sprOrbIdle;
+				phSpritePerfect = sprOrbIdle;
 		}
 	}
 	
@@ -345,6 +352,8 @@ function scrEquipStateInit() //All equip states
 	snowState.add_child("Draw Attack","Draw Perfect",{
 		enter: function()
 		{
+			snowState.inherit();
+			
 			sprite_index = phSpritePerfect;
 			
 			if instance_exists(equipProjectile)
@@ -352,8 +361,6 @@ function scrEquipStateInit() //All equip states
 				equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5;
 				if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
 			}
-				
-			snowState.inherit();
 		}
 	});
 	
@@ -379,11 +386,12 @@ function scrEquipStateInit() //All equip states
 			scrSequenceCreator(seqCastCharge);
 
 			//Modules
-			scrEquipAnimations();
+			scrEquipAnimations(); //
 			scrEquipAiming([45,45],false,false);
+			scrCastRange(128);
 			image_index = scrSequenceRatio(image_number,currentSequenceElement);
 			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
-				
+			
 			//Projectile init
 			if !instance_exists(equipProjectile)
 			{
@@ -396,7 +404,6 @@ function scrEquipStateInit() //All equip states
 					[scrProjectileTemplateSpellStatic,sprEmpty,sprArcaneBlast,sprArcaneBlast]
 					);
 			}
-			else equipProjectile.projectilePower = scrSequenceRatioRaw(currentSequenceElement) * equipProjectile.projectilePowerMax; //Projectile power updating var as bow pulls back, power goes up
 	
 			//State switches
 			if !equipInput() and scrPerfectFrame(currentSequenceElement,perfectFrame) snowState.change("Cast Perfect");
@@ -419,6 +426,7 @@ function scrEquipStateInit() //All equip states
 			//Modules
 			scrEquipAnimations();
 			scrEquipAiming([45,45],false);
+			scrCastRange(128);
 			image_index = image_number-1;
 			owner.stats.hVel = clamp(owner.stats.hVel,-owner.stats.hMaxVel*0.5,owner.stats.hMaxVel*0.5);
 	
@@ -448,19 +456,13 @@ function scrEquipStateInit() //All equip states
 			if !in_sequence snowState.change("Idle");
 		}
 	});
-		
+	
 	snowState.add_child("Cast Attack","Cast Perfect",{
 		enter: function()
 		{
-			sprite_index = phSpritePerfect;
-			
-			if instance_exists(equipProjectile)
-			{
-				equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5;
-				if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
-			}
-				
 			snowState.inherit();
+			show_debug_message()
+			sprite_index = phSpritePerfect;
 		}
 	});
 	
@@ -509,7 +511,7 @@ function scrEquipStateInit() //All equip states
 		step: function()
 		{
 			//Sequence init
-			scrSequenceCreator(seqOrbCharge);
+			scrSequenceCreator(seqCastCharge);
 			
 			//Orb direction aim
 			aimDirection = sign(mouse_x - owner.x);

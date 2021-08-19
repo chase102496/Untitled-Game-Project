@@ -100,20 +100,35 @@ function scrDebugVars()
 		}
 		
 		//Equipment
-		if global.keyPress1 entityEquip.snowState.change("Empty");
-		
-		if global.keyPress2
+		if global.keyPress1
 		{
 			entityEquip.phTemplate("Greatsword")
+			
 			entityEquip.equipPrimaryName = "Swing";
 			entityEquip.equipSecondaryName = "Draw";
+			entityEquip.equipTertiaryName = "Cast";
+			
 			entityEquip.snowState.change("Idle");
+		}
+		if global.keyPress2
+		{
+			entityEquip.phTemplate("Bow")
+			
+			entityEquip.equipPrimaryName = "Swing";
+			entityEquip.equipSecondaryName = "Draw";
+			entityEquip.equipTertiaryName = "Cast";
+			
+			entityEquip.snowState.change("Idle");
+			
 		}
 		if global.keyPress3
 		{
-			entityEquip.phTemplate("Bow")
+			entityEquip.phTemplate("Orb")
+			
 			entityEquip.equipPrimaryName = "Swing";
 			entityEquip.equipSecondaryName = "Draw";
+			entityEquip.equipTertiaryName = "Cast";
+			
 			entityEquip.snowState.change("Idle");
 		}
 		

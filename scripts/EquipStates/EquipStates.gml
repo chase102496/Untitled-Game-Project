@@ -331,14 +331,13 @@ function scrEquipStateInit() //All equip states
 		enter: function()
 		{
 			sprite_index = phSpriteAttack;
-			 
-			if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
 		},
 		step: function()
 		{
 			//Sequence init
 			scrSequenceCreator(seqDrawAttack);
 			image_index = scrSequenceRatio(image_number,currentSequenceElement);
+			if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
 				
 			//Modules
 			scrEquipAnimations();
@@ -356,11 +355,7 @@ function scrEquipStateInit() //All equip states
 			
 			sprite_index = phSpritePerfect;
 			
-			if instance_exists(equipProjectile)
-			{
-				equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5;
-				if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
-			}
+			if instance_exists(equipProjectile) equipProjectile.projectilePower = equipProjectile.projectilePowerMax*1.5;
 		}
 	});
 	
@@ -439,14 +434,13 @@ function scrEquipStateInit() //All equip states
 		enter: function()
 		{
 			sprite_index = phSpriteAttack;
-			 
-			if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
 		},
 		step: function()
 		{
 			//Sequence init
 			scrSequenceCreator(seqCastAttack);
 			image_index = scrSequenceRatio(image_number,currentSequenceElement);
+			if instance_exists(equipProjectile) equipProjectile.snowState.change("Free");
 				
 			//Modules
 			scrEquipAnimations();
@@ -461,7 +455,7 @@ function scrEquipStateInit() //All equip states
 		enter: function()
 		{
 			snowState.inherit();
-			show_debug_message()
+			show_debug_message("cast perf");
 			sprite_index = phSpritePerfect;
 		}
 	});
